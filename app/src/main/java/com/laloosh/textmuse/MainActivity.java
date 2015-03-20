@@ -77,5 +77,7 @@ public class MainActivity extends ActionBarActivity {
         TextMuseData data = parser.parse(s);
 
         Log.d(Constants.TAG, "App ID: " + data.appId);
+
+        data.save(this);
     }
 }

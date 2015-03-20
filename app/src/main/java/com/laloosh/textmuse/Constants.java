@@ -5,4 +5,6 @@ package com.laloosh.textmuse;
  */
 public class Constants {
     public static final String TAG = "TextMuse";
+
+    public static final String DATA_FILE = "TextMuse.Cache";
 }
