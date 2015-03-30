@@ -3,6 +3,7 @@
     package="com.laloosh.textmuse" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +18,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ContactsPickerActivity"
+            android:label="@string/title_activity_contacts_picker" >
         </activity>
     </application>
 
