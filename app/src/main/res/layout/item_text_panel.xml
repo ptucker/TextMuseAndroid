@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffee885a"
+    android:id="@+id/mainViewRelativeLayoutTextItem"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainViewImageViewItemBackground"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/bubble"
+        android:scaleType="fitEnd"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainViewTextViewLatest"
+        android:text="LATEST"
+        android:textColor="#ffffffff"
+        android:background="#44000000"
+        android:padding="6dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:paddingBottom="40dp"
+            android:src="@drawable/leftquote"
+            android:scaleType="fitCenter"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:id="@+id/mainViewTextViewText"
+            android:text="SEND A TEXT TO\nLAUREN PANGBORN"
+            android:textColor="#ffffffff"
+            android:gravity="center"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:paddingBottom="40dp"
+            android:src="@drawable/rightquote"
+            android:scaleType="fitCenter"
+            />
+    </LinearLayout>
+</RelativeLayout>

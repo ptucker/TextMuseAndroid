@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainFragmentListItemTextViewTitle"
+        android:text="Category Title"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="15dp"
+        android:textSize="24sp"
+
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainFragmentListItemImageArrow"
+        android:src="@drawable/ic_action_next_item"
+        android:layout_margin="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        />
+        <!--android:tint="#ff990000" -->
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainViewFragmentListItemTextViewNewBadge"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/mainFragmentListItemImageArrow"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/newbadge"
+        android:text="24 NEW"
+        android:textColor="#ffffffff"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:scaleType="centerCrop"
+        />
+        <!-- android:backgroundTint="#ff990000" -->
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/mainFragmentListItemPager"
+        android:background="@android:color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/mainFragmentListItemTextViewTitle"
+        />
+</RelativeLayout>
