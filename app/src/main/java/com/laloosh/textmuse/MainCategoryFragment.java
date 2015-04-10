@@ -18,12 +18,15 @@ import android.widget.TextView;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainCategoryFragment extends Fragment {
+
+    static final int[] COLOR_LIST = {0xffee885a, 0xff16c2df, 0xff00ac65};
 
     //temporary stuff
 
@@ -204,7 +207,7 @@ public class MainCategoryFragment extends Fragment {
 
             holder.mArrow.setColorFilter(0xff880000);
 
-            CategoryViewPagerAdapter viewPagerAdapter = new CategoryViewPagerAdapter(category.notes, mContext);
+            CategoryViewPagerAdapter viewPagerAdapter = new CategoryViewPagerAdapter(category.notes, mContext, position);
             holder.mViewPager.setAdapter(viewPagerAdapter);
 
             return rowView;
@@ -216,10 +219,14 @@ public class MainCategoryFragment extends Fragment {
 
         private List<Note> mNotes;
         private LayoutInflater mLayoutInflater;
+        private Activity mActivity;
+        private int mColorOffset;   //The color offset is to choose a starting color
 
-        public CategoryViewPagerAdapter(List<Note> notes, Activity activity) {
+        public CategoryViewPagerAdapter(List<Note> notes, Activity activity, int offset) {
             mNotes = notes;
+            mActivity = activity;
             mLayoutInflater = activity.getLayoutInflater();
+            mColorOffset = offset;
         }
 
         @Override
@@ -230,13 +237,22 @@ public class MainCategoryFragment extends Fragment {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
 
+            Log.d(Constants.TAG, "Instantiating view at position " + position);
+
             View view;
             Note note = mNotes.get(position);
 
             if (note.mediaUrl != null && note.mediaUrl.length() > 0) {
                 view = mLayoutInflater.inflate(R.layout.item_text_with_image, container, false);
+                ImageView imageView = (ImageView) view.findViewById(R.id.mainViewImageViewItemBackground);
+
+                //Try out picasso library to see how it performs
+                Picasso.with(mActivity).load(note.mediaUrl).into(imageView);
             } else {
                 view = mLayoutInflater.inflate(R.layout.item_text_panel, container, false);
+
+                View backgroundView = view.findViewById(R.id.mainViewBackgroundView);
+                backgroundView.setBackgroundColor(COLOR_LIST[(position + mColorOffset) % COLOR_LIST.length]);
             }
 
             TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
@@ -249,6 +265,8 @@ public class MainCategoryFragment extends Fragment {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
+            Log.d(Constants.TAG, "Destroying view at position " + position);
+
             container.removeView((View)object);
         }
 
