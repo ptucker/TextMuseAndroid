@@ -192,8 +192,7 @@ public class MainCategoryFragment extends Fragment {
             Category category = mCategories.get(position);
             holder.mCategoryTitle.setText(category.name);
 
-            //TODO: Temp color here
-            holder.mCategoryTitle.setTextColor(0xff880000);
+            holder.mCategoryTitle.setTextColor(COLOR_LIST[position % COLOR_LIST.length]);
 
             int newCount = 0;
             for (Note note : category.notes) {
@@ -205,7 +204,7 @@ public class MainCategoryFragment extends Fragment {
             holder.mNewBadge.setText(Integer.toString(newCount) + " NEW");
             //TODO: Figure out a way to change background of new badge
 
-            holder.mArrow.setColorFilter(0xff880000);
+            holder.mArrow.setColorFilter(COLOR_LIST[position % COLOR_LIST.length]);
 
             CategoryViewPagerAdapter viewPagerAdapter = new CategoryViewPagerAdapter(category.notes, mContext, position);
             holder.mViewPager.setAdapter(viewPagerAdapter);
