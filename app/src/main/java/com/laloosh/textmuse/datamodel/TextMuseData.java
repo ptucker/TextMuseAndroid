@@ -33,6 +33,11 @@ public class TextMuseData {
     //Saves the data to our local preferences
     public void save(Context context) {
 
+        if (context == null) {
+            Log.d(Constants.TAG, "Attempt to save data after context has been destroyed.");
+            return;
+        }
+
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
         try {

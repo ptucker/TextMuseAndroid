@@ -239,6 +239,7 @@ public class MainCategoryFragment extends Fragment {
             Log.d(Constants.TAG, "Instantiating view at position " + position);
 
             View view;
+            boolean useImageLayout = false;
             Note note = mNotes.get(position);
 
             if (note.mediaUrl != null && note.mediaUrl.length() > 0) {
@@ -246,7 +247,14 @@ public class MainCategoryFragment extends Fragment {
                 ImageView imageView = (ImageView) view.findViewById(R.id.mainViewImageViewItemBackground);
 
                 //Try out picasso library to see how it performs
-                Picasso.with(mActivity).load(note.mediaUrl).into(imageView);
+                Picasso.with(mActivity)
+                       .load(note.mediaUrl)
+                       .fit()
+                       .centerCrop()
+                       .into(imageView);
+
+                useImageLayout = true;
+
             } else {
                 view = mLayoutInflater.inflate(R.layout.item_text_panel, container, false);
 
@@ -255,7 +263,11 @@ public class MainCategoryFragment extends Fragment {
             }
 
             TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
-            textView.setText(note.text);
+            if (useImageLayout && (note.text == null || note.text.length() <= 0)) {
+                textView.setVisibility(View.INVISIBLE);
+            } else {
+                textView.setText(note.text);
+            }
 
             container.addView(view);
 

@@ -34,6 +34,7 @@
         android:id="@+id/mainViewTextViewText"
         android:text="SMILE! HERE'S A SUPER CUTE PUPPY."
         android:textColor="#ffffffff"
+        android:textSize="16sp"
         android:background="#44000000"
         android:padding="8dp"
         android:layout_alignParentLeft="true"

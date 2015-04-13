@@ -60,6 +60,7 @@
             android:layout_weight="0.7"
             android:id="@+id/mainViewTextViewText"
             android:text="SEND A TEXT TO\nLAUREN PANGBORN"
+            android:textSize="16sp"
             android:textColor="#ffffffff"
             android:gravity="center"
             />
