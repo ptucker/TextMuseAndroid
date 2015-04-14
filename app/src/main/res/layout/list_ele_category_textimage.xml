@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    >
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainFragmentListItemImageArrow"
+        android:src="@drawable/ic_action_next_item"
+        android:layout_margin="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        />
+        <!--android:tint="#ff990000" -->
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainViewFragmentListItemTextViewNewBadge"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/mainFragmentListItemImageArrow"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/newbadge"
+        android:text="24 NEW"
+        android:textColor="#ffffffff"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:scaleType="centerCrop"
+        />
+        <!-- android:backgroundTint="#ff990000" -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainFragmentListItemTextViewTitle"
+        android:text="Category Title"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/mainViewFragmentListItemTextViewNewBadge"
+        android:layout_margin="15dp"
+        android:textSize="18sp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:scrollHorizontally="true"
+
+        />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/mainFragmentListItemTextViewTitle"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainViewImageViewItemBackground"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/bubble"
+            android:background="#ffeeeeee"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainViewTextViewLatest"
+            android:text="LATEST"
+            android:textColor="#ffffffff"
+            android:background="#44000000"
+            android:padding="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainViewTextViewText"
+            android:text="SMILE! HERE'S A SUPER CUTE PUPPY."
+            android:textColor="#ffffffff"
+            android:textSize="16sp"
+            android:background="#44000000"
+            android:padding="8dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

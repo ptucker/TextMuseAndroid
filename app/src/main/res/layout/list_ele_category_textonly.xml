@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    >
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainFragmentListItemImageArrow"
+        android:src="@drawable/ic_action_next_item"
+        android:layout_margin="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        />
+        <!--android:tint="#ff990000" -->
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainViewFragmentListItemTextViewNewBadge"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/mainFragmentListItemImageArrow"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/newbadge"
+        android:text="24 NEW"
+        android:textColor="#ffffffff"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:scaleType="centerCrop"
+        />
+        <!-- android:backgroundTint="#ff990000" -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainFragmentListItemTextViewTitle"
+        android:text="Category Title"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/mainViewFragmentListItemTextViewNewBadge"
+        android:layout_margin="15dp"
+        android:textSize="18sp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:scrollHorizontally="true"
+
+        />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/mainViewRelativeLayoutTextItem"
+        android:padding="15dp"
+        android:background="@android:color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/mainFragmentListItemTextViewTitle"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainViewBackgroundView"
+            android:background="#ffee885a"
+         />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainViewImageViewItemBackground"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bubble"
+            android:scaleType="fitEnd"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainViewTextViewLatest"
+            android:text="LATEST"
+            android:textColor="#ffffffff"
+            android:background="#44000000"
+            android:padding="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="40dp"
+                android:src="@drawable/leftquote"
+                android:scaleType="fitCenter"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:id="@+id/mainViewTextViewText"
+                android:text="SEND A TEXT TO\nLAUREN PANGBORN"
+                android:textSize="16sp"
+                android:textColor="#ffffffff"
+                android:gravity="center"
+                />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:paddingBottom="40dp"
+                android:src="@drawable/rightquote"
+                android:scaleType="fitCenter"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

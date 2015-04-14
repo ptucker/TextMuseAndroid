@@ -108,9 +108,10 @@ public class MainCategoryFragment extends Fragment {
         }
 
         WebDataParser parser = new WebDataParser();
-        mData = parser.parse(s);
+        TextMuseData data = parser.parse(s);
 
-        mData.save(getActivity());
+        data.save(getActivity());
+        mData = data;
     }
 
 
@@ -162,7 +163,13 @@ public class MainCategoryFragment extends Fragment {
             public TextView mCategoryTitle;
             public TextView mNewBadge;
             public ImageView mArrow;
-            public ViewPager mViewPager;
+
+            public View mBackgroundViewTextOnly;
+            public TextView mLatest;
+            public TextView mTextView;
+            public ImageView mBackgroundImageView;
+
+            public boolean mTextOnly;
         }
 
         public MainCategoryListArrayAdapter(Activity context, List<Category> categories) {
@@ -175,24 +182,44 @@ public class MainCategoryFragment extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
             View rowView = convertView;
 
+            Category category = mCategories.get(position);
+            if (category.notes == null || category.notes.size() <= 0) {
+                return null;
+            }
+
+            Note firstNote = category.notes.get(0);
+
             if (rowView == null) {
                 LayoutInflater inflater = mContext.getLayoutInflater();
-                rowView = inflater.inflate(R.layout.list_ele_category, parent, false);
-
                 ViewHolder viewHolder = new ViewHolder();
+
+                if (firstNote.mediaUrl != null && firstNote.mediaUrl.length() > 0) {
+                    //TODO: check if youtube...
+
+                    rowView = inflater.inflate(R.layout.list_ele_category_textimage, parent, false);
+                    viewHolder.mBackgroundImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewItemBackground);
+                    viewHolder.mTextOnly = false;
+                } else {
+                    rowView = inflater.inflate(R.layout.list_ele_category_textonly, parent, false);
+                    viewHolder.mBackgroundViewTextOnly = rowView.findViewById(R.id.mainViewBackgroundView);
+                    viewHolder.mTextOnly = true;
+                }
+
+                viewHolder.mTextView = (TextView) rowView.findViewById(R.id.mainViewTextViewText);
+                viewHolder.mLatest = (TextView) rowView.findViewById(R.id.mainViewTextViewLatest);
                 viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewTitle);
                 viewHolder.mArrow = (ImageView) rowView.findViewById(R.id.mainFragmentListItemImageArrow);
                 viewHolder.mNewBadge = (TextView) rowView.findViewById(R.id.mainViewFragmentListItemTextViewNewBadge);
-                viewHolder.mViewPager = (ViewPager) rowView.findViewById(R.id.mainFragmentListItemPager);
 
                 rowView.setTag(viewHolder);
             }
 
             ViewHolder holder = (ViewHolder) rowView.getTag();
-            Category category = mCategories.get(position);
-            holder.mCategoryTitle.setText(category.name);
 
-            holder.mCategoryTitle.setTextColor(COLOR_LIST[position % COLOR_LIST.length]);
+            int color = COLOR_LIST[position % COLOR_LIST.length];
+
+            holder.mCategoryTitle.setText(category.name);
+            holder.mCategoryTitle.setTextColor(color);
 
             int newCount = 0;
             for (Note note : category.notes) {
@@ -204,86 +231,43 @@ public class MainCategoryFragment extends Fragment {
             holder.mNewBadge.setText(Integer.toString(newCount) + " NEW");
             //TODO: Figure out a way to change background of new badge
 
-            holder.mArrow.setColorFilter(COLOR_LIST[position % COLOR_LIST.length]);
+            holder.mArrow.setColorFilter(color);
 
-            CategoryViewPagerAdapter viewPagerAdapter = new CategoryViewPagerAdapter(category.notes, mContext, position);
-            holder.mViewPager.setAdapter(viewPagerAdapter);
+            if (holder.mTextOnly) {
+                holder.mBackgroundViewTextOnly.setBackgroundColor(color);
+            } else {
+                Picasso.with(mContext)
+                        .load(firstNote.mediaUrl)
+                        .fit()
+                        .centerCrop()
+                        .into(holder.mBackgroundImageView);
+            }
+
+            if (firstNote.text == null || firstNote.text.length() <= 0) {
+                holder.mTextView.setVisibility(View.INVISIBLE);
+                Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with empty text");
+            } else {
+                holder.mTextView.setText(firstNote.text);
+                Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with text: " + firstNote.text);
+            }
 
             return rowView;
         }
-    }
 
-
-    public static class CategoryViewPagerAdapter extends PagerAdapter {
-
-        private List<Note> mNotes;
-        private LayoutInflater mLayoutInflater;
-        private Activity mActivity;
-        private int mColorOffset;   //The color offset is to choose a starting color
-
-        public CategoryViewPagerAdapter(List<Note> notes, Activity activity, int offset) {
-            mNotes = notes;
-            mActivity = activity;
-            mLayoutInflater = activity.getLayoutInflater();
-            mColorOffset = offset;
+        @Override
+        public int getViewTypeCount() {
+            return 2;
         }
 
         @Override
-        public int getCount() {
-            return mNotes.size();
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-
-            Log.d(Constants.TAG, "Instantiating view at position " + position);
-
-            View view;
-            boolean useImageLayout = false;
-            Note note = mNotes.get(position);
-
-            if (note.mediaUrl != null && note.mediaUrl.length() > 0) {
-                view = mLayoutInflater.inflate(R.layout.item_text_with_image, container, false);
-                ImageView imageView = (ImageView) view.findViewById(R.id.mainViewImageViewItemBackground);
-
-                //Try out picasso library to see how it performs
-                Picasso.with(mActivity)
-                       .load(note.mediaUrl)
-                       .fit()
-                       .centerCrop()
-                       .into(imageView);
-
-                useImageLayout = true;
-
+        public int getItemViewType(int position) {
+            Category category = mCategories.get(position);
+            Note firstNote = category.notes.get(0);
+            if (firstNote.mediaUrl != null && firstNote.mediaUrl.length() > 0) {
+                return 0;
             } else {
-                view = mLayoutInflater.inflate(R.layout.item_text_panel, container, false);
-
-                View backgroundView = view.findViewById(R.id.mainViewBackgroundView);
-                backgroundView.setBackgroundColor(COLOR_LIST[(position + mColorOffset) % COLOR_LIST.length]);
+                return 1;
             }
-
-            TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
-            if (useImageLayout && (note.text == null || note.text.length() <= 0)) {
-                textView.setVisibility(View.INVISIBLE);
-            } else {
-                textView.setText(note.text);
-            }
-
-            container.addView(view);
-
-            return view;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            Log.d(Constants.TAG, "Destroying view at position " + position);
-
-            container.removeView((View)object);
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
         }
     }
 
