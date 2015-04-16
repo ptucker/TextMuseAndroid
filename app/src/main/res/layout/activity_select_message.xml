@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.laloosh.textmuse.SelectMessageActivity"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectMessageTextViewCategory"
+        android:text="category name"
+        android:textSize="18sp"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:padding="15dp"
+        android:gravity="center"
+        android:textColor="#ffffffff"
+        android:background="#ff19ab67"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectMessagePageIndicator"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/selectMessageViewPager"
+        android:background="@android:color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@id/selectMessagePageIndicator"
+        android:layout_below="@id/selectMessageTextViewCategory"
+        />
+
+</RelativeLayout>

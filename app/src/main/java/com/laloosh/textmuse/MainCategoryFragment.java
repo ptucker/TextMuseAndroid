@@ -1,6 +1,7 @@
 package com.laloosh.textmuse;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.datamodel.Category;
+import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.squareup.picasso.Picasso;
@@ -26,9 +28,6 @@ import java.util.List;
 
 public class MainCategoryFragment extends Fragment {
 
-    static final int[] COLOR_LIST = {0xffee885a, 0xff16c2df, 0xff00ac65};
-
-    //temporary stuff
 
     private TextMuseData mData;
 
@@ -52,6 +51,10 @@ public class MainCategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        GlobalData instance = GlobalData.getInstance();
+        instance.loadData(getActivity());
+        mData = instance.getData();
     }
 
     @Override
@@ -73,6 +76,8 @@ public class MainCategoryFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.mainFragmentListView);
         mListView.setVisibility(View.GONE);
 
+        generateViewsFromData();
+
         loadDataFromInternet();
 
         return view;
@@ -80,9 +85,14 @@ public class MainCategoryFragment extends Fragment {
 
     private void generateViewsFromData() {
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
+
+            if (mCategoryListAdapter != null) {
+                mCategoryListAdapter.updateCategories(mData.categories);
+            } else {
+                mCategoryListAdapter = new MainCategoryListArrayAdapter(getActivity(), mData.categories);
+                mListView.setAdapter(mCategoryListAdapter);
+            }
             mListView.setVisibility(View.VISIBLE);
-            mCategoryListAdapter = new MainCategoryListArrayAdapter(getActivity(), mData.categories);
-            mListView.setAdapter(mCategoryListAdapter);
         }
 
     }
@@ -92,7 +102,9 @@ public class MainCategoryFragment extends Fragment {
         FetchNotesAsyncTask.FetchNotesAsyncTaskHandler handler = new FetchNotesAsyncTask.FetchNotesAsyncTaskHandler() {
             @Override
             public void handleFetchResult(String s) {
+                Log.d(Constants.TAG, "Fetch data complete, parsing data");
                 parseData(s);
+                Log.d(Constants.TAG, "Parsing data complete, generating views");
                 generateViewsFromData();
             }
         };
@@ -112,6 +124,7 @@ public class MainCategoryFragment extends Fragment {
 
         data.save(getActivity());
         mData = data;
+        GlobalData.getInstance().updateData(data);
     }
 
 
@@ -216,7 +229,7 @@ public class MainCategoryFragment extends Fragment {
 
             ViewHolder holder = (ViewHolder) rowView.getTag();
 
-            int color = COLOR_LIST[position % COLOR_LIST.length];
+            int color = Constants.COLOR_LIST[position % Constants.COLOR_LIST.length];
 
             holder.mCategoryTitle.setText(category.name);
             holder.mCategoryTitle.setTextColor(color);
@@ -232,6 +245,17 @@ public class MainCategoryFragment extends Fragment {
             //TODO: Figure out a way to change background of new badge
 
             holder.mArrow.setColorFilter(color);
+
+            holder.mArrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, SelectMessageActivity.class);
+                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, position);
+                    intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
+                    mContext.startActivity(intent);
+                }
+            });
+
 
             if (holder.mTextOnly) {
                 holder.mBackgroundViewTextOnly.setBackgroundColor(color);
@@ -268,6 +292,11 @@ public class MainCategoryFragment extends Fragment {
             } else {
                 return 1;
             }
+        }
+
+        public void updateCategories(List<Category> categories) {
+            mCategories = categories;
+            this.notifyDataSetChanged();
         }
     }
 

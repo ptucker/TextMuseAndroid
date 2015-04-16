@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailViewTextViewFavorite"
+        android:text="Favorite"
+        android:textAllCaps="true"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailViewButtonSelectButton"
+        android:layout_above="@id/detailViewTextViewFavorite"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewImageViewSelect"
+            android:src="@drawable/newbadge"
+            android:scaleType="fitCenter"
+            android:layout_alignBottom="@+id/detailViewTextViewSelect"
+            android:layout_alignLeft="@+id/detailViewTextViewSelect"
+            android:layout_alignRight="@+id/detailViewTextViewSelect"
+            android:layout_alignTop="@+id/detailViewTextViewSelect"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewTextViewSelect"
+            android:text="Select"
+            android:textSize="18sp"
+            android:textColor="#ffffffff"
+            android:textAllCaps="true"
+            android:padding="15dp"
+            />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailViewImageViewBackgroundBubble"
+        android:src="@drawable/bubble"
+        android:scaleType="fitEnd"
+        android:layout_alignParentTop="true"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/detailViewButtonSelectButton"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewImageViewLeftQuote"
+            android:layout_weight="0.15"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:paddingBottom="40dp"
+            android:src="@drawable/leftquote"
+            android:scaleType="fitCenter"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:id="@+id/detailViewTextViewText"
+            android:text="This is the text contents."
+            android:textSize="26sp"
+            android:gravity="center"
+            />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewImageViewRightQuote"
+            android:layout_weight="0.15"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:paddingBottom="40dp"
+            android:src="@drawable/rightquote"
+            android:scaleType="fitCenter"
+            />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

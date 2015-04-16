@@ -73,6 +73,10 @@ public class TextMuseData {
     //Loads the cached data from our local preferences
     public static TextMuseData load(Context context) {
 
+        if (context == null) {
+            return null;
+        }
+
         TextMuseData textMuseData = null;
         StringBuilder data = new StringBuilder();
         InputStreamReader isr = null;
@@ -91,8 +95,10 @@ public class TextMuseData {
 
         } catch (FileNotFoundException e) {
             Log.e(Constants.TAG, "Could not open cached data file", e);
+            return null;
         } catch (IOException e) {
             Log.e(Constants.TAG, "IOException reading cache file", e);
+            return null;
         } finally {
             if (buffreader != null) {
                 IOUtils.closeQuietly(buffreader);
@@ -110,6 +116,7 @@ public class TextMuseData {
             textMuseData = gson.fromJson(jsonData, TextMuseData.class);
         } catch (Exception e) {
             Log.e(Constants.TAG, "Could not read in text muse cache data ", e);
+            return null;
         }
 
         return textMuseData;
