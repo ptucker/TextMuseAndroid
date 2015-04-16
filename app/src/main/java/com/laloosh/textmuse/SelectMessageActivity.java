@@ -141,7 +141,8 @@ public class SelectMessageActivity extends ActionBarActivity {
 
             TextView textView = (TextView) view.findViewById(R.id.detailViewTextViewText);
             if (useImageLayout && (note.text == null || note.text.length() <= 0)) {
-                textView.setVisibility(View.GONE);
+                ViewGroup textLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutText);
+                textLayout.setVisibility(View.GONE);
             } else {
                 textView.setText(note.text);
             }
