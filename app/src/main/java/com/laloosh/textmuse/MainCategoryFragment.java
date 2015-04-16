@@ -174,13 +174,17 @@ public class MainCategoryFragment extends Fragment {
         //view holder pattern to prevent repeated queries for ID
         static class ViewHolder {
             public TextView mCategoryTitle;
-            public TextView mNewBadge;
+            public ViewGroup mNewBadge;
+            public TextView mNewBadgeText;
+            public ImageView mNewBadgeBackground;
             public ImageView mArrow;
 
             public View mBackgroundViewTextOnly;
             public TextView mLatest;
             public TextView mTextView;
             public ImageView mBackgroundImageView;
+
+            public ViewGroup mTextLayout;
 
             public boolean mTextOnly;
         }
@@ -222,8 +226,10 @@ public class MainCategoryFragment extends Fragment {
                 viewHolder.mLatest = (TextView) rowView.findViewById(R.id.mainViewTextViewLatest);
                 viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewTitle);
                 viewHolder.mArrow = (ImageView) rowView.findViewById(R.id.mainFragmentListItemImageArrow);
-                viewHolder.mNewBadge = (TextView) rowView.findViewById(R.id.mainViewFragmentListItemTextViewNewBadge);
-
+                viewHolder.mNewBadgeText = (TextView) rowView.findViewById(R.id.mainViewFragmentListItemTextViewNewBadge);
+                viewHolder.mNewBadgeBackground = (ImageView) rowView.findViewById(R.id.mainViewFragmentImageViewNewBadge);
+                viewHolder.mNewBadge = (ViewGroup) rowView.findViewById(R.id.mainViewFragmentListItemLayoutNewBadge);
+                viewHolder.mTextLayout = (ViewGroup) rowView.findViewById(R.id.mainViewRelativeLayoutTextItem);
                 rowView.setTag(viewHolder);
             }
 
@@ -241,12 +247,12 @@ public class MainCategoryFragment extends Fragment {
                 }
             }
 
-            holder.mNewBadge.setText(Integer.toString(newCount) + " NEW");
-            //TODO: Figure out a way to change background of new badge
+            holder.mNewBadgeText.setText(Integer.toString(newCount) + " NEW");
+            holder.mNewBadgeBackground.setColorFilter(color);
 
             holder.mArrow.setColorFilter(color);
 
-            holder.mArrow.setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener onClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, SelectMessageActivity.class);
@@ -254,8 +260,11 @@ public class MainCategoryFragment extends Fragment {
                     intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
                     mContext.startActivity(intent);
                 }
-            });
+            };
 
+            holder.mArrow.setOnClickListener(onClickListener);
+            holder.mNewBadge.setOnClickListener(onClickListener);
+            holder.mTextLayout.setOnClickListener(onClickListener);
 
             if (holder.mTextOnly) {
                 holder.mBackgroundViewTextOnly.setBackgroundColor(color);

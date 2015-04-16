@@ -11,30 +11,46 @@
         android:layout_height="wrap_content"
         android:id="@+id/mainFragmentListItemImageArrow"
         android:src="@drawable/ic_action_next_item"
-        android:layout_margin="15dp"
+        android:layout_margin="12dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         />
         <!--android:tint="#ff990000" -->
 
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/mainViewFragmentListItemTextViewNewBadge"
+        android:id="@+id/mainViewFragmentListItemLayoutNewBadge"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@id/mainFragmentListItemImageArrow"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/newbadge"
-        android:text="24 NEW"
-        android:textColor="#ffffffff"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:scaleType="centerCrop"
-        />
-        <!-- android:backgroundTint="#ff990000" -->
+        android:layout_marginTop="10dp"
+        android:layout_alignBaseline="@id/mainFragmentListItemImageArrow"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainViewFragmentImageViewNewBadge"
+            android:src="@drawable/newbadge"
+            android:scaleType="fitCenter"
+            android:layout_alignBottom="@+id/mainViewFragmentListItemTextViewNewBadge"
+            android:layout_alignLeft="@+id/mainViewFragmentListItemTextViewNewBadge"
+            android:layout_alignRight="@+id/mainViewFragmentListItemTextViewNewBadge"
+            android:layout_alignTop="@+id/mainViewFragmentListItemTextViewNewBadge"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainViewFragmentListItemTextViewNewBadge"
+            android:text="24 NEW"
+            android:textColor="#ffffffff"
+            android:textAllCaps="true"
+            android:padding="10dp"
+            />
+
+    </RelativeLayout>        <!-- android:backgroundTint="#ff990000" -->
 
     <TextView
         android:layout_width="match_parent"
@@ -43,7 +59,7 @@
         android:text="Category Title"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/mainViewFragmentListItemTextViewNewBadge"
+        android:layout_toLeftOf="@id/mainViewFragmentListItemLayoutNewBadge"
         android:layout_margin="15dp"
         android:textSize="18sp"
         android:singleLine="true"
@@ -78,6 +94,8 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/bubble"
             android:scaleType="fitEnd"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             />
 
         <TextView
@@ -90,6 +108,8 @@
             android:padding="6dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             />
 
         <LinearLayout
@@ -98,6 +118,8 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="horizontal"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             >
 
             <ImageView
@@ -109,6 +131,8 @@
                 android:paddingBottom="40dp"
                 android:src="@drawable/leftquote"
                 android:scaleType="fitCenter"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 />
             <TextView
                 android:layout_width="0dp"
@@ -119,6 +143,8 @@
                 android:textSize="16sp"
                 android:textColor="#ffffffff"
                 android:gravity="center"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 />
             <ImageView
                 android:layout_width="0dp"
@@ -129,6 +155,8 @@
                 android:paddingBottom="40dp"
                 android:src="@drawable/rightquote"
                 android:scaleType="fitCenter"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 />
         </LinearLayout>
     </RelativeLayout>
