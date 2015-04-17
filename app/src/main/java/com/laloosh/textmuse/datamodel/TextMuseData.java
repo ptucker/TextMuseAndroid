@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.List;
 
 public class TextMuseData {
@@ -68,6 +69,49 @@ public class TextMuseData {
         Gson gson = GsonConverter.registerDateTime(new GsonBuilder()).create();
         String json = gson.toJson(this);
         return json;
+    }
+
+    //Compares the categories to see if they are similar enough.  This function is called when
+    //we download a new TextMuseData from the server
+    public boolean isDataSimilar(TextMuseData data) {
+
+        //if anything is empty, just assume that the data is different
+        if (this.categories == null || this.categories.size() <= 0 || data.categories == null || data.categories.size() <= 0) {
+            Log.d(Constants.TAG, "Data different 1");
+            return false;
+        }
+
+        if (this.categories.size() != data.categories.size()) {
+            Log.d(Constants.TAG, "Data different 2");
+            return false;
+        }
+
+        //For some reason, sometimes the new flag is not set correctly.  Just use a hashset to compare
+        HashSet<String> notesHashset = new HashSet<String>();
+
+        for (Category category : this.categories) {
+            if (category.notes != null && category.notes.size() > 0) {
+                for (Note note : category.notes) {
+                    notesHashset.add(category.name + Integer.toString(note.noteId));
+                }
+            }
+        }
+
+        for (Category category: data.categories) {
+            if (category.notes != null && category.notes.size() > 0) {
+                for (Note note : category.notes) {
+                    if (!notesHashset.remove(category.name + Integer.toString(note.noteId))) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        if (!notesHashset.isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 
     //Loads the cached data from our local preferences

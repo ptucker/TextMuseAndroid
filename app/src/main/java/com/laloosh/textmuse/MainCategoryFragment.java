@@ -98,14 +98,16 @@ public class MainCategoryFragment extends Fragment {
     }
 
     private void loadDataFromInternet() {
+        View view = getView();
+        if (view != null) {
+            TextView textView = (TextView) view.findViewById(R.id.mainFragmentTextViewNoItems);
+            textView.setText("Loading...");
+        }
 
         FetchNotesAsyncTask.FetchNotesAsyncTaskHandler handler = new FetchNotesAsyncTask.FetchNotesAsyncTaskHandler() {
             @Override
             public void handleFetchResult(String s) {
-                Log.d(Constants.TAG, "Fetch data complete, parsing data");
-                parseData(s);
-                Log.d(Constants.TAG, "Parsing data complete, generating views");
-                generateViewsFromData();
+                handleNewData(s);
             }
         };
 
@@ -113,18 +115,56 @@ public class MainCategoryFragment extends Fragment {
         task.execute();
     }
 
-    private void parseData(String s) {
-
-        if (s == null || s.length() <= 0) {
+    private void showFailureMessage() {
+        //Don't do anything when we already have data... just keep showing the old data
+        if (mData != null) {
+            Log.d(Constants.TAG, "Could not get new data, keeping old data in views");
             return;
         }
 
-        WebDataParser parser = new WebDataParser();
-        TextMuseData data = parser.parse(s);
+        View view = getView();
+        if (view != null) {
+            TextView textView = (TextView) view.findViewById(R.id.mainFragmentTextViewNoItems);
 
-        data.save(getActivity());
-        mData = data;
-        GlobalData.getInstance().updateData(data);
+            textView.setText("Could not load data from the internet. Please check your connection and try again.");
+        }
+    }
+
+    private void handleNewData(String s) {
+        Log.d(Constants.TAG, "Fetch data complete, parsing data");
+        TextMuseData data = parseData(s);
+        Log.d(Constants.TAG, "Parsing data complete");
+
+        if (data == null || data.categories == null || data.categories.size() <= 0) {
+            showFailureMessage();
+            return;
+        }
+
+        boolean differentData = true;
+        if (mData != null) {
+            if (mData.isDataSimilar(data)) {
+                differentData = false;
+                Log.d(Constants.TAG, "Download of new data did not show any differences. Keeping old data");
+            }
+        }
+
+        if (differentData) {
+            data.save(getActivity());
+            mData = data;
+            GlobalData.getInstance().updateData(data);
+            generateViewsFromData();
+        }
+
+    }
+
+    private TextMuseData parseData(String s) {
+
+        if (s == null || s.length() <= 0) {
+            return null;
+        }
+
+        WebDataParser parser = new WebDataParser();
+        return parser.parse(s);
     }
 
 
