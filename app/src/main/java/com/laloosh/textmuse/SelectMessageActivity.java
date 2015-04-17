@@ -144,7 +144,15 @@ public class SelectMessageActivity extends ActionBarActivity {
                 ViewGroup textLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutText);
                 textLayout.setVisibility(View.GONE);
             } else {
-                textView.setText(note.text);
+                if (AndroidUtils.hasTextSizeBug()) {
+                    //Due to a bug in android between some specific versions, text resizing doesn't
+                    //work properly unless you add a double byte space around it
+                    final String DOUBLE_BYTE_SPACE = "\u3000";
+                    textView.setText(DOUBLE_BYTE_SPACE + note.text + DOUBLE_BYTE_SPACE);
+                } else {
+                    textView.setText(note.text);
+                }
+
             }
 
             //Select box color

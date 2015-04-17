@@ -20,4 +20,9 @@ public class AndroidUtils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
     }
 
+    public static boolean hasTextSizeBug() {
+        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1
+                && Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1);
+    }
+
 }
