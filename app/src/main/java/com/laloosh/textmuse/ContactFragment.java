@@ -29,7 +29,7 @@ import android.widget.CompoundButton;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.laloosh.textmuse.datamodel.ChosenContact;
+import com.laloosh.textmuse.datamodel.TextMuseContact;
 
 import java.util.HashMap;
 
@@ -38,7 +38,7 @@ import java.util.HashMap;
 public class ContactFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
 
     ContactsAdapter mAdapter;
-    HashMap<String, ChosenContact> mChosenContacts;
+    HashMap<String, TextMuseContact> mChosenContacts;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -56,7 +56,7 @@ public class ContactFragment extends ListFragment implements LoaderManager.Loade
 
         // Create the main contacts adapter
         mAdapter = new ContactsAdapter(getActivity());
-        mChosenContacts = new HashMap<String, ChosenContact> ();
+        mChosenContacts = new HashMap<String, TextMuseContact> ();
     }
 
     @Override
@@ -230,8 +230,8 @@ public class ContactFragment extends ListFragment implements LoaderManager.Loade
                         String typeString = ContactsContract.CommonDataKinds.Phone.getTypeLabel(getResources(), type, label).toString();
                         Log.d(Constants.TAG, "Type as string:" + typeString);
 
-                        ChosenContact chosenContact = new ChosenContact(lookupKey, displayName, number, typeString);
-                        mChosenContacts.put(contactData.contactLookup, chosenContact);
+                        TextMuseContact textMuseContact = new TextMuseContact(lookupKey, displayName, number, typeString);
+                        mChosenContacts.put(contactData.contactLookup, textMuseContact);
 
                         //only get the first one for now....
                         break;

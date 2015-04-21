@@ -18,10 +18,11 @@ public class GlobalData {
 
 
     private TextMuseData mData;
-
+    private TextMuseStoredContacts mStoredContacts;
 
     public void loadData(Context context) {
         mData = TextMuseData.load(context);
+        mStoredContacts = TextMuseStoredContacts.load(context);
     }
 
     public TextMuseData getData() {
@@ -30,6 +31,14 @@ public class GlobalData {
 
     public void updateData(TextMuseData data) {
         mData = data;
+    }
+
+    public TextMuseStoredContacts getStoredContacts() {
+        return mStoredContacts;
+    }
+
+    public void updateStoredContacts(TextMuseStoredContacts storedContacts) {
+        mStoredContacts = storedContacts;
     }
 
 }

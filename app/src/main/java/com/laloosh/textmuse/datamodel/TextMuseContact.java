@@ -1,13 +1,13 @@
 package com.laloosh.textmuse.datamodel;
 
 
-public class ChosenContact {
+public class TextMuseContact {
     public String lookupKey;
     public String displayName;
     public String phoneNumber;
     public String numberType;
 
-    public ChosenContact(String lookupKey, String displayName, String phoneNumber, String numberType) {
+    public TextMuseContact(String lookupKey, String displayName, String phoneNumber, String numberType) {
         this.lookupKey = lookupKey;
         this.displayName = displayName;
         this.phoneNumber = phoneNumber;
