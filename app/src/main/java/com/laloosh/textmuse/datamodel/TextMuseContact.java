@@ -7,6 +7,8 @@ public class TextMuseContact {
     public String phoneNumber;
     public String numberType;
 
+    public TextMuseContact() {}
+
     public TextMuseContact(String lookupKey, String displayName, String phoneNumber, String numberType) {
         this.lookupKey = lookupKey;
         this.displayName = displayName;

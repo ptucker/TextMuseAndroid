@@ -117,7 +117,7 @@ public class SelectMessageActivity extends ActionBarActivity {
 
             View view;
             boolean useImageLayout = false;
-            Note note = mNotes.get(position);
+            final Note note = mNotes.get(position);
 
             if (note.mediaUrl != null && note.mediaUrl.length() > 0) {
                 view = mLayoutInflater.inflate(R.layout.detail_view_textimage, container, false);
@@ -164,6 +164,17 @@ public class SelectMessageActivity extends ActionBarActivity {
             quote.setColorFilter(0xff000000);
             quote = (ImageView) view.findViewById(R.id.detailViewImageViewRightQuote);
             quote.setColorFilter(0xff000000);
+
+
+            ViewGroup selectButton = (ViewGroup) view.findViewById(R.id.detailViewButtonSelectButton);
+            selectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: somehow pass the note into the next activity
+                    Intent intent = new Intent(mActivity, ContactsPickerActivity.class);
+                    mActivity.startActivity(intent);
+                }
+            });
 
             container.addView(view);
 

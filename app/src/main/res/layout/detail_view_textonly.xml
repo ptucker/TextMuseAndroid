@@ -36,6 +36,8 @@
             android:layout_alignLeft="@+id/detailViewTextViewSelect"
             android:layout_alignRight="@+id/detailViewTextViewSelect"
             android:layout_alignTop="@+id/detailViewTextViewSelect"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
             />
 
         <TextView
@@ -47,6 +49,8 @@
             android:textColor="#ffffffff"
             android:textAllCaps="true"
             android:padding="15dp"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
             />
 
     </RelativeLayout>

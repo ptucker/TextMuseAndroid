@@ -38,6 +38,14 @@ public class TextMuseStoredContacts {
         return DataPersistenceHelper.load(context, Constants.CONTACTS_FILE, TextMuseStoredContacts.class);
     }
 
+    public boolean hasGroups() {
+        return (groups != null && groups.size() > 0);
+    }
+
+    public boolean hasRecentContacts() {
+        return (recentContacts != null && recentContacts.size() > 0);
+    }
+
     public boolean groupNameExists(String displayName) {
         if (groups == null) {
             return false;

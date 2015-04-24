@@ -4,32 +4,39 @@
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Display Name"
-        android:id="@+id/contactListItemDisplayName"
-
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_alignParentTop="true"
-        android:fontFamily="sans-serif-light"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:focusable="false"
-        />
-
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/contactListItemCheckBox"
-        android:layout_alignTop="@+id/contactListItemDisplayName"
+        android:layout_centerVertical="true"
 
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
+        android:layout_marginLeft="10dp"
+
         android:focusable="false"
-         />
+        android:focusableInTouchMode="false"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Display Name"
+        android:id="@+id/contactListItemDisplayName"
+
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/contactListItemCheckBox"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:textSize="18sp"
+        android:textColor="#ff000000"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        />
+
 
 </RelativeLayout>

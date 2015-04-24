@@ -16,7 +16,11 @@
         </activity>
         <activity
             android:name=".ContactsPickerActivity"
-            android:label="@string/title_activity_contacts_picker" >
+            android:label="@string/title_activity_contacts_picker"
+            android:parentActivityName=".SelectMessageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.laloosh.textmuse.SelectMessageActivity" />
         </activity>
         <activity
             android:name=".MainCategoryActivity"
