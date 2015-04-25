@@ -2,7 +2,6 @@ package com.laloosh.textmuse;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
@@ -25,18 +24,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.datamodel.GlobalData;
+import com.laloosh.textmuse.datamodel.TextMuseContact;
+import com.laloosh.textmuse.datamodel.TextMuseGroup;
+import com.laloosh.textmuse.datamodel.TextMuseRecentContact;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class ContactsPickerActivity extends ActionBarActivity  implements LoaderManager.LoaderCallbacks<Cursor>{
 
     ContactGroupListAdapter mAdapter;
     TextMuseStoredContacts mStoredContacts;
+    ContactAndGroupPickerState mState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_picker);
+
+        //TODO: handle the case where the state was saved
+        mState = new ContactAndGroupPickerState();
 
         mStoredContacts = GlobalData.getInstance().getStoredContacts();
         if (mStoredContacts == null) {
@@ -49,7 +58,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             mStoredContacts = new TextMuseStoredContacts();
         }
 
-        mAdapter = new ContactGroupListAdapter(mStoredContacts, this);
+        mAdapter = new ContactGroupListAdapter(mStoredContacts, this, mHandler, mState);
 
         ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(mAdapter);
@@ -115,6 +124,16 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         }
     }
 
+    private ContactsAdapter.ContactsAdapterHandler mHandler = new ContactsAdapter.ContactsAdapterHandler() {
+
+        @Override
+        public void phoneLookupFailed() {
+            PhoneNumberRemovedDialogFragment fragment = PhoneNumberRemovedDialogFragment.newInstance();
+            fragment.show(ContactsPickerActivity.this.getSupportFragmentManager(), "phoneLookupFailed");
+        }
+
+    };
+
     public static class PhoneNumberRemovedDialogFragment extends DialogFragment {
 
         public static PhoneNumberRemovedDialogFragment newInstance() {
@@ -141,16 +160,18 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
 
         private TextMuseStoredContacts mStoredContacts;
         private ContactsAdapter mContactsAdapter;
-        private Context mContext;
+        private ActionBarActivity mContext;
         private LayoutInflater mLayoutInflater;
+        private ContactsAdapter.ContactsAdapterHandler mHandler;
+        private ContactAndGroupPickerState mState;
 
-        public ContactGroupListAdapter(TextMuseStoredContacts storedContacts, Context context) {
+        public ContactGroupListAdapter(TextMuseStoredContacts storedContacts, ActionBarActivity context, ContactsAdapter.ContactsAdapterHandler handler, ContactAndGroupPickerState state) {
             mStoredContacts = storedContacts;
             mContext = context;
+            mHandler = handler;
             mLayoutInflater = LayoutInflater.from(context);
-
-            //TODO: need to handle callbacks
-            mContactsAdapter = new ContactsAdapter(context, null);
+            mState = state;
+            mContactsAdapter = new ContactsAdapter(context, handler, state);
         }
 
         @Override
@@ -284,6 +305,9 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             viewHolder.contactItemType = itemType;
             viewHolder.itemIndex = index;
 
+            //Temporarily unset the checked change listener so that we don't trigger anything when setting checked state
+            viewHolder.selectedCheckbox.setOnCheckedChangeListener(null);
+
             switch (itemType) {
                 case GROUP_ITEM_PLACEHOLDER:
                     viewHolder.displayName.setText("Add a group");
@@ -291,6 +315,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                     break;
                 case GROUP_ITEM_TYPE:
                     viewHolder.displayName.setText(mStoredContacts.groups.get(index).displayName);
+                    viewHolder.selectedCheckbox.setChecked(mState.isGroupChecked(mStoredContacts.groups.get(index)));
                     viewHolder.selectedCheckbox.setVisibility(View.VISIBLE);
                     break;
                 case RECENT_ITEM_PLACEHOLDER:
@@ -299,6 +324,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                     break;
                 case RECENT_ITEM_TYPE:
                     viewHolder.displayName.setText(mStoredContacts.recentContacts.get(index).displayName);
+                    viewHolder.selectedCheckbox.setChecked(mState.isRecentContactChecked(mStoredContacts.recentContacts.get(index)));
                     viewHolder.selectedCheckbox.setVisibility(View.VISIBLE);
                     break;
                 default:
@@ -384,7 +410,16 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             GroupContactViewHolder holder = (GroupContactViewHolder) v.getTag();
             Log.d(Constants.TAG, "View with display name " + holder.displayName.getText() + " clicked!!");
 
-            toggleEnabled(v);
+            //Check to see if this is a placeholder, and if so, launch the Add a group flow
+            if (holder.contactItemType == ContactItemType.GROUP_ITEM_PLACEHOLDER) {
+
+                //TODO: implement this....
+
+                Log.d(Constants.TAG, "Launching add a group flow");
+
+            } else if (holder.contactItemType != ContactItemType.RECENT_ITEM_PLACEHOLDER) {
+                holder.selectedCheckbox.setChecked(!holder.selectedCheckbox.isChecked());
+            }
         }
 
         @Override
@@ -393,24 +428,33 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             View parentView = (View) buttonView.getParent();
             GroupContactViewHolder viewHolder = (GroupContactViewHolder) parentView.getTag();
 
-            //TODO: handle this case
             Log.d(Constants.TAG, "Item with displayname " + viewHolder.displayName.getText() + " ischecked: " + isChecked);
-        }
-
-        public void toggleEnabled (View view) {
-            GroupContactViewHolder holder = (GroupContactViewHolder) view.getTag();
-            if (holder != null &&
-                holder.contactItemType != ContactItemType.GROUP_ITEM_PLACEHOLDER &&
-                holder.contactItemType != ContactItemType.RECENT_ITEM_PLACEHOLDER) {
-
-                holder.selectedCheckbox.setChecked(!holder.selectedCheckbox.isChecked());
+            switch (viewHolder.contactItemType) {
+                case GROUP_ITEM_TYPE:
+                    TextMuseGroup group = mStoredContacts.groups.get(viewHolder.itemIndex);
+                    if (isChecked) {
+                        mState.checkedGroup(group);
+                    } else {
+                        mState.uncheckedGroup(group);
+                    }
+                    break;
+                case RECENT_ITEM_TYPE:
+                    TextMuseRecentContact recentcontact = mStoredContacts.recentContacts.get(viewHolder.itemIndex);
+                        if (isChecked) {
+                            mState.checkedRecentContact(recentcontact);
+                        } else {
+                            mState.uncheckedRecentContact(recentcontact);
+                        }
+                    break;
+                default:
+                    Log.d(Constants.TAG, "Received oncheckedchanged for category that we don't care about");
             }
+
         }
 
         public Cursor swapContactCursor(Cursor newCursor) {
             return mContactsAdapter.swapCursor(newCursor);
         }
-
 
         private enum ContactItemType {
             TITLE_TYPE,
@@ -424,8 +468,5 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             public ContactItemType contactItemType;
             public int itemIndex;
         }
-
     }
-
-
 }

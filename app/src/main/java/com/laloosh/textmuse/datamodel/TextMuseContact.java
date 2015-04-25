@@ -1,7 +1,10 @@
 package com.laloosh.textmuse.datamodel;
 
 
-public class TextMuseContact {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class TextMuseContact implements Parcelable {
     public String lookupKey;
     public String displayName;
     public String phoneNumber;
@@ -15,6 +18,36 @@ public class TextMuseContact {
         this.phoneNumber = phoneNumber;
         this.numberType = numberType;
     }
+
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        ParcelUtils.writeString(out, lookupKey);
+        ParcelUtils.writeString(out, displayName);
+        ParcelUtils.writeString(out, phoneNumber);
+        ParcelUtils.writeString(out, numberType);
+    }
+
+    public static final Parcelable.Creator<TextMuseContact> CREATOR = new Parcelable.Creator<TextMuseContact>() {
+        public TextMuseContact createFromParcel(Parcel in) {
+            return new TextMuseContact(in);
+        }
+
+        public TextMuseContact[] newArray(int size) {
+            return new TextMuseContact[size];
+        }
+    };
+
+    protected TextMuseContact(Parcel in) {
+        lookupKey = ParcelUtils.readString(in);
+        displayName = ParcelUtils.readString(in);
+        phoneNumber = ParcelUtils.readString(in);
+        numberType = ParcelUtils.readString(in);
+    }
+
 
 //    @Override
 //    public boolean equals(Object o) {

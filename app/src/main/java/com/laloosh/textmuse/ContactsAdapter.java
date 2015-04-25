@@ -1,37 +1,38 @@
 package com.laloosh.textmuse;
 
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AlphabetIndexer;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.datamodel.TextMuseContact;
 
-public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
-    private LayoutInflater mInflater; // Stores the layout inflater
-    private Context mContext;
-    private ContactsAdapterHandler mHandler;
+import java.util.ArrayList;
 
-    public ContactsAdapter(Context context, ContactsAdapterHandler handler) {
-        super(context, null, 0);
+public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnCheckedChangeListener, View.OnClickListener, ChoosePhoneNumberDialogFragment.ChoosePhoneNumberDialogHandler {
+    private LayoutInflater mInflater; // Stores the layout inflater
+    private ActionBarActivity mContext;
+    private ContactsAdapterHandler mHandler;
+    private CompoundButton mCurrentButton;  //Used during dialog bits
+    private ContactPickerState mState;
+
+    public ContactsAdapter(ActionBarActivity activity, ContactsAdapterHandler handler, ContactPickerState state) {
+        super(activity, null, 0);
 
         // Stores inflater for use later
-        mInflater = LayoutInflater.from(context);
-
-        mContext = context;
+        mInflater = LayoutInflater.from(activity);
+        mContext = activity;
         mHandler = handler;
-
+        mState = state;
     }
 
     @Override
@@ -45,7 +46,6 @@ public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnC
 
         TextMuseContact contactData = new TextMuseContact();
         holder.selectedCheckbox.setTag(contactData);
-        holder.selectedCheckbox.setOnCheckedChangeListener(this);
 
         itemLayout.setTag(holder);
 
@@ -62,6 +62,13 @@ public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnC
         contactData.lookupKey = cursor.getString(Queries.ContactsQuery.LOOKUP_KEY);
         contactData.displayName = displayName;
 
+        holder.selectedCheckbox.setOnCheckedChangeListener(null);
+
+        //This only does a lookup by lookupKey, so this is ok, even though we haven't
+        //filled in the full information yet
+        holder.selectedCheckbox.setChecked(mState.isContactChecked(contactData));
+        holder.selectedCheckbox.setOnCheckedChangeListener(this);
+
         view.setOnClickListener(this);
     }
 
@@ -73,9 +80,7 @@ public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnC
         Log.d(Constants.TAG, "Contact with display name of " + contactData.displayName + " ischecked: " + isChecked);
 
         if (!isChecked) {
-            if (mHandler != null) {
-                mHandler.uncheckedContact(contactData);
-            }
+            mState.uncheckedContact(contactData);
         } else {
 
             //let's get the data for this contact
@@ -88,46 +93,50 @@ public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnC
                     Queries.PhoneNumQuery.SORT_ORDER);
 
             if (cur.getCount() > 0) {
-                while (cur.moveToNext()) {
+                ArrayList<TextMuseContact> contacts = new ArrayList<TextMuseContact>();
 
-                    String id = cur.getString(Queries.PhoneNumQuery.ID);
+                while (cur.moveToNext()) {
                     String lookupKey = cur.getString(Queries.PhoneNumQuery.LOOKUP_KEY);
                     String displayName = cur.getString(Queries.PhoneNumQuery.DISPLAY_NAME);
                     String number = cur.getString(Queries.PhoneNumQuery.NUMBER);
                     int type = cur.getInt(Queries.PhoneNumQuery.TYPE);
                     String label = cur.getString(Queries.PhoneNumQuery.LABEL);
-                    int isPrimary = cur.getInt(Queries.PhoneNumQuery.IS_PRIMARY);
 
                     Log.d(Constants.TAG, "Got contact with this info:");
-                    Log.d(Constants.TAG, "ID:" + id);
                     Log.d(Constants.TAG, "Lookup key:" + lookupKey);
                     Log.d(Constants.TAG, "Display Name:" + displayName);
                     Log.d(Constants.TAG, "Number:" + number);
                     Log.d(Constants.TAG, "Type:" + type);
                     Log.d(Constants.TAG, "Label:" + label);
-                    Log.d(Constants.TAG, "Is primary:" + isPrimary);
 
                     String typeString = ContactsContract.CommonDataKinds.Phone.getTypeLabel(mContext.getResources(), type, label).toString();
                     Log.d(Constants.TAG, "Type as string:" + typeString);
 
-                    contactData.lookupKey = lookupKey;
-                    contactData.displayName = displayName;
-                    contactData.phoneNumber = number;
-                    contactData.numberType = typeString;
-
-                    if (mHandler != null) {
-                        mHandler.checkedContact(contactData);
-                    }
-
-                    //TODO: only get the first one for now....
-                    break;
+                    TextMuseContact foundContactData = new TextMuseContact(lookupKey, displayName, number, typeString);
+                    contacts.add(foundContactData);
                 }
+
+                if (contacts.size() == 1) {
+                    mState.checkedContact(contacts.get(0));
+                } else {
+                    //More than one phone number! let's launch the dialog!
+                    ChoosePhoneNumberDialogFragment fragment = ChoosePhoneNumberDialogFragment.newInstance(contacts);
+                    fragment.setHandler(this);
+                    mCurrentButton = buttonView;
+                    fragment.show(mContext.getSupportFragmentManager(), "phoneNumberChoiceFragment");
+                }
+
             } else {
                 Log.e(Constants.TAG, "Error getting phone number from lookup!");
 
                 if (mHandler != null) {
                     mHandler.phoneLookupFailed();
                 }
+
+                //Clear the checkbox on failure
+                buttonView.setOnCheckedChangeListener(null);
+                buttonView.setChecked(false);
+                buttonView.setOnCheckedChangeListener(this);
             }
 
             cur.close();
@@ -150,15 +159,31 @@ public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnC
 
     @Override
     public void onClick(View v) {
+        Log.d(Constants.TAG, "Toggle enabled on contacts adapter!");
         toggleEnabled(v);
+    }
+
+    //This is called whenever we have multiple phone numbers and the person has selected one of them
+    @Override
+    public void selectedContact(TextMuseContact contact) {
+        mState.checkedContact(contact);
+        mCurrentButton = null;
+    }
+
+    @Override
+    public void canceledContactSelection() {
+        if (mCurrentButton != null) {
+            mCurrentButton.setOnCheckedChangeListener(null);
+            mCurrentButton.setChecked(false);
+            mCurrentButton.setOnCheckedChangeListener(this);
+
+            mCurrentButton = null;
+        }
     }
 
 
     public interface ContactsAdapterHandler {
         public void phoneLookupFailed();
-        public void checkedContact(TextMuseContact contact);
-        public void uncheckedContact(TextMuseContact contact);
     }
-
 
 }
