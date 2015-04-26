@@ -39,6 +39,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.laloosh.textmuse.MainCategoryActivity" />
         </activity>
+        <activity
+            android:name=".GroupEditActivity"
+            android:label="@string/title_activity_group_edit"
+            android:parentActivityName=".ContactsPickerActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.laloosh.textmuse.ContactsPickerActivity" />
+        </activity>
     </application>
 
 </manifest>

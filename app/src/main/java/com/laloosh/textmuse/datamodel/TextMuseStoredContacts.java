@@ -101,7 +101,7 @@ public class TextMuseStoredContacts {
         }
 
         for (TextMuseGroup g : groups) {
-            if (g.displayName.equalsIgnoreCase(displayName)) {
+            if (g.displayName.equals(displayName)) {
                 groups.remove(g);
                 return true;
             }
@@ -109,6 +109,36 @@ public class TextMuseStoredContacts {
 
         return false;
     }
+
+    public TextMuseGroup getGroup(String displayName) {
+        if (groups == null) {
+            return null;
+        }
+
+        for (TextMuseGroup g : groups) {
+            if (g.displayName.equals(displayName)) {
+                return g;
+            }
+        }
+
+        return null;
+    }
+
+//    public boolean updateGroup(String displayName, TextMuseGroup group) {
+//        if (groups == null) {
+//            return false;
+//        }
+//
+//        for (int i = 0; i < groups.size(); i++) {
+//            TextMuseGroup g = groups.get(i);
+//            if (g.displayName.equals(displayName)) {
+//                groups.set(i, group);
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
     public void addOrUpdateRecentContacts(List<TextMuseContact> contactList) {
         if (recentContacts == null) {

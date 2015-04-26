@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.datamodel.TextMuseContact;
+import com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment;
 
 import java.util.ArrayList;
 

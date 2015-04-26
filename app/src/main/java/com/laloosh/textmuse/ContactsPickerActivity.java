@@ -1,11 +1,9 @@
 package com.laloosh.textmuse;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -24,16 +22,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.datamodel.GlobalData;
-import com.laloosh.textmuse.datamodel.TextMuseContact;
 import com.laloosh.textmuse.datamodel.TextMuseGroup;
 import com.laloosh.textmuse.datamodel.TextMuseRecentContact;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
+import com.laloosh.textmuse.dialogs.EnterGroupDialogFragment;
+import com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
+public class ContactsPickerActivity extends ActionBarActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler{
 
-public class ContactsPickerActivity extends ActionBarActivity  implements LoaderManager.LoaderCallbacks<Cursor>{
+    private static final int REQUEST_CODE_GROUPEDIT = 1000;
 
     ContactGroupListAdapter mAdapter;
     TextMuseStoredContacts mStoredContacts;
@@ -80,6 +78,9 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+
+        //TODO: add in Add Group, Send, etc.
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -134,25 +135,52 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
 
     };
 
-    public static class PhoneNumberRemovedDialogFragment extends DialogFragment {
+    @Override
+    public void handleNewGroupName(String name) {
+        if (name != null && !name.isEmpty()) {
+            Intent intent = new Intent(this, GroupEditActivity.class);
+            intent.putExtra(GroupEditActivity.NEW_GROUP_NAME_EXTRA, name);
+            startActivityForResult(intent, REQUEST_CODE_GROUPEDIT);
+        }
+    }
 
-        public static PhoneNumberRemovedDialogFragment newInstance() {
-            return new PhoneNumberRemovedDialogFragment();
+    @Override
+    public void handleRenameGroupName(String oldname, String newName) {
+        TextMuseGroup group = mStoredContacts.getGroup(oldname);
+        if (group != null) {
+            group.displayName = newName;
         }
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("We could not get the phone number for this contact.  Please pick a different contact.")
-                    .setTitle("Could not get phone number")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            PhoneNumberRemovedDialogFragment.this.dismiss();
-                        }
-                    });
+        mStoredContacts.save(this);
+        mAdapter.updateStoredContacts(mStoredContacts);
+    }
 
-            return builder.create();
+    @Override
+    public boolean isUsableGroupName(String name) {
+        return !(mStoredContacts.groupNameExists(name));
+    }
+
+    //Called when we start adding a new group, either through the menu or through the tile
+    public void createNewGroup() {
+        Log.d(Constants.TAG, "Launching add a group flow");
+        EnterGroupDialogFragment fragment = EnterGroupDialogFragment.newInstance();
+        fragment.show(getSupportFragmentManager(), "enterGroupFragment");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_GROUPEDIT) {
+            if (resultCode == Activity.RESULT_OK) {
+                TextMuseStoredContacts contacts = GlobalData.getInstance().getStoredContacts();
+
+                //contacts can be null in the case that the user went to the next screen and decided
+                //to quit out of it, so just keep our old data if that's the case
+                if (contacts != null) {
+                    //update our stored contacts if we got some new data
+                    mStoredContacts = contacts;
+                    mAdapter.updateStoredContacts(mStoredContacts);
+                }
+            }
         }
     }
 
@@ -172,6 +200,11 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             mLayoutInflater = LayoutInflater.from(context);
             mState = state;
             mContactsAdapter = new ContactsAdapter(context, handler, state);
+        }
+
+        public void updateStoredContacts(TextMuseStoredContacts contacts) {
+            mStoredContacts = contacts;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -413,10 +446,12 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             //Check to see if this is a placeholder, and if so, launch the Add a group flow
             if (holder.contactItemType == ContactItemType.GROUP_ITEM_PLACEHOLDER) {
 
-                //TODO: implement this....
-
-                Log.d(Constants.TAG, "Launching add a group flow");
-
+                try {
+                    ContactsPickerActivity contactsPickerActivity = (ContactsPickerActivity) mContext;
+                    contactsPickerActivity.createNewGroup();
+                } catch (ClassCastException e) {
+                    Log.e(Constants.TAG, "Contact and group adapter not attached to contact picker activity!");
+                }
             } else if (holder.contactItemType != ContactItemType.RECENT_ITEM_PLACEHOLDER) {
                 holder.selectedCheckbox.setChecked(!holder.selectedCheckbox.isChecked());
             }
@@ -469,4 +504,6 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             public int itemIndex;
         }
     }
+
+
 }

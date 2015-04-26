@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="15dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogGroupNameTextViewDescription"
+        android:text="@string/enter_group_name_description"
+        android:textColor="#ff000000"
+        android:layout_marginLeft="3dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogGroupNameEditText"
+        android:layout_below="@id/dialogGroupNameTextViewDescription"
+        android:textSize="16sp"
+        android:hint="Group Name"
+        android:layout_marginTop="10dp"
+        />
+</RelativeLayout>
