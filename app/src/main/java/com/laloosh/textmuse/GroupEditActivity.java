@@ -27,6 +27,7 @@ import com.laloosh.textmuse.datamodel.TextMuseGroup;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
 import com.laloosh.textmuse.dialogs.NoUsersDialogFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,6 +35,8 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
 
     public static final String NEW_GROUP_NAME_EXTRA = "com.laloosh.textmuse.newgroup.name";
     public static final String EXISTING_GROUP = "com.laloosh.textmuse.existinggroup";
+
+    private static final int CONTACT_PICKER_REQUEST_CODE = 1999;
 
     private TextView mEmptyTextView;
     private ListView mListView;
@@ -134,8 +137,25 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_add_contact) {
+            Intent intent = new Intent(this, ContactOnlyPickerActivity.class);
+            startActivityForResult(intent, CONTACT_PICKER_REQUEST_CODE);
+
+            return true;
+        } else if (id == android.R.id.home) {
+
+            if (mGroup.contactList == null || mGroup.contactList.size() <= 0) {
+                Log.e(Constants.TAG, "No users added to this group");
+
+                mBackPressed = false;
+                NoUsersDialogFragment fragment = NoUsersDialogFragment.newInstance();
+                fragment.show(getSupportFragmentManager(), "noUsersDialogFragment");
+            } else {
+                persistGroup();
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+
             return true;
         }
 
@@ -199,6 +219,26 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CONTACT_PICKER_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                ArrayList<TextMuseContact> contacts = data.getParcelableArrayListExtra(ContactOnlyPickerActivity.CHOSEN_CONTACTS_EXTRA);
+                if (contacts != null) {
+                    for (TextMuseContact c : contacts) {
+                        mGroup.addContact(c);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                    if (mGroup.contactList.size() <= 0) {
+                        mEmptyTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        mEmptyTextView.setVisibility(View.GONE);
+                    }
+                }
+            }
+        }
+    }
+
     public class GroupContactListAdapter extends ArrayAdapter<TextMuseContact> {
 
         private LayoutInflater mLayoutInflater;
@@ -211,7 +251,7 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
         }
 
         public GroupContactListAdapter(Context context, List<TextMuseContact> objects) {
-            super(context, R.layout.dialog_choose_phonenum_list_ele, objects);
+            super(context, R.layout.activity_group_edit_list_ele, objects);
             mContext = context;
             mLayoutInflater = LayoutInflater.from(context);
             mContacts = objects;

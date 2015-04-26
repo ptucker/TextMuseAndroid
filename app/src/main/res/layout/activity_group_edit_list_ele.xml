@@ -11,7 +11,8 @@
         android:id="@+id/groupEditTextViewName"
         android:text="Firstname Lastname"
         android:textColor="#ff000000"
-        android:textSize="16sp"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
         />
 
 </RelativeLayout>

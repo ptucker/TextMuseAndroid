@@ -85,6 +85,9 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.menu_add_group) {
+            createNewGroup();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
