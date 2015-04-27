@@ -13,6 +13,8 @@
         android:textColor="#ff000000"
         android:textSize="20sp"
         android:layout_margin="10dp"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
         />
 
 </RelativeLayout>

@@ -10,9 +10,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,9 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
     private TextMuseStoredContacts mStoredContacts;
     private boolean mAddingGroup;
     private boolean mBackPressed;
+
+    private ActionMode mActionMode = null;
+    private int mActionModeIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +143,8 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
         int id = item.getItemId();
 
         if (id == R.id.menu_add_contact) {
+            clearActionMode();
+
             Intent intent = new Intent(this, ContactOnlyPickerActivity.class);
             startActivityForResult(intent, CONTACT_PICKER_REQUEST_CODE);
 
@@ -219,6 +226,64 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
         }
     }
 
+    private void startActionMode() {
+        if (mActionMode == null) {
+            mActionMode = this.startSupportActionMode(mActionModeCallback);
+        }
+    }
+
+    private void clearActionMode() {
+        if (mActionMode != null) {
+            mActionMode.finish();
+        }
+    }
+
+    protected ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.menu_group_edit_popup, menu);
+            return true;
+        }
+
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_remove_contact:
+                    if (mActionModeIndex == -1) {
+                        mActionMode.finish();
+                    } else {
+                        TextMuseContact contact = mGroup.contactList.get(mActionModeIndex);
+                        mGroup.removeContact(contact);
+                        mStoredContacts.save(GroupEditActivity.this);
+                        mActionMode.finish();
+                    }
+
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+            mActionModeIndex = -1;
+            mAdapter.notifyDataSetChanged();
+        }
+    };
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CONTACT_PICKER_REQUEST_CODE) {
@@ -274,6 +339,23 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
             TextMuseContact contact = mContacts.get(position);
 
             viewHolder.nameTextView.setText(contact.displayName);
+
+            if (position == mActionModeIndex) {
+                rowView.setBackgroundColor(0xffffbf98);
+            } else {
+                rowView.setBackgroundColor(0xffffffff);
+            }
+
+            rowView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    v.setBackgroundColor(0xffffbf98);
+
+                    mActionModeIndex = position;
+                    startActionMode();
+                    return false;
+                }
+            });
 
             return rowView;
         }
