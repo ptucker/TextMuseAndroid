@@ -341,7 +341,7 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
             viewHolder.nameTextView.setText(contact.displayName);
 
             if (position == mActionModeIndex) {
-                rowView.setBackgroundColor(0xffffbf98);
+                rowView.setBackgroundColor(0xffcccccc);
             } else {
                 rowView.setBackgroundColor(0xffffffff);
             }
@@ -349,7 +349,7 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
             rowView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    v.setBackgroundColor(0xffffbf98);
+                    v.setBackgroundColor(0xffcccccc);
 
                     mActionModeIndex = position;
                     startActionMode();

@@ -61,6 +61,14 @@ public class EnterGroupDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onCancel(DialogInterface dialog) {
+        if (mHandler != null) {
+            mHandler.onGroupNameEditCancel();
+        }
+        super.onCancel(dialog);
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final String originalName;
@@ -84,7 +92,14 @@ public class EnterGroupDialogFragment extends DialogFragment {
         builder.setView(view)
                 .setTitle("New Group")
                 .setPositiveButton("Ok", null)
-                .setNegativeButton("Cancel", null);
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mHandler != null) {
+                            mHandler.onGroupNameEditCancel();
+                        }
+                    }
+                });
 
         final AlertDialog d = builder.create();
 
@@ -143,6 +158,7 @@ public class EnterGroupDialogFragment extends DialogFragment {
         public void handleNewGroupName(String name);
         public void handleRenameGroupName(String oldname, String newName);
         public boolean isUsableGroupName(String name);
+        public void onGroupNameEditCancel();
     }
 }
 

@@ -9,9 +9,11 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.datamodel.GlobalData;
+import com.laloosh.textmuse.datamodel.TextMuseContact;
 import com.laloosh.textmuse.datamodel.TextMuseGroup;
 import com.laloosh.textmuse.datamodel.TextMuseRecentContact;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
@@ -36,6 +39,9 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     ContactGroupListAdapter mAdapter;
     TextMuseStoredContacts mStoredContacts;
     ContactAndGroupPickerState mState;
+
+    private ActionMode mActionMode = null;
+    private int mActionModeIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +62,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             mStoredContacts = new TextMuseStoredContacts();
         }
 
-        mAdapter = new ContactGroupListAdapter(mStoredContacts, this, mHandler, mState);
+        mAdapter = new ContactGroupListAdapter(this, mHandler);
 
         ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(mAdapter);
@@ -155,7 +161,13 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         }
 
         mStoredContacts.save(this);
-        mAdapter.updateStoredContacts(mStoredContacts);
+        mAdapter.notifyDataSetChanged();
+        clearActionMode();
+    }
+
+    @Override
+    public void onGroupNameEditCancel() {
+        clearActionMode();
     }
 
     @Override
@@ -170,6 +182,34 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         fragment.show(getSupportFragmentManager(), "enterGroupFragment");
     }
 
+    //renames the group with index mActionModeIndex
+    public void renameGroup() {
+        Log.d(Constants.TAG, "Renaming group");
+        TextMuseGroup group = mStoredContacts.groups.get(mActionModeIndex);
+        EnterGroupDialogFragment fragment = EnterGroupDialogFragment.newInstance(group.displayName);
+        fragment.show(getSupportFragmentManager(), "enterGroupFragment");
+    }
+
+    public void removeGroup() {
+        Log.d(Constants.TAG, "Removing group");
+        TextMuseGroup group = mStoredContacts.groups.get(mActionModeIndex);
+        mStoredContacts.removeGroup(group);
+        mStoredContacts.save(this);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void editGroup() {
+        Log.d(Constants.TAG, "Editing group");
+
+        TextMuseGroup group = mStoredContacts.groups.get(mActionModeIndex);
+        Intent intent = new Intent(this, GroupEditActivity.class);
+        intent.putExtra(GroupEditActivity.EXISTING_GROUP, group.displayName);
+
+        clearActionMode();
+
+        startActivityForResult(intent, REQUEST_CODE_GROUPEDIT);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_GROUPEDIT) {
@@ -181,33 +221,100 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                 if (contacts != null) {
                     //update our stored contacts if we got some new data
                     mStoredContacts = contacts;
-                    mAdapter.updateStoredContacts(mStoredContacts);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         }
     }
 
-    public static class ContactGroupListAdapter extends BaseAdapter implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
+    private void startActionMode() {
+        if (mActionMode == null) {
+            mActionMode = this.startSupportActionMode(mActionModeCallback);
+        }
+    }
 
-        private TextMuseStoredContacts mStoredContacts;
+    private void clearActionMode() {
+        if (mActionMode != null) {
+            mActionModeIndex = -1;
+            mActionMode.finish();
+        }
+    }
+
+    protected ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.menu_contacts_picker_popup, menu);
+            return true;
+        }
+
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_remove_group:
+
+                    if (mActionModeIndex < 0) {
+                        mActionMode.finish();
+                    } else {
+                        removeGroup();
+                        clearActionMode();
+                    }
+
+                    return true;
+
+                case R.id.menu_rename_group:
+                    if (mActionModeIndex < 0) {
+                        mActionMode.finish();
+                    } else {
+                        renameGroup();
+                        mActionMode.finish();
+                    }
+
+                    return true;
+
+                case R.id.menu_edit_group:
+                    if (mActionModeIndex < 0) {
+                        mActionMode.finish();
+                    } else {
+                        editGroup();
+                    }
+
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+            mActionModeIndex = -1;
+            mAdapter.notifyDataSetChanged();
+        }
+    };
+
+
+    public class ContactGroupListAdapter extends BaseAdapter implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
+
         private ContactsAdapter mContactsAdapter;
         private ActionBarActivity mContext;
         private LayoutInflater mLayoutInflater;
-        private ContactsAdapter.ContactsAdapterHandler mHandler;
-        private ContactAndGroupPickerState mState;
 
-        public ContactGroupListAdapter(TextMuseStoredContacts storedContacts, ActionBarActivity context, ContactsAdapter.ContactsAdapterHandler handler, ContactAndGroupPickerState state) {
-            mStoredContacts = storedContacts;
+        public ContactGroupListAdapter(ActionBarActivity context, ContactsAdapter.ContactsAdapterHandler handler) {
             mContext = context;
-            mHandler = handler;
             mLayoutInflater = LayoutInflater.from(context);
-            mState = state;
-            mContactsAdapter = new ContactsAdapter(context, handler, state);
-        }
-
-        public void updateStoredContacts(TextMuseStoredContacts contacts) {
-            mStoredContacts = contacts;
-            notifyDataSetChanged();
+            mContactsAdapter = new ContactsAdapter(context, handler, mState);
         }
 
         @Override
@@ -324,7 +431,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             return rowView;
         }
 
-        private View getItemListView(int index, ContactItemType itemType, View convertView, ViewGroup parent) {
+        private View getItemListView(final int index, ContactItemType itemType, View convertView, ViewGroup parent) {
 
             View rowView = convertView;
 
@@ -344,6 +451,8 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             //Temporarily unset the checked change listener so that we don't trigger anything when setting checked state
             viewHolder.selectedCheckbox.setOnCheckedChangeListener(null);
 
+            rowView.setBackgroundColor(0xffffffff);
+
             switch (itemType) {
                 case GROUP_ITEM_PLACEHOLDER:
                     viewHolder.displayName.setText("Add a group");
@@ -353,6 +462,22 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                     viewHolder.displayName.setText(mStoredContacts.groups.get(index).displayName);
                     viewHolder.selectedCheckbox.setChecked(mState.isGroupChecked(mStoredContacts.groups.get(index)));
                     viewHolder.selectedCheckbox.setVisibility(View.VISIBLE);
+
+                    if (index == mActionModeIndex) {
+                        rowView.setBackgroundColor(0xffcccccc);
+                    }
+
+                    rowView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            v.setBackgroundColor(0xffcccccc);
+                            mActionModeIndex = index;
+                            startActionMode();
+                            return true;
+                        }
+                    });
+
+
                     break;
                 case RECENT_ITEM_PLACEHOLDER:
                     viewHolder.displayName.setText("No recent contacts");
@@ -494,19 +619,17 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             return mContactsAdapter.swapCursor(newCursor);
         }
 
-        private enum ContactItemType {
-            TITLE_TYPE,
-            GROUP_ITEM_TYPE,
-            RECENT_ITEM_TYPE,
-            GROUP_ITEM_PLACEHOLDER,
-            RECENT_ITEM_PLACEHOLDER
-        }
-
         private class GroupContactViewHolder extends ContactViewHolder {
             public ContactItemType contactItemType;
             public int itemIndex;
         }
     }
 
-
+    protected enum ContactItemType {
+        TITLE_TYPE,
+        GROUP_ITEM_TYPE,
+        RECENT_ITEM_TYPE,
+        GROUP_ITEM_PLACEHOLDER,
+        RECENT_ITEM_PLACEHOLDER
+    }
 }
