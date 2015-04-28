@@ -38,6 +38,9 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
     public static final String NEW_GROUP_NAME_EXTRA = "com.laloosh.textmuse.newgroup.name";
     public static final String EXISTING_GROUP = "com.laloosh.textmuse.existinggroup";
 
+    private static final String SAVE_STATE_ADDING_GROUP_KEY = "addinggroup";
+    private static final String SAVE_STATE_GROUP_KEY = "currentgroup";
+
     private static final int CONTACT_PICKER_REQUEST_CODE = 1999;
 
     private TextView mEmptyTextView;
@@ -70,7 +73,7 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
 
         //We get the data for the group through the intent
         Intent intent = getIntent();
-        setupInitialData(intent);
+        setupInitialData(intent, savedInstanceState);
 
         if (mGroup == null) {
             return;
@@ -93,41 +96,62 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
         }
     }
 
-    private void setupInitialData(Intent intent) {
+    private void setupInitialData(Intent intent, Bundle savedInstanceState) {
 
-        String newGroupName = intent.getStringExtra(NEW_GROUP_NAME_EXTRA);
-        if (newGroupName == null || newGroupName.isEmpty()) {
-            //Existing group edit! -- find the existing group
+        if (savedInstanceState != null) {
+            Log.d(Constants.TAG, "Restoring instance state for group edit activity");
 
-            mAddingGroup = false;
-            String existingGroupName = intent.getStringExtra(EXISTING_GROUP);
-            if (existingGroupName != null && !existingGroupName.isEmpty()) {
+            //Launch from a restore of this activity, load up our state from the bundle
+            mAddingGroup = savedInstanceState.getBoolean(SAVE_STATE_ADDING_GROUP_KEY);
+            mGroup = savedInstanceState.getParcelable(SAVE_STATE_GROUP_KEY);
 
-                for (TextMuseGroup group : mStoredContacts.groups) {
-                    if (group.displayName.equals(existingGroupName)) {
-                        mGroup = group;
-                        break;
+        } else {
+
+            //Normal launch
+            String newGroupName = intent.getStringExtra(NEW_GROUP_NAME_EXTRA);
+            if (newGroupName == null || newGroupName.isEmpty()) {
+                //Existing group edit! -- find the existing group
+
+                mAddingGroup = false;
+                String existingGroupName = intent.getStringExtra(EXISTING_GROUP);
+                if (existingGroupName != null && !existingGroupName.isEmpty()) {
+
+                    for (TextMuseGroup group : mStoredContacts.groups) {
+                        if (group.displayName.equals(existingGroupName)) {
+                            mGroup = group;
+                            break;
+                        }
                     }
-                }
 
-                if (mGroup == null) {
-                    Log.e(Constants.TAG, "Invalid state when starting group edit activity -- existing group not found!");
+                    if (mGroup == null) {
+                        Log.e(Constants.TAG, "Invalid state when starting group edit activity -- existing group not found!");
+                        finish();
+                        return;
+                    }
+                } else {
+                    Log.e(Constants.TAG, "Invalid state when starting group edit activity -- not a new or existing group");
                     finish();
                     return;
                 }
             } else {
-                Log.e(Constants.TAG, "Invalid state when starting group edit activity -- not a new or existing group");
-                finish();
-                return;
+                //New group time!
+                mGroup = new TextMuseGroup(newGroupName);
+                mAddingGroup = true;
             }
-        } else {
-            //New group time!
-            mGroup = new TextMuseGroup(newGroupName);
-            mAddingGroup = true;
+
         }
     }
 
-    //TODO: options menu, long press to remove, add a name
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d(Constants.TAG, "Saving instance state for group edit activity");
+
+        outState.putBoolean(SAVE_STATE_ADDING_GROUP_KEY, mAddingGroup);
+        outState.putParcelable(SAVE_STATE_GROUP_KEY, mGroup);
+
+        super.onSaveInstanceState(outState);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

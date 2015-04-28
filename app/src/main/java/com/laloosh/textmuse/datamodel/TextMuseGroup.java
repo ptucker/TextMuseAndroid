@@ -1,12 +1,20 @@
 package com.laloosh.textmuse.datamodel;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextMuseGroup {
+public class TextMuseGroup implements Parcelable {
 
     public String displayName;
     public List<TextMuseContact> contactList;
+
+    public TextMuseGroup() {
+        displayName = "";
+        contactList = new ArrayList<TextMuseContact>();
+    }
 
     public TextMuseGroup(String name) {
         displayName = name;
@@ -42,6 +50,31 @@ public class TextMuseGroup {
         }
 
         contactList.add(contact);
+    }
+
+    //Parcelable stuff
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        ParcelUtils.writeString(out, displayName);
+        out.writeTypedList(contactList);
+    }
+
+    public static final Parcelable.Creator<TextMuseGroup> CREATOR = new Parcelable.Creator<TextMuseGroup>() {
+        public TextMuseGroup createFromParcel(Parcel in) {
+            return new TextMuseGroup(in);
+        }
+
+        public TextMuseGroup[] newArray(int size) {
+            return new TextMuseGroup[size];
+        }
+    };
+
+    protected TextMuseGroup(Parcel in) {
+        displayName = ParcelUtils.readString(in);
+        contactList = in.createTypedArrayList(TextMuseContact.CREATOR);
     }
 
 }

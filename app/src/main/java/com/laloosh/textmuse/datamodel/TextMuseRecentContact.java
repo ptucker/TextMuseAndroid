@@ -13,6 +13,10 @@ import org.joda.time.format.ISODateTimeFormat;
 public class TextMuseRecentContact extends TextMuseContact implements Parcelable{
     public DateTime lastUsed;
 
+    public TextMuseRecentContact() {
+        lastUsed = DateTime.now();
+    }
+
     public TextMuseRecentContact(String lookupKey, String displayName, String phoneNumber, String numberType) {
         super (lookupKey, displayName, phoneNumber, numberType);
         this.lastUsed = DateTime.now();

@@ -24,6 +24,8 @@ public class ContactOnlyPickerActivity extends ActionBarActivity implements Load
 
     public static final String CHOSEN_CONTACTS_EXTRA = "com.laloosh.textmuse.chosencontacts";
 
+    private static final String SAVE_STATE_CONTACT_PICKER = "contactpickerstate";
+
     private ContactsAdapter mAdapter;
     private ContactPickerState mState;
 
@@ -32,13 +34,25 @@ public class ContactOnlyPickerActivity extends ActionBarActivity implements Load
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_only_picker);
 
-        //TODO: handle the case where the state was saved
-        mState = new ContactPickerState();
+        if (savedInstanceState != null) {
+            Log.d(Constants.TAG, "Restoring instance state for contact picker only activity");
+            mState = savedInstanceState.getParcelable(SAVE_STATE_CONTACT_PICKER);
+        } else {
+            mState = new ContactPickerState();
+        }
+
         mAdapter = new ContactsAdapter(this, mHandler, mState);
 
         ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setAdapter(mAdapter);
         getSupportLoaderManager().initLoader(Queries.ContactsQuery.QUERY_ID, null, this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d(Constants.TAG, "Saving instance state for contact picker only activity");
+        outState.putParcelable(SAVE_STATE_CONTACT_PICKER, mState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

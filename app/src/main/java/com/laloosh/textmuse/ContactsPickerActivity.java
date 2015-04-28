@@ -35,10 +35,13 @@ import com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment;
 public class ContactsPickerActivity extends ActionBarActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler{
 
     private static final int REQUEST_CODE_GROUPEDIT = 1000;
+    private static final String SAVE_STATE_PICKER_STATE = "contactandgrouppickerstate";
 
     ContactGroupListAdapter mAdapter;
     TextMuseStoredContacts mStoredContacts;
     ContactAndGroupPickerState mState;
+
+    //TODO: also needs to handle the actual note to send!
 
     private ActionMode mActionMode = null;
     private int mActionModeIndex = -1;
@@ -48,8 +51,12 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_picker);
 
-        //TODO: handle the case where the state was saved
-        mState = new ContactAndGroupPickerState();
+        if (savedInstanceState != null) {
+            Log.d(Constants.TAG, "Loading state in contacts picker activity");
+            mState = savedInstanceState.getParcelable(SAVE_STATE_PICKER_STATE);
+        } else {
+            mState = new ContactAndGroupPickerState();
+        }
 
         mStoredContacts = GlobalData.getInstance().getStoredContacts();
         if (mStoredContacts == null) {
@@ -70,6 +77,13 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         getSupportLoaderManager().initLoader(Queries.ContactsQuery.QUERY_ID, null, this);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d(Constants.TAG, "Saving state in contacts picker activity");
+        outState.putParcelable(SAVE_STATE_PICKER_STATE, mState);
+
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
