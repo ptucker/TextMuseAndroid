@@ -43,6 +43,7 @@ import static android.widget.LinearLayout.VERTICAL;
  */
 public class CirclePageIndicator extends View implements PageIndicator {
     private static final int INVALID_POINTER = -1;
+    private static final int MAX_CIRCLES = 15;
 
     private float mRadius;
     private final Paint mPaintPageFill = new Paint(ANTI_ALIAS_FLAG);
@@ -57,6 +58,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mOrientation;
     private boolean mCentered;
     private boolean mSnap;
+    private int mMaxCircles;
 
     private int mTouchSlop;
     private float mLastMotionX = -1;
@@ -111,8 +113,17 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+
+        mMaxCircles = MAX_CIRCLES;
     }
 
+    public void setMaxCircles(int circles) {
+        if (circles > 0) {
+            mMaxCircles = circles;
+        } else {
+            mMaxCircles = MAX_CIRCLES;
+        }
+    }
 
     public void setCentered(boolean centered) {
         mCentered = centered;
@@ -211,6 +222,34 @@ public class CirclePageIndicator extends View implements PageIndicator {
             return;
         }
 
+        //Clamp the actual number of circles we draw to either MAX_CIRCLES or the count
+        int actualMaxCount = (count > mMaxCircles) ? mMaxCircles : count;
+        int page = 0;
+        boolean transitionPage = false;
+        if (actualMaxCount != count) {
+
+            //We will do some math to figure out what equivalent page we should draw
+            double divisor = (double) count / (double) mMaxCircles;
+            page = (int) ((double) mCurrentPage / divisor);
+            if (page >= actualMaxCount) {
+                page = actualMaxCount - 1;
+            }
+
+            if (page < actualMaxCount - 1) {
+                //If we aren't on the last bubble, then we should check if going to the next page
+                //will cause a transition to another bubble.  If so, then we set this variable so
+                //that we see a nice sliding animation during the pan
+                int nextPage = (int) ((double) (mCurrentPage + 1) / divisor);
+                if (nextPage > page) {
+                    transitionPage = true;
+                }
+            }
+
+        } else {
+            page = mSnap ? mSnapPage : mCurrentPage;
+            transitionPage = true;
+        }
+
         int longSize;
         int longPaddingBefore;
         int longPaddingAfter;
@@ -231,7 +270,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final float shortOffset = shortPaddingBefore + mRadius;
         float longOffset = longPaddingBefore + mRadius;
         if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((actualMaxCount * threeRadius) / 2.0f);
         }
 
         float dX;
@@ -243,7 +282,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         //Draw stroked circles
-        for (int iLoop = 0; iLoop < count; iLoop++) {
+        for (int iLoop = 0; iLoop < actualMaxCount; iLoop++) {
             float drawLong = longOffset + (iLoop * threeRadius);
             if (mOrientation == HORIZONTAL) {
                 dX = drawLong;
@@ -264,8 +303,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         //Draw the filled circle according to the current scroll
-        float cx = (mSnap ? mSnapPage : mCurrentPage) * threeRadius;
-        if (!mSnap) {
+        float cx = page * threeRadius;
+        if (!mSnap && transitionPage) {
             cx += mPageOffset * threeRadius;
         }
         if (mOrientation == HORIZONTAL) {
@@ -467,7 +506,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
             result = specSize;
         } else {
             //Calculate the width according the views count
-            final int count = mViewPager.getAdapter().getCount();
+            int count = mViewPager.getAdapter().getCount();
+            count = (count > mMaxCircles) ? mMaxCircles : count;
             result = (int)(getPaddingLeft() + getPaddingRight()
                     + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
             //Respect AT_MOST value if that was what is called for by measureSpec
