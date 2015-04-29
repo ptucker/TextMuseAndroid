@@ -1,10 +1,13 @@
 package com.laloosh.textmuse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.ArrayAdapter;
@@ -16,11 +19,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.squareup.picasso.Picasso;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +63,9 @@ public class MainCategoryFragment extends Fragment {
         GlobalData instance = GlobalData.getInstance();
         instance.loadData(getActivity());
         mData = instance.getData();
+
+        setLastNotified();
+        setNotificationAlarm();
     }
 
     @Override
@@ -128,6 +139,24 @@ public class MainCategoryFragment extends Fragment {
 
             textView.setText("Could not load data from the internet. Please check your connection and try again.");
         }
+    }
+
+    private void setLastNotified() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_PREF_FILE, Context.MODE_PRIVATE);
+        DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
+        String currentTime = fmt.print(DateTime.now());
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        //A launch of the app is like a notification.  Reset our notification count to 0 and also
+        //Put the current time in there so that we can check against it later
+        editor.putString(Constants.SHARED_PREF_KEY_LAST_NOTIFIED, currentTime);
+        editor.putInt(Constants.SHARED_PREF_KEY_NOTIFICATION_COUNT, 0);
+        editor.commit();
+    }
+
+    private void setNotificationAlarm() {
+        AlarmReceivedBroadcastReceiver.setAlarm(getActivity());
     }
 
     private void handleNewData(String s) {
