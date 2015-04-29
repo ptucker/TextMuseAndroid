@@ -1,15 +1,20 @@
 package com.laloosh.textmuse;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,6 +50,8 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
 
     private ActionMode mActionMode = null;
     private int mActionModeIndex = -1;
+
+    protected String mSearchTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +96,83 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_contacts_picker, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        final SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+
+//        final int textViewID = searchView.getContext().getResources().getIdentifier("android:id/search_src_text",null, null);
+//        final AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(textViewID);
+//        try {
+//            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+//            mCursorDrawableRes.setAccessible(true);
+//            mCursorDrawableRes.set(searchTextView, 0); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
+//        } catch (Exception e) {}
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String queryText) {
+                // Nothing needs to happen when the user submits the search string
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                String newFilter = !TextUtils.isEmpty(newText) ? newText : null;
+                if (mSearchTerm == null && newFilter == null) {
+                    return true;
+                }
+
+                if (mSearchTerm != null && mSearchTerm.equals(newFilter)) {
+                    return true;
+                }
+
+                mSearchTerm = newFilter;
+
+                // Restarts the loader. This triggers onCreateLoader(), which builds the
+                // necessary content Uri from mSearchTerm.
+                getSupportLoaderManager().restartLoader(Queries.ContactsQuery.QUERY_ID, null, ContactsPickerActivity.this);
+                return true;
+            }
+        });
+
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                mSearchTerm = null;
+                getSupportLoaderManager().restartLoader(Queries.ContactsQuery.QUERY_ID, null, ContactsPickerActivity.this);
+                return true;
+
+            }
+        });
+
+        if (mSearchTerm != null) {
+            // If search term is already set here then this fragment is
+            // being restored from a saved state and the search menu item
+            // needs to be expanded and populated again.
+
+            // Stores the search term (as it will be wiped out by
+            // onQueryTextChange() when the menu item is expanded).
+            final String savedSearchTerm = mSearchTerm;
+
+            // Expands the search menu item
+            MenuItemCompat.expandActionView(searchItem);
+
+            // Sets the SearchView to the previous search string
+            searchView.setQuery(savedSearchTerm, false);
+        }
+
+
         return true;
     }
 
@@ -100,9 +184,8 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         int id = item.getItemId();
 
 
-        //TODO: add in Add Group, Send, etc.
+        //TODO: add in Send
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.menu_add_group) {
@@ -122,7 +205,11 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         }
 
         Uri contentUri;
-        contentUri = Queries.ContactsQuery.CONTENT_URI;
+        if (mSearchTerm == null) {
+            contentUri = Queries.ContactsQuery.CONTENT_URI;
+        } else {
+            contentUri = Uri.withAppendedPath(Queries.ContactsQuery.FILTER_URI, Uri.encode(mSearchTerm));
+        }
 
         return new CursorLoader(this,
                 contentUri,
@@ -337,21 +424,27 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             int total = 0;
             int sectionTitleCount = 3;
 
-            total += sectionTitleCount;
+            if (mSearchTerm != null) {
+                //In a search, only show the searched contacts
 
-            if (mStoredContacts.hasGroups()) {
-                total += mStoredContacts.groups.size();
+                total = mContactsAdapter.getCount();
             } else {
-                total += 1;  //One placeholder item telling the user to add a group
-            }
+                total += sectionTitleCount;
 
-            if (mStoredContacts.hasRecentContacts()) {
-                total += mStoredContacts.recentContacts.size();
-            } else {
-                total += 1;  //One placeholder item telling the user that there are no recent contacts
-            }
+                if (mStoredContacts.hasGroups()) {
+                    total += mStoredContacts.groups.size();
+                } else {
+                    total += 1;  //One placeholder item telling the user to add a group
+                }
 
-            total += mContactsAdapter.getCount();
+                if (mStoredContacts.hasRecentContacts()) {
+                    total += mStoredContacts.recentContacts.size();
+                } else {
+                    total += 1;  //One placeholder item telling the user that there are no recent contacts
+                }
+
+                total += mContactsAdapter.getCount();
+            }
 
             return total;
         }
@@ -368,6 +461,11 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+
+            if (mSearchTerm != null) {
+                //in the case of a search, only display the cursor adapter's results
+                return mContactsAdapter.getView(position, convertView, parent);
+            }
 
             int tempPosition = position;
             
@@ -517,6 +615,11 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         @Override
         public int getItemViewType(int position) {
 
+            if (mSearchTerm != null) {
+                //In the case of a search, there is only one type of element--the type managed by the CursorAdapter
+                return 2;
+            }
+
             //First position is the groups label
             if (position == 0) {
                 return 0;
@@ -630,7 +733,9 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         }
 
         public Cursor swapContactCursor(Cursor newCursor) {
-            return mContactsAdapter.swapCursor(newCursor);
+            Cursor cursor = mContactsAdapter.swapCursor(newCursor);
+            notifyDataSetChanged();
+            return cursor;
         }
 
         private class GroupContactViewHolder extends ContactViewHolder {
