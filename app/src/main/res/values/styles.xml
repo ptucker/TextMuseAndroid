@@ -2,11 +2,16 @@
 
     <color name="white_opaque">#ffffffff</color>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/white_opaque</item>
 
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@color/white_opaque</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
 
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
 </resources>

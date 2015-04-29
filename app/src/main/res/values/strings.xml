@@ -14,4 +14,6 @@
     <string name="enter_group_name_duplicate_error">"Another group is already called this name."</string>
     <string name="title_activity_group_edit">GroupEditActivity</string>
     <string name="title_activity_contact_only_picker">Add Contacts To Group</string>
+    <string name="contacts_only_picker_search_label">Add Contacts To Group</string>
+    <string name="contacts_only_picker_search_hint">Find a Contact</string>
 </resources>
