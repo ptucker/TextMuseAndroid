@@ -59,7 +59,6 @@ public class ContactAndGroupPickerState extends ContactPickerState implements Pa
     }
 
 
-
     //Stuff for parcelable
     public int describeContents() {
         return 0;

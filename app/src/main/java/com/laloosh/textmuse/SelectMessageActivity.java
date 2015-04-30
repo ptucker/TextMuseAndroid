@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -56,7 +58,7 @@ public class SelectMessageActivity extends ActionBarActivity {
 
         int color = Constants.COLOR_LIST[colorOffset % Constants.COLOR_LIST.length];
 
-        mPagerAdapter = new NoteViewPagerAdapter(category.notes, this, color);
+        mPagerAdapter = new NoteViewPagerAdapter(category.notes, this, color, categoryPosition);
         mViewPager.setAdapter(mPagerAdapter);
 
         mPageIndicator = (CirclePageIndicator) findViewById(R.id.selectMessagePageIndicator);
@@ -97,12 +99,16 @@ public class SelectMessageActivity extends ActionBarActivity {
         private LayoutInflater mLayoutInflater;
         private Activity mActivity;
         private int mColor;
+        private HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
+        private int mCategoryPosition;
 
-        public NoteViewPagerAdapter(List<Note> notes, Activity activity, int color) {
+        public NoteViewPagerAdapter(List<Note> notes, Activity activity, int color, int categoryPosition) {
             mNotes = notes;
             mActivity = activity;
             mLayoutInflater = activity.getLayoutInflater();
             mColor = color;
+            mDownloadTargets = new HashMap<Integer, ImageDownloadTarget>();
+            mCategoryPosition = categoryPosition;
         }
 
         @Override
@@ -111,7 +117,7 @@ public class SelectMessageActivity extends ActionBarActivity {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
 
             Log.d(Constants.TAG, "Instantiating view at position " + position);
 
@@ -119,6 +125,7 @@ public class SelectMessageActivity extends ActionBarActivity {
             boolean useImageLayout = false;
             final Note note = mNotes.get(position);
 
+            //TODO: check if this is youtube...
             if (note.mediaUrl != null && note.mediaUrl.length() > 0) {
                 view = mLayoutInflater.inflate(R.layout.detail_view_textimage, container, false);
                 ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewImage);
@@ -129,6 +136,20 @@ public class SelectMessageActivity extends ActionBarActivity {
                         .fit()
                         .centerCrop()
                         .into(imageView);
+
+                if (!mDownloadTargets.containsKey(note.noteId)) {
+
+                    //Do another picasso task to write the image file to external storage.  This will
+                    //reuse the same image in the cache so it won't go to network again
+                    ImageDownloadTarget downloadTarget = new ImageDownloadTarget(mActivity, note);
+
+                    //Use a hashmap to keep track of these for 2 reasons--to prevent them from getting
+                    //garbage collected, and also so that we don't download twice
+                    mDownloadTargets.put(note.noteId, downloadTarget);
+                    Picasso.with(mActivity)
+                            .load(note.mediaUrl)
+                            .into(downloadTarget);
+                }
 
                 useImageLayout = true;
 
@@ -170,8 +191,10 @@ public class SelectMessageActivity extends ActionBarActivity {
             selectButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: somehow pass the note into the next activity
                     Intent intent = new Intent(mActivity, ContactsPickerActivity.class);
+                    intent.putExtra(ContactsPickerActivity.CATEGORY_POSITION_EXTRA, mCategoryPosition);
+                    intent.putExtra(ContactsPickerActivity.NOTE_POSITION_EXTRA, position);
+                    intent.putExtra(ContactsPickerActivity.NOTE_ID_EXTRA, note.noteId);
                     mActivity.startActivity(intent);
                 }
             });

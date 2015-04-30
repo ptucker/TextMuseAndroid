@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.Telephony;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -28,23 +29,38 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
+import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseContact;
+import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseGroup;
 import com.laloosh.textmuse.datamodel.TextMuseRecentContact;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
+import com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment;
 import com.laloosh.textmuse.dialogs.EnterGroupDialogFragment;
+import com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment;
 import com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 
 public class ContactsPickerActivity extends ActionBarActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler{
 
+    public static final String CATEGORY_POSITION_EXTRA = "com.laloosh.textmuse.contactspicker.categoryextra";
+    public static final String NOTE_POSITION_EXTRA = "com.laloosh.textmuse.contactspicker.noteposition";
+    public static final String NOTE_ID_EXTRA = "com.laloosh.textmuse.contactspicker.noteid";
+
     private static final int REQUEST_CODE_GROUPEDIT = 1000;
     private static final String SAVE_STATE_PICKER_STATE = "contactandgrouppickerstate";
+    private static final String SAVE_STATE_NOTE_STATE = "notestate";
 
     ContactGroupListAdapter mAdapter;
     TextMuseStoredContacts mStoredContacts;
     ContactAndGroupPickerState mState;
+    Note mNote;
 
     //TODO: also needs to handle the actual note to send!
 
@@ -71,6 +87,13 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             mStoredContacts = GlobalData.getInstance().getStoredContacts();
         }
 
+        Intent intent = getIntent();
+        findChosenNote(intent, savedInstanceState);
+        if (mNote == null) {
+            finish();
+            return;
+        }
+
         //Still no loaded contacts?  Just create an empty one
         if (mStoredContacts == null) {
             mStoredContacts = new TextMuseStoredContacts();
@@ -88,7 +111,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     protected void onSaveInstanceState(Bundle outState) {
         Log.d(Constants.TAG, "Saving state in contacts picker activity");
         outState.putParcelable(SAVE_STATE_PICKER_STATE, mState);
-
+        outState.putParcelable(SAVE_STATE_NOTE_STATE, mNote);
         super.onSaveInstanceState(outState);
     }
 
@@ -191,9 +214,90 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         } else if (id == R.id.menu_add_group) {
             createNewGroup();
             return true;
+        } else if (id == R.id.menu_send) {
+
+            HashSet<String> phoneNumberSet = getSelectedPhoneNumbers();
+            if (phoneNumberSet.isEmpty()) {
+                NoContactsSelectedDialogFragment fragment = NoContactsSelectedDialogFragment.newInstance();
+                fragment.show(getSupportFragmentManager(), "nocontactsfragment");
+                return true;
+            }
+
+            updateRecentContacts();
+
+            Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
+
+            try {
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
+                CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
+                fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
+            }
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void findChosenNote(Intent intent, Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+            mNote = savedInstanceState.getParcelable(SAVE_STATE_NOTE_STATE);
+            return;
+        }
+
+        int categoryPosition = intent.getIntExtra(CATEGORY_POSITION_EXTRA, -1);
+        int notePosition = intent.getIntExtra(NOTE_POSITION_EXTRA, -1);
+        int noteId = intent.getIntExtra(NOTE_ID_EXTRA, -1);
+
+        if (categoryPosition == -1 || notePosition == -1 || noteId == -1) {
+            Log.e(Constants.TAG, "Note information not passed in properly; exiting");
+            return;
+        }
+
+        TextMuseData data = GlobalData.getInstance().getData();
+        if (data != null && data.categories != null && data.categories.size() > categoryPosition) {
+            Category category = data.categories.get(categoryPosition);
+            if (category.notes != null && category.notes.size() > notePosition) {
+                Note note = category.notes.get(notePosition);
+
+                if (note.noteId == noteId) {
+                    mNote = note;
+                } else {
+                    Log.e(Constants.TAG, "Note data corrupted");
+                }
+            }
+        } else {
+            Log.e(Constants.TAG, "TextMuse data corrupted");
+        }
+    }
+
+    private void updateRecentContacts() {
+        mStoredContacts.addOrUpdateRecentContacts(mState.getSelectedContacts());
+    }
+
+    private HashSet<String> getSelectedPhoneNumbers() {
+        HashSet<String> resultSet = new HashSet<String>();
+
+        for (TextMuseGroup g : mState.getSelectedGroups()) {
+            if (g.contactList != null && g.contactList.size() > 0) {
+                for (TextMuseContact c : g.contactList) {
+                    resultSet.add(c.phoneNumber);
+                }
+            }
+        }
+
+        for (TextMuseRecentContact rc : mState.getSelectedRecentContacts()) {
+            resultSet.add(rc.phoneNumber);
+        }
+
+        for (TextMuseContact c : mState.getSelectedContacts()) {
+            resultSet.add(c.phoneNumber);
+        }
+
+        return resultSet;
     }
 
     @Override

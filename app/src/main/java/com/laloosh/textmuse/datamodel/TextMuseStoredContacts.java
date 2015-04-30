@@ -222,8 +222,10 @@ public class TextMuseStoredContacts {
         for (TextMuseContact contact : contactListTemp) {
             TextMuseRecentContact recentContact = new TextMuseRecentContact(contact);
             recentContacts.set(i++, recentContact);
+            if (i >= maxRecentContacts) {
+                break;
+            }
         }
-
     }
 
 }

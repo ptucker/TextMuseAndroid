@@ -2,21 +2,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.laloosh.textmuse.ContactsPickerActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
 
-
+    <item
+        android:id="@+id/menu_send"
+        android:title="Send"
+        android:icon="@drawable/ic_action_send_now"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        />
     <item
         android:id="@+id/menu_add_group"
         android:title="Add Group"
         android:icon="@drawable/ic_action_add_group"
+        android:orderInCategory="2"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_search"
         android:title="Search"
         android:icon="@drawable/ic_action_search"
+        android:orderInCategory="3"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
+
+
 
 </menu>
