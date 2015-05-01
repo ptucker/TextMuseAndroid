@@ -32,43 +32,68 @@ public class SelectMessageActivity extends ActionBarActivity {
     public static final String CATEGORY_EXTRA = "com.laloosh.textmuse.category.extra";
     public static final String COLOR_OFFSET_EXTRA = "com.laloosh.textmuse.category.coloroffset.extra";
 
+    private static final String SAVE_STATE_POSITION = "savestateposition";
+
     private ViewPager mViewPager;
     private CirclePageIndicator mPageIndicator;
     private NoteViewPagerAdapter mPagerAdapter;
+
+    private int mCategoryIndex;
+    private int mColorOffset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_message);
 
-        Intent intent = getIntent();
-        int categoryPosition = intent.getIntExtra(CATEGORY_EXTRA, 0);
-        int colorOffset = intent.getIntExtra(COLOR_OFFSET_EXTRA, 0);
+        int currentItem = -1;
+        if (savedInstanceState != null) {
+            mCategoryIndex = savedInstanceState.getInt(CATEGORY_EXTRA);
+            mColorOffset = savedInstanceState.getInt(COLOR_OFFSET_EXTRA);
+            currentItem = savedInstanceState.getInt(SAVE_STATE_POSITION);
+        } else {
+            Intent intent = getIntent();
+            mCategoryIndex = intent.getIntExtra(CATEGORY_EXTRA, 0);
+            mColorOffset = intent.getIntExtra(COLOR_OFFSET_EXTRA, 0);
+        }
 
         TextMuseData data = GlobalData.getInstance().getData();
-        if (data == null || data.categories == null || categoryPosition >= data.categories.size()) {
+        if (data == null || data.categories == null || mCategoryIndex >= data.categories.size()) {
             //quit the activity and go to the previous screen if somehow there's no data
             finish();
             return;
         }
 
-        Category category = data.categories.get(categoryPosition);
+        Category category = data.categories.get(mCategoryIndex);
 
         mViewPager = (ViewPager) findViewById(R.id.selectMessageViewPager);
 
-        int color = Constants.COLOR_LIST[colorOffset % Constants.COLOR_LIST.length];
+        int color = Constants.COLOR_LIST[mColorOffset % Constants.COLOR_LIST.length];
 
-        mPagerAdapter = new NoteViewPagerAdapter(category.notes, this, color, categoryPosition);
+        mPagerAdapter = new NoteViewPagerAdapter(category.notes, this, color, mCategoryIndex);
         mViewPager.setAdapter(mPagerAdapter);
 
         mPageIndicator = (CirclePageIndicator) findViewById(R.id.selectMessagePageIndicator);
         mPageIndicator.setViewPager(mViewPager);
+
+        //Restore our page 
+        if (currentItem > 0 && mPagerAdapter.getCount() > currentItem) {
+            mViewPager.setCurrentItem(currentItem);
+        }
 
         TextView categoryTextView = (TextView) findViewById(R.id.selectMessageTextViewCategory);
         categoryTextView.setText(category.name);
         categoryTextView.setBackgroundColor(color);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CATEGORY_EXTRA, mCategoryIndex);
+        outState.putInt(COLOR_OFFSET_EXTRA, mColorOffset);
+        outState.putInt(SAVE_STATE_POSITION, mViewPager.getCurrentItem());
+
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -276,6 +276,8 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
 
     private void updateRecentContacts() {
         mStoredContacts.addOrUpdateRecentContacts(mState.getSelectedContacts());
+        mStoredContacts.save(this);
+        mAdapter.notifyDataSetChanged();
     }
 
     private HashSet<String> getSelectedPhoneNumbers() {
