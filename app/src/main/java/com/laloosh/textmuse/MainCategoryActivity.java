@@ -36,9 +36,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainCategoryActivity extends ActionBarActivity {
+    private static final long INTERVAL_BEFORE_AUTOSLIDESHOW = 15000;  //At least 15 seconds after the user scrolls a page before we autoscroll again
     private static final int RANDOM_NOTES_PER_CATEGORY = 3;
 
     private TextMuseData mData;
@@ -47,6 +50,8 @@ public class MainCategoryActivity extends ActionBarActivity {
     private ListView mListView;
     private MainCategoryListArrayAdapter mCategoryListAdapter;
     private ArrayList<Note> mRandomNotes;
+    private Timer mTimer;
+    private long mLastUserScrollMillis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +89,7 @@ public class MainCategoryActivity extends ActionBarActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                mLastUserScrollMillis = System.currentTimeMillis();
             }
         });
 
@@ -93,6 +99,10 @@ public class MainCategoryActivity extends ActionBarActivity {
         generateViewsFromData();
 
         loadDataFromInternet();
+
+        mLastUserScrollMillis = System.currentTimeMillis();
+        mTimer = new Timer();
+        mTimer.scheduleAtFixedRate(new ChangeHeaderTask(), 0, 10000);
     }
 
 
@@ -266,6 +276,24 @@ public class MainCategoryActivity extends ActionBarActivity {
         return parser.parse(s);
     }
 
+    public class ChangeHeaderTask extends TimerTask {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (mMainPagerAdapter.getCount() > 1 && System.currentTimeMillis() - mLastUserScrollMillis > INTERVAL_BEFORE_AUTOSLIDESHOW) {
+                        //mMainViewPager.setCurrentItem(mMainPagerAdapter.getReasonablePseudoRandomIndex(), false);
+                        if (mMainViewPager.getCurrentItem() == mMainPagerAdapter.getCount() - 2) {
+                            mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
+                        } else {
+                            mMainViewPager.setCurrentItem(mMainViewPager.getCurrentItem() + 1, true);
+                        }
+                    }
+                }
+            });
+        }
+    }
 
     public static class HeaderViewPagerAdapter extends PagerAdapter {
 
