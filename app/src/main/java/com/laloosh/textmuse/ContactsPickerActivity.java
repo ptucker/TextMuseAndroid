@@ -52,6 +52,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     public static final String CATEGORY_POSITION_EXTRA = "com.laloosh.textmuse.contactspicker.categoryextra";
     public static final String NOTE_POSITION_EXTRA = "com.laloosh.textmuse.contactspicker.noteposition";
     public static final String NOTE_ID_EXTRA = "com.laloosh.textmuse.contactspicker.noteid";
+    public static final String NOTE_OBJECT_EXTRA = "com.laloosh.textmuse.contactspicker.noteobj";
 
     private static final int REQUEST_CODE_GROUPEDIT = 1000;
     private static final String SAVE_STATE_PICKER_STATE = "contactandgrouppickerstate";
@@ -61,8 +62,6 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     TextMuseStoredContacts mStoredContacts;
     ContactAndGroupPickerState mState;
     Note mNote;
-
-    //TODO: also needs to handle the actual note to send!
 
     private ActionMode mActionMode = null;
     private int mActionModeIndex = -1;
@@ -124,15 +123,6 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         final SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-
-//        final int textViewID = searchView.getContext().getResources().getIdentifier("android:id/search_src_text",null, null);
-//        final AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(textViewID);
-//        try {
-//            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
-//            mCursorDrawableRes.setAccessible(true);
-//            mCursorDrawableRes.set(searchTextView, 0); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
-//        } catch (Exception e) {}
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -248,6 +238,15 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             return;
         }
 
+        //See if a parcelable was passed in
+        Note noteObj = intent.getParcelableExtra(NOTE_OBJECT_EXTRA);
+
+        if (noteObj != null) {
+            mNote = noteObj;
+            return;
+        }
+
+        //If no parcelable was passed in, then we must have gotten a set of indexes
         int categoryPosition = intent.getIntExtra(CATEGORY_POSITION_EXTRA, -1);
         int notePosition = intent.getIntExtra(NOTE_POSITION_EXTRA, -1);
         int noteId = intent.getIntExtra(NOTE_ID_EXTRA, -1);

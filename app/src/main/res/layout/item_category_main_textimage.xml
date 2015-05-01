@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainViewRelativeLayoutTextItem"
+    >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainViewImageViewItemBackground"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/bubble"
+            android:background="#ffeeeeee"
+            android:scaleType="centerCrop"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainViewTextViewText"
+            android:text="SMILE! HERE'S A SUPER CUTE PUPPY."
+            android:textColor="#ffffffff"
+            android:textSize="16sp"
+            android:background="#44000000"
+            android:padding="8dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
+
+</RelativeLayout>

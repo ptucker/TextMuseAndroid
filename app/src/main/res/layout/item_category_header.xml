@@ -16,12 +16,12 @@
         android:scaleType="fitEnd"
          />
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="SEND A TEXT TO\nLAUREN PANGBORN"
+        android:text="Welcome\nto Textmuse"
+        android:textAllCaps="true"
         android:textColor="#ffffffff"
         android:id="@+id/mainViewTextView"
         android:layout_alignParentBottom="true"

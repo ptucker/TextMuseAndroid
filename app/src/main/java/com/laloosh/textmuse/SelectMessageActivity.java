@@ -76,7 +76,7 @@ public class SelectMessageActivity extends ActionBarActivity {
         mPageIndicator = (CirclePageIndicator) findViewById(R.id.selectMessagePageIndicator);
         mPageIndicator.setViewPager(mViewPager);
 
-        //Restore our page 
+        //Restore our page
         if (currentItem > 0 && mPagerAdapter.getCount() > currentItem) {
             mViewPager.setCurrentItem(currentItem);
         }

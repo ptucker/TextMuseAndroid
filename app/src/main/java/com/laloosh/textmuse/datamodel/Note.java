@@ -12,7 +12,7 @@ public class Note implements Parcelable {
     public String mediaUrl;
     public String extraUrl;
 
-    //Non-serialized value that
+    //Non-serialized value that are used temporarily
     public transient boolean savedInternally;
     public transient boolean saveFailed;
 
@@ -20,6 +20,44 @@ public class Note implements Parcelable {
 
     public String getInternalFilename() {
         return Integer.toString(noteId) + ".jpg";
+    }
+
+    public boolean hasDisplayableText() {
+        if (text == null || text.isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean hasDisplayableMedia() {
+        if (mediaUrl == null || mediaUrl.isEmpty()) {
+            return false;
+        }
+
+        //TODO: for now, just make youtube non-displayable
+        if (isMediaYoutube()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isMediaYoutube() {
+        String[] youtubeBaseUrls = {"http://youtu.be", "http://www.youtube.com", "https://youtu.be", "https://www.youtube.com"};
+
+        if (mediaUrl == null || mediaUrl.isEmpty()) {
+            return false;
+        }
+
+        String convertedMediaUrl = mediaUrl.toLowerCase().trim();
+        for (int i = 0; i < youtubeBaseUrls.length; i++) {
+            if (convertedMediaUrl.startsWith(youtubeBaseUrls[i])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

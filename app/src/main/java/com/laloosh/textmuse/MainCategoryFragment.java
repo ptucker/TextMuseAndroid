@@ -31,19 +31,23 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 
 public class MainCategoryFragment extends Fragment {
 
+    private static final int RANDOM_NOTES_PER_CATEGORY = 3;
 
     private TextMuseData mData;
-
     private ViewPager mMainViewPager;
-
+    private HeaderViewPagerAdapter mMainPagerAdapter;
     private ListView mListView;
-
     private MainCategoryListArrayAdapter mCategoryListAdapter;
+    private ArrayList<Note> mRandomNotes;
 
     //private List<ViewPager> mCategoryViewPagers;
 
@@ -64,6 +68,8 @@ public class MainCategoryFragment extends Fragment {
         instance.loadData(getActivity());
         mData = instance.getData();
 
+        generateRandomNotes();
+
         setLastNotified();
         setNotificationAlarm();
     }
@@ -73,16 +79,34 @@ public class MainCategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_category, container, false);
 
-        ArrayList<String> titleList = new ArrayList<String>();
-        titleList.add("Send a text to Taurus Johnson");
-        titleList.add("Wish John a happy birthday");
-        titleList.add("Send well wishes to Amy");
-        titleList.add("Say hello to Boris");
-
         mMainViewPager = (ViewPager) view.findViewById(R.id.mainFragmentViewPagerTop);
 
-        HeaderViewPagerAdapter pagerAdapter = new HeaderViewPagerAdapter(titleList, getActivity());
-        mMainViewPager.setAdapter(pagerAdapter);
+        mMainPagerAdapter = new HeaderViewPagerAdapter(getActivity(), mRandomNotes);
+        mMainViewPager.setAdapter(mMainPagerAdapter);
+
+//        mMainViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                if (position == mMainPagerAdapter.getCount() - 1) {
+//                    Log.d(Constants.TAG, "At end of view pager, moving to first element");
+//                    mMainViewPager.setCurrentItem(0, false);
+//                }
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+////                if (state == ViewPager.SCROLL_STATE_IDLE) {
+////                    int index = mMainViewPager.getCurrentItem();
+////                    if (index == )
+////                }
+//            }
+//        });
 
         mListView = (ListView) view.findViewById(R.id.mainFragmentListView);
         mListView.setVisibility(View.GONE);
@@ -92,6 +116,56 @@ public class MainCategoryFragment extends Fragment {
         loadDataFromInternet();
 
         return view;
+    }
+
+    private void generateRandomNotes() {
+
+        if (mData == null || mData.categories == null) {
+            mRandomNotes = null;
+            return;
+        }
+
+        //if we have data, then get some of it
+        mRandomNotes = new ArrayList<Note> ();
+
+        for (Category category : mData.categories) {
+            if (category.notes != null && category.notes.size() > 0) {
+                if (category.notes.size() <= RANDOM_NOTES_PER_CATEGORY) {
+                    mRandomNotes.addAll(category.notes);
+                } else {
+                    int indexGap = category.notes.size() / RANDOM_NOTES_PER_CATEGORY;
+                    for (int i = 0; i < RANDOM_NOTES_PER_CATEGORY; i++) {
+                        mRandomNotes.add(category.notes.get(i * indexGap));
+                    }
+                }
+            }
+        }
+
+        //De-dupe the notes since sometimes there are duplicates in different categories
+        HashSet<Integer> noteIds = new HashSet<Integer> ();
+        Iterator iterator = mRandomNotes.iterator();
+        while (iterator.hasNext()) {
+            Note note = (Note) iterator.next();
+
+            if (!noteIds.contains(note.noteId)) {
+                noteIds.add(note.noteId);
+            } else {
+                iterator.remove();
+            }
+        }
+
+        //Randomize the notes
+        Random rand = new Random();
+        for (int i = 0; i < mRandomNotes.size() - 1; i++) {
+            int index = rand.nextInt(mRandomNotes.size() - i);
+            if (index == 0) {
+                continue;
+            }
+
+            Note swapNote = mRandomNotes.get(i + index);
+            mRandomNotes.set(i + index, mRandomNotes.get(i));
+            mRandomNotes.set(i, swapNote);
+        }
     }
 
     private void generateViewsFromData() {
@@ -182,6 +256,8 @@ public class MainCategoryFragment extends Fragment {
             mData = data;
             GlobalData.getInstance().updateData(data);
             generateViewsFromData();
+            generateRandomNotes();
+            mMainPagerAdapter.updateNotes(mRandomNotes);
         }
 
     }
@@ -199,27 +275,106 @@ public class MainCategoryFragment extends Fragment {
 
     public static class HeaderViewPagerAdapter extends PagerAdapter {
 
-        private List<String> mHeaderTexts;
+        private ArrayList<Note> mNotes;
         private LayoutInflater mLayoutInflater;
+        private Activity mContext;
 
-        public HeaderViewPagerAdapter(List<String> headerTexts, Activity activity) {
-            mHeaderTexts = headerTexts;
+        //Needed to download images.  Should be pulled out into a base class
+        private HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
+
+        public HeaderViewPagerAdapter(Activity activity, ArrayList<Note> notes) {
+            mNotes = notes;
             mLayoutInflater = activity.getLayoutInflater();
+            mContext = activity;
+            mDownloadTargets = new HashMap<Integer, ImageDownloadTarget>();
+        }
+
+        public void updateNotes(ArrayList<Note> notes) {
+            mNotes = notes;
+            notifyDataSetChanged();
         }
 
         @Override
         public int getCount() {
-            return mHeaderTexts.size();
+            //If we don't have any notes, then just show the textmuse welcome banner. If we do, then
+            //the first and last elements need to be the welcome banner for wraparound behavior to work
+            if (mNotes == null) {
+                return 1;
+            } else {
+                return mNotes.size() + 2;
+            }
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            View view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
 
-            TextView textView = (TextView) view.findViewById(R.id.mainViewTextView);
-            textView.setText(mHeaderTexts.get(position).toUpperCase());
+            View view = null;
 
-            container.addView(view);
+            if (mNotes == null || mNotes.size() <= 0) {
+                view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
+            } else {
+                if (position == 0 || position == getCount() - 1) {
+                    view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
+                } else {
+                    final int indexPosition = position - 1;
+                    final Note note = mNotes.get(indexPosition);
+
+                    if (note.hasDisplayableMedia()) {
+                        view = mLayoutInflater.inflate(R.layout.item_category_main_textimage, container, false);
+
+                        ImageView imageView = (ImageView) view.findViewById(R.id.mainViewImageViewItemBackground);
+
+                        Picasso.with(mContext)
+                                .load(note.mediaUrl)
+                                .fit()
+                                .centerCrop()
+                                .into(imageView);
+
+                        if (!mDownloadTargets.containsKey(note.noteId)) {
+
+                            //Do another picasso task to write the image file to external storage.  This will
+                            //reuse the same image in the cache so it won't go to network again
+                            ImageDownloadTarget downloadTarget = new ImageDownloadTarget(mContext, note);
+
+                            //Use a hashmap to keep track of these for 2 reasons--to prevent them from getting
+                            //garbage collected, and also so that we don't download twice
+                            mDownloadTargets.put(note.noteId, downloadTarget);
+                            Picasso.with(mContext)
+                                    .load(note.mediaUrl)
+                                    .into(downloadTarget);
+                        }
+
+                    } else {
+                        view = mLayoutInflater.inflate(R.layout.item_category_main_textonly, container, false);
+
+                        View background = view.findViewById(R.id.mainViewBackgroundView);
+                        int color = Constants.COLOR_LIST[position % Constants.COLOR_LIST.length];
+                        background.setBackgroundColor(color);
+
+                    }
+
+                    TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
+                    if (note.hasDisplayableText()) {
+                        textView.setText(note.text);
+                    } else {
+                        textView.setVisibility(View.GONE);
+                    }
+
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, ContactsPickerActivity.class);
+                            intent.putExtra(ContactsPickerActivity.NOTE_OBJECT_EXTRA, note);
+                            mContext.startActivity(intent);
+                        }
+                    });
+                }
+
+            }
+
+            if (view != null) {
+                container.addView(view);
+            }
 
             return view;
         }
