@@ -80,7 +80,7 @@ public class SmsUtils {
     }
 
     private static Uri getMediaFile(Context context, Note note) {
-        if (note.mediaUrl != null && note.mediaUrl.length() > 0 && note.savedInternally) {
+        if (note.hasDisplayableMedia() && note.savedInternally) {
             File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), note.getInternalFilename());
             if (!file.isFile()) {
                 return null;

@@ -150,8 +150,7 @@ public class SelectMessageActivity extends ActionBarActivity {
             boolean useImageLayout = false;
             final Note note = mNotes.get(position);
 
-            //TODO: check if this is youtube...
-            if (note.mediaUrl != null && note.mediaUrl.length() > 0) {
+            if (note.hasDisplayableMedia()) {
                 view = mLayoutInflater.inflate(R.layout.detail_view_textimage, container, false);
                 ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewImage);
 

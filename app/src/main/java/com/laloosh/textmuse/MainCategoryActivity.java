@@ -485,9 +485,7 @@ public class MainCategoryActivity extends ActionBarActivity {
                 LayoutInflater inflater = mContext.getLayoutInflater();
                 ViewHolder viewHolder = new ViewHolder();
 
-                if (firstNote.mediaUrl != null && firstNote.mediaUrl.length() > 0) {
-                    //TODO: check if youtube...
-
+                if (firstNote.hasDisplayableMedia()) {
                     rowView = inflater.inflate(R.layout.list_ele_category_textimage, parent, false);
                     viewHolder.mBackgroundImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewItemBackground);
                     viewHolder.mTextOnly = false;
@@ -571,7 +569,7 @@ public class MainCategoryActivity extends ActionBarActivity {
         public int getItemViewType(int position) {
             Category category = mCategories.get(position);
             Note firstNote = category.notes.get(0);
-            if (firstNote.mediaUrl != null && firstNote.mediaUrl.length() > 0) {
+            if (firstNote.hasDisplayableMedia()) {
                 return 0;
             } else {
                 return 1;
