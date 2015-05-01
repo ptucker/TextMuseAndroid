@@ -169,6 +169,8 @@ public class WebDataParser {
                 note.noteId = Integer.parseInt(attributeValue);
             } else if (attributeName.equalsIgnoreCase("new")) {
                 note.newFlag = (Integer.parseInt(attributeValue) > 0);
+            } else if (attributeName.equalsIgnoreCase("liked")) {
+                note.liked = (Integer.parseInt(attributeValue) > 0);
             }
         }
 

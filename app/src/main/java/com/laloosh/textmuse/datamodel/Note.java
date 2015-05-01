@@ -1,6 +1,7 @@
 package com.laloosh.textmuse.datamodel;
 
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,6 +12,7 @@ public class Note implements Parcelable {
     public String text;
     public String mediaUrl;
     public String extraUrl;
+    public boolean liked;
 
     //Non-serialized value that are used temporarily
     public transient boolean savedInternally;
@@ -43,6 +45,30 @@ public class Note implements Parcelable {
         return true;
     }
 
+    public boolean hasExternalLink() {
+        if (extraUrl == null || extraUrl.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public Uri getExternalLinkUri() {
+        if (!hasExternalLink()) {
+            return null;
+        }
+
+        String url = extraUrl;
+        Uri uri = Uri.parse(url);
+        String scheme = uri.getScheme();
+
+        if (scheme == null || scheme.isEmpty()) {
+            url = "http://" + extraUrl;
+            uri = Uri.parse(url);
+        }
+
+        return uri;
+    }
+
     public boolean isMediaYoutube() {
         String[] youtubeBaseUrls = {"http://youtu.be", "http://www.youtube.com", "https://youtu.be", "https://www.youtube.com"};
 
@@ -71,6 +97,7 @@ public class Note implements Parcelable {
         ParcelUtils.writeString(out, text);
         ParcelUtils.writeString(out, mediaUrl);
         ParcelUtils.writeString(out, extraUrl);
+        out.writeByte(liked ? (byte) 1 : (byte) 0);
 
         out.writeByte(savedInternally ? (byte) 1 : (byte) 0);
         out.writeByte(saveFailed ? (byte) 1 : (byte) 0);
@@ -92,6 +119,7 @@ public class Note implements Parcelable {
         text = ParcelUtils.readString(in);
         mediaUrl = ParcelUtils.readString(in);
         extraUrl = ParcelUtils.readString(in);
+        liked = (in.readByte() != 0);
 
         savedInternally = (in.readByte() != 0);
         saveFailed = (in.readByte() != 0);

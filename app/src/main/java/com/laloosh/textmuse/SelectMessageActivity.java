@@ -2,6 +2,7 @@ package com.laloosh.textmuse;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -199,6 +200,50 @@ public class SelectMessageActivity extends ActionBarActivity {
                 }
 
             }
+
+            //Link if necessary
+            ViewGroup linkLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLink);
+            if (note.hasExternalLink()) {
+                linkLayout.setVisibility(View.VISIBLE);
+                linkLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, note.getExternalLinkUri());
+                            mActivity.startActivity(intent);
+                        } catch (Exception e) {
+                            Log.e(Constants.TAG, "Could not open link!");
+                            //TODO: error popup?
+                        }
+                    }
+                });
+            } else {
+                linkLayout.setVisibility(View.GONE);
+            }
+
+            //Highlight colors
+            ViewGroup highlightLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutHighlight);
+            ImageView highlightImage = (ImageView) view.findViewById(R.id.detailViewImageViewHighlight);
+            TextView highlightText = (TextView) view.findViewById(R.id.detailViewTextViewHighlight);
+            if (note.liked) {
+                highlightImage.setColorFilter(0xffefd830);
+                highlightText.setTextColor(0xffefd830);
+            }
+            highlightLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Only allow highlighting and not unhighlighting for now
+                    if (!note.liked) {
+                        note.liked = true;
+                        ImageView highlightImage = (ImageView) v.findViewById(R.id.detailViewImageViewHighlight);
+                        TextView highlightText = (TextView) v.findViewById(R.id.detailViewTextViewHighlight);
+                        highlightImage.setColorFilter(0xffefd830);
+                        highlightText.setTextColor(0xffefd830);
+
+                        //TODO: also kick of a job to actually send the like back up
+                    }
+                }
+            });
 
             //Select box color
             ImageView selectBackground = (ImageView) view.findViewById(R.id.detailViewImageViewSelect);
