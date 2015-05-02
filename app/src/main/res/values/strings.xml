@@ -16,4 +16,5 @@
     <string name="title_activity_contact_only_picker">Add Contacts To Group</string>
     <string name="contacts_only_picker_search_label">Add Contacts To Group</string>
     <string name="contacts_only_picker_search_hint">Find a Contact</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>

@@ -19,10 +19,14 @@ public class GlobalData {
 
     private TextMuseData mData;
     private TextMuseStoredContacts mStoredContacts;
+    private TextMuseSettings mSettings;
+    private boolean mLoaded = false;
 
     public void loadData(Context context) {
         mData = TextMuseData.load(context);
         mStoredContacts = TextMuseStoredContacts.load(context);
+        mSettings = TextMuseSettings.load(context);
+        mLoaded = true;
     }
 
     public TextMuseData getData() {
@@ -39,6 +43,21 @@ public class GlobalData {
 
     public void updateStoredContacts(TextMuseStoredContacts storedContacts) {
         mStoredContacts = storedContacts;
+    }
+
+    public TextMuseSettings getSettings() {
+        if (mSettings == null) {
+            mSettings = new TextMuseSettings();
+        }
+        return mSettings;
+    }
+
+    public void updateTextMuseSettings(TextMuseSettings settings) {
+        mSettings = settings;
+    }
+
+    public boolean hasLoadedData() {
+        return mLoaded;
     }
 
 }
