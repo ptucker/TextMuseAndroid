@@ -24,6 +24,7 @@ import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -45,6 +46,7 @@ public class MainCategoryActivity extends ActionBarActivity {
     private static final int RANDOM_NOTES_PER_CATEGORY = 3;
 
     private TextMuseData mData;
+    private TextMuseSettings mSettings;
     private ViewPager mMainViewPager;
     private HeaderViewPagerAdapter mMainPagerAdapter;
     private ListView mListView;
@@ -61,6 +63,7 @@ public class MainCategoryActivity extends ActionBarActivity {
         GlobalData instance = GlobalData.getInstance();
         instance.loadData(this);
         mData = instance.getData();
+        mSettings = instance.getSettings();
 
         generateRandomNotes();
 
@@ -142,7 +145,7 @@ public class MainCategoryActivity extends ActionBarActivity {
         mRandomNotes = new ArrayList<Note> ();
 
         for (Category category : mData.categories) {
-            if (category.notes != null && category.notes.size() > 0) {
+            if (category.notes != null && category.notes.size() > 0 && mSettings.shouldShowCategory(category.name)) {
                 if (category.notes.size() <= RANDOM_NOTES_PER_CATEGORY) {
                     mRandomNotes.addAll(category.notes);
                 } else {
@@ -187,7 +190,7 @@ public class MainCategoryActivity extends ActionBarActivity {
             if (mCategoryListAdapter != null) {
                 mCategoryListAdapter.updateCategories(mData.categories);
             } else {
-                mCategoryListAdapter = new MainCategoryListArrayAdapter(this, mData.categories);
+                mCategoryListAdapter = new MainCategoryListArrayAdapter(this, mData.categories, mSettings);
                 mListView.setAdapter(mCategoryListAdapter);
             }
             mListView.setVisibility(View.VISIBLE);
@@ -449,7 +452,9 @@ public class MainCategoryActivity extends ActionBarActivity {
     public static class MainCategoryListArrayAdapter extends ArrayAdapter<Category> {
 
         private Activity mContext;
-        private List<Category> mCategories;
+        private List<Category> mOriginalCategories;
+        private List<Category> mShownCategories;
+        private TextMuseSettings mSettings;
 
         //view holder pattern to prevent repeated queries for ID
         static class ViewHolder {
@@ -469,17 +474,25 @@ public class MainCategoryActivity extends ActionBarActivity {
             public boolean mTextOnly;
         }
 
-        public MainCategoryListArrayAdapter(Activity context, List<Category> categories) {
+        public MainCategoryListArrayAdapter(Activity context, List<Category> categories, TextMuseSettings settings) {
             super(context, R.layout.list_ele_category, categories);
             this.mContext = context;
-            this.mCategories = categories;
+            this.mOriginalCategories = categories;
+            this.mSettings = settings;
+            this.mShownCategories = new ArrayList<Category>();
+            generateShownCategories();
+        }
+
+        @Override
+        public int getCount() {
+            return mShownCategories.size();
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View rowView = convertView;
 
-            Category category = mCategories.get(position);
+            final Category category = mShownCategories.get(position);
             if (category.notes == null || category.notes.size() <= 0) {
                 return null;
             }
@@ -533,10 +546,13 @@ public class MainCategoryActivity extends ActionBarActivity {
             View.OnClickListener onClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, SelectMessageActivity.class);
-                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, position);
-                    intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
-                    mContext.startActivity(intent);
+                    int originalIndex = getOriginalIndex(category);
+                    if (originalIndex > 0) {
+                        Intent intent = new Intent(mContext, SelectMessageActivity.class);
+                        intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, originalIndex);
+                        intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
+                        mContext.startActivity(intent);
+                    }
                 }
             };
 
@@ -572,7 +588,7 @@ public class MainCategoryActivity extends ActionBarActivity {
 
         @Override
         public int getItemViewType(int position) {
-            Category category = mCategories.get(position);
+            Category category = mShownCategories.get(position);
             Note firstNote = category.notes.get(0);
             if (firstNote.hasDisplayableMedia()) {
                 return 0;
@@ -582,8 +598,29 @@ public class MainCategoryActivity extends ActionBarActivity {
         }
 
         public void updateCategories(List<Category> categories) {
-            mCategories = categories;
+            mOriginalCategories = categories;
+            generateShownCategories();
             this.notifyDataSetChanged();
+        }
+
+        private void generateShownCategories() {
+            mShownCategories.clear();
+            for (Category c : mOriginalCategories) {
+                if (mSettings.shouldShowCategory(c.name)) {
+                    mShownCategories.add(c);
+                }
+            }
+        }
+
+        private int getOriginalIndex(Category category) {
+            for (int i = 0; i < mOriginalCategories.size(); i++) {
+                Category c = mOriginalCategories.get(i);
+                if (c.name.equals(category.name)) {
+                    return i;
+                }
+            }
+
+            return -1;
         }
     }
 
