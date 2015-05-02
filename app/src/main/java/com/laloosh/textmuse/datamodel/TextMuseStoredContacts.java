@@ -140,9 +140,39 @@ public class TextMuseStoredContacts {
 //        return false;
 //    }
 
-    public void addOrUpdateRecentContacts(List<TextMuseContact> contactList) {
+    public void updateRecentContactsFromSettings (TextMuseSettings settings) {
+        if (settings == null) {
+            return;
+        }
+
+        if (!settings.saveRecentContacts) {
+            maxRecentContacts = 0;
+            recentContacts.clear();
+            return;
+        }
+
+        maxRecentContacts = settings.recentContactLimit;
+
+        if (recentContacts.size() > maxRecentContacts) {
+            int numToDelete = recentContacts.size() - maxRecentContacts;
+            Iterator iterator = recentContacts.iterator();
+            while (iterator.hasNext() && numToDelete > 0) {
+                iterator.next();
+                iterator.remove();
+                numToDelete--;
+            }
+        }
+    }
+
+    public void addOrUpdateRecentContacts(List<TextMuseContact> contactList, TextMuseSettings settings) {
         if (recentContacts == null) {
             recentContacts = new ArrayList<TextMuseRecentContact>();
+        }
+
+        updateRecentContactsFromSettings(settings);
+
+        if (!settings.saveRecentContacts) {
+            return;
         }
 
         //If the number of contacts to add to our recent list is as big or bigger than the number

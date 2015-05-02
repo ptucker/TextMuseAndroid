@@ -19,6 +19,7 @@ import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.LocalNotification;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.datamodel.TextMuseSettings;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -49,6 +50,11 @@ public class AlarmReceivedBroadcastReceiver extends BroadcastReceiver {
     }
 
     private boolean shouldCreateNotification(Context context) {
+
+        TextMuseSettings settings = TextMuseSettings.load(context);
+        if (!settings.notifications) {
+            return false;
+        }
 
         //See if we need to post a notification
         DateTimeFormatter fmt = ISODateTimeFormat.dateTime();

@@ -36,6 +36,7 @@ import com.laloosh.textmuse.datamodel.TextMuseContact;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseGroup;
 import com.laloosh.textmuse.datamodel.TextMuseRecentContact;
+import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
 import com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment;
 import com.laloosh.textmuse.dialogs.EnterGroupDialogFragment;
@@ -60,6 +61,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
 
     ContactGroupListAdapter mAdapter;
     TextMuseStoredContacts mStoredContacts;
+    TextMuseSettings mSettings;
     ContactAndGroupPickerState mState;
     Note mNote;
 
@@ -81,6 +83,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         }
 
         mStoredContacts = GlobalData.getInstance().getStoredContacts();
+        mSettings = GlobalData.getInstance().getSettings();
         if (mStoredContacts == null) {
             GlobalData.getInstance().loadData(this);
             mStoredContacts = GlobalData.getInstance().getStoredContacts();
@@ -97,6 +100,8 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         if (mStoredContacts == null) {
             mStoredContacts = new TextMuseStoredContacts();
         }
+
+
 
         mAdapter = new ContactGroupListAdapter(this, mHandler);
 
@@ -196,9 +201,6 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
-        //TODO: add in Send
-
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.menu_add_group) {
@@ -274,7 +276,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     }
 
     private void updateRecentContacts() {
-        mStoredContacts.addOrUpdateRecentContacts(mState.getSelectedContacts());
+        mStoredContacts.addOrUpdateRecentContacts(mState.getSelectedContacts(), mSettings);
         mStoredContacts.save(this);
         mAdapter.notifyDataSetChanged();
     }

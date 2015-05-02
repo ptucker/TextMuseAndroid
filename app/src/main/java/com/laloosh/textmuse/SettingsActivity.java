@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.datamodel.TextMuseRecentContact;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
 
@@ -33,6 +34,7 @@ public class SettingsActivity extends ActionBarActivity {
     private SettingsListAdapter mAdapter;
     private TextMuseSettings mSettings;
     private TextMuseData mData;
+    private TextMuseStoredContacts mStoredContacts;
 
     private boolean mShouldShowCategories;
 
@@ -58,6 +60,8 @@ public class SettingsActivity extends ActionBarActivity {
         } else {
             mShouldShowCategories = true;
         }
+
+        mStoredContacts = globalData.getStoredContacts();
 
         mAdapter = new SettingsListAdapter();
         mListView = (ListView) findViewById(android.R.id.list);
@@ -173,6 +177,11 @@ public class SettingsActivity extends ActionBarActivity {
                         seekBar.setEnabled(false);
                     }
                     mSettings.save(SettingsActivity.this);
+
+                    if (mStoredContacts != null) {
+                        mStoredContacts.updateRecentContactsFromSettings(mSettings);
+                        mStoredContacts.save(SettingsActivity.this);
+                    }
                 }
             });
 
@@ -192,6 +201,11 @@ public class SettingsActivity extends ActionBarActivity {
                     mSettings.recentContactLimit = realValue;
                     mSettings.save(SettingsActivity.this);
                     Log.d(Constants.TAG, "Saving value of contacts");
+
+                    if (mStoredContacts != null) {
+                        mStoredContacts.updateRecentContactsFromSettings(mSettings);
+                        mStoredContacts.save(SettingsActivity.this);
+                    }
                 }
             });
 
