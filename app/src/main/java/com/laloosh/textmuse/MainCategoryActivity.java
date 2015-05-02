@@ -203,7 +203,7 @@ public class MainCategoryActivity extends ActionBarActivity {
             }
         };
 
-        FetchNotesAsyncTask task = new FetchNotesAsyncTask(handler);
+        FetchNotesAsyncTask task = new FetchNotesAsyncTask(handler, mData == null ? -1 : mData.appId);
         task.execute();
     }
 
@@ -245,6 +245,8 @@ public class MainCategoryActivity extends ActionBarActivity {
             showFailureMessage();
             return;
         }
+
+        Log.d(Constants.TAG, "Received and parsed data for app ID: " + Integer.toString(data.appId));
 
         boolean differentData = true;
         if (mData != null) {

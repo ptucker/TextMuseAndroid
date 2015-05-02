@@ -3,6 +3,8 @@ package com.laloosh.textmuse;
 import android.util.Log;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -62,11 +64,15 @@ public class ConnectionUtils {
 
         byte[] result = getUrlBytes(stringUrl, params);
 
-        if (result != null) {
+        return byteArrayToString(result);
+    }
+
+    private String byteArrayToString(byte[] input) {
+        if (input != null) {
             String resultString;
 
             try {
-                resultString = new String(result, "UTF-8");
+                resultString = new String(input, "UTF-8");
                 return resultString;
             } catch (UnsupportedEncodingException e) {
                 //This shouldn't happen
@@ -75,6 +81,69 @@ public class ConnectionUtils {
         }
 
         return null;
+    }
+
+    public String postUrl(String stringUrl, byte[] data, HashMap<String, String> params) {
+
+        byte[] result = null;
+
+        if (data != null) {
+            ByteArrayInputStream is = new ByteArrayInputStream(data);
+            result = postUrlBytes(stringUrl, is, params);
+        } else {
+            result = postUrlBytes(stringUrl, null, params);
+        }
+
+        return byteArrayToString(result);
+    }
+
+    public byte[] postUrlBytes(String stringUrl, InputStream inputDataStream, HashMap<String, String> params) {
+        InputStream is = null;
+        byte[] result = null;
+
+        try {
+
+            HttpURLConnection conn = openConnection(stringUrl);
+            conn.setReadTimeout(READ_TIMEOUT);
+            conn.setConnectTimeout(CONNECT_TIMEOUT);
+            conn.setRequestMethod("POST");
+
+            if (params != null && !params.isEmpty()) {
+                for (HashMap.Entry<String, String> entry : params.entrySet()) {
+                    conn.setRequestProperty(entry.getKey(), entry.getValue());
+                }
+            }
+
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            if (inputDataStream != null) {
+                DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+                IOUtils.copy(inputDataStream, os);
+                os.close();
+            }
+
+            conn.connect();
+
+            int response = conn.getResponseCode();
+            if (response != 200) {
+                Log.e(Constants.TAG, "Got an unexpected response from the server during post, URL was: " + stringUrl + " and response was: " + Integer.toString(response));
+                return null;
+            }
+
+            is = conn.getInputStream();
+            result = IOUtils.toByteArray(is);
+
+        } catch (Exception e) {
+            Log.e(Constants.TAG, "Error posting URL using parameters", e);
+            return null;
+        } finally {
+            if (is != null) {
+                IOUtils.closeQuietly(is);
+            }
+        }
+
+        return result;
     }
 
 //    public byte[] getUrlBytes(String stringUrl, HashMap<String, String> params) {

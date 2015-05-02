@@ -21,6 +21,7 @@ import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment;
 import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -42,6 +43,8 @@ public class SelectMessageActivity extends ActionBarActivity {
     private int mCategoryIndex;
     private int mColorOffset;
 
+    private TextMuseData mData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,20 +61,20 @@ public class SelectMessageActivity extends ActionBarActivity {
             mColorOffset = intent.getIntExtra(COLOR_OFFSET_EXTRA, 0);
         }
 
-        TextMuseData data = GlobalData.getInstance().getData();
-        if (data == null || data.categories == null || mCategoryIndex >= data.categories.size()) {
+        TextMuseData mData = GlobalData.getInstance().getData();
+        if (mData == null || mData.categories == null || mCategoryIndex >= mData.categories.size()) {
             //quit the activity and go to the previous screen if somehow there's no data
             finish();
             return;
         }
 
-        Category category = data.categories.get(mCategoryIndex);
+        Category category = mData.categories.get(mCategoryIndex);
 
         mViewPager = (ViewPager) findViewById(R.id.selectMessageViewPager);
 
         int color = Constants.COLOR_LIST[mColorOffset % Constants.COLOR_LIST.length];
 
-        mPagerAdapter = new NoteViewPagerAdapter(category.notes, this, color, mCategoryIndex);
+        mPagerAdapter = new NoteViewPagerAdapter(category.notes, this, color, mCategoryIndex, mData);
         mViewPager.setAdapter(mPagerAdapter);
 
         mPageIndicator = (CirclePageIndicator) findViewById(R.id.selectMessagePageIndicator);
@@ -118,8 +121,13 @@ public class SelectMessageActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void showHighlightFailedDialog() {
+        SetHighlightProblemDialogFragment fragment = SetHighlightProblemDialogFragment.newInstance();
+        fragment.show(getSupportFragmentManager(), "highlightfailedfragment");
+    }
 
-    public static class NoteViewPagerAdapter extends PagerAdapter {
+
+    public static class NoteViewPagerAdapter extends PagerAdapter implements SetHighlightAsyncTask.SetHighlightAsyncTaskHandler {
 
         private List<Note> mNotes;
         private LayoutInflater mLayoutInflater;
@@ -127,14 +135,16 @@ public class SelectMessageActivity extends ActionBarActivity {
         private int mColor;
         private HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
         private int mCategoryPosition;
+        private TextMuseData mData;
 
-        public NoteViewPagerAdapter(List<Note> notes, Activity activity, int color, int categoryPosition) {
+        public NoteViewPagerAdapter(List<Note> notes, Activity activity, int color, int categoryPosition, TextMuseData data) {
             mNotes = notes;
             mActivity = activity;
             mLayoutInflater = activity.getLayoutInflater();
             mColor = color;
             mDownloadTargets = new HashMap<Integer, ImageDownloadTarget>();
             mCategoryPosition = categoryPosition;
+            mData = data;
         }
 
         @Override
@@ -232,16 +242,21 @@ public class SelectMessageActivity extends ActionBarActivity {
             highlightLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Only allow highlighting and not unhighlighting for now
+                    ImageView highlightImage = (ImageView) v.findViewById(R.id.detailViewImageViewHighlight);
+                    TextView highlightText = (TextView) v.findViewById(R.id.detailViewTextViewHighlight);
+
                     if (!note.liked) {
                         note.liked = true;
-                        ImageView highlightImage = (ImageView) v.findViewById(R.id.detailViewImageViewHighlight);
-                        TextView highlightText = (TextView) v.findViewById(R.id.detailViewTextViewHighlight);
                         highlightImage.setColorFilter(0xffefd830);
                         highlightText.setTextColor(0xffefd830);
-
-                        //TODO: also kick of a job to actually send the like back up
+                    } else {
+                        note.liked = false;
+                        highlightImage.setColorFilter(null);
+                        highlightText.setTextColor(0xffbcbec0);
                     }
+
+                    SetHighlightAsyncTask task = new SetHighlightAsyncTask(NoteViewPagerAdapter.this, mData.appId, note.liked, note, v);
+                    task.execute();
                 }
             });
 
@@ -283,6 +298,40 @@ public class SelectMessageActivity extends ActionBarActivity {
         @Override
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
+        }
+
+        @Override
+        public void handlePostResult(String s, Note note, boolean liked, View view) {
+
+            //in the case of a post error, we'll try to set everything back to what it was before if possible
+            if (s == null) {
+                Log.e(Constants.TAG, "Failed to post to highlight URL, attempting to revert like data");
+
+                note.liked = !liked;
+
+                //in the case where we've passed this view, we don't need to re-set these
+                if (view != null) {
+                    ImageView highlightImage = (ImageView) view.findViewById(R.id.detailViewImageViewHighlight);
+                    TextView highlightText = (TextView) view.findViewById(R.id.detailViewTextViewHighlight);
+
+                    if (note.liked) {
+                        highlightImage.setColorFilter(0xffefd830);
+                        highlightText.setTextColor(0xffefd830);
+                    } else {
+                        highlightImage.setColorFilter(null);
+                        highlightText.setTextColor(0xffbcbec0);
+                    }
+
+                }
+
+                SelectMessageActivity activity = (SelectMessageActivity) mActivity;
+                activity.showHighlightFailedDialog();
+            } else {
+                Log.d(Constants.TAG, "Succeeded in posting like/highlight data to server");
+                note.liked = liked;
+            }
+
+            mData.save(mActivity);
         }
     }
 }
