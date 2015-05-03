@@ -11,8 +11,7 @@
         android:id="@+id/detailViewLayoutHighlight"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         >
 
         <ImageView
@@ -102,7 +101,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.3"
             android:layout_above="@id/detailViewButtonSelectButton"
             android:id="@+id/detailViewLayoutText"
             android:gravity="center"
