@@ -35,8 +35,7 @@ public class WebDataParser {
             xpp.setInput(reader);
             xpp.nextTag();
 
-            return parseContent(xpp);          //TODO: need to actually return this value somewhere
-
+            return parseContent(xpp);
 
         } catch (XmlPullParserException e) {
             Log.e(Constants.TAG, "Error parsing XML data", e);
