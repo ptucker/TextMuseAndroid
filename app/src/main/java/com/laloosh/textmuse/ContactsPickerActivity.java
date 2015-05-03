@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.Telephony;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -43,9 +42,7 @@ import com.laloosh.textmuse.dialogs.EnterGroupDialogFragment;
 import com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment;
 import com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 
 public class ContactsPickerActivity extends ActionBarActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler{
@@ -100,8 +97,6 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         if (mStoredContacts == null) {
             mStoredContacts = new TextMuseStoredContacts();
         }
-
-
 
         mAdapter = new ContactGroupListAdapter(this, mHandler);
 
