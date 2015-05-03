@@ -44,6 +44,7 @@ import java.util.TimerTask;
 public class MainCategoryActivity extends ActionBarActivity {
     private static final long INTERVAL_BEFORE_AUTOSLIDESHOW = 15000;  //At least 15 seconds after the user scrolls a page before we autoscroll again
     private static final int RANDOM_NOTES_PER_CATEGORY = 3;
+    private static final int REQUEST_CODE_SETTINGS = 2333;
 
     private TextMuseData mData;
     private TextMuseSettings mSettings;
@@ -126,7 +127,7 @@ public class MainCategoryActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
 
             Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE_SETTINGS);
 
             return true;
         }
@@ -282,6 +283,26 @@ public class MainCategoryActivity extends ActionBarActivity {
 
         WebDataParser parser = new WebDataParser();
         return parser.parse(s);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_SETTINGS) {
+            if (resultCode == Activity.RESULT_OK) {
+                mSettings = GlobalData.getInstance().getSettings();
+
+                if (data != null && data.getBooleanExtra(SettingsActivity.SHOWN_CATEGORIES_CHANGED_EXTRA, false)) {
+                    //Refresh our data if the shown categories changed
+
+                    mCategoryListAdapter.updateSettings(mSettings);
+                    generateRandomNotes();
+                    mMainPagerAdapter.updateNotes(mRandomNotes);
+                    mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
+
+                    mCategoryListAdapter.updateCategories(mData.categories);
+                }
+            }
+        }
     }
 
     public class ChangeHeaderTask extends TimerTask {
@@ -595,6 +616,10 @@ public class MainCategoryActivity extends ActionBarActivity {
             } else {
                 return 1;
             }
+        }
+
+        public void updateSettings(TextMuseSettings settings) {
+            mSettings = settings;
         }
 
         public void updateCategories(List<Category> categories) {

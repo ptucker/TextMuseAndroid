@@ -1,5 +1,6 @@
 package com.laloosh.textmuse;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 
 public class SettingsActivity extends ActionBarActivity {
 
+    public static final String SHOWN_CATEGORIES_CHANGED_EXTRA = "com.laloosh.textmuse.settings.categorieschanged";
+
     private ListView mListView;
     private SettingsListAdapter mAdapter;
     private TextMuseSettings mSettings;
@@ -37,6 +40,7 @@ public class SettingsActivity extends ActionBarActivity {
     private TextMuseStoredContacts mStoredContacts;
 
     private boolean mShouldShowCategories;
+    private boolean mChangedCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class SettingsActivity extends ActionBarActivity {
         }
 
         mStoredContacts = globalData.getStoredContacts();
+        mChangedCategories = false;
 
         mAdapter = new SettingsListAdapter();
         mListView = (ListView) findViewById(android.R.id.list);
@@ -69,7 +74,45 @@ public class SettingsActivity extends ActionBarActivity {
 
     }
 
-    public class SettingsListAdapter extends BaseAdapter implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+
+            setActivityResultValue();
+            finish();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        setActivityResultValue();
+
+        super.onBackPressed();
+    }
+
+    private void setActivityResultValue() {
+
+        GlobalData.getInstance().updateTextMuseSettings(mSettings);
+
+        if (mChangedCategories) {
+            Intent intent = new Intent();
+            intent.putExtra(SHOWN_CATEGORIES_CHANGED_EXTRA, true);
+            setResult(Activity.RESULT_OK, intent);
+        } else {
+            setResult(Activity.RESULT_OK);
+        }
+
+    }
+
+    public class SettingsListAdapter extends BaseAdapter {
 
         private ArrayList<String> mCategoryList;
         private LayoutInflater mLayoutInflater;
@@ -289,6 +332,7 @@ public class SettingsActivity extends ActionBarActivity {
                     Log.d(Constants.TAG, "Setting show category for " + categoryName + " to " + isChecked);
                     mSettings.setShowCategory(categoryName, isChecked);
                     mSettings.save(SettingsActivity.this);
+                    mChangedCategories = true;
                 }
             });
 
@@ -327,17 +371,6 @@ public class SettingsActivity extends ActionBarActivity {
             //5 different types of views
             return 5;
         }
-
-        @Override
-        public void onClick(View v) {
-
-        }
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        }
-
-
 
     }
 
