@@ -636,6 +636,7 @@ public class MainCategoryActivity extends ActionBarActivity {
                 holder.mTextView.setVisibility(View.INVISIBLE);
                 Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with empty text");
             } else {
+                holder.mTextView.setVisibility(View.VISIBLE);
                 holder.mTextView.setText(firstNote.text);
                 Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with text: " + firstNote.text);
             }
