@@ -52,7 +52,7 @@ public class AlarmReceivedBroadcastReceiver extends BroadcastReceiver {
     private boolean shouldCreateNotification(Context context) {
 
         TextMuseSettings settings = TextMuseSettings.load(context);
-        if (!settings.notifications) {
+        if (settings == null || !settings.notifications) {
             return false;
         }
 

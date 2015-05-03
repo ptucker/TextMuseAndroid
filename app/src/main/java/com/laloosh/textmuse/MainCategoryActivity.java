@@ -140,6 +140,7 @@ public class MainCategoryActivity extends ActionBarActivity {
 
         if (mData == null || mData.categories == null) {
             mRandomNotes = null;
+            mRandomNoteIndex = null;
             return;
         }
 
@@ -376,6 +377,10 @@ public class MainCategoryActivity extends ActionBarActivity {
         }
 
         public int getMidpoint() {
+            if (mNotes == null) {
+                return 0;
+            }
+
             return (WRAPAROUND_MULTIPLIER / 2) * (mNotes.size() + 1);
         }
 
@@ -604,7 +609,7 @@ public class MainCategoryActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     int originalIndex = getOriginalIndex(category);
-                    if (originalIndex > 0) {
+                    if (originalIndex >= 0) {
                         Intent intent = new Intent(mContext, SelectMessageActivity.class);
                         intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, originalIndex);
                         intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);

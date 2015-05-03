@@ -15,3 +15,38 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+
+-assumenosideeffects class android.util.Log {
+    public static int d(...);
+}
+
+-dontwarn com.squareup.okhttp.**
+-dontwarn org.joda.convert.**
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+
+# Some more gson stuff for more details in crashes
+-keep class com.google.gson.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.laloosh.textmuse.datamodel.gson.DateTimeConverter { *; }
+-keep class com.laloosh.textmuse.datamodel.gson.GsonConverter { *; }
+-keep class com.laloosh.textmuse.datamodel.Category { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.LocalNotification { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.Note { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseContact { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseData { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseGroup { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseRecentContact { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseSettings { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseStoredContacts { <fields>; }
+
