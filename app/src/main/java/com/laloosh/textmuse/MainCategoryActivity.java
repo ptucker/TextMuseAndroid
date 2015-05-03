@@ -53,6 +53,7 @@ public class MainCategoryActivity extends ActionBarActivity {
     private ListView mListView;
     private MainCategoryListArrayAdapter mCategoryListAdapter;
     private ArrayList<Note> mRandomNotes;
+    private HashMap<Integer, CategoryAndNoteIndex> mRandomNoteIndex;
     private Timer mTimer;
     private long mLastUserScrollMillis;
 
@@ -73,7 +74,7 @@ public class MainCategoryActivity extends ActionBarActivity {
 
         mMainViewPager = (ViewPager) findViewById(R.id.mainFragmentViewPagerTop);
 
-        mMainPagerAdapter = new HeaderViewPagerAdapter(this, mRandomNotes);
+        mMainPagerAdapter = new HeaderViewPagerAdapter(this, mRandomNotes, mRandomNoteIndex);
         mMainViewPager.setAdapter(mMainPagerAdapter);
         mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
 
@@ -144,15 +145,34 @@ public class MainCategoryActivity extends ActionBarActivity {
 
         //if we have data, then get some of it
         mRandomNotes = new ArrayList<Note> ();
+        mRandomNoteIndex = new HashMap<Integer, CategoryAndNoteIndex>();
 
-        for (Category category : mData.categories) {
+        for (int catIdx = 0; catIdx < mData.categories.size(); catIdx++) {
+            Category category = mData.categories.get(catIdx);
+
             if (category.notes != null && category.notes.size() > 0 && mSettings.shouldShowCategory(category.name)) {
                 if (category.notes.size() <= RANDOM_NOTES_PER_CATEGORY) {
-                    mRandomNotes.addAll(category.notes);
+
+                    for (int i = 0; i < category.notes.size(); i++) {
+                        Note note = category.notes.get(i);
+                        mRandomNotes.add(note);
+
+                        CategoryAndNoteIndex categoryAndNoteIndex = new CategoryAndNoteIndex();
+                        categoryAndNoteIndex.mCategoryIndex = catIdx;
+                        categoryAndNoteIndex.mNoteIndex = i;
+                        mRandomNoteIndex.put(note.noteId, categoryAndNoteIndex);
+                    }
+
                 } else {
                     int indexGap = category.notes.size() / RANDOM_NOTES_PER_CATEGORY;
                     for (int i = 0; i < RANDOM_NOTES_PER_CATEGORY; i++) {
-                        mRandomNotes.add(category.notes.get(i * indexGap));
+                        Note note = category.notes.get(i * indexGap);
+                        mRandomNotes.add(note);
+
+                        CategoryAndNoteIndex categoryAndNoteIndex = new CategoryAndNoteIndex();
+                        categoryAndNoteIndex.mCategoryIndex = catIdx;
+                        categoryAndNoteIndex.mNoteIndex = i * indexGap;
+                        mRandomNoteIndex.put(note.noteId, categoryAndNoteIndex);
                     }
                 }
             }
@@ -269,7 +289,7 @@ public class MainCategoryActivity extends ActionBarActivity {
             GlobalData.getInstance().updateData(data);
             generateViewsFromData();
             generateRandomNotes();
-            mMainPagerAdapter.updateNotes(mRandomNotes);
+            mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);
             mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
         }
 
@@ -296,7 +316,7 @@ public class MainCategoryActivity extends ActionBarActivity {
 
                     mCategoryListAdapter.updateSettings(mSettings);
                     generateRandomNotes();
-                    mMainPagerAdapter.updateNotes(mRandomNotes);
+                    mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);
                     mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
 
                     mCategoryListAdapter.updateCategories(mData.categories);
@@ -330,6 +350,7 @@ public class MainCategoryActivity extends ActionBarActivity {
         private static final int TIMES_SINCE_RANDOM_LOGO_LIMIT = 6;
 
         private ArrayList<Note> mNotes;
+        private HashMap<Integer, CategoryAndNoteIndex> mNotesIndex;
         private LayoutInflater mLayoutInflater;
         private Activity mContext;
         private int mTimesSinceRandomLogo;
@@ -338,8 +359,9 @@ public class MainCategoryActivity extends ActionBarActivity {
         //Needed to download images.  Should be pulled out into a base class
         private HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
 
-        public HeaderViewPagerAdapter(Activity activity, ArrayList<Note> notes) {
+        public HeaderViewPagerAdapter(Activity activity, ArrayList<Note> notes, HashMap<Integer, CategoryAndNoteIndex> notesIndex) {
             mNotes = notes;
+            mNotesIndex = notesIndex;
             mLayoutInflater = activity.getLayoutInflater();
             mContext = activity;
             mDownloadTargets = new HashMap<Integer, ImageDownloadTarget>();
@@ -347,8 +369,9 @@ public class MainCategoryActivity extends ActionBarActivity {
             mRandom = new Random();
         }
 
-        public void updateNotes(ArrayList<Note> notes) {
+        public void updateNotes(ArrayList<Note> notes, HashMap<Integer, CategoryAndNoteIndex> noteIndex) {
             mNotes = notes;
+            mNotesIndex = noteIndex;
             notifyDataSetChanged();
         }
 
@@ -385,7 +408,7 @@ public class MainCategoryActivity extends ActionBarActivity {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
 
             View view = null;
 
@@ -443,9 +466,22 @@ public class MainCategoryActivity extends ActionBarActivity {
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(mContext, ContactsPickerActivity.class);
-                            intent.putExtra(ContactsPickerActivity.NOTE_OBJECT_EXTRA, note);
-                            mContext.startActivity(intent);
+
+                            CategoryAndNoteIndex categoryAndNoteIndex = mNotesIndex.get(note.noteId);
+
+                            if (categoryAndNoteIndex != null) {
+                                Intent intent = new Intent(mContext, SelectMessageActivity.class);
+                                intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, categoryAndNoteIndex.mCategoryIndex);
+                                intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
+                                intent.putExtra(SelectMessageActivity.NOTE_INDEX_EXTRA, categoryAndNoteIndex.mNoteIndex);
+                                mContext.startActivity(intent);
+
+                            } else {
+                                Intent intent = new Intent(mContext, ContactsPickerActivity.class);
+                                intent.putExtra(ContactsPickerActivity.NOTE_OBJECT_EXTRA, note);
+                                mContext.startActivity(intent);
+
+                            }
                         }
                     });
                 }
@@ -461,7 +497,7 @@ public class MainCategoryActivity extends ActionBarActivity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View)object);
+            container.removeView((View) object);
         }
 
         @Override
@@ -649,5 +685,9 @@ public class MainCategoryActivity extends ActionBarActivity {
         }
     }
 
+    private class CategoryAndNoteIndex {
+        public int mCategoryIndex;
+        public int mNoteIndex;
+    }
 
 }

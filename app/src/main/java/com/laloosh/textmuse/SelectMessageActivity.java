@@ -33,6 +33,7 @@ public class SelectMessageActivity extends ActionBarActivity {
 
     public static final String CATEGORY_EXTRA = "com.laloosh.textmuse.category.extra";
     public static final String COLOR_OFFSET_EXTRA = "com.laloosh.textmuse.category.coloroffset.extra";
+    public static final String NOTE_INDEX_EXTRA = "com.lalaoosh.textmuse.noteid.extra";
 
     private static final String SAVE_STATE_POSITION = "savestateposition";
 
@@ -59,6 +60,11 @@ public class SelectMessageActivity extends ActionBarActivity {
             Intent intent = getIntent();
             mCategoryIndex = intent.getIntExtra(CATEGORY_EXTRA, 0);
             mColorOffset = intent.getIntExtra(COLOR_OFFSET_EXTRA, 0);
+
+            int noteIndex = intent.getIntExtra(NOTE_INDEX_EXTRA, -1);
+            if (noteIndex > 0) {
+                currentItem = noteIndex;
+            }
         }
 
         TextMuseData mData = GlobalData.getInstance().getData();
