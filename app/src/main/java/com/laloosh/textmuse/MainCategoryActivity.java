@@ -41,7 +41,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class MainCategoryActivity extends ActionBarActivity {
+public class MainCategoryActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
     private static final long INTERVAL_BEFORE_AUTOSLIDESHOW = 15000;  //At least 15 seconds after the user scrolls a page before we autoscroll again
     private static final int RANDOM_NOTES_PER_CATEGORY = 3;
     private static final int REQUEST_CODE_SETTINGS = 2333;
@@ -224,14 +224,7 @@ public class MainCategoryActivity extends ActionBarActivity {
         TextView textView = (TextView) findViewById(R.id.mainFragmentTextViewNoItems);
         textView.setText("Loading...");
 
-        FetchNotesAsyncTask.FetchNotesAsyncTaskHandler handler = new FetchNotesAsyncTask.FetchNotesAsyncTaskHandler() {
-            @Override
-            public void handleFetchResult(String s) {
-                handleNewData(s);
-            }
-        };
-
-        FetchNotesAsyncTask task = new FetchNotesAsyncTask(handler, mData == null ? -1 : mData.appId);
+        FetchNotesAsyncTask task = new FetchNotesAsyncTask(this, this, mData == null ? -1 : mData.appId);
         task.execute();
     }
 
@@ -264,46 +257,23 @@ public class MainCategoryActivity extends ActionBarActivity {
         AlarmReceivedBroadcastReceiver.setAlarm(this);
     }
 
-    private void handleNewData(String s) {
-        Log.d(Constants.TAG, "Fetch data complete, parsing data");
-        TextMuseData data = parseData(s);
-        Log.d(Constants.TAG, "Parsing data complete");
-
-        if (data == null || data.categories == null || data.categories.size() <= 0) {
+    @Override
+    public void handleFetchResult(FetchNotesAsyncTask.FetchNotesResult result) {
+        if (result == FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED) {
             showFailureMessage();
             return;
-        }
+        } else if (result == FetchNotesAsyncTask.FetchNotesResult.FETCH_SUCCEEDED_DIFFERENT_DATA) {
 
-        Log.d(Constants.TAG, "Received and parsed data for app ID: " + Integer.toString(data.appId));
+            TextMuseData data = GlobalData.getInstance().getData();
+            if (data != null) {
+                mData = data;
 
-        boolean differentData = true;
-        if (mData != null) {
-            if (mData.isDataSimilar(data)) {
-                differentData = false;
-                Log.d(Constants.TAG, "Download of new data did not show any differences. Keeping old data");
+                generateViewsFromData();
+                generateRandomNotes();
+                mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);
+                mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
             }
         }
-
-        if (differentData) {
-            data.save(this);
-            mData = data;
-            GlobalData.getInstance().updateData(data);
-            generateViewsFromData();
-            generateRandomNotes();
-            mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);
-            mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
-        }
-
-    }
-
-    private TextMuseData parseData(String s) {
-
-        if (s == null || s.length() <= 0) {
-            return null;
-        }
-
-        WebDataParser parser = new WebDataParser();
-        return parser.parse(s);
     }
 
     @Override
