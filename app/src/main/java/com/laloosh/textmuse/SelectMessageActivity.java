@@ -21,6 +21,7 @@ import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment;
 import com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment;
 import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -137,13 +138,13 @@ public class SelectMessageActivity extends ActionBarActivity {
 
         private List<Note> mNotes;
         private LayoutInflater mLayoutInflater;
-        private Activity mActivity;
+        private ActionBarActivity mActivity;
         private int mColor;
         private HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
         private int mCategoryPosition;
         private TextMuseData mData;
 
-        public NoteViewPagerAdapter(List<Note> notes, Activity activity, int color, int categoryPosition, TextMuseData data) {
+        public NoteViewPagerAdapter(List<Note> notes, ActionBarActivity activity, int color, int categoryPosition, TextMuseData data) {
             mNotes = notes;
             mActivity = activity;
             mLayoutInflater = activity.getLayoutInflater();
@@ -191,6 +192,15 @@ public class SelectMessageActivity extends ActionBarActivity {
                             .load(note.mediaUrl)
                             .into(downloadTarget);
                 }
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Load the expanded image on a click
+                        ExpandedImageDialogFragment fragment = ExpandedImageDialogFragment.newInstance(note);
+                        fragment.show(mActivity.getSupportFragmentManager(), "expandedimagefragment");
+                    }
+                });
 
                 useImageLayout = true;
 

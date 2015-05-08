@@ -600,7 +600,12 @@ public class MainCategoryActivity extends ActionBarActivity {
                 }
             }
 
-            holder.mNewBadgeText.setText(Integer.toString(newCount) + " NEW");
+            if (newCount > 0) {
+                holder.mNewBadgeText.setText(Integer.toString(newCount) + " NEW");
+            } else {
+                holder.mNewBadgeText.setText("NEW");
+            }
+
             holder.mNewBadgeBackground.setColorFilter(color);
 
             holder.mArrow.setColorFilter(color);
