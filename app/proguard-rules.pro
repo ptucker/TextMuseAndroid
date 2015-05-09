@@ -16,6 +16,9 @@
 #   public *;
 #}
 
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+
 -printmapping mapping.txt
 
 -assumenosideeffects class android.util.Log {
