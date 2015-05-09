@@ -1,6 +1,7 @@
 package com.laloosh.textmuse;
 
 
+import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -120,6 +121,7 @@ public class SmsUtils {
     }
 
     //Only call this function post Kit-Kat, or else this will crash
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private static Intent getPostKitKatIntent(Context context, Note note, Set<String> phoneNumberSet) {
 
         Intent intent;
@@ -132,26 +134,37 @@ public class SmsUtils {
             return getTextOnlyIntent(note, phoneNumberSet);
         }
 
+        String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(context);
+
+        //If this is a google app -- messenger or hangouts, then the image attach behavior just
+        //doesn't work. Just send a text only thing instead....
+        if (defaultSmsPackageName.toLowerCase().contains("com.google.android")) {
+            Log.d(Constants.TAG, "Google hangouts or messenger detected as default SMS app--falling back to text only");
+            return getTextOnlyIntent(note, phoneNumberSet);
+        }
+
         String[] knownGoodSmsApps = {"com.android.mms"};
 
         //Try some known good sms apps.  These apps allow you to attach pictures and text, and also
         //allow you to specify people to send stuff to. They also have good back button behavior.
         //Try to use these apps if they are present, even if they aren't the default app
         for (int i = 0; i < knownGoodSmsApps.length; i++) {
-            intent = new Intent(Intent.ACTION_SEND);
+            if (defaultSmsPackageName.equalsIgnoreCase(knownGoodSmsApps[i])) {
+                intent = new Intent(Intent.ACTION_SEND);
 
-            intent.setPackage(knownGoodSmsApps[i]);
-            intent.putExtra("address", getToList(phoneNumberSet));
-            intent.putExtra("sms_body", getText(note, false));
+                intent.setPackage(knownGoodSmsApps[i]);
+                intent.putExtra("address", getToList(phoneNumberSet));
+                intent.putExtra("sms_body", getText(note, false));
 
-            if (mediaUri != null) {
-                intent.putExtra(Intent.EXTRA_STREAM, mediaUri);
-                intent.setType("image/png");
-            }
+                if (mediaUri != null) {
+                    intent.putExtra(Intent.EXTRA_STREAM, mediaUri);
+                    intent.setType("image/png");
+                }
 
-            resolveInfoList = packageManager.queryIntentActivities(intent, 0);
-            if (resolveInfoList.size() > 0) {
-                return intent;
+                resolveInfoList = packageManager.queryIntentActivities(intent, 0);
+                if (resolveInfoList.size() > 0) {
+                    return intent;
+                }
             }
         }
 
@@ -174,7 +187,6 @@ public class SmsUtils {
         }
 
         Log.d(Constants.TAG, "Could not use known good messaging app, just creating a sendto intent without an image");
-
         return getTextOnlyIntent(note, phoneNumberSet);
     }
 
