@@ -8771,14 +8771,23 @@ com.laloosh.textmuse.ContactsPickerActivity$ContactItemType -> com.laloosh.textm
     com.laloosh.textmuse.ContactsPickerActivity$ContactItemType[] values() -> values
     com.laloosh.textmuse.ContactsPickerActivity$ContactItemType valueOf(java.lang.String) -> valueOf
 com.laloosh.textmuse.FetchNotesAsyncTask -> com.laloosh.textmuse.u:
-    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesAsyncTaskHandler mHandler -> a
-    int mAppId -> b
-    java.lang.String doInBackground(java.lang.Void[]) -> a
-    void onPostExecute(java.lang.String) -> a
+    java.lang.ref.WeakReference mHandler -> a
+    java.lang.ref.WeakReference mContext -> b
+    int mAppId -> c
+    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult doInBackground(java.lang.Void[]) -> a
+    void handleDataUpdate(com.laloosh.textmuse.datamodel.GlobalData,com.laloosh.textmuse.datamodel.TextMuseData) -> a
+    void onPostExecute(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesAsyncTaskHandler -> com.laloosh.textmuse.v:
-    void handleFetchResult(java.lang.String) -> a
+    void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
+com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult -> com.laloosh.textmuse.w:
+    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult FETCH_FAILED -> a
+    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult FETCH_SUCCEEDED_SAME_DATA -> b
+    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult FETCH_SUCCEEDED_DIFFERENT_DATA -> c
+    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult[] $VALUES -> d
+    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult[] values() -> values
+    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult valueOf(java.lang.String) -> valueOf
 com.laloosh.textmuse.GroupEditActivity -> com.laloosh.textmuse.GroupEditActivity:
     android.widget.TextView mEmptyTextView -> o
     android.widget.ListView mListView -> p
@@ -8810,26 +8819,26 @@ com.laloosh.textmuse.GroupEditActivity -> com.laloosh.textmuse.GroupEditActivity
     int access$002(com.laloosh.textmuse.GroupEditActivity,int) -> a
     com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter access$400(com.laloosh.textmuse.GroupEditActivity) -> e
     void access$600(com.laloosh.textmuse.GroupEditActivity) -> f
-com.laloosh.textmuse.GroupEditActivity$1 -> com.laloosh.textmuse.w:
+com.laloosh.textmuse.GroupEditActivity$1 -> com.laloosh.textmuse.x:
     com.laloosh.textmuse.GroupEditActivity this$0 -> a
     boolean onCreateActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> a
     boolean onPrepareActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> b
     boolean onActionItemClicked(android.support.v7.view.ActionMode,android.view.MenuItem) -> a
     void onDestroyActionMode(android.support.v7.view.ActionMode) -> a
-com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter -> com.laloosh.textmuse.x:
+com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter -> com.laloosh.textmuse.y:
     android.view.LayoutInflater mLayoutInflater -> b
     android.content.Context mContext -> c
     java.util.List mContacts -> d
     com.laloosh.textmuse.GroupEditActivity this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter$1 -> com.laloosh.textmuse.y:
+com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter$1 -> com.laloosh.textmuse.z:
     int val$position -> a
     com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter this$1 -> b
     boolean onLongClick(android.view.View) -> onLongClick
-com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter$ViewHolder -> com.laloosh.textmuse.z:
+com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter$ViewHolder -> com.laloosh.textmuse.aa:
     android.widget.TextView nameTextView -> a
     com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter this$1 -> b
-com.laloosh.textmuse.ImageDownloadTarget -> com.laloosh.textmuse.aa:
+com.laloosh.textmuse.ImageDownloadTarget -> com.laloosh.textmuse.ab:
     java.lang.ref.WeakReference mContext -> a
     com.laloosh.textmuse.datamodel.Note mNote -> b
     void onBitmapLoaded(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom) -> a
@@ -8856,22 +8865,17 @@ com.laloosh.textmuse.MainCategoryActivity -> com.laloosh.textmuse.MainCategoryAc
     void showFailureMessage() -> n
     void setLastNotified() -> o
     void setNotificationAlarm() -> p
-    void handleNewData(java.lang.String) -> b
-    com.laloosh.textmuse.datamodel.TextMuseData parseData(java.lang.String) -> c
+    void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter access$000(com.laloosh.textmuse.MainCategoryActivity) -> a
     android.support.v4.view.ViewPager access$100(com.laloosh.textmuse.MainCategoryActivity) -> b
     long access$202(com.laloosh.textmuse.MainCategoryActivity,long) -> a
-    void access$400(com.laloosh.textmuse.MainCategoryActivity,java.lang.String) -> a
     long access$200(com.laloosh.textmuse.MainCategoryActivity) -> c
-com.laloosh.textmuse.MainCategoryActivity$1 -> com.laloosh.textmuse.ab:
+com.laloosh.textmuse.MainCategoryActivity$1 -> com.laloosh.textmuse.ac:
     com.laloosh.textmuse.MainCategoryActivity this$0 -> a
     void onPageScrolled(int,float,int) -> a
     void onPageSelected(int) -> a
     void onPageScrollStateChanged(int) -> b
-com.laloosh.textmuse.MainCategoryActivity$2 -> com.laloosh.textmuse.ac:
-    com.laloosh.textmuse.MainCategoryActivity this$0 -> a
-    void handleFetchResult(java.lang.String) -> a
 com.laloosh.textmuse.MainCategoryActivity$CategoryAndNoteIndex -> com.laloosh.textmuse.ad:
     int mCategoryIndex -> a
     int mNoteIndex -> b
@@ -8896,8 +8900,8 @@ com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter -> com.laloosh.
     java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
     void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
     boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    java.util.HashMap access$500(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> a
-    android.app.Activity access$600(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> b
+    java.util.HashMap access$400(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> a
+    android.app.Activity access$500(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> b
 com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter$1 -> com.laloosh.textmuse.ah:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     int val$position -> b
@@ -8916,8 +8920,8 @@ com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter -> com.la
     void updateCategories(java.util.List) -> a
     void generateShownCategories() -> a
     int getOriginalIndex(com.laloosh.textmuse.datamodel.Category) -> a
-    int access$700(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter,com.laloosh.textmuse.datamodel.Category) -> a
-    android.app.Activity access$800(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter) -> a
+    int access$600(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter,com.laloosh.textmuse.datamodel.Category) -> a
+    android.app.Activity access$700(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter) -> a
 com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter$1 -> com.laloosh.textmuse.aj:
     com.laloosh.textmuse.datamodel.Category val$category -> a
     int val$position -> b
@@ -9074,9 +9078,13 @@ com.laloosh.textmuse.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.b
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType valueOf(java.lang.String) -> valueOf
 com.laloosh.textmuse.SmsUtils -> com.laloosh.textmuse.bg:
     android.content.Intent createSmsIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> a
-    java.lang.String getSmsTo(java.util.Set) -> a
-    java.lang.String getText(com.laloosh.textmuse.datamodel.Note) -> a
+    java.lang.String getToList(java.util.Set) -> a
+    java.lang.String getSmsTo(java.util.Set) -> b
+    java.lang.String getText(com.laloosh.textmuse.datamodel.Note,boolean) -> a
     android.net.Uri getMediaFile(android.content.Context,com.laloosh.textmuse.datamodel.Note) -> a
+    android.content.Intent getTextOnlyIntent(com.laloosh.textmuse.datamodel.Note,java.util.Set) -> a
+    android.content.Intent getPostKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> b
+    android.content.Intent getPreKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> c
 com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.bh:
     com.laloosh.textmuse.datamodel.TextMuseData parse(java.lang.String) -> a
     com.laloosh.textmuse.datamodel.TextMuseData parseContent(org.xmlpull.v1.XmlPullParser) -> a
@@ -9329,51 +9337,45 @@ com.laloosh.textmuse.dialogs.EnterGroupDialogFragment$GroupNameChangeHandler -> 
 com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment -> com.laloosh.textmuse.a.n:
     int mDialogWidth -> aj
     int mDialogHeight -> ak
+    android.widget.ImageView mImageView -> al
     com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment newInstance(com.laloosh.textmuse.datamodel.Note) -> a
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    void doneLoadingBitmap(android.graphics.Bitmap) -> a
     android.app.Dialog onCreateDialog(android.os.Bundle) -> c
     void onResume() -> r
-    int access$002(com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment,int) -> a
-    int access$102(com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment,int) -> b
-    int access$100(com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment) -> a
-    int access$000(com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment) -> b
-com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment$1 -> com.laloosh.textmuse.a.o:
-    android.widget.ImageView val$imageView -> a
-    com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment this$0 -> b
-    void doneLoadingBitmap(android.graphics.Bitmap) -> a
-com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment$ImageSizeDownloadTarget -> com.laloosh.textmuse.a.p:
-    com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment$ImageSizeDownloadTarget$ImageSizeDownloadTargetHandler mHandler -> a
+com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget -> com.laloosh.textmuse.a.o:
+    java.lang.ref.WeakReference mHandler -> a
     void onBitmapFailed(android.graphics.drawable.Drawable) -> a
     void onPrepareLoad(android.graphics.drawable.Drawable) -> b
     void onBitmapLoaded(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom) -> a
-com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment$ImageSizeDownloadTarget$ImageSizeDownloadTargetHandler -> com.laloosh.textmuse.a.q:
+com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget$ImageSizeDownloadTargetHandler -> com.laloosh.textmuse.a.p:
     void doneLoadingBitmap(android.graphics.Bitmap) -> a
-com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment -> com.laloosh.textmuse.a.r:
+com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment -> com.laloosh.textmuse.a.q:
     com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment newInstance() -> N
     android.app.Dialog onCreateDialog(android.os.Bundle) -> c
-com.laloosh.textmuse.dialogs.NoUsersDialogFragment -> com.laloosh.textmuse.a.s:
+com.laloosh.textmuse.dialogs.NoUsersDialogFragment -> com.laloosh.textmuse.a.r:
     com.laloosh.textmuse.dialogs.NoUsersDialogFragment$NoUsersDialogHandler mHandler -> aj
     com.laloosh.textmuse.dialogs.NoUsersDialogFragment newInstance() -> N
     void onAttach(android.app.Activity) -> a
     void onDetach() -> d
     android.app.Dialog onCreateDialog(android.os.Bundle) -> c
     com.laloosh.textmuse.dialogs.NoUsersDialogFragment$NoUsersDialogHandler access$000(com.laloosh.textmuse.dialogs.NoUsersDialogFragment) -> a
-com.laloosh.textmuse.dialogs.NoUsersDialogFragment$1 -> com.laloosh.textmuse.a.t:
+com.laloosh.textmuse.dialogs.NoUsersDialogFragment$1 -> com.laloosh.textmuse.a.s:
     com.laloosh.textmuse.dialogs.NoUsersDialogFragment this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.laloosh.textmuse.dialogs.NoUsersDialogFragment$2 -> com.laloosh.textmuse.a.u:
+com.laloosh.textmuse.dialogs.NoUsersDialogFragment$2 -> com.laloosh.textmuse.a.t:
     com.laloosh.textmuse.dialogs.NoUsersDialogFragment this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.laloosh.textmuse.dialogs.NoUsersDialogFragment$NoUsersDialogHandler -> com.laloosh.textmuse.a.v:
+com.laloosh.textmuse.dialogs.NoUsersDialogFragment$NoUsersDialogHandler -> com.laloosh.textmuse.a.u:
     void noUsersProceedToDelete() -> k
     void noUsersCancel() -> l
-com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment -> com.laloosh.textmuse.a.w:
+com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment -> com.laloosh.textmuse.a.v:
     com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment newInstance() -> N
     android.app.Dialog onCreateDialog(android.os.Bundle) -> c
-com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment$1 -> com.laloosh.textmuse.a.x:
+com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment$1 -> com.laloosh.textmuse.a.w:
     com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment -> com.laloosh.textmuse.a.y:
+com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment -> com.laloosh.textmuse.a.x:
     com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment newInstance() -> N
     android.app.Dialog onCreateDialog(android.os.Bundle) -> c
 com.squareup.picasso.Action -> com.a.a.a:
