@@ -110,7 +110,13 @@ public class ConnectionUtils {
 
             if (params != null && !params.isEmpty()) {
                 for (HashMap.Entry<String, String> entry : params.entrySet()) {
-                    conn.setRequestProperty(entry.getKey(), entry.getValue());
+                    try {
+                        String key = URLEncoder.encode(entry.getKey(), "UTF-8");
+                        String value = URLEncoder.encode(entry.getValue(), "UTF-8");
+                        conn.setRequestProperty(key, value);
+                    } catch (Exception e) {
+                        Log.e(Constants.TAG, "Post: could not attach key: " + entry.getKey() + " and value: " + entry.getValue());
+                    }
                 }
             }
 

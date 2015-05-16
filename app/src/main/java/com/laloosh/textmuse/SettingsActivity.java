@@ -131,8 +131,8 @@ public class SettingsActivity extends ActionBarActivity {
         @Override
         public int getCount() {
 
-            //There are a base of 4 (notifications, recent contacts, feedback, privacy policy) items
-            int total = 4;
+            //There are a base of 5 (notifications, recent contacts, feedback, register, privacy policy) items
+            int total = 5;
 
             if (mShouldShowCategories) {
                 total += mCategoryList.size() + 1;  //category list plus header
@@ -161,8 +161,10 @@ public class SettingsActivity extends ActionBarActivity {
                 case 2:
                     return getTextOnlyView(convertView, parent, TextOnlyViewType.FEEDBACK_VIEW);
                 case 3:
-                    return getTextOnlyView(convertView, parent, TextOnlyViewType.PRIVACY_POLICY_VIEW);
+                    return getTextOnlyView(convertView, parent, TextOnlyViewType.REGISTER_VIEW);
                 case 4:
+                    return getTextOnlyView(convertView, parent, TextOnlyViewType.PRIVACY_POLICY_VIEW);
+                case 5:
                     return getCategoryHeader(convertView, parent);
                 default:
                     int adjustedPosition = position - (getCount() - mCategoryList.size());
@@ -274,6 +276,9 @@ public class SettingsActivity extends ActionBarActivity {
                 case FEEDBACK_VIEW:
                     viewHolder.mTextView.setText("Feedback");
                     break;
+                case REGISTER_VIEW:
+                    viewHolder.mTextView.setText("Register");
+                    break;
                 case PRIVACY_POLICY_VIEW:
                     viewHolder.mTextView.setText("Privacy Policy");
                     break;
@@ -291,6 +296,10 @@ public class SettingsActivity extends ActionBarActivity {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.textmuse.com/privacy-policy"));
                         startActivity(intent);
 
+                    } else if (viewType == TextOnlyViewType.REGISTER_VIEW) {
+
+                        Intent intent = new Intent(SettingsActivity.this, RegisterActivity.class);
+                        startActivity(intent);
                     }
                 }
             });
@@ -355,9 +364,11 @@ public class SettingsActivity extends ActionBarActivity {
                     return 1;
                 case 2:         //feedback
                     return 2;
-                case 3:         //privacy policy
+                case 3:         //Register
                     return 2;
-                case 4:         //category header
+                case 4:        //privacy policy
+                    return 2;
+                case 5:        //category header
                     return 3;
                 default:        //category elements
                     return 4;
@@ -374,7 +385,8 @@ public class SettingsActivity extends ActionBarActivity {
 
     private enum TextOnlyViewType {
         FEEDBACK_VIEW,
-        PRIVACY_POLICY_VIEW
+        PRIVACY_POLICY_VIEW,
+        REGISTER_VIEW
     }
 
     private class TextItemViewHolder {
