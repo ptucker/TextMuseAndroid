@@ -284,9 +284,7 @@ public class SettingsActivity extends ActionBarActivity {
                 public void onClick(View v) {
                     if (viewType == TextOnlyViewType.FEEDBACK_VIEW) {
 
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        Uri data = Uri.parse("mailto:info@textmuse.com?subject=Feedback for TextMuse");
-                        intent.setData(data);
+                        Intent intent = new Intent(SettingsActivity.this, FeedbackActivity.class);
                         startActivity(intent);
 
                     } else if (viewType == TextOnlyViewType.PRIVACY_POLICY_VIEW) {

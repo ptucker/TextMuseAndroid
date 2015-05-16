@@ -102,6 +102,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.laloosh.textmuse.MainCategoryActivity" />
         </activity>
+        <activity
+            android:name=".FeedbackActivity"
+            android:label="@string/title_activity_feedback"
+            android:parentActivityName=".SettingsActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.laloosh.textmuse.SettingsActivity" />
+        </activity>
     </application>
 
 </manifest>
