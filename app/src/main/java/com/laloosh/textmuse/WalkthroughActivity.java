@@ -125,6 +125,7 @@ public class WalkthroughActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                    intent.putExtra(RegisterActivity.REGISTER_THROUGH_WALKTHROUGH_EXTRA, true);
                     startActivity(intent);
                 }
             });

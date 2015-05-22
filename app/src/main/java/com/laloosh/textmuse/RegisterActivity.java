@@ -1,7 +1,9 @@
 package com.laloosh.textmuse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import org.joda.time.DateTime;
 
 
 public class RegisterActivity extends ActionBarActivity implements RegisterAsyncTask.RegisterAsyncTaskHandler{
+    public static final String REGISTER_THROUGH_WALKTHROUGH_EXTRA = "com.laloosh.textmuse.walkthrough";
 
     private EditText mEditTextName;
     private EditText mEditTextEmail;
@@ -31,6 +34,13 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Intent intent = getIntent();
+        boolean fromWalkthrough = intent.getBooleanExtra(REGISTER_THROUGH_WALKTHROUGH_EXTRA, false);
+        if (fromWalkthrough) {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
 
         mEditTextName = (EditText) findViewById(R.id.registerEditTextName);
         mEditTextEmail = (EditText) findViewById(R.id.registerEditTextEmail);
