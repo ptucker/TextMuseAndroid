@@ -131,8 +131,8 @@ public class SettingsActivity extends ActionBarActivity {
         @Override
         public int getCount() {
 
-            //There are a base of 5 (notifications, recent contacts, feedback, register, privacy policy) items
-            int total = 5;
+            //There are a base of 6 (notifications, recent contacts, feedback, register, privacy policy, walkthrough) items
+            int total = 6;
 
             if (mShouldShowCategories) {
                 total += mCategoryList.size() + 1;  //category list plus header
@@ -165,6 +165,8 @@ public class SettingsActivity extends ActionBarActivity {
                 case 4:
                     return getTextOnlyView(convertView, parent, TextOnlyViewType.PRIVACY_POLICY_VIEW);
                 case 5:
+                    return getTextOnlyView(convertView, parent, TextOnlyViewType.WALKTHROUGH_VIEW);
+                case 6:
                     return getCategoryHeader(convertView, parent);
                 default:
                     int adjustedPosition = position - (getCount() - mCategoryList.size());
@@ -282,6 +284,8 @@ public class SettingsActivity extends ActionBarActivity {
                 case PRIVACY_POLICY_VIEW:
                     viewHolder.mTextView.setText("Privacy Policy");
                     break;
+                case WALKTHROUGH_VIEW:
+                    viewHolder.mTextView.setText("Walkthrough");
             }
 
             rowView.setOnClickListener(new View.OnClickListener() {
@@ -299,6 +303,9 @@ public class SettingsActivity extends ActionBarActivity {
                     } else if (viewType == TextOnlyViewType.REGISTER_VIEW) {
 
                         Intent intent = new Intent(SettingsActivity.this, RegisterActivity.class);
+                        startActivity(intent);
+                    } else if (viewType == TextOnlyViewType.WALKTHROUGH_VIEW) {
+                        Intent intent = new Intent(SettingsActivity.this, WalkthroughActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -368,7 +375,9 @@ public class SettingsActivity extends ActionBarActivity {
                     return 2;
                 case 4:        //privacy policy
                     return 2;
-                case 5:        //category header
+                case 5:        //walkthrough
+                    return 2;
+                case 6:        //Category header
                     return 3;
                 default:        //category elements
                     return 4;
@@ -386,7 +395,8 @@ public class SettingsActivity extends ActionBarActivity {
     private enum TextOnlyViewType {
         FEEDBACK_VIEW,
         PRIVACY_POLICY_VIEW,
-        REGISTER_VIEW
+        REGISTER_VIEW,
+        WALKTHROUGH_VIEW
     }
 
     private class TextItemViewHolder {

@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="com.laloosh.textmuse.WalkthroughActivity">
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/walkthroughPageIndicator"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:background="#ffffffff"
+        app:radius="3dp"
+        app:fillColor="#ff000000"
+        app:pageColor="#ff888888"
+        app:strokeColor="#ff888888"
+        app:strokeWidth="0dp"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/walkthroughViewPager"
+        android:background="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/walkthroughPageIndicator"
+        />
+</RelativeLayout>

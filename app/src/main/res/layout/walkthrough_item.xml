@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="16dp"
+    android:layout_gravity="center"
+    >
+
+    <com.laloosh.textmuse.controls.AutoResizeTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/walkthroughTextViewDescription"
+        android:text="Walkthrough description"
+        android:textSize="24sp"
+        android:gravity="center"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/walkthroughDoneButton"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/walkthroughImageDone"
+            android:src="@drawable/newbadge"
+            android:scaleType="fitCenter"
+            android:layout_alignBottom="@+id/walkthroughTextViewDone"
+            android:layout_alignLeft="@+id/walkthroughTextViewDone"
+            android:layout_alignRight="@+id/walkthroughTextViewDone"
+            android:layout_alignTop="@+id/walkthroughTextViewDone"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/walkthroughTextViewDone"
+            android:text="Done"
+            android:textSize="18sp"
+            android:textColor="#ffffffff"
+            android:textAllCaps="true"
+            android:padding="15dp"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/walkthroughRegister"
+        android:text="Get the most out of TextMuse and register today!"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_above="@id/walkthroughDoneButton"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:id="@+id/walkthroughImage"
+
+        android:layout_below="@id/walkthroughTextViewDescription"
+        android:layout_above="@id/walkthroughRegister"
+        android:layout_margin="20dp"
+
+        android:src="@drawable/page1_walkthrough"
+        android:scaleType="fitCenter"
+
+        />
+
+</RelativeLayout>

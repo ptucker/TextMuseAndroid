@@ -120,6 +120,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.laloosh.textmuse.SettingsActivity" />
         </activity>
+        <activity
+            android:name=".WalkthroughActivity"
+            android:label="@string/title_activity_walkthrough"
+            android:theme="@style/AppNoActionBar"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

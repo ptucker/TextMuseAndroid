@@ -9,6 +9,10 @@
         <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
 
+    <style name="AppNoActionBar" parent="AppTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="android:textColor">@android:color/holo_red_dark</item>
