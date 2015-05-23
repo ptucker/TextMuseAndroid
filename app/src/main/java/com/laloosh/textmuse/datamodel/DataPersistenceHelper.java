@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.datamodel.gson.GsonConverter;
 
 import org.apache.commons.io.IOUtils;
@@ -17,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class DataPersistenceHelper {
@@ -111,5 +113,44 @@ public class DataPersistenceHelper {
 
         return convertedData;
 
+    }
+
+    public static String loadRawContent(Context context) {
+        if (context == null) {
+            Log.d(Constants.TAG, "Attempt to load raw content with no context");
+            return null;
+        }
+
+        StringBuilder data = new StringBuilder();
+        InputStreamReader isr = null;
+        BufferedReader buffreader = null;
+
+        try {
+            InputStream is = context.getResources().openRawResource(R.raw.notes_original_fallback);
+            isr = new InputStreamReader(is);
+            buffreader = new BufferedReader(isr);
+
+            String readString = buffreader.readLine();
+            while (readString != null) {
+                data.append(readString);
+                readString = buffreader.readLine();
+            }
+
+        } catch (FileNotFoundException e) {
+            Log.e(Constants.TAG, "Could not open cached data file", e);
+            return null;
+        } catch (IOException e) {
+            Log.e(Constants.TAG, "IOException reading cache file", e);
+            return null;
+        } finally {
+            if (buffreader != null) {
+                IOUtils.closeQuietly(buffreader);
+            }
+            if (isr != null) {
+                IOUtils.closeQuietly(isr);
+            }
+        }
+
+        return data.toString();
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.WebDataParser;
+
 import org.joda.time.DateTime;
 
 import java.util.HashSet;
@@ -27,6 +29,18 @@ public class TextMuseData {
     //Loads the cached data from our local preferences
     public static TextMuseData load(Context context) {
         return DataPersistenceHelper.load(context, Constants.DATA_FILE, TextMuseData.class);
+    }
+
+    public static TextMuseData loadRawContent(Context context) {
+        String rawResult = DataPersistenceHelper.loadRawContent(context);
+        WebDataParser parser = new WebDataParser();
+        TextMuseData data = parser.parse(rawResult);
+
+        //Manually set the app ID to a value that it should not be normally,
+        //to prevent us from screwing up metrics, and so we'll get a normal app id from the server
+        //later
+        data.appId = -1;
+        return data;
     }
 
 
