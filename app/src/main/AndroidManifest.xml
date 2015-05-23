@@ -34,11 +34,6 @@
             android:name=".MainCategoryActivity"
             android:label="@string/title_activity_main_category"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SelectMessageActivity"
@@ -123,8 +118,18 @@
         <activity
             android:name=".WalkthroughActivity"
             android:label="@string/title_activity_walkthrough"
-            android:theme="@style/AppNoActionBar"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar" >
+        </activity>
+        <activity
+            android:name=".SplashScreenActivity"
+            android:label="@string/title_activity_splash_screen"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

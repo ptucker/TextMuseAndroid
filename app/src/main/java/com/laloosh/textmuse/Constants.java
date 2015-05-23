@@ -18,6 +18,8 @@ public class Constants {
     //since somehow the default file changes based on shortcuts
     public static final String SHARED_PREF_FILE = "com.laloosh.textmuse.sharedprefs";
 
+    public static final String SHARED_PREF_KEY_LAUNCHED_BEFORE = "haslaunchedbefore";
+
     public static final String SHARED_PREF_KEY_LAST_NOTIFIED = "lastnotified";
     public static final String SHARED_PREF_KEY_NOTIFICATION_COUNT = "notificationcount";
 

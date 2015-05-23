@@ -42,6 +42,9 @@ import java.util.TimerTask;
 
 
 public class MainCategoryActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
+
+    public static final String ALREADY_LOADED_DATA_EXTRA = "com.laloosh.textmuse.alreadyloadeddata";
+
     private static final long INTERVAL_BEFORE_AUTOSLIDESHOW = 15000;  //At least 15 seconds after the user scrolls a page before we autoscroll again
     private static final int RANDOM_NOTES_PER_CATEGORY = 3;
     private static final int REQUEST_CODE_SETTINGS = 2333;
@@ -63,7 +66,9 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         setContentView(R.layout.activity_main_category);
 
         GlobalData instance = GlobalData.getInstance();
-        instance.loadData(this);
+        if (!instance.hasLoadedData()) {
+            instance.loadData(this);
+        }
         mData = instance.getData();
         mSettings = instance.getSettings();
 
@@ -103,7 +108,14 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
         generateViewsFromData();
 
-        loadDataFromInternet();
+        Intent intent = getIntent();
+        boolean alreadyLoadedData = intent.getBooleanExtra(ALREADY_LOADED_DATA_EXTRA, false);
+        if (!alreadyLoadedData) {
+            Log.d(Constants.TAG, "Splash screen load data did not succeed. Retrying");
+            loadDataFromInternet();
+        } else {
+            Log.d(Constants.TAG, "Already successfully loaded data from internet via splash screen. Skipping reload");
+        }
 
         mLastUserScrollMillis = System.currentTimeMillis();
         mTimer = new Timer();
