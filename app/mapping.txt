@@ -232,6 +232,9 @@ android.support.v4.app.Fragment -> android.support.v4.app.Fragment:
     712:712:boolean isDetached() -> o
     761:761:boolean isHidden() -> p
     782:782:void onHiddenChanged(boolean) -> b
+    836:842:void setMenuVisibility(boolean) -> c
+    858:863:void setUserVisibleHint(boolean) -> d
+    893:897:void startActivity(android.content.Intent) -> a
     925:925:void onActivityResult(int,int,android.content.Intent) -> a
     933:936:android.view.LayoutInflater getLayoutInflater(android.os.Bundle) -> b
     982:983:void onInflate(android.app.Activity,android.util.AttributeSet,android.os.Bundle) -> a
@@ -351,6 +354,7 @@ android.support.v4.app.FragmentActivity -> android.support.v4.app.p:
     798:798:void onAttachFragment(android.support.v4.app.Fragment) -> a
     805:805:android.support.v4.app.FragmentManager getSupportFragmentManager() -> f
     814:818:void startActivityForResult(android.content.Intent,int) -> startActivityForResult
+    825:833:void startActivityFromFragment(android.support.v4.app.Fragment,android.content.Intent,int) -> a
     837:844:void invalidateSupportFragment(java.lang.String) -> a
     854:859:android.support.v4.app.LoaderManager getSupportLoaderManager() -> g
     863:875:android.support.v4.app.LoaderManagerImpl getLoaderManager(java.lang.String,boolean,boolean) -> a
@@ -499,6 +503,21 @@ android.support.v4.app.FragmentManagerState$1 -> android.support.v4.app.ab:
     393:393:android.support.v4.app.FragmentManagerState[] newArray(int) -> a
     387:387:java.lang.Object[] newArray(int) -> newArray
     387:387:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.FragmentPagerAdapter -> android.support.v4.app.ac:
+    android.support.v4.app.FragmentManager mFragmentManager -> a
+    android.support.v4.app.FragmentTransaction mCurTransaction -> b
+    android.support.v4.app.Fragment mCurrentPrimaryItem -> c
+    android.support.v4.app.Fragment getItem(int) -> a
+    80:80:void startUpdate(android.view.ViewGroup) -> a
+    84:107:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
+    112:118:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
+    122:134:void setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) -> b
+    138:143:void finishUpdate(android.view.ViewGroup) -> b
+    147:147:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
+    152:152:android.os.Parcelable saveState() -> a
+    157:157:void restoreState(android.os.Parcelable,java.lang.ClassLoader) -> a
+    169:169:long getItemId(int) -> b
+    173:173:java.lang.String makeFragmentName(int,long) -> a
 android.support.v4.app.FragmentState -> android.support.v4.app.FragmentState:
     java.lang.String mClassName -> a
     int mIndex -> b
@@ -515,7 +534,7 @@ android.support.v4.app.FragmentState -> android.support.v4.app.FragmentState:
     93:120:android.support.v4.app.Fragment instantiate(android.support.v4.app.FragmentActivity,android.support.v4.app.Fragment) -> a
     124:124:int describeContents() -> describeContents
     128:138:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-android.support.v4.app.FragmentState$1 -> android.support.v4.app.ac:
+android.support.v4.app.FragmentState$1 -> android.support.v4.app.ad:
     143:143:android.support.v4.app.FragmentState createFromParcel(android.os.Parcel) -> a
     147:147:android.support.v4.app.FragmentState[] newArray(int) -> a
     141:141:java.lang.Object[] newArray(int) -> newArray
@@ -536,18 +555,18 @@ android.support.v4.app.FragmentTabHost -> android.support.v4.app.FragmentTabHost
     303:306:void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
     310:319:void onTabChanged(java.lang.String) -> onTabChanged
     322:353:android.support.v4.app.FragmentTransaction doTabChanged(java.lang.String,android.support.v4.app.FragmentTransaction) -> a
-android.support.v4.app.FragmentTabHost$1 -> android.support.v4.app.ad:
+android.support.v4.app.FragmentTabHost$1 -> android.support.v4.app.ae:
 android.support.v4.app.FragmentTabHost$SavedState -> android.support.v4.app.FragmentTabHost$SavedState:
     java.lang.String curTab -> a
     android.os.Parcelable$Creator CREATOR -> CREATOR
     104:106:void writeToParcel(android.os.Parcel,int) -> writeToParcel
     110:110:java.lang.String toString() -> toString
-android.support.v4.app.FragmentTabHost$SavedState$1 -> android.support.v4.app.ae:
+android.support.v4.app.FragmentTabHost$SavedState$1 -> android.support.v4.app.af:
     118:118:android.support.v4.app.FragmentTabHost$SavedState createFromParcel(android.os.Parcel) -> a
     122:122:android.support.v4.app.FragmentTabHost$SavedState[] newArray(int) -> a
     116:116:java.lang.Object[] newArray(int) -> newArray
     116:116:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.app.FragmentTabHost$TabInfo -> android.support.v4.app.af:
+android.support.v4.app.FragmentTabHost$TabInfo -> android.support.v4.app.ag:
     java.lang.String tag -> a
     java.lang.Class clss -> b
     android.os.Bundle args -> c
@@ -557,7 +576,7 @@ android.support.v4.app.FragmentTabHost$TabInfo -> android.support.v4.app.af:
     61:61:java.lang.String access$200(android.support.v4.app.FragmentTabHost$TabInfo) -> b
     61:61:java.lang.Class access$300(android.support.v4.app.FragmentTabHost$TabInfo) -> c
     61:61:android.os.Bundle access$400(android.support.v4.app.FragmentTabHost$TabInfo) -> d
-android.support.v4.app.FragmentTransaction -> android.support.v4.app.ag:
+android.support.v4.app.FragmentTransaction -> android.support.v4.app.ah:
     android.support.v4.app.FragmentTransaction add(android.support.v4.app.Fragment,java.lang.String) -> a
     android.support.v4.app.FragmentTransaction add(int,android.support.v4.app.Fragment,java.lang.String) -> a
     android.support.v4.app.FragmentTransaction remove(android.support.v4.app.Fragment) -> a
@@ -565,7 +584,7 @@ android.support.v4.app.FragmentTransaction -> android.support.v4.app.ag:
     android.support.v4.app.FragmentTransaction attach(android.support.v4.app.Fragment) -> c
     int commit() -> a
     int commitAllowingStateLoss() -> b
-android.support.v4.app.FragmentTransitionCompat21 -> android.support.v4.app.ah:
+android.support.v4.app.FragmentTransitionCompat21 -> android.support.v4.app.ai:
     36:36:java.lang.String getTransitionName(android.view.View) -> a
     40:43:java.lang.Object cloneTransition(java.lang.Object) -> a
     48:59:java.lang.Object captureExitingViews(java.lang.Object,android.view.View,java.util.ArrayList,java.util.Map) -> a
@@ -583,10 +602,10 @@ android.support.v4.app.FragmentTransitionCompat21 -> android.support.v4.app.ah:
     316:321:void addTargets(java.lang.Object,java.util.ArrayList) -> b
     34:34:void access$000(java.util.ArrayList,android.view.View) -> a
     34:34:android.graphics.Rect access$100(android.view.View) -> b
-android.support.v4.app.FragmentTransitionCompat21$1 -> android.support.v4.app.ai:
+android.support.v4.app.FragmentTransitionCompat21$1 -> android.support.v4.app.aj:
     android.graphics.Rect val$epicenter -> a
     79:79:android.graphics.Rect onGetEpicenter(android.transition.Transition) -> onGetEpicenter
-android.support.v4.app.FragmentTransitionCompat21$2 -> android.support.v4.app.aj:
+android.support.v4.app.FragmentTransitionCompat21$2 -> android.support.v4.app.ak:
     android.view.View val$container -> a
     android.support.v4.app.FragmentTransitionCompat21$ViewRetriever val$inFragment -> b
     java.util.Map val$nameOverrides -> c
@@ -594,11 +613,11 @@ android.support.v4.app.FragmentTransitionCompat21$2 -> android.support.v4.app.aj
     android.transition.Transition val$enterTransition -> e
     java.util.ArrayList val$enteringViews -> f
     115:136:boolean onPreDraw() -> onPreDraw
-android.support.v4.app.FragmentTransitionCompat21$3 -> android.support.v4.app.ak:
+android.support.v4.app.FragmentTransitionCompat21$3 -> android.support.v4.app.al:
     android.graphics.Rect mEpicenter -> b
     android.support.v4.app.FragmentTransitionCompat21$EpicenterView val$epicenterView -> a
     212:215:android.graphics.Rect onGetEpicenter(android.transition.Transition) -> onGetEpicenter
-android.support.v4.app.FragmentTransitionCompat21$4 -> android.support.v4.app.al:
+android.support.v4.app.FragmentTransitionCompat21$4 -> android.support.v4.app.am:
     android.view.View val$sceneRoot -> a
     android.transition.Transition val$enterTransition -> b
     android.view.View val$nonExistentView -> c
@@ -611,19 +630,19 @@ android.support.v4.app.FragmentTransitionCompat21$4 -> android.support.v4.app.al
     java.util.ArrayList val$hiddenViews -> j
     android.transition.Transition val$overallTransition -> k
     280:301:boolean onPreDraw() -> onPreDraw
-android.support.v4.app.FragmentTransitionCompat21$EpicenterView -> android.support.v4.app.am:
+android.support.v4.app.FragmentTransitionCompat21$EpicenterView -> android.support.v4.app.an:
     android.view.View epicenter -> a
-android.support.v4.app.FragmentTransitionCompat21$ViewRetriever -> android.support.v4.app.an:
+android.support.v4.app.FragmentTransitionCompat21$ViewRetriever -> android.support.v4.app.ao:
     android.view.View getView() -> a
-android.support.v4.app.LoaderManager -> android.support.v4.app.ao:
+android.support.v4.app.LoaderManager -> android.support.v4.app.ap:
     android.support.v4.content.Loader initLoader(int,android.os.Bundle,android.support.v4.app.LoaderManager$LoaderCallbacks) -> a
     android.support.v4.content.Loader restartLoader(int,android.os.Bundle,android.support.v4.app.LoaderManager$LoaderCallbacks) -> b
     184:184:boolean hasRunningLoaders() -> a
-android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.ap:
+android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.aq:
     android.support.v4.content.Loader onCreateLoader(int,android.os.Bundle) -> a
     void onLoadFinished(android.support.v4.content.Loader,java.lang.Object) -> a
     void onLoaderReset(android.support.v4.content.Loader) -> a
-android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.aq:
+android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.ar:
     boolean DEBUG -> a
     android.support.v4.util.SparseArrayCompat mLoaders -> b
     android.support.v4.util.SparseArrayCompat mInactiveLoaders -> c
@@ -648,7 +667,7 @@ android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.aq:
     790:796:java.lang.String toString() -> toString
     801:821:void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
     825:831:boolean hasRunningLoaders() -> a
-android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.ar:
+android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.as:
     int mId -> a
     android.os.Bundle mArgs -> b
     android.support.v4.app.LoaderManager$LoaderCallbacks mCallbacks -> c
@@ -674,7 +693,7 @@ android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.ar
     418:435:void callOnLoadFinished(android.support.v4.content.Loader,java.lang.Object) -> b
     439:447:java.lang.String toString() -> toString
     451:474:void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
-android.support.v4.app.NavUtils -> android.support.v4.app.as:
+android.support.v4.app.NavUtils -> android.support.v4.app.at:
     android.support.v4.app.NavUtils$NavUtilsImpl IMPL -> a
     159:159:boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     202:203:void navigateUpTo(android.app.Activity,android.content.Intent) -> b
@@ -682,43 +701,43 @@ android.support.v4.app.NavUtils -> android.support.v4.app.as:
     256:266:android.content.Intent getParentActivityIntent(android.content.Context,android.content.ComponentName) -> a
     281:284:java.lang.String getParentActivityName(android.app.Activity) -> b
     300:303:java.lang.String getParentActivityName(android.content.Context,android.content.ComponentName) -> b
-android.support.v4.app.NavUtils$NavUtilsImpl -> android.support.v4.app.at:
+android.support.v4.app.NavUtils$NavUtilsImpl -> android.support.v4.app.au:
     android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     void navigateUpTo(android.app.Activity,android.content.Intent) -> b
     java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> a
-android.support.v4.app.NavUtils$NavUtilsImplBase -> android.support.v4.app.au:
+android.support.v4.app.NavUtils$NavUtilsImplBase -> android.support.v4.app.av:
     53:67:android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     73:74:boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     79:82:void navigateUpTo(android.app.Activity,android.content.Intent) -> b
     86:92:java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> a
-android.support.v4.app.NavUtils$NavUtilsImplJB -> android.support.v4.app.av:
+android.support.v4.app.NavUtils$NavUtilsImplJB -> android.support.v4.app.aw:
     102:106:android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     110:110:android.content.Intent superGetParentActivityIntent(android.app.Activity) -> b
     115:115:boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     120:121:void navigateUpTo(android.app.Activity,android.content.Intent) -> b
     125:129:java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> a
-android.support.v4.app.NavUtilsJB -> android.support.v4.app.aw:
+android.support.v4.app.NavUtilsJB -> android.support.v4.app.ax:
     25:25:android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     29:29:boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     33:34:void navigateUpTo(android.app.Activity,android.content.Intent) -> b
     37:37:java.lang.String getParentActivityName(android.content.pm.ActivityInfo) -> a
-android.support.v4.app.NoSaveStateFrameLayout -> android.support.v4.app.ax:
+android.support.v4.app.NoSaveStateFrameLayout -> android.support.v4.app.ay:
     32:41:android.view.ViewGroup wrap(android.view.View) -> a
     53:54:void dispatchSaveInstanceState(android.util.SparseArray) -> dispatchSaveInstanceState
     61:62:void dispatchRestoreInstanceState(android.util.SparseArray) -> dispatchRestoreInstanceState
-android.support.v4.app.NotificationBuilderWithActions -> android.support.v4.app.ay:
+android.support.v4.app.NotificationBuilderWithActions -> android.support.v4.app.az:
     void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
-android.support.v4.app.NotificationBuilderWithBuilderAccessor -> android.support.v4.app.az:
+android.support.v4.app.NotificationBuilderWithBuilderAccessor -> android.support.v4.app.ba:
     android.app.Notification$Builder getBuilder() -> a
-android.support.v4.app.NotificationCompat -> android.support.v4.app.ba:
+android.support.v4.app.NotificationCompat -> android.support.v4.app.bb:
     android.support.v4.app.NotificationCompat$NotificationCompatImpl IMPL -> a
     779:782:void addActionsToBuilder(android.support.v4.app.NotificationBuilderWithActions,java.util.ArrayList) -> b
     786:812:void addStyleToBuilderJellybean(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style) -> b
     41:41:void access$000(android.support.v4.app.NotificationBuilderWithActions,java.util.ArrayList) -> a
     41:41:void access$100(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style) -> a
     41:41:android.support.v4.app.NotificationCompat$NotificationCompatImpl access$200() -> a
-android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.bb:
+android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.bc:
     android.os.Bundle mExtras -> e
     android.support.v4.app.RemoteInput[] mRemoteInputs -> f
     int icon -> a
@@ -731,14 +750,14 @@ android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.bb:
     1823:1823:android.os.Bundle getExtras() -> d
     1832:1832:android.support.v4.app.RemoteInput[] getRemoteInputs() -> e
     1772:1772:android.support.v4.app.RemoteInputCompatBase$RemoteInput[] getRemoteInputs() -> f
-android.support.v4.app.NotificationCompat$Action$1 -> android.support.v4.app.bc:
-android.support.v4.app.NotificationCompat$BigPictureStyle -> android.support.v4.app.bd:
+android.support.v4.app.NotificationCompat$Action$1 -> android.support.v4.app.bd:
+android.support.v4.app.NotificationCompat$BigPictureStyle -> android.support.v4.app.be:
     android.graphics.Bitmap mPicture -> a
     android.graphics.Bitmap mBigLargeIcon -> b
     boolean mBigLargeIconSet -> c
-android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.be:
+android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.bf:
     java.lang.CharSequence mBigText -> a
-android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.bf:
+android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.bg:
     android.content.Context mContext -> a
     java.lang.CharSequence mContentTitle -> b
     java.lang.CharSequence mContentText -> c
@@ -775,59 +794,59 @@ android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.bf:
     1148:1150:android.support.v4.app.NotificationCompat$Builder setSound(android.net.Uri,int) -> a
     1532:1532:android.app.Notification build() -> a
     1536:1540:java.lang.CharSequence limitCharSequenceLength(java.lang.CharSequence) -> c
-android.support.v4.app.NotificationCompat$InboxStyle -> android.support.v4.app.bg:
+android.support.v4.app.NotificationCompat$InboxStyle -> android.support.v4.app.bh:
     java.util.ArrayList mTexts -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImpl -> android.support.v4.app.bh:
+android.support.v4.app.NotificationCompat$NotificationCompatImpl -> android.support.v4.app.bi:
     android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplApi20 -> android.support.v4.app.bi:
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi20 -> android.support.v4.app.bj:
     692:700:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplApi21 -> android.support.v4.app.bj:
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi21 -> android.support.v4.app.bk:
     746:755:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplBase -> android.support.v4.app.bk:
+android.support.v4.app.NotificationCompat$NotificationCompatImplBase -> android.support.v4.app.bl:
     465:472:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplGingerbread -> android.support.v4.app.bl:
+android.support.v4.app.NotificationCompat$NotificationCompatImplGingerbread -> android.support.v4.app.bm:
     542:551:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplHoneycomb -> android.support.v4.app.bm:
+android.support.v4.app.NotificationCompat$NotificationCompatImplHoneycomb -> android.support.v4.app.bn:
     558:558:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplIceCreamSandwich -> android.support.v4.app.bn:
+android.support.v4.app.NotificationCompat$NotificationCompatImplIceCreamSandwich -> android.support.v4.app.bo:
     567:567:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplJellybean -> android.support.v4.app.bo:
+android.support.v4.app.NotificationCompat$NotificationCompatImplJellybean -> android.support.v4.app.bp:
     577:585:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplKitKat -> android.support.v4.app.bp:
+android.support.v4.app.NotificationCompat$NotificationCompatImplKitKat -> android.support.v4.app.bq:
     641:649:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
-android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.bq:
+android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.br:
     java.lang.CharSequence mBigContentTitle -> d
     java.lang.CharSequence mSummaryText -> e
     boolean mSummaryTextSet -> f
-android.support.v4.app.NotificationCompatApi20 -> android.support.v4.app.br:
+android.support.v4.app.NotificationCompatApi20 -> android.support.v4.app.bs:
     101:113:void addAction(android.app.Notification$Builder,android.support.v4.app.NotificationCompatBase$Action) -> a
-android.support.v4.app.NotificationCompatApi20$Builder -> android.support.v4.app.bs:
+android.support.v4.app.NotificationCompatApi20$Builder -> android.support.v4.app.bt:
     android.app.Notification$Builder b -> a
     android.os.Bundle mExtras -> b
     86:87:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
     91:91:android.app.Notification$Builder getBuilder() -> a
     95:96:android.app.Notification build() -> b
-android.support.v4.app.NotificationCompatApi21 -> android.support.v4.app.bt:
-android.support.v4.app.NotificationCompatApi21$Builder -> android.support.v4.app.bu:
+android.support.v4.app.NotificationCompatApi21 -> android.support.v4.app.bu:
+android.support.v4.app.NotificationCompatApi21$Builder -> android.support.v4.app.bv:
     android.app.Notification$Builder b -> a
     110:111:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
     115:115:android.app.Notification$Builder getBuilder() -> a
     119:119:android.app.Notification build() -> b
-android.support.v4.app.NotificationCompatBase -> android.support.v4.app.bv:
-android.support.v4.app.NotificationCompatBase$Action -> android.support.v4.app.bw:
+android.support.v4.app.NotificationCompatBase -> android.support.v4.app.bw:
+android.support.v4.app.NotificationCompatBase$Action -> android.support.v4.app.bx:
     int getIcon() -> a
     java.lang.CharSequence getTitle() -> b
     android.app.PendingIntent getActionIntent() -> c
     android.os.Bundle getExtras() -> d
     android.support.v4.app.RemoteInputCompatBase$RemoteInput[] getRemoteInputs() -> f
-android.support.v4.app.NotificationCompatBase$Action$Factory -> android.support.v4.app.bx:
-android.support.v4.app.NotificationCompatGingerbread -> android.support.v4.app.by:
+android.support.v4.app.NotificationCompatBase$Action$Factory -> android.support.v4.app.by:
+android.support.v4.app.NotificationCompatGingerbread -> android.support.v4.app.bz:
     27:29:android.app.Notification add(android.app.Notification,android.content.Context,java.lang.CharSequence,java.lang.CharSequence,android.app.PendingIntent,android.app.PendingIntent) -> a
-android.support.v4.app.NotificationCompatHoneycomb -> android.support.v4.app.bz:
+android.support.v4.app.NotificationCompatHoneycomb -> android.support.v4.app.ca:
     30:52:android.app.Notification add(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap) -> a
-android.support.v4.app.NotificationCompatIceCreamSandwich -> android.support.v4.app.ca:
+android.support.v4.app.NotificationCompatIceCreamSandwich -> android.support.v4.app.cb:
     31:54:android.app.Notification add(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean) -> a
-android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.cb:
+android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.cc:
     java.lang.Object sExtrasLock -> a
     java.lang.reflect.Field sExtrasField -> b
     boolean sExtrasFieldAccessFailed -> c
@@ -838,22 +857,22 @@ android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.cb:
     194:204:android.util.SparseArray buildActionExtrasMap(java.util.List) -> a
     212:240:android.os.Bundle getExtras(android.app.Notification) -> a
     258:264:android.os.Bundle writeActionAndGetExtras(android.app.Notification$Builder,android.support.v4.app.NotificationCompatBase$Action) -> a
-android.support.v4.app.NotificationCompatJellybean$Builder -> android.support.v4.app.cc:
+android.support.v4.app.NotificationCompatJellybean$Builder -> android.support.v4.app.cd:
     android.app.Notification$Builder b -> a
     android.os.Bundle mExtras -> b
     java.util.List mActionExtrasList -> c
     124:125:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
     129:129:android.app.Notification$Builder getBuilder() -> a
     133:149:android.app.Notification build() -> b
-android.support.v4.app.NotificationCompatKitKat -> android.support.v4.app.cd:
-android.support.v4.app.NotificationCompatKitKat$Builder -> android.support.v4.app.ce:
+android.support.v4.app.NotificationCompatKitKat -> android.support.v4.app.ce:
+android.support.v4.app.NotificationCompatKitKat$Builder -> android.support.v4.app.cf:
     android.app.Notification$Builder b -> a
     android.os.Bundle mExtras -> b
     java.util.List mActionExtrasList -> c
     97:98:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
     102:102:android.app.Notification$Builder getBuilder() -> a
     106:114:android.app.Notification build() -> b
-android.support.v4.app.RemoteInput -> android.support.v4.app.cf:
+android.support.v4.app.RemoteInput -> android.support.v4.app.cg:
     java.lang.String mResultKey -> b
     java.lang.CharSequence mLabel -> c
     java.lang.CharSequence[] mChoices -> d
@@ -866,30 +885,30 @@ android.support.v4.app.RemoteInput -> android.support.v4.app.cf:
     71:71:java.lang.CharSequence[] getChoices() -> c
     81:81:boolean getAllowFreeFormInput() -> d
     88:88:android.os.Bundle getExtras() -> e
-android.support.v4.app.RemoteInput$1 -> android.support.v4.app.cg:
-android.support.v4.app.RemoteInput$Impl -> android.support.v4.app.ch:
-android.support.v4.app.RemoteInput$ImplApi20 -> android.support.v4.app.ci:
-android.support.v4.app.RemoteInput$ImplBase -> android.support.v4.app.cj:
-android.support.v4.app.RemoteInput$ImplJellybean -> android.support.v4.app.ck:
-android.support.v4.app.RemoteInputCompatApi20 -> android.support.v4.app.cl:
+android.support.v4.app.RemoteInput$1 -> android.support.v4.app.ch:
+android.support.v4.app.RemoteInput$Impl -> android.support.v4.app.ci:
+android.support.v4.app.RemoteInput$ImplApi20 -> android.support.v4.app.cj:
+android.support.v4.app.RemoteInput$ImplBase -> android.support.v4.app.ck:
+android.support.v4.app.RemoteInput$ImplJellybean -> android.support.v4.app.cl:
+android.support.v4.app.RemoteInputCompatApi20 -> android.support.v4.app.cm:
     39:52:android.app.RemoteInput[] fromCompat(android.support.v4.app.RemoteInputCompatBase$RemoteInput[]) -> a
-android.support.v4.app.RemoteInputCompatBase -> android.support.v4.app.cm:
-android.support.v4.app.RemoteInputCompatBase$RemoteInput -> android.support.v4.app.cn:
+android.support.v4.app.RemoteInputCompatBase -> android.support.v4.app.cn:
+android.support.v4.app.RemoteInputCompatBase$RemoteInput -> android.support.v4.app.co:
     java.lang.String getResultKey() -> a
     java.lang.CharSequence getLabel() -> b
     java.lang.CharSequence[] getChoices() -> c
     boolean getAllowFreeFormInput() -> d
     android.os.Bundle getExtras() -> e
-android.support.v4.app.RemoteInputCompatBase$RemoteInput$Factory -> android.support.v4.app.co:
-android.support.v4.app.RemoteInputCompatJellybean -> android.support.v4.app.cp:
+android.support.v4.app.RemoteInputCompatBase$RemoteInput$Factory -> android.support.v4.app.cp:
+android.support.v4.app.RemoteInputCompatJellybean -> android.support.v4.app.cq:
     47:53:android.os.Bundle toBundle(android.support.v4.app.RemoteInputCompatBase$RemoteInput) -> a
     69:76:android.os.Bundle[] toBundleArray(android.support.v4.app.RemoteInputCompatBase$RemoteInput[]) -> a
-android.support.v4.app.SharedElementCallback -> android.support.v4.app.cq:
+android.support.v4.app.SharedElementCallback -> android.support.v4.app.cr:
     57:57:void onSharedElementStart(java.util.List,java.util.List,java.util.List) -> a
     82:82:void onSharedElementEnd(java.util.List,java.util.List,java.util.List) -> b
     117:117:void onMapSharedElements(java.util.List,java.util.Map) -> a
-android.support.v4.app.SuperNotCalledException -> android.support.v4.app.cr:
-android.support.v4.app.TaskStackBuilder -> android.support.v4.app.cs:
+android.support.v4.app.SuperNotCalledException -> android.support.v4.app.cs:
+android.support.v4.app.TaskStackBuilder -> android.support.v4.app.ct:
     android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl IMPL -> a
     java.util.ArrayList mIntents -> b
     android.content.Context mSourceContext -> c
@@ -900,11 +919,11 @@ android.support.v4.app.TaskStackBuilder -> android.support.v4.app.cs:
     289:289:java.util.Iterator iterator() -> iterator
     301:302:void startActivities() -> a
     316:330:void startActivities(android.os.Bundle) -> a
-android.support.v4.app.TaskStackBuilder$SupportParentable -> android.support.v4.app.ct:
+android.support.v4.app.TaskStackBuilder$SupportParentable -> android.support.v4.app.cu:
     android.content.Intent getSupportParentActivityIntent() -> a
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl -> android.support.v4.app.cu:
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplBase -> android.support.v4.app.cv:
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplHoneycomb -> android.support.v4.app.cw:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl -> android.support.v4.app.cv:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplBase -> android.support.v4.app.cw:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplHoneycomb -> android.support.v4.app.cx:
 android.support.v4.content.AsyncTaskLoader -> android.support.v4.a.a:
     android.support.v4.content.AsyncTaskLoader$LoadTask mTask -> a
     android.support.v4.content.AsyncTaskLoader$LoadTask mCancellingTask -> b
@@ -1726,7 +1745,7 @@ android.support.v4.view.OnApplyWindowInsetsListener -> android.support.v4.view.a
     android.support.v4.view.WindowInsetsCompat onApplyWindowInsets(android.view.View,android.support.v4.view.WindowInsetsCompat) -> a
 android.support.v4.view.PagerAdapter -> android.support.v4.view.ay:
     android.database.DataSetObservable mObservable -> a
-    int getCount() -> a
+    int getCount() -> b
     95:96:void startUpdate(android.view.ViewGroup) -> a
     110:110:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
     124:125:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
@@ -1738,14 +1757,14 @@ android.support.v4.view.PagerAdapter -> android.support.v4.view.ay:
     207:207:void setPrimaryItem(android.view.View,int,java.lang.Object) -> b
     219:219:void finishUpdate(android.view.View) -> b
     boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    239:239:android.os.Parcelable saveState() -> b
+    239:239:android.os.Parcelable saveState() -> a
     250:250:void restoreState(android.os.Parcelable,java.lang.ClassLoader) -> a
     268:268:int getItemPosition(java.lang.Object) -> a
     276:277:void notifyDataSetChanged() -> c
     285:286:void registerDataSetObserver(android.database.DataSetObserver) -> a
     294:295:void unregisterDataSetObserver(android.database.DataSetObserver) -> b
-    307:307:java.lang.CharSequence getPageTitle(int) -> a
-    318:318:float getPageWidth(int) -> b
+    307:307:java.lang.CharSequence getPageTitle(int) -> c
+    318:318:float getPageWidth(int) -> d
 android.support.v4.view.VelocityTrackerCompat -> android.support.v4.view.az:
     android.support.v4.view.VelocityTrackerCompat$VelocityTrackerVersionImpl IMPL -> a
     82:82:float getXVelocity(android.view.VelocityTracker,int) -> a
@@ -3079,18 +3098,20 @@ android.support.v4.widget.ViewDragHelper$Callback -> android.support.v4.widget.a
     304:304:int clampViewPositionHorizontal(android.view.View,int,int) -> a
     319:319:int clampViewPositionVertical(android.view.View,int,int) -> b
 android.support.v7.app.ActionBar -> android.support.v7.app.a:
+    void setDisplayHomeAsUpEnabled(boolean) -> a
     int getDisplayOptions() -> a
-    835:835:void setHomeButtonEnabled(boolean) -> a
-    847:847:android.content.Context getThemedContext() -> b
-    953:957:void setHideOnContentScrollEnabled(boolean) -> b
+    void hide() -> b
+    835:835:void setHomeButtonEnabled(boolean) -> b
+    847:847:android.content.Context getThemedContext() -> c
+    953:957:void setHideOnContentScrollEnabled(boolean) -> c
     1008:1012:void setElevation(float) -> a
-    1028:1028:void setDefaultDisplayHomeAsUpEnabled(boolean) -> c
-    1032:1032:void setShowHideAnimationEnabled(boolean) -> d
+    1028:1028:void setDefaultDisplayHomeAsUpEnabled(boolean) -> d
+    1032:1032:void setShowHideAnimationEnabled(boolean) -> e
     1036:1036:void onConfigurationChanged(android.content.res.Configuration) -> a
-    1040:1040:void dispatchMenuVisibilityChanged(boolean) -> e
+    1040:1040:void dispatchMenuVisibilityChanged(boolean) -> f
     1044:1044:android.support.v7.view.ActionMode startActionMode(android.support.v7.view.ActionMode$Callback) -> a
-    1054:1054:boolean invalidateOptionsMenu() -> c
-    1064:1064:boolean collapseActionView() -> d
+    1054:1054:boolean invalidateOptionsMenu() -> d
+    1064:1064:boolean collapseActionView() -> e
     1069:1069:void setWindowTitle(java.lang.CharSequence) -> a
 android.support.v7.app.ActionBar$LayoutParams -> android.support.v7.app.b:
     int gravity -> gravity
@@ -4333,33 +4354,34 @@ android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.inter
     255:259:void setElevation(float) -> a
     267:268:void onConfigurationChanged(android.content.res.Configuration) -> a
     271:293:void setHasEmbeddedTabs(boolean) -> k
-    320:325:void completeDeferredDestroyActionMode() -> e
+    320:325:void completeDeferredDestroyActionMode() -> f
     328:329:void onWindowVisibilityChanged(int) -> a
-    339:343:void setShowHideAnimationEnabled(boolean) -> d
-    354:363:void dispatchMenuVisibilityChanged(boolean) -> e
-    383:384:void setDisplayHomeAsUpEnabled(boolean) -> f
-    398:399:void setHomeButtonEnabled(boolean) -> a
+    339:343:void setShowHideAnimationEnabled(boolean) -> e
+    354:363:void dispatchMenuVisibilityChanged(boolean) -> f
+    383:384:void setDisplayHomeAsUpEnabled(boolean) -> a
+    398:399:void setHomeButtonEnabled(boolean) -> b
     446:447:void setWindowTitle(java.lang.CharSequence) -> a
     461:466:void setDisplayOptions(int,int) -> a
-    495:495:int getNavigationMode() -> f
+    495:495:int getNavigationMode() -> g
     499:499:int getDisplayOptions() -> a
     503:527:android.support.v7.view.ActionMode startActionMode(android.support.v7.view.ActionMode$Callback) -> a
     654:655:void enableContentAnimations(boolean) -> g
-    666:673:void showForActionMode() -> k
-    676:680:void showForSystem() -> g
-    691:698:void hideForActionMode() -> l
-    701:705:void hideForSystem() -> h
-    709:715:void setHideOnContentScrollEnabled(boolean) -> b
+    666:673:void showForActionMode() -> l
+    676:680:void showForSystem() -> h
+    684:688:void hide() -> b
+    691:698:void hideForActionMode() -> m
+    701:705:void hideForSystem() -> i
+    709:715:void setHideOnContentScrollEnabled(boolean) -> c
     738:743:boolean checkShowingFlags(boolean,boolean,boolean) -> b
     749:763:void updateVisibility(boolean) -> l
     766:824:void doShow(boolean) -> h
     827:861:void doHide(boolean) -> i
     870:879:void animateToMode(boolean) -> j
-    882:894:android.content.Context getThemedContext() -> b
-    924:928:void onContentScrollStarted() -> i
-    932:932:void onContentScrollStopped() -> j
-    936:940:boolean collapseActionView() -> d
-    1341:1344:void setDefaultDisplayHomeAsUpEnabled(boolean) -> c
+    882:894:android.content.Context getThemedContext() -> c
+    924:928:void onContentScrollStarted() -> j
+    932:932:void onContentScrollStopped() -> k
+    936:940:boolean collapseActionView() -> e
+    1341:1344:void setDefaultDisplayHomeAsUpEnabled(boolean) -> d
     75:75:boolean access$000(android.support.v7.internal.app.WindowDecorActionBar) -> a
     75:75:android.view.View access$100(android.support.v7.internal.app.WindowDecorActionBar) -> b
     75:75:android.support.v7.internal.widget.ActionBarContainer access$200(android.support.v7.internal.app.WindowDecorActionBar) -> c
@@ -5481,11 +5503,11 @@ android.support.v7.internal.widget.ActionBarOverlayLayout$4 -> android.support.v
     135:144:void run() -> run
 android.support.v7.internal.widget.ActionBarOverlayLayout$ActionBarVisibilityCallback -> android.support.v7.internal.widget.l:
     void onWindowVisibilityChanged(int) -> a
-    void showForSystem() -> g
-    void hideForSystem() -> h
+    void showForSystem() -> h
+    void hideForSystem() -> i
     void enableContentAnimations(boolean) -> g
-    void onContentScrollStarted() -> i
-    void onContentScrollStopped() -> j
+    void onContentScrollStarted() -> j
+    void onContentScrollStopped() -> k
 android.support.v7.internal.widget.ActionBarOverlayLayout$LayoutParams -> android.support.v7.internal.widget.m:
 android.support.v7.internal.widget.ActivityChooserModel -> android.support.v7.internal.widget.n:
     java.lang.String LOG_TAG -> a
@@ -8860,10 +8882,10 @@ com.laloosh.textmuse.GroupEditActivity$GroupContactListAdapter$ViewHolder -> com
 com.laloosh.textmuse.ImageDownloadTarget -> com.laloosh.textmuse.ad:
     java.lang.ref.WeakReference mContext -> a
     com.laloosh.textmuse.datamodel.Note mNote -> b
-    32:59:void onBitmapLoaded(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom) -> a
-    63:65:void onBitmapFailed(android.graphics.drawable.Drawable) -> a
-    69:70:void onPrepareLoad(android.graphics.drawable.Drawable) -> b
-    74:78:boolean isExternalStorageWritable() -> a
+    31:60:void onBitmapLoaded(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom) -> a
+    64:67:void onBitmapFailed(android.graphics.drawable.Drawable) -> a
+    71:72:void onPrepareLoad(android.graphics.drawable.Drawable) -> b
+    76:80:boolean isExternalStorageWritable() -> a
 com.laloosh.textmuse.MainCategoryActivity -> com.laloosh.textmuse.MainCategoryActivity:
     com.laloosh.textmuse.datamodel.TextMuseData mData -> n
     com.laloosh.textmuse.datamodel.TextMuseSettings mSettings -> o
@@ -8875,36 +8897,36 @@ com.laloosh.textmuse.MainCategoryActivity -> com.laloosh.textmuse.MainCategoryAc
     java.util.HashMap mRandomNoteIndex -> u
     java.util.Timer mTimer -> v
     long mLastUserScrollMillis -> w
-    62:111:void onCreate(android.os.Bundle) -> onCreate
-    117:118:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    126:136:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    141:207:void generateRandomNotes() -> k
-    210:221:void generateViewsFromData() -> l
-    224:229:void loadDataFromInternet() -> m
-    233:240:void showFailureMessage() -> n
-    243:254:void setLastNotified() -> o
-    257:258:void setNotificationAlarm() -> p
-    262:277:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
-    281:297:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    65:123:void onCreate(android.os.Bundle) -> onCreate
+    129:130:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    138:148:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    153:219:void generateRandomNotes() -> k
+    222:233:void generateViewsFromData() -> l
+    236:241:void loadDataFromInternet() -> m
+    245:252:void showFailureMessage() -> n
+    255:266:void setLastNotified() -> o
+    269:270:void setNotificationAlarm() -> p
+    274:289:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
+    293:309:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     44:44:com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter access$000(com.laloosh.textmuse.MainCategoryActivity) -> a
     44:44:android.support.v4.view.ViewPager access$100(com.laloosh.textmuse.MainCategoryActivity) -> b
     44:44:long access$202(com.laloosh.textmuse.MainCategoryActivity,long) -> a
     44:44:long access$200(com.laloosh.textmuse.MainCategoryActivity) -> c
 com.laloosh.textmuse.MainCategoryActivity$1 -> com.laloosh.textmuse.ae:
     com.laloosh.textmuse.MainCategoryActivity this$0 -> a
-    84:84:void onPageScrolled(int,float,int) -> a
-    89:93:void onPageSelected(int) -> a
-    97:98:void onPageScrollStateChanged(int) -> b
+    89:89:void onPageScrolled(int,float,int) -> a
+    94:98:void onPageSelected(int) -> a
+    102:103:void onPageScrollStateChanged(int) -> b
 com.laloosh.textmuse.MainCategoryActivity$CategoryAndNoteIndex -> com.laloosh.textmuse.af:
     int mCategoryIndex -> a
     int mNoteIndex -> b
     com.laloosh.textmuse.MainCategoryActivity this$0 -> c
 com.laloosh.textmuse.MainCategoryActivity$ChangeHeaderTask -> com.laloosh.textmuse.ag:
     com.laloosh.textmuse.MainCategoryActivity this$0 -> a
-    302:315:void run() -> run
+    314:327:void run() -> run
 com.laloosh.textmuse.MainCategoryActivity$ChangeHeaderTask$1 -> com.laloosh.textmuse.ah:
     com.laloosh.textmuse.MainCategoryActivity$ChangeHeaderTask this$1 -> a
-    305:313:void run() -> run
+    317:325:void run() -> run
 com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter -> com.laloosh.textmuse.ai:
     java.util.ArrayList mNotes -> a
     java.util.HashMap mNotesIndex -> b
@@ -8913,39 +8935,39 @@ com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter -> com.laloosh.
     int mTimesSinceRandomLogo -> e
     java.util.Random mRandom -> f
     java.util.HashMap mDownloadTargets -> g
-    344:347:void updateNotes(java.util.ArrayList,java.util.HashMap) -> a
-    350:354:int getMidpoint() -> d
-    374:380:int getCount() -> a
-    388:470:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
-    475:476:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
-    480:480:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    318:318:java.util.HashMap access$400(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> a
-    318:318:android.app.Activity access$500(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> b
+    356:359:void updateNotes(java.util.ArrayList,java.util.HashMap) -> a
+    362:366:int getMidpoint() -> d
+    386:392:int getCount() -> b
+    400:483:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
+    488:489:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
+    493:493:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
+    330:330:java.util.HashMap access$400(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> a
+    330:330:android.app.Activity access$500(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> b
 com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter$1 -> com.laloosh.textmuse.aj:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     int val$position -> b
     com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter this$0 -> c
-    445:460:void onClick(android.view.View) -> onClick
+    458:473:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter -> com.laloosh.textmuse.ak:
     android.app.Activity mContext -> a
     java.util.List mOriginalCategories -> b
     java.util.List mShownCategories -> c
     com.laloosh.textmuse.datamodel.TextMuseSettings mSettings -> d
-    520:520:int getCount() -> getCount
-    525:619:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    624:624:int getViewTypeCount() -> getViewTypeCount
-    629:634:int getItemViewType(int) -> getItemViewType
-    639:640:void updateSettings(com.laloosh.textmuse.datamodel.TextMuseSettings) -> a
-    643:646:void updateCategories(java.util.List) -> a
-    649:655:void generateShownCategories() -> a
-    658:665:int getOriginalIndex(com.laloosh.textmuse.datamodel.Category) -> a
-    484:484:int access$600(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter,com.laloosh.textmuse.datamodel.Category) -> a
-    484:484:android.app.Activity access$700(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter) -> a
+    533:533:int getCount() -> getCount
+    538:633:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    638:638:int getViewTypeCount() -> getViewTypeCount
+    643:648:int getItemViewType(int) -> getItemViewType
+    653:654:void updateSettings(com.laloosh.textmuse.datamodel.TextMuseSettings) -> a
+    657:660:void updateCategories(java.util.List) -> a
+    663:669:void generateShownCategories() -> a
+    672:679:int getOriginalIndex(com.laloosh.textmuse.datamodel.Category) -> a
+    497:497:int access$600(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter,com.laloosh.textmuse.datamodel.Category) -> a
+    497:497:android.app.Activity access$700(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter) -> a
 com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter$1 -> com.laloosh.textmuse.al:
     com.laloosh.textmuse.datamodel.Category val$category -> a
     int val$position -> b
     com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter this$0 -> c
-    586:593:void onClick(android.view.View) -> onClick
+    599:606:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter$ViewHolder -> com.laloosh.textmuse.am:
     android.widget.TextView mCategoryTitle -> a
     android.view.ViewGroup mNewBadge -> b
@@ -8974,14 +8996,14 @@ com.laloosh.textmuse.RegisterActivity -> com.laloosh.textmuse.RegisterActivity:
     android.widget.EditText mEditTextBirthMonth -> p
     android.widget.EditText mEditTextBirthYear -> q
     boolean mRegistered -> r
-    32:53:void onCreate(android.os.Bundle) -> onCreate
-    58:59:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    67:74:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    79:138:void handleRegistrationSubmit() -> k
-    141:143:void showIncompleteInfoDialog() -> l
-    146:148:void showBadInputDialog() -> m
-    151:153:void showTooYoungDialog() -> n
-    157:170:void handleRegisterResult(boolean) -> b
+    35:63:void onCreate(android.os.Bundle) -> onCreate
+    68:69:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    77:84:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    89:148:void handleRegistrationSubmit() -> k
+    151:153:void showIncompleteInfoDialog() -> l
+    156:158:void showBadInputDialog() -> m
+    161:163:void showTooYoungDialog() -> n
+    167:180:void handleRegisterResult(boolean) -> b
 com.laloosh.textmuse.RegisterAsyncTask -> com.laloosh.textmuse.aq:
     java.lang.ref.WeakReference mHandler -> a
     java.lang.String mName -> b
@@ -9013,31 +9035,31 @@ com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter -> com.laloosh.t
     java.util.HashMap mDownloadTargets -> e
     int mCategoryPosition -> f
     com.laloosh.textmuse.datamodel.TextMuseData mData -> g
-    159:159:int getCount() -> a
-    165:304:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
-    309:312:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
-    316:316:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    323:351:void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
+    159:159:int getCount() -> b
+    165:307:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
+    312:315:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
+    319:319:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
+    326:354:void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
     137:137:android.support.v7.app.ActionBarActivity access$000(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> a
     137:137:com.laloosh.textmuse.datamodel.TextMuseData access$100(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> b
     137:137:int access$200(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> c
 com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$1 -> com.laloosh.textmuse.at:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    200:202:void onClick(android.view.View) -> onClick
+    203:205:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$2 -> com.laloosh.textmuse.au:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    238:244:void onClick(android.view.View) -> onClick
+    241:247:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3 -> com.laloosh.textmuse.av:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    261:276:void onClick(android.view.View) -> onClick
+    264:279:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$4 -> com.laloosh.textmuse.aw:
     int val$position -> a
     com.laloosh.textmuse.datamodel.Note val$note -> b
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> c
-    294:299:void onClick(android.view.View) -> onClick
+    297:302:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.SetHighlightAsyncTask -> com.laloosh.textmuse.ax:
     java.lang.ref.WeakReference mHandler -> a
     java.lang.ref.WeakReference mView -> b
@@ -9081,37 +9103,37 @@ com.laloosh.textmuse.SettingsActivity$SettingsListAdapter -> com.laloosh.textmus
     135:141:int getCount() -> getCount
     146:146:java.lang.Object getItem(int) -> getItem
     151:151:long getItemId(int) -> getItemId
-    156:171:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    177:193:android.view.View getNotificationView(android.view.View,android.view.ViewGroup) -> a
-    198:257:android.view.View getRecentContactsView(android.view.View,android.view.ViewGroup) -> b
-    263:307:android.view.View getTextOnlyView(android.view.View,android.view.ViewGroup,com.laloosh.textmuse.SettingsActivity$TextOnlyViewType) -> a
-    311:316:android.view.View getCategoryHeader(android.view.View,android.view.ViewGroup) -> c
-    320:354:android.view.View getCategoryElementView(int,android.view.View,android.view.ViewGroup) -> a
-    360:374:int getItemViewType(int) -> getItemViewType
-    381:381:int getViewTypeCount() -> getViewTypeCount
+    156:173:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    179:195:android.view.View getNotificationView(android.view.View,android.view.ViewGroup) -> a
+    200:259:android.view.View getRecentContactsView(android.view.View,android.view.ViewGroup) -> b
+    265:314:android.view.View getTextOnlyView(android.view.View,android.view.ViewGroup,com.laloosh.textmuse.SettingsActivity$TextOnlyViewType) -> a
+    318:323:android.view.View getCategoryHeader(android.view.View,android.view.ViewGroup) -> c
+    327:361:android.view.View getCategoryElementView(int,android.view.View,android.view.ViewGroup) -> a
+    367:383:int getItemViewType(int) -> getItemViewType
+    390:390:int getViewTypeCount() -> getViewTypeCount
 com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$1 -> com.laloosh.textmuse.bc:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
-    188:190:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+    190:192:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
 com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$2 -> com.laloosh.textmuse.bd:
     android.widget.SeekBar val$seekBar -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
-    218:230:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+    220:232:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
 com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$3 -> com.laloosh.textmuse.be:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
-    236:236:void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
-    240:240:void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
-    245:254:void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
+    238:238:void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
+    242:242:void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
+    247:256:void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
 com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$4 -> com.laloosh.textmuse.bf:
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType val$viewType -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
-    290:304:void onClick(android.view.View) -> onClick
+    294:311:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$5 -> com.laloosh.textmuse.bg:
     java.lang.String val$categoryName -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
-    339:343:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+    346:350:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
 com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$6 -> com.laloosh.textmuse.bh:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
-    349:351:void onClick(android.view.View) -> onClick
+    356:358:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.SettingsActivity$TextItemViewHolder -> com.laloosh.textmuse.bi:
     android.widget.TextView mTextView -> a
     com.laloosh.textmuse.SettingsActivity this$0 -> b
@@ -9119,9 +9141,10 @@ com.laloosh.textmuse.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.b
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType FEEDBACK_VIEW -> a
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType PRIVACY_POLICY_VIEW -> b
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType REGISTER_VIEW -> c
-    com.laloosh.textmuse.SettingsActivity$TextOnlyViewType[] $VALUES -> d
-    386:386:com.laloosh.textmuse.SettingsActivity$TextOnlyViewType[] values() -> values
-    386:386:com.laloosh.textmuse.SettingsActivity$TextOnlyViewType valueOf(java.lang.String) -> valueOf
+    com.laloosh.textmuse.SettingsActivity$TextOnlyViewType WALKTHROUGH_VIEW -> d
+    com.laloosh.textmuse.SettingsActivity$TextOnlyViewType[] $VALUES -> e
+    395:395:com.laloosh.textmuse.SettingsActivity$TextOnlyViewType[] values() -> values
+    395:395:com.laloosh.textmuse.SettingsActivity$TextOnlyViewType valueOf(java.lang.String) -> valueOf
 com.laloosh.textmuse.SmsUtils -> com.laloosh.textmuse.bk:
     32:38:android.content.Intent createSmsIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> a
     43:63:java.lang.String getToList(java.util.Set) -> a
@@ -9131,7 +9154,53 @@ com.laloosh.textmuse.SmsUtils -> com.laloosh.textmuse.bk:
     117:120:android.content.Intent getTextOnlyIntent(com.laloosh.textmuse.datamodel.Note,java.util.Set) -> a
     129:190:android.content.Intent getPostKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> b
     196:247:android.content.Intent getPreKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> c
-com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.bl:
+com.laloosh.textmuse.SplashScreenActivity -> com.laloosh.textmuse.SplashScreenActivity:
+    com.laloosh.textmuse.datamodel.TextMuseData mData -> n
+    boolean mFinishedLoading -> o
+    com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult mFinishedLoadingResult -> p
+    java.util.Timer mTimer -> q
+    boolean mFirstLaunch -> r
+    30:43:void onCreate(android.os.Bundle) -> onCreate
+    48:51:void loadRawContent() -> k
+    54:56:void getNewContent() -> l
+    60:68:void scheduleTimerForFinish() -> m
+    72:97:void timerFinished() -> n
+    101:108:boolean isFirstLaunch() -> o
+    112:116:void setLaunchedBefore() -> p
+    120:125:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
+    17:17:void access$000(com.laloosh.textmuse.SplashScreenActivity) -> a
+com.laloosh.textmuse.SplashScreenActivity$1 -> com.laloosh.textmuse.bl:
+    com.laloosh.textmuse.SplashScreenActivity this$0 -> a
+    64:65:void run() -> run
+com.laloosh.textmuse.WalkthroughActivity -> com.laloosh.textmuse.WalkthroughActivity:
+    android.support.v4.view.ViewPager mViewPager -> n
+    com.viewpagerindicator.CirclePageIndicator mPageIndicator -> o
+    com.laloosh.textmuse.WalkthroughActivity$WalkthroughAdapter mAdapter -> p
+    boolean mInitialLaunch -> q
+    java.lang.String[] WALKTHROUGH_DESCRIPTIONS -> r
+    int[] WALKTHROUGH_IMAGE_RESOURCES -> s
+    45:63:void onCreate(android.os.Bundle) -> onCreate
+    67:69:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    20:20:java.lang.String[] access$000() -> k
+    20:20:int[] access$100() -> l
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughAdapter -> com.laloosh.textmuse.bm:
+    boolean mInitialLaunch -> a
+    81:81:android.support.v4.app.Fragment getItem(int) -> a
+    86:86:int getCount() -> b
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment -> com.laloosh.textmuse.bn:
+    int mNum -> a
+    boolean mInitialLaunch -> b
+    95:102:com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment newInstance(int,boolean) -> a
+    107:110:void onCreate(android.os.Bundle) -> a
+    114:152:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    90:90:boolean access$200(com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment) -> a
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment$1 -> com.laloosh.textmuse.bo:
+    com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment this$0 -> a
+    127:130:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment$2 -> com.laloosh.textmuse.bp:
+    com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment this$0 -> a
+    136:149:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.bq:
     25:50:com.laloosh.textmuse.datamodel.TextMuseData parse(java.lang.String) -> a
     55:91:com.laloosh.textmuse.datamodel.TextMuseData parseContent(org.xmlpull.v1.XmlPullParser) -> a
     95:115:void parseLocalNotifications(org.xmlpull.v1.XmlPullParser,com.laloosh.textmuse.datamodel.TextMuseData) -> a
@@ -9181,8 +9250,9 @@ com.laloosh.textmuse.datamodel.Category -> com.laloosh.textmuse.datamodel.Catego
     boolean newFlag -> newFlag
     java.util.List notes -> notes
 com.laloosh.textmuse.datamodel.DataPersistenceHelper -> com.laloosh.textmuse.datamodel.a:
-    26:61:boolean save(android.content.Context,java.lang.String,java.lang.Object) -> a
-    66:112:java.lang.Object load(android.content.Context,java.lang.String,java.lang.Class) -> a
+    28:63:boolean save(android.content.Context,java.lang.String,java.lang.Object) -> a
+    68:114:java.lang.Object load(android.content.Context,java.lang.String,java.lang.Class) -> a
+    119:154:java.lang.String loadRawContent(android.content.Context) -> a
 com.laloosh.textmuse.datamodel.GlobalData -> com.laloosh.textmuse.datamodel.b:
     com.laloosh.textmuse.datamodel.TextMuseData mData -> a
     com.laloosh.textmuse.datamodel.TextMuseStoredContacts mStoredContacts -> b
@@ -9249,9 +9319,10 @@ com.laloosh.textmuse.datamodel.TextMuseData -> com.laloosh.textmuse.datamodel.Te
     java.util.List localNotifications -> localNotifications
     org.joda.time.DateTime timestamp -> timestamp
     int appId -> appId
-    22:25:void save(android.content.Context) -> a
-    29:29:com.laloosh.textmuse.datamodel.TextMuseData load(android.content.Context) -> b
-    38:73:boolean isDataSimilar(com.laloosh.textmuse.datamodel.TextMuseData) -> a
+    24:27:void save(android.content.Context) -> a
+    31:31:com.laloosh.textmuse.datamodel.TextMuseData load(android.content.Context) -> b
+    35:43:com.laloosh.textmuse.datamodel.TextMuseData loadRawContent(android.content.Context) -> c
+    52:87:boolean isDataSimilar(com.laloosh.textmuse.datamodel.TextMuseData) -> a
 com.laloosh.textmuse.datamodel.TextMuseGroup -> com.laloosh.textmuse.datamodel.TextMuseGroup:
     java.lang.String displayName -> displayName
     java.util.List contactList -> contactList
@@ -9390,16 +9461,16 @@ com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment -> com.laloosh.textmuse
     int mDialogWidth -> aj
     int mDialogHeight -> ak
     android.widget.ImageView mImageView -> al
-    33:42:com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment newInstance(com.laloosh.textmuse.datamodel.Note) -> a
-    48:64:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    70:119:void doneLoadingBitmap(android.graphics.Bitmap) -> a
-    124:127:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
-    133:138:void onResume() -> r
+    36:45:com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment newInstance(com.laloosh.textmuse.datamodel.Note) -> a
+    51:77:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    82:131:void doneLoadingBitmap(android.graphics.Bitmap) -> a
+    136:139:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    145:150:void onResume() -> r
 com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget -> com.laloosh.textmuse.a.q:
     java.lang.ref.WeakReference mHandler -> a
-    22:22:void onBitmapFailed(android.graphics.drawable.Drawable) -> a
-    26:26:void onPrepareLoad(android.graphics.drawable.Drawable) -> b
-    30:34:void onBitmapLoaded(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom) -> a
+    24:25:void onBitmapFailed(android.graphics.drawable.Drawable) -> a
+    29:29:void onPrepareLoad(android.graphics.drawable.Drawable) -> b
+    33:38:void onBitmapLoaded(android.graphics.Bitmap,com.squareup.picasso.Picasso$LoadedFrom) -> a
 com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget$ImageSizeDownloadTargetHandler -> com.laloosh.textmuse.a.r:
     void doneLoadingBitmap(android.graphics.Bitmap) -> a
 com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment -> com.laloosh.textmuse.a.s:
@@ -9751,6 +9822,7 @@ com.squareup.picasso.Picasso -> com.a.a.ak:
     211:212:void cancelRequest(com.squareup.picasso.Target) -> a
     273:273:com.squareup.picasso.RequestCreator load(android.net.Uri) -> a
     293:299:com.squareup.picasso.RequestCreator load(java.lang.String) -> a
+    316:319:com.squareup.picasso.RequestCreator load(java.io.File) -> a
     451:451:java.util.List getRequestHandlers() -> a
     455:462:com.squareup.picasso.Request transformRequest(com.squareup.picasso.Request) -> a
     466:467:void defer(android.widget.ImageView,com.squareup.picasso.DeferredRequestCreator) -> a
@@ -9896,6 +9968,7 @@ com.squareup.picasso.RequestCreator -> com.a.a.ba:
     android.graphics.drawable.Drawable placeholderDrawable -> k
     android.graphics.drawable.Drawable errorDrawable -> l
     java.lang.Object tag -> m
+    141:148:com.squareup.picasso.RequestCreator error(int) -> a
     199:200:com.squareup.picasso.RequestCreator fit() -> a
     205:206:com.squareup.picasso.RequestCreator unfit() -> b
     219:220:com.squareup.picasso.RequestCreator resize(int,int) -> a
