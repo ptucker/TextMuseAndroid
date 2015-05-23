@@ -2,7 +2,9 @@ package com.laloosh.textmuse.dialogs;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
+import com.laloosh.textmuse.Constants;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -19,6 +21,7 @@ public class ImageSizeDownloadTarget implements Target {
 
     @Override
     public void onBitmapFailed(Drawable errorDrawable) {
+        Log.d(Constants.TAG, "Bitmap load failed");
     }
 
     @Override
@@ -28,6 +31,7 @@ public class ImageSizeDownloadTarget implements Target {
     @Override
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
         ImageSizeDownloadTargetHandler handler = mHandler.get();
+        Log.d(Constants.TAG, "Bitmap load finished! handler null status: " + (handler == null));
         if (handler != null) {
             handler.doneLoadingBitmap(bitmap);
         }

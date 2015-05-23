@@ -4,6 +4,7 @@ package com.laloosh.textmuse.dialogs;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.os.Environment;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,8 @@ import com.laloosh.textmuse.Constants;
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.datamodel.Note;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 public class ExpandedImageDialogFragment extends DialogFragment implements ImageSizeDownloadTarget.ImageSizeDownloadTargetHandler {
 
@@ -53,16 +56,25 @@ public class ExpandedImageDialogFragment extends DialogFragment implements Image
 
         mImageView = (ImageView) view.findViewById(R.id.dialogExpandedImageView);
 
-        Log.d(Constants.TAG, "Attempting to load media url: " + note.mediaUrl);
-
         ImageSizeDownloadTarget target = new ImageSizeDownloadTarget(this);
 
-        Picasso.with(getActivity())
-                .load(note.mediaUrl)
-                .into(target);
+        if (note.savedInternally) {
+            File file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), note.getInternalFilename());
+
+            Log.d(Constants.TAG, "Attempting to load media url for expanded image view: " + file.getAbsolutePath());
+
+            Picasso.with(getActivity())
+                    .load(file)
+                    .into(target);
+        } else {
+            Log.d(Constants.TAG, "Attempting to load media url for expanded image view: " + note.mediaUrl);
+
+            Picasso.with(getActivity())
+                    .load(note.mediaUrl)
+                    .into(target);
+        }
 
         return view;
-
     }
 
     @Override

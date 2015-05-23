@@ -175,12 +175,15 @@ public class SelectMessageActivity extends ActionBarActivity {
                 //Try out picasso library to see how it performs
                 Picasso.with(mActivity)
                         .load(note.mediaUrl)
+                        .error(R.drawable.placeholder_image)
                         .fit()
                         .centerCrop()
                         .into(imageView);
 
+                Log.d(Constants.TAG, "Seeing if this contains key: " + note.noteId);
                 if (!mDownloadTargets.containsKey(note.noteId)) {
 
+                    Log.d(Constants.TAG, "Preparing to download image: " + note.mediaUrl + " with note ID: " + note.noteId);
                     //Do another picasso task to write the image file to external storage.  This will
                     //reuse the same image in the cache so it won't go to network again
                     ImageDownloadTarget downloadTarget = new ImageDownloadTarget(mActivity, note);

@@ -28,6 +28,7 @@ public class ImageDownloadTarget implements Target {
 
     @Override
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        Log.d(Constants.TAG, "Bitmap loaded in image download target");
 
         Context context = mContext.get();
 
@@ -60,6 +61,7 @@ public class ImageDownloadTarget implements Target {
 
     @Override
     public void onBitmapFailed(Drawable errorDrawable) {
+        Log.d(Constants.TAG, "Bitmap load failed in image download target");
         mNote.savedInternally = false;
         mNote.saveFailed = true;
     }

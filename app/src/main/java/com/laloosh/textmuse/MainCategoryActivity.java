@@ -416,6 +416,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
                         Picasso.with(mContext)
                                 .load(note.mediaUrl)
+                                .error(R.drawable.placeholder_image)
                                 .fit()
                                 .centerCrop()
                                 .into(imageView);
@@ -614,6 +615,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             } else {
                 Picasso.with(mContext)
                         .load(firstNote.mediaUrl)
+                        .error(R.drawable.placeholder_image)
                         .fit()
                         .centerCrop()
                         .into(holder.mBackgroundImageView);
