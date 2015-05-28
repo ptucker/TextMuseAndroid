@@ -33,13 +33,13 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
         String result = null;
         ConnectionUtils connUtils = new ConnectionUtils();
 
+        HashMap<String, String> webParams = new HashMap<String, String>();
+        webParams.put("highlight", "1");
         if (mAppId > 0) {
-            HashMap<String, String> webParams = new HashMap<String, String>();
             webParams.put("app", Integer.toString(mAppId));
-            result = connUtils.getUrl(UPDATE_URL, webParams);
-        } else {
-            result = connUtils.getUrl(UPDATE_URL, null);
         }
+
+        result = connUtils.getUrl(UPDATE_URL, webParams);
 
         Log.d(Constants.TAG, "Finished async task to fetch new data from server, length = " + (result == null ? "null" : Integer.toString(result.length())));
 
