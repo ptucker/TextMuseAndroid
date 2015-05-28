@@ -30,6 +30,8 @@
 
 -keep class android.support.v7.widget.** { *; }
 -keep interface android.support.v7.widget.** { *; }
+-keep class android.support.v4.widget.** { *; }
+-keep interface android.support.v4.widget.** { *; }
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard

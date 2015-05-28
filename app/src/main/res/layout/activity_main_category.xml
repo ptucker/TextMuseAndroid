@@ -12,13 +12,22 @@
         android:background="@android:color/white"
         />
 
-    <ListView
-        android:id="@+id/mainFragmentListView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainFragmentSwipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:drawSelectorOnTop="false"
         android:layout_marginTop="10dp"
-        />
+        >
+
+        <ListView
+            android:id="@+id/mainFragmentListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawSelectorOnTop="false"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <TextView
         android:id="@+id/mainFragmentTextViewNoItems"

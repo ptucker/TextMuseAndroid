@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,6 +54,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
     private TextMuseSettings mSettings;
     private ViewPager mMainViewPager;
     private HeaderViewPagerAdapter mMainPagerAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListView mListView;
     private MainCategoryListArrayAdapter mCategoryListAdapter;
     private ArrayList<Note> mRandomNotes;
@@ -76,6 +78,14 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
         setLastNotified();
         setNotificationAlarm();
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.mainFragmentSwipeContainer);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadDataFromInternet();
+            }
+        });
 
         mMainViewPager = (ViewPager) findViewById(R.id.mainFragmentViewPagerTop);
 
@@ -113,6 +123,12 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         if (!alreadyLoadedData) {
             Log.d(Constants.TAG, "Splash screen load data did not succeed. Retrying");
             loadDataFromInternet();
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                }
+            });
         } else {
             Log.d(Constants.TAG, "Already successfully loaded data from internet via splash screen. Skipping reload");
         }
@@ -271,6 +287,13 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
     @Override
     public void handleFetchResult(FetchNotesAsyncTask.FetchNotesResult result) {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         if (result == FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED) {
             showFailureMessage();
             return;
