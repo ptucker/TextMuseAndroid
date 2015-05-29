@@ -116,7 +116,7 @@ public class AlarmReceivedBroadcastReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle("TextMuse")
                 .setContentText(text)
-                .setSmallIcon(R.drawable.ic_action_search)   //TODO: Change this to a real icon
+                .setSmallIcon(R.drawable.notification_icon)   
                 .setContentIntent(pendingIntent)
                 .setSound(sound, AudioManager.STREAM_NOTIFICATION);
 
