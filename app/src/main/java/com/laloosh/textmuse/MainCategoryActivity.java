@@ -437,12 +437,23 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
                         ImageView imageView = (ImageView) view.findViewById(R.id.mainViewImageViewItemBackground);
 
-                        Picasso.with(mContext)
-                                .load(note.mediaUrl)
-                                .error(R.drawable.placeholder_image)
-                                .fit()
-                                .centerCrop()
-                                .into(imageView);
+                        if (note.shouldCenterInside()) {
+                            Picasso.with(mContext)
+                                    .load(note.mediaUrl)
+                                    .error(R.drawable.placeholder_image)
+                                    .fit()
+                                    .centerInside()
+                                    .into(imageView);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        } else {
+                            Picasso.with(mContext)
+                                    .load(note.mediaUrl)
+                                    .error(R.drawable.placeholder_image)
+                                    .fit()
+                                    .centerCrop()
+                                    .into(imageView);
+                            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        }
 
                         if (!mDownloadTargets.containsKey(note.noteId)) {
 
@@ -633,15 +644,26 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             holder.mNewBadge.setOnClickListener(onClickListener);
             holder.mTextLayout.setOnClickListener(onClickListener);
 
-            if (holder.mTextOnly) {
+            if (!firstNote.hasDisplayableMedia()) {
                 holder.mBackgroundViewTextOnly.setBackgroundColor(color);
             } else {
-                Picasso.with(mContext)
-                        .load(firstNote.mediaUrl)
-                        .error(R.drawable.placeholder_image)
-                        .fit()
-                        .centerCrop()
-                        .into(holder.mBackgroundImageView);
+                if (firstNote.shouldCenterInside()) {
+                    Picasso.with(mContext)
+                            .load(firstNote.mediaUrl)
+                            .error(R.drawable.placeholder_image)
+                            .fit()
+                            .centerInside()
+                            .into(holder.mBackgroundImageView);
+                    holder.mBackgroundImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                } else {
+                    Picasso.with(mContext)
+                            .load(firstNote.mediaUrl)
+                            .error(R.drawable.placeholder_image)
+                            .fit()
+                            .centerCrop()
+                            .into(holder.mBackgroundImageView);
+                    holder.mBackgroundImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }
             }
 
             if (firstNote.text == null || firstNote.text.length() <= 0) {

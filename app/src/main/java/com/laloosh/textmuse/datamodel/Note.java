@@ -45,6 +45,16 @@ public class Note implements Parcelable {
         return true;
     }
 
+    //On certain images, we should center fit instead of crop.  Only do this for quotehd images
+    //for now
+    public boolean shouldCenterInside() {
+        if (mediaUrl != null && mediaUrl.toLowerCase().contains("quotehd.com")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean hasExternalLink() {
         if (extraUrl == null || extraUrl.isEmpty()) {
             return false;
