@@ -45,7 +45,7 @@ public class RegisterAsyncTask extends AsyncTask<Void, Void, String> {
         webParams.put("bmonth", Integer.toString(mBirthMonth));
         webParams.put("byear", Integer.toString(mBirthYear));
 
-        result = connUtils.postUrl(FEEDBACK_URL, null, webParams);
+        result = connUtils.postUrl(FEEDBACK_URL, webParams);
 
         Log.d(Constants.TAG, "Finished async task to register, length = " + (result == null ? "null" : Integer.toString(result.length())));
 

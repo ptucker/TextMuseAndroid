@@ -1,5 +1,7 @@
 package com.laloosh.textmuse;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,15 @@ public class FeedbackActivity extends ActionBarActivity implements FeedbackAsync
         mNameEditText = (EditText) findViewById(R.id.feedbackActivityEditTextName);
         mEmailEditText = (EditText) findViewById(R.id.feedbackActivityEditTextEmail);
         mFeedbackEditText = (EditText) findViewById(R.id.feedbackActivityEditTextFeedback);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREF_FILE, Context.MODE_PRIVATE);
+        if (sharedPreferences.getBoolean(Constants.SHARED_PREF_KEY_REGISTERED, false)) {
+            String name = sharedPreferences.getString(Constants.SHARED_PREF_KEY_REGISTER_NAME, "");
+            String email = sharedPreferences.getString(Constants.SHARED_PREF_KEY_REGISTER_EMAIL, "");
+
+            mNameEditText.setText(name);
+            mEmailEditText.setText(email);
+        }
     }
 
     @Override

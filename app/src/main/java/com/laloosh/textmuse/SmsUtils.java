@@ -96,7 +96,7 @@ public class SmsUtils {
             }
         }
 
-        text += "\n\nSent by TextMuse";
+        text += "\n\nSent by TextMuse - http://www.textmuse.com/download";
 
         return text;
     }

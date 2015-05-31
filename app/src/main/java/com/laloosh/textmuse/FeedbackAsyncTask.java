@@ -44,9 +44,12 @@ public class FeedbackAsyncTask extends AsyncTask<Void, Void, String> {
             webParams.put("feedback", mFeedback);
         }
 
-        result = connUtils.postUrl(FEEDBACK_URL, null, webParams);
+        result = connUtils.postUrl(FEEDBACK_URL, webParams);
 
         Log.d(Constants.TAG, "Finished async task to post feedback, length = " + (result == null ? "null" : Integer.toString(result.length())));
+        if (result != null) {
+            Log.d(Constants.TAG, "Result: " + result);
+        }
 
         return result;
     }

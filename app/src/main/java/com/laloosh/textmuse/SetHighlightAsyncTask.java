@@ -43,7 +43,7 @@ public class SetHighlightAsyncTask extends AsyncTask<Void, Void, String> {
         webParams.put("id", Integer.toString(mNoteId));
         webParams.put("h", Integer.toString(mLike));
 
-        result = connUtils.postUrl(LIKE_URL, null, webParams);
+        result = connUtils.postUrl(LIKE_URL, webParams);
 
         Log.d(Constants.TAG, "Finished async task to fetch new data from server, length = " + (result == null ? "null" : Integer.toString(result.length())));
 

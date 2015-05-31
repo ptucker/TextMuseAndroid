@@ -1,0 +1,39 @@
+package com.laloosh.textmuse;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+import java.util.HashMap;
+
+public class NoteSendAsyncTask extends AsyncTask<Void, Void, String> {
+
+    public static final String SEND_URL = "http://www.textmuse.com/admin/notesend.php";
+
+    int mAppId = -1;
+    int mNoteId = -1;
+
+    public NoteSendAsyncTask(int appId, int noteId) {
+        mAppId = appId;
+        mNoteId = noteId;
+    }
+
+    @Override
+    protected String doInBackground(Void... params) {
+
+        Log.d(Constants.TAG, "Starting async task to send note id to server");
+
+        String result = null;
+        ConnectionUtils connUtils = new ConnectionUtils();
+
+        HashMap<String, String> webParams = new HashMap<String, String>();
+        webParams.put("app", Integer.toString(mAppId));
+        webParams.put("id", Integer.toString(mNoteId));
+
+        result = connUtils.postUrl(SEND_URL, webParams);
+
+        Log.d(Constants.TAG, "Finished async task to send note id to server, length = " + (result == null ? "null" : Integer.toString(result.length())));
+
+        return result;
+    }
+
+}

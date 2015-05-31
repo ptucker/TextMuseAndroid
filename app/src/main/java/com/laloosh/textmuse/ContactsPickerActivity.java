@@ -211,6 +211,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             }
 
             updateRecentContacts();
+            sendNoteIdToServer();
 
             Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
 
@@ -274,6 +275,17 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         mStoredContacts.addOrUpdateRecentContacts(mState.getSelectedContacts(), mSettings);
         mStoredContacts.save(this);
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void sendNoteIdToServer() {
+        TextMuseData data = GlobalData.getInstance().getData();
+        if (data != null) {
+            int appId = data.appId;
+            if (appId > 0) {
+                NoteSendAsyncTask asyncTask = new NoteSendAsyncTask(appId, mNote.noteId);
+                asyncTask.execute();
+            }
+        }
     }
 
     private HashSet<String> getSelectedPhoneNumbers() {

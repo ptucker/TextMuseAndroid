@@ -83,21 +83,15 @@ public class ConnectionUtils {
         return null;
     }
 
-    public String postUrl(String stringUrl, byte[] data, HashMap<String, String> params) {
+    public String postUrl(String stringUrl, HashMap<String, String> params) {
 
         byte[] result = null;
-
-        if (data != null) {
-            ByteArrayInputStream is = new ByteArrayInputStream(data);
-            result = postUrlBytes(stringUrl, is, params);
-        } else {
-            result = postUrlBytes(stringUrl, null, params);
-        }
+        result = postUrlBytes(stringUrl, params);
 
         return byteArrayToString(result);
     }
 
-    public byte[] postUrlBytes(String stringUrl, InputStream inputDataStream, HashMap<String, String> params) {
+    public byte[] postUrlBytes(String stringUrl, HashMap<String, String> params) {
         InputStream is = null;
         byte[] result = null;
 
@@ -108,28 +102,33 @@ public class ConnectionUtils {
             conn.setConnectTimeout(CONNECT_TIMEOUT);
             conn.setRequestMethod("POST");
 
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
             if (params != null && !params.isEmpty()) {
+                StringBuilder postData = new StringBuilder();
                 for (HashMap.Entry<String, String> entry : params.entrySet()) {
                     try {
+                        if (postData.length() > 0) {
+                            postData.append('&');
+                        }
                         String key = URLEncoder.encode(entry.getKey(), "UTF-8");
                         String value = URLEncoder.encode(entry.getValue(), "UTF-8");
-                        conn.setRequestProperty(key, value);
+
+                        postData.append(key);
+                        postData.append("=");
+                        postData.append(value);
+
                     } catch (Exception e) {
                         Log.e(Constants.TAG, "Post: could not attach key: " + entry.getKey() + " and value: " + entry.getValue());
                     }
                 }
+
+                if (postData.length() > 0) {
+                    byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+                    conn.getOutputStream().write(postDataBytes);
+                }
             }
-
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            if (inputDataStream != null) {
-                DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                IOUtils.copy(inputDataStream, os);
-                os.close();
-            }
-
-            conn.connect();
 
             int response = conn.getResponseCode();
             if (response != 200) {
