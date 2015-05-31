@@ -245,18 +245,23 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         }
 
         //If no parcelable was passed in, then we must have gotten a set of indexes
-        int categoryPosition = intent.getIntExtra(CATEGORY_POSITION_EXTRA, -1);
-        int notePosition = intent.getIntExtra(NOTE_POSITION_EXTRA, -1);
-        int noteId = intent.getIntExtra(NOTE_ID_EXTRA, -1);
+        int categoryPosition = intent.getIntExtra(CATEGORY_POSITION_EXTRA, Integer.MIN_VALUE);
+        int notePosition = intent.getIntExtra(NOTE_POSITION_EXTRA, Integer.MIN_VALUE);
+        int noteId = intent.getIntExtra(NOTE_ID_EXTRA, Integer.MIN_VALUE);
 
-        if (categoryPosition == -1 || notePosition == -1 || noteId == -1) {
+        if (categoryPosition == Integer.MIN_VALUE || notePosition == Integer.MIN_VALUE || noteId == Integer.MIN_VALUE) {
             Log.e(Constants.TAG, "Note information not passed in properly; exiting");
             return;
         }
 
         TextMuseData data = GlobalData.getInstance().getData();
-        if (data != null && data.categories != null && data.categories.size() > categoryPosition) {
-            Category category = data.categories.get(categoryPosition);
+        if (data != null && data.categories != null) {
+            Category category;
+            if (categoryPosition >= data.categories.size()) {
+                category = data.localTexts;
+            } else {
+                category = data.categories.get(categoryPosition);
+            }
             if (category.notes != null && category.notes.size() > notePosition) {
                 Note note = category.notes.get(notePosition);
 

@@ -7,6 +7,8 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,6 +50,8 @@ public class SelectMessageActivity extends ActionBarActivity {
 
     private TextMuseData mData;
 
+    private boolean mRequireSave;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,14 +73,21 @@ public class SelectMessageActivity extends ActionBarActivity {
             }
         }
 
-        TextMuseData mData = GlobalData.getInstance().getData();
-        if (mData == null || mData.categories == null || mCategoryIndex >= mData.categories.size()) {
+        mData = GlobalData.getInstance().getData();
+        if (mData == null || mData.categories == null) {
             //quit the activity and go to the previous screen if somehow there's no data
             finish();
             return;
         }
 
-        Category category = mData.categories.get(mCategoryIndex);
+        Category category;
+        if (mCategoryIndex >= mData.categories.size()) {
+            category = mData.localTexts;
+            mRequireSave = true;
+        } else {
+            category = mData.categories.get(mCategoryIndex);
+            mRequireSave = false;
+        }
 
         mViewPager = (ViewPager) findViewById(R.id.selectMessageViewPager);
 
@@ -86,6 +98,24 @@ public class SelectMessageActivity extends ActionBarActivity {
 
         mPageIndicator = (CirclePageIndicator) findViewById(R.id.selectMessagePageIndicator);
         mPageIndicator.setViewPager(mViewPager);
+
+        if (mRequireSave) {
+            mPageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    mData.save(SelectMessageActivity.this);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+        }
 
         //Restore our page
         if (currentItem > 0 && mPagerAdapter.getCount() > currentItem) {
@@ -104,6 +134,14 @@ public class SelectMessageActivity extends ActionBarActivity {
         outState.putInt(SAVE_STATE_POSITION, mViewPager.getCurrentItem());
 
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onPause() {
+        if (mRequireSave) {
+            mData.save(this);
+        }
+        super.onPause();
     }
 
     @Override
@@ -168,7 +206,30 @@ public class SelectMessageActivity extends ActionBarActivity {
             boolean useImageLayout = false;
             final Note note = mNotes.get(position);
 
-            if (note.hasDisplayableMedia()) {
+            if (note.isLocalNote()) {
+                view = mLayoutInflater.inflate(R.layout.detail_view_text_entry, container, false);
+
+                ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewBackgroundBubble);
+                imageView.setColorFilter(mColor);
+
+                EditText editText = (EditText) view.findViewById(R.id.detailViewEditText);
+                editText.setText(note.text);
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        note.text = s.toString();
+                    }
+                });
+
+            } else if (note.hasDisplayableMedia()) {
                 view = mLayoutInflater.inflate(R.layout.detail_view_textimage, container, false);
                 ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewImage);
 
@@ -214,20 +275,21 @@ public class SelectMessageActivity extends ActionBarActivity {
                 imageView.setColorFilter(mColor);
             }
 
-            TextView textView = (TextView) view.findViewById(R.id.detailViewTextViewText);
-            if (useImageLayout && (note.text == null || note.text.length() <= 0)) {
-                ViewGroup textLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutText);
-                textLayout.setVisibility(View.GONE);
-            } else {
-                if (AndroidUtils.hasTextSizeBug()) {
-                    //Due to a bug in android between some specific versions, text resizing doesn't
-                    //work properly unless you add a double byte space around it
-                    final String DOUBLE_BYTE_SPACE = "\u3000";
-                    textView.setText(DOUBLE_BYTE_SPACE + note.text + DOUBLE_BYTE_SPACE);
+            if (!note.isLocalNote()) {
+                TextView textView = (TextView) view.findViewById(R.id.detailViewTextViewText);
+                if (useImageLayout && (note.text == null || note.text.length() <= 0)) {
+                    ViewGroup textLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutText);
+                    textLayout.setVisibility(View.GONE);
                 } else {
-                    textView.setText(note.text);
+                    if (AndroidUtils.hasTextSizeBug()) {
+                        //Due to a bug in android between some specific versions, text resizing doesn't
+                        //work properly unless you add a double byte space around it
+                        final String DOUBLE_BYTE_SPACE = "\u3000";
+                        textView.setText(DOUBLE_BYTE_SPACE + note.text + DOUBLE_BYTE_SPACE);
+                    } else {
+                        textView.setText(note.text);
+                    }
                 }
-
             }
 
             //Link if necessary
@@ -274,8 +336,10 @@ public class SelectMessageActivity extends ActionBarActivity {
                         highlightText.setTextColor(0xffbcbec0);
                     }
 
-                    SetHighlightAsyncTask task = new SetHighlightAsyncTask(NoteViewPagerAdapter.this, mData.appId, note.liked, note, v);
-                    task.execute();
+                    if (!note.isLocalNote()) {
+                        SetHighlightAsyncTask task = new SetHighlightAsyncTask(NoteViewPagerAdapter.this, mData.appId, note.liked, note, v);
+                        task.execute();
+                    }
                 }
             });
 
@@ -288,7 +352,6 @@ public class SelectMessageActivity extends ActionBarActivity {
             quote.setColorFilter(0xff000000);
             quote = (ImageView) view.findViewById(R.id.detailViewImageViewRightQuote);
             quote.setColorFilter(0xff000000);
-
 
             ViewGroup selectButton = (ViewGroup) view.findViewById(R.id.detailViewButtonSelectButton);
             selectButton.setOnClickListener(new View.OnClickListener() {

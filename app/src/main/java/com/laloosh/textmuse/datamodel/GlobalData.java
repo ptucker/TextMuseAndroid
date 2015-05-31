@@ -34,7 +34,17 @@ public class GlobalData {
     }
 
     public void updateData(TextMuseData data) {
+        Category localTexts = null;
+        if (mData != null) {
+            localTexts = mData.localTexts;
+        }
+
         mData = data;
+
+        mData.localTexts = localTexts;
+        if (mData.localTexts == null) {
+            mData.setupNewLocalNotes();
+        }
     }
 
     public TextMuseStoredContacts getStoredContacts() {

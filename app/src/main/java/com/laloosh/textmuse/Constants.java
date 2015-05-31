@@ -33,4 +33,6 @@ public class Constants {
     //notify the user after 3 days of non-use, then 6 days after that, then 9 days after that, etc.
     public static final int NOTIFICATION_FREQUENCY = 3;
 
+    public static final int LOCAL_NOTE_SIZE = 15;
+
 }

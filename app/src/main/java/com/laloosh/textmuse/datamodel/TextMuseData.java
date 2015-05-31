@@ -8,6 +8,7 @@ import com.laloosh.textmuse.WebDataParser;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -16,8 +17,14 @@ public class TextMuseData {
     public List<Category> categories;
     public List<LocalNotification> localNotifications;
 
+    public Category localTexts;
+
     public DateTime timestamp;
     public int appId;
+
+    public TextMuseData() {
+        setupNewLocalNotes();
+    }
 
     //Saves the data to our local preferences
     public void save(Context context) {
@@ -87,5 +94,15 @@ public class TextMuseData {
         return true;
     }
 
+    public void setupNewLocalNotes() {
+        localTexts = new Category();
+        localTexts.name = "My Texts";
+        localTexts.requiredFlag = true;
+        localTexts.notes = new ArrayList<Note>();
 
+        for (int i = 0; i < Constants.LOCAL_NOTE_SIZE; i++) {
+            Note note = new Note(true);
+            localTexts.notes.add(note);
+        }
+    }
 }

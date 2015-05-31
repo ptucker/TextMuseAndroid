@@ -238,9 +238,9 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
 
             if (mCategoryListAdapter != null) {
-                mCategoryListAdapter.updateCategories(mData.categories);
+                mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts);
             } else {
-                mCategoryListAdapter = new MainCategoryListArrayAdapter(this, mData.categories, mSettings);
+                mCategoryListAdapter = new MainCategoryListArrayAdapter(this, mData.categories, mData.localTexts, mSettings);
                 mListView.setAdapter(mCategoryListAdapter);
             }
             mListView.setVisibility(View.VISIBLE);
@@ -325,7 +325,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                     mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);
                     mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
 
-                    mCategoryListAdapter.updateCategories(mData.categories);
+                    mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts);
                 }
             }
         }
@@ -533,6 +533,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         private Activity mContext;
         private List<Category> mOriginalCategories;
         private List<Category> mShownCategories;
+        private Category mLocalTexts;
         private TextMuseSettings mSettings;
 
         //view holder pattern to prevent repeated queries for ID
@@ -553,25 +554,33 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             public boolean mTextOnly;
         }
 
-        public MainCategoryListArrayAdapter(Activity context, List<Category> categories, TextMuseSettings settings) {
+        public MainCategoryListArrayAdapter(Activity context, List<Category> categories, Category localTexts, TextMuseSettings settings) {
             super(context, R.layout.list_ele_category, categories);
             this.mContext = context;
             this.mOriginalCategories = categories;
             this.mSettings = settings;
             this.mShownCategories = new ArrayList<Category>();
+            this.mLocalTexts = localTexts;
             generateShownCategories();
         }
 
         @Override
         public int getCount() {
-            return mShownCategories.size();
+            //+1 for the local texts category
+            return mShownCategories.size() + 1;
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View rowView = convertView;
 
-            final Category category = mShownCategories.get(position);
+            final Category category;
+            if (position >= mShownCategories.size()) {
+               category = mLocalTexts;
+            } else {
+                category = mShownCategories.get(position);
+            }
+
             if (category.notes == null || category.notes.size() <= 0) {
                 return null;
             }
@@ -667,8 +676,15 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             }
 
             if (firstNote.text == null || firstNote.text.length() <= 0) {
-                holder.mTextView.setVisibility(View.INVISIBLE);
-                Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with empty text");
+                if (category == mLocalTexts) {
+                    //The local texts not having any text means that the user has yet to add any
+                    holder.mTextView.setVisibility(View.VISIBLE);
+                    holder.mTextView.setText("Add your own texts here!");
+                    Log.d(Constants.TAG, "Category: " + category.name + " had empty first note, so putting in filler text");
+                } else {
+                    holder.mTextView.setVisibility(View.INVISIBLE);
+                    Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with empty text");
+                }
             } else {
                 holder.mTextView.setVisibility(View.VISIBLE);
                 holder.mTextView.setText(firstNote.text);
@@ -685,12 +701,17 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
         @Override
         public int getItemViewType(int position) {
-            Category category = mShownCategories.get(position);
-            Note firstNote = category.notes.get(0);
-            if (firstNote.hasDisplayableMedia()) {
-                return 0;
-            } else {
+            //Type 0 is an image one, type 1 is the text one
+            if (position >= mShownCategories.size()) {
                 return 1;
+            } else {
+                Category category = mShownCategories.get(position);
+                Note firstNote = category.notes.get(0);
+                if (firstNote.hasDisplayableMedia()) {
+                    return 0;
+                } else {
+                    return 1;
+                }
             }
         }
 
@@ -698,8 +719,9 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             mSettings = settings;
         }
 
-        public void updateCategories(List<Category> categories) {
+        public void updateCategories(List<Category> categories, Category localNotes) {
             mOriginalCategories = categories;
+            mLocalTexts = localNotes;
             generateShownCategories();
             this.notifyDataSetChanged();
         }
@@ -714,10 +736,14 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         }
 
         private int getOriginalIndex(Category category) {
-            for (int i = 0; i < mOriginalCategories.size(); i++) {
-                Category c = mOriginalCategories.get(i);
-                if (c.name.equals(category.name)) {
-                    return i;
+            if (category == mLocalTexts) {
+                return mOriginalCategories.size();
+            } else {
+                for (int i = 0; i < mOriginalCategories.size(); i++) {
+                    Category c = mOriginalCategories.get(i);
+                    if (c.name.equals(category.name)) {
+                        return i;
+                    }
                 }
             }
 

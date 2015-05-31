@@ -20,8 +20,20 @@ public class Note implements Parcelable {
 
     public Note() {}
 
+    public Note(boolean localNote) {
+        if (localNote) {
+            noteId = -1;
+            text = "";
+        }
+    }
+
     public String getInternalFilename() {
         return Integer.toString(noteId) + ".jpg";
+    }
+
+    //Local notes are initialized to have an ID of -1
+    public boolean isLocalNote() {
+        return (noteId < 0);
     }
 
     public boolean hasDisplayableText() {
