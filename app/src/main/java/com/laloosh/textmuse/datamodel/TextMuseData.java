@@ -151,7 +151,6 @@ public class TextMuseData {
                         Note note = new Note(true);
                         note.mediaUrl = Uri.fromFile(file).toString();
                         localPhotos.notes.add(note);
-                        Log.d(Constants.TAG, "File with url: " + note.mediaUrl + " had bucket name: " + cur.getString(Queries.PhotoQuery.BUCKET_DISPLAY_NAME));
                         curIndex++;
                     }
                 } catch (Exception e) {

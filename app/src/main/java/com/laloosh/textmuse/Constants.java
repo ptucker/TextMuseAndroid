@@ -35,4 +35,7 @@ public class Constants {
 
     public static final int LOCAL_NOTE_SIZE = 15;
 
+    //64 mb image cache for saved images
+    public static final long MAX_IMAGE_CACHE_SIZE = 64 * 1024 * 1024;
+
 }

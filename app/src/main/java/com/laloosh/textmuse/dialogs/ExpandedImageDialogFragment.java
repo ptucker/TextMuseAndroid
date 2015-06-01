@@ -31,6 +31,7 @@ public class ExpandedImageDialogFragment extends DialogFragment implements Image
     private int mDialogHeight = -1;
 
     private ImageView mImageView;
+    private ImageSizeDownloadTarget mTarget;
 
     public static ExpandedImageDialogFragment newInstance(Note note) {
         if (note == null || !note.hasDisplayableMedia()) {
@@ -56,7 +57,7 @@ public class ExpandedImageDialogFragment extends DialogFragment implements Image
 
         mImageView = (ImageView) view.findViewById(R.id.dialogExpandedImageView);
 
-        ImageSizeDownloadTarget target = new ImageSizeDownloadTarget(this);
+        mTarget = new ImageSizeDownloadTarget(this);
 
         if (note.savedInternally) {
             File file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), note.getInternalFilename());
@@ -65,13 +66,13 @@ public class ExpandedImageDialogFragment extends DialogFragment implements Image
 
             Picasso.with(getActivity())
                     .load(file)
-                    .into(target);
+                    .into(mTarget);
         } else {
             Log.d(Constants.TAG, "Attempting to load media url for expanded image view: " + note.mediaUrl);
 
             Picasso.with(getActivity())
                     .load(note.mediaUrl)
-                    .into(target);
+                    .into(mTarget);
         }
 
         return view;

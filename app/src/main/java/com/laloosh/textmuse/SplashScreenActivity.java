@@ -39,6 +39,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         setLaunchedBefore();
 
         getNewContent();
+        cleanImageCacheTask();
         scheduleTimerForFinish();
     }
 
@@ -53,6 +54,11 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
     private void getNewContent() {
         FetchNotesAsyncTask task = new FetchNotesAsyncTask(this, getApplicationContext(), mData == null ? -1 : mData.appId);
+        task.execute();
+    }
+
+    private void cleanImageCacheTask() {
+        CalculateFreeSpaceCleanupAsyncTask task = new CalculateFreeSpaceCleanupAsyncTask(getApplicationContext());
         task.execute();
     }
 
