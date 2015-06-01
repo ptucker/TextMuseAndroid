@@ -1,13 +1,18 @@
 package com.laloosh.textmuse.datamodel;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 
 import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.Queries;
 import com.laloosh.textmuse.WebDataParser;
 
 import org.joda.time.DateTime;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +23,7 @@ public class TextMuseData {
     public List<LocalNotification> localNotifications;
 
     public Category localTexts;
+    public Category localPhotos;
 
     public DateTime timestamp;
     public int appId;
@@ -103,6 +109,49 @@ public class TextMuseData {
         for (int i = 0; i < Constants.LOCAL_NOTE_SIZE; i++) {
             Note note = new Note(true);
             localTexts.notes.add(note);
+        }
+
+        localPhotos = new Category();
+        localPhotos.name = "My Photos";
+        localPhotos.requiredFlag = true;
+        localPhotos.notes = new ArrayList<Note>();
+    }
+
+    public void updatePhotos(Context context) {
+        if (localPhotos == null) {
+            localPhotos = new Category();
+            localPhotos.name = "My Photos";
+            localPhotos.requiredFlag = true;
+            localPhotos.notes = new ArrayList<Note>();
+        }
+        localPhotos.notes.clear();
+
+        ContentResolver cr = context.getContentResolver();
+        Cursor  cur = cr.query(Queries.PhotoQuery.CONTENT_URI,
+                Queries.PhotoQuery.PROJECTION,
+                null,
+                null,
+                Queries.PhotoQuery.SORT_ORDER);
+
+        if (cur.getCount() > 0) {
+
+            int curIndex = 0;
+            while (cur.moveToNext() && curIndex < Constants.LOCAL_NOTE_SIZE) {
+                String photoPath = cur.getString(Queries.PhotoQuery.DATA_PATH);
+
+                try {
+                    File file = new File(photoPath);
+                    if (file.isFile()) {
+                        Note note = new Note(true);
+                        note.mediaUrl = Uri.fromFile(file).toString();
+                        localPhotos.notes.add(note);
+                        curIndex++;
+                    }
+                } catch (Exception e) {
+                    Log.e(Constants.TAG, "Photo path: " + photoPath + " was not found");
+                    continue;
+                }
+            }
         }
     }
 }

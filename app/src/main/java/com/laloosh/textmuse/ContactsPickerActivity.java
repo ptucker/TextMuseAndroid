@@ -257,8 +257,10 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         TextMuseData data = GlobalData.getInstance().getData();
         if (data != null && data.categories != null) {
             Category category;
-            if (categoryPosition >= data.categories.size()) {
+            if (categoryPosition == data.categories.size()) {
                 category = data.localTexts;
+            } else if (categoryPosition > data.categories.size()) {
+                category = data.localPhotos;
             } else {
                 category = data.categories.get(categoryPosition);
             }

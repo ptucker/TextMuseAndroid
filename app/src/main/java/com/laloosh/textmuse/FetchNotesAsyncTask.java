@@ -67,6 +67,12 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
         if (parsedData.isDataSimilar(oldData)) {
             //Don't update anything or save anything if this is the same...
             Log.d(Constants.TAG, "Data from server is the same as the current data--discarding new data");
+
+            //Still update our photos
+            Context context = mContext.get();
+            if (context != null) {
+                oldData.updatePhotos(context);
+            }
             return FetchNotesResult.FETCH_SUCCEEDED_SAME_DATA;
         }
 
@@ -84,6 +90,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
 
         Context context = mContext.get();
         if (context != null) {
+            newData.updatePhotos(context);
             newData.save(context);
         }
     }

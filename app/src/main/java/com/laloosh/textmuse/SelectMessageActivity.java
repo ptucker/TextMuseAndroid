@@ -81,9 +81,12 @@ public class SelectMessageActivity extends ActionBarActivity {
         }
 
         Category category;
-        if (mCategoryIndex >= mData.categories.size()) {
+        if (mCategoryIndex == mData.categories.size()) {
             category = mData.localTexts;
             mRequireSave = true;
+        } else if (mCategoryIndex > mData.categories.size()) {
+            category = mData.localPhotos;
+            mRequireSave = false;
         } else {
             category = mData.categories.get(mCategoryIndex);
             mRequireSave = false;
@@ -206,7 +209,8 @@ public class SelectMessageActivity extends ActionBarActivity {
             boolean useImageLayout = false;
             final Note note = mNotes.get(position);
 
-            if (note.isLocalNote()) {
+            if (note.isLocalNote() && !note.hasDisplayableMedia()) {
+                //Local texts
                 view = mLayoutInflater.inflate(R.layout.detail_view_text_entry, container, false);
 
                 ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewBackgroundBubble);
@@ -242,7 +246,7 @@ public class SelectMessageActivity extends ActionBarActivity {
                         .into(imageView);
 
                 Log.d(Constants.TAG, "Seeing if this contains key: " + note.noteId);
-                if (!mDownloadTargets.containsKey(note.noteId)) {
+                if (!note.isLocalNote() && !mDownloadTargets.containsKey(note.noteId)) {
 
                     Log.d(Constants.TAG, "Preparing to download image: " + note.mediaUrl + " with note ID: " + note.noteId);
                     //Do another picasso task to write the image file to external storage.  This will
@@ -275,7 +279,7 @@ public class SelectMessageActivity extends ActionBarActivity {
                 imageView.setColorFilter(mColor);
             }
 
-            if (!note.isLocalNote()) {
+            if (!note.isLocalNote() || (note.isLocalNote() && note.hasDisplayableMedia())) {
                 TextView textView = (TextView) view.findViewById(R.id.detailViewTextViewText);
                 if (useImageLayout && (note.text == null || note.text.length() <= 0)) {
                     ViewGroup textLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutText);

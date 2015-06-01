@@ -47,6 +47,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     private void loadRawContent() {
         Log.d(Constants.TAG, "Falling back to the original content bundled with the app");
         mData = TextMuseData.loadRawContent(this);
+        mData.updatePhotos(this);
         GlobalData.getInstance().updateData(mData);
     }
 

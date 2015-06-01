@@ -19,13 +19,14 @@ import android.util.Log;
 import com.laloosh.textmuse.datamodel.Note;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class SmsUtils {
 
     //If an intent produces too many providers, then it's probably the wrong one...
-    private static final int TOO_MANY_PROVIDERS = 6;
+    private static final int TOO_MANY_PROVIDERS = 10;
 
     public static Intent createSmsIntent(Context context, Note note, Set<String> phoneNumberSet) {
 
@@ -102,12 +103,16 @@ public class SmsUtils {
     }
 
     private static Uri getMediaFile(Context context, Note note) {
-        if (note.hasDisplayableMedia() && note.savedInternally) {
-            File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), note.getInternalFilename());
-            if (!file.isFile()) {
-                return null;
+        if (note.hasDisplayableMedia() ) {
+            if (note.isLocalNote()) {
+                return Uri.parse(note.mediaUrl);
+            } else if (note.savedInternally) {
+                File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), note.getInternalFilename());
+                if (!file.isFile()) {
+                    return null;
+                }
+                return Uri.fromFile(file);
             }
-            return Uri.fromFile(file);
         }
 
         return null;
@@ -245,5 +250,44 @@ public class SmsUtils {
         //or nothing matched.  Just attempt to do a sendto intent without the image.
         Log.d(Constants.TAG, "Defaulting to sendto method with no images");
         return getTextOnlyIntent(note, phoneNumberSet);
+    }
+
+    public static boolean testIfPhotosSupported(Context context) {
+
+        //Create a fake test note and try to get the intent for it, to see if it's one that supports photos
+        Note note = new Note();
+        note.noteId = 0;
+        note.text = "test";
+        note.mediaUrl = "http://www.test.com/1.png";
+        note.savedInternally = true;
+
+        //Create the fake empty file in the external media folder so that we can test this properly
+        try {
+            File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), note.getInternalFilename());
+            file.createNewFile();
+        } catch (Exception e) {
+            Log.e(Constants.TAG, "Could not test if photos are supported on this device, defaulting to no");
+            return false;
+        }
+
+        //Create a fake send-to phone number
+        Set<String> phoneNumberSet = new HashSet<String>();
+        phoneNumberSet.add("1234567890");
+
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
+        {
+            intent = getPostKitKatIntent(context, note, phoneNumberSet);
+        } else {
+            intent = getPreKitKatIntent(context, note, phoneNumberSet);
+        }
+
+        //SendTo is the bad case.  If we are attempting a SEND, then we have a good idea that
+        //pictures are supported
+        if (intent.getAction().equalsIgnoreCase(Intent.ACTION_SENDTO)) {
+            return false;
+        }
+
+        return true;
     }
 }

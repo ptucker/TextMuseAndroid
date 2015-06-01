@@ -4,6 +4,7 @@ package com.laloosh.textmuse;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 
 public class Queries {
     public interface ContactsQuery {
@@ -92,5 +93,28 @@ public class Queries {
         final static int TYPE = 4;
         final static int LABEL = 5;
         final static int IS_PRIMARY = 6;
+    }
+
+    public interface PhotoQuery {
+
+        final static int QUERY_ID = 3;
+        final static Uri CONTENT_URI = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        final static String SORT_ORDER = MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC";
+
+        @SuppressLint("InlinedApi")
+        final static String[] PROJECTION = {
+                MediaStore.Images.ImageColumns._ID,
+                MediaStore.Images.ImageColumns.DATA,
+                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+                MediaStore.Images.ImageColumns.DATE_TAKEN,
+                MediaStore.Images.ImageColumns.MIME_TYPE
+        };
+
+        // The query column numbers which map to each value in the projection
+        final static int ID = 0;
+        final static int DATA_PATH = 1;
+        final static int BUCKET_DISPLAY_NAME = 2;
+        final static int DATE_TAKEN = 3;
+        final static int MIME_TYPE = 4;
     }
 }

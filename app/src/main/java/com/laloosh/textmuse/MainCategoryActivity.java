@@ -61,6 +61,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
     private HashMap<Integer, CategoryAndNoteIndex> mRandomNoteIndex;
     private Timer mTimer;
     private long mLastUserScrollMillis;
+    private boolean mShowPhotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
         setLastNotified();
         setNotificationAlarm();
+
+        setShowPhotos();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.mainFragmentSwipeContainer);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -238,9 +241,9 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
 
             if (mCategoryListAdapter != null) {
-                mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts);
+                mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
             } else {
-                mCategoryListAdapter = new MainCategoryListArrayAdapter(this, mData.categories, mData.localTexts, mSettings);
+                mCategoryListAdapter = new MainCategoryListArrayAdapter(this, mData.categories, mData.localTexts, mData.localPhotos, mSettings, mShowPhotos);
                 mListView.setAdapter(mCategoryListAdapter);
             }
             mListView.setVisibility(View.VISIBLE);
@@ -285,6 +288,19 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         AlarmReceivedBroadcastReceiver.setAlarm(this);
     }
 
+    private void setShowPhotos() {
+        //Only show the My Photos category if this phone supports it and if we have some photos to show
+        if (SmsUtils.testIfPhotosSupported(this) &&
+                mData != null &&
+                mData.localPhotos != null &&
+                mData.localPhotos.notes != null &&
+                mData.localPhotos.notes.size() > 0) {
+            mShowPhotos = true;
+        } else {
+            mShowPhotos = false;
+        }
+    }
+
     @Override
     public void handleFetchResult(FetchNotesAsyncTask.FetchNotesResult result) {
         mSwipeRefreshLayout.post(new Runnable() {
@@ -325,7 +341,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                     mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);
                     mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
 
-                    mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts);
+                    mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
                 }
             }
         }
@@ -534,7 +550,9 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         private List<Category> mOriginalCategories;
         private List<Category> mShownCategories;
         private Category mLocalTexts;
+        private Category mLocalPhotos;
         private TextMuseSettings mSettings;
+        private boolean mShowPhotos;
 
         //view holder pattern to prevent repeated queries for ID
         static class ViewHolder {
@@ -554,20 +572,27 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             public boolean mTextOnly;
         }
 
-        public MainCategoryListArrayAdapter(Activity context, List<Category> categories, Category localTexts, TextMuseSettings settings) {
+        public MainCategoryListArrayAdapter(Activity context, List<Category> categories, Category localTexts, Category localPhotos, TextMuseSettings settings, boolean showPhotos) {
             super(context, R.layout.list_ele_category, categories);
             this.mContext = context;
             this.mOriginalCategories = categories;
             this.mSettings = settings;
             this.mShownCategories = new ArrayList<Category>();
             this.mLocalTexts = localTexts;
+            this.mLocalPhotos = localPhotos;
+            this.mShowPhotos = showPhotos;
             generateShownCategories();
         }
 
         @Override
         public int getCount() {
-            //+1 for the local texts category
-            return mShownCategories.size() + 1;
+            if (mShowPhotos) {
+                //+2 for the local texts, photos category
+                return mShownCategories.size() + 2;
+            } else {
+                //+1 for the local texts
+                return mShownCategories.size() + 1;
+            }
         }
 
         @Override
@@ -575,8 +600,10 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             View rowView = convertView;
 
             final Category category;
-            if (position >= mShownCategories.size()) {
-               category = mLocalTexts;
+            if (position == mShownCategories.size()) {
+                category = mLocalTexts;
+            } else if (position > mShownCategories.size()) {
+                category = mLocalPhotos;
             } else {
                 category = mShownCategories.get(position);
             }
@@ -633,6 +660,14 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             }
 
             holder.mNewBadgeBackground.setColorFilter(color);
+
+            if (category == mLocalPhotos || category == mLocalTexts) {
+                holder.mNewBadge.setVisibility(View.GONE);
+                holder.mNewBadgeBackground.setVisibility(View.GONE);
+            } else {
+                holder.mNewBadge.setVisibility(View.VISIBLE);
+                holder.mNewBadgeBackground.setVisibility(View.VISIBLE);
+            }
 
             holder.mArrow.setColorFilter(color);
 
@@ -702,8 +737,10 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         @Override
         public int getItemViewType(int position) {
             //Type 0 is an image one, type 1 is the text one
-            if (position >= mShownCategories.size()) {
-                return 1;
+            if (position == mShownCategories.size()) {
+                return 1;    //My texts
+            } else if (position > mShownCategories.size()) {
+                return 0;    //My photos
             } else {
                 Category category = mShownCategories.get(position);
                 Note firstNote = category.notes.get(0);
@@ -719,9 +756,10 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             mSettings = settings;
         }
 
-        public void updateCategories(List<Category> categories, Category localNotes) {
+        public void updateCategories(List<Category> categories, Category localNotes, Category localPhotos) {
             mOriginalCategories = categories;
             mLocalTexts = localNotes;
+            mLocalPhotos = localPhotos;
             generateShownCategories();
             this.notifyDataSetChanged();
         }
@@ -738,6 +776,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         private int getOriginalIndex(Category category) {
             if (category == mLocalTexts) {
                 return mOriginalCategories.size();
+            } else if (category == mLocalPhotos) {
+                return mOriginalCategories.size() + 1;
             } else {
                 for (int i = 0; i < mOriginalCategories.size(); i++) {
                     Category c = mOriginalCategories.get(i);
