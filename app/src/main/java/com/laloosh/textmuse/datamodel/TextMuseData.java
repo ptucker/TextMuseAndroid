@@ -138,6 +138,12 @@ public class TextMuseData {
             int curIndex = 0;
             while (cur.moveToNext() && curIndex < Constants.LOCAL_NOTE_SIZE) {
                 String photoPath = cur.getString(Queries.PhotoQuery.DATA_PATH);
+                String bucketName = cur.getString(Queries.PhotoQuery.BUCKET_DISPLAY_NAME);
+
+                //Skip screenshots
+                if (bucketName.toLowerCase().contains("screenshot")) {
+                    continue;
+                }
 
                 try {
                     File file = new File(photoPath);
@@ -145,6 +151,7 @@ public class TextMuseData {
                         Note note = new Note(true);
                         note.mediaUrl = Uri.fromFile(file).toString();
                         localPhotos.notes.add(note);
+                        Log.d(Constants.TAG, "File with url: " + note.mediaUrl + " had bucket name: " + cur.getString(Queries.PhotoQuery.BUCKET_DISPLAY_NAME));
                         curIndex++;
                     }
                 } catch (Exception e) {
