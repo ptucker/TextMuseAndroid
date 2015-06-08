@@ -9811,8 +9811,8 @@ com.laloosh.textmuse.FetchNotesAsyncTask -> com.laloosh.textmuse.x:
     java.lang.ref.WeakReference mContext -> b
     int mAppId -> c
     31:81:com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult doInBackground(java.lang.Void[]) -> a
-    87:96:void handleDataUpdate(com.laloosh.textmuse.datamodel.GlobalData,com.laloosh.textmuse.datamodel.TextMuseData) -> a
-    101:106:void onPostExecute(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
+    87:97:void handleDataUpdate(com.laloosh.textmuse.datamodel.GlobalData,com.laloosh.textmuse.datamodel.TextMuseData) -> a
+    102:107:void onPostExecute(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
     14:14:void onPostExecute(java.lang.Object) -> onPostExecute
     14:14:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesAsyncTaskHandler -> com.laloosh.textmuse.y:
@@ -9822,8 +9822,8 @@ com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult -> com.laloosh.textmus
     com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult FETCH_SUCCEEDED_SAME_DATA -> b
     com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult FETCH_SUCCEEDED_DIFFERENT_DATA -> c
     com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult[] $VALUES -> d
-    112:112:com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult[] values() -> values
-    112:112:com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult valueOf(java.lang.String) -> valueOf
+    113:113:com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult[] values() -> values
+    113:113:com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult valueOf(java.lang.String) -> valueOf
 com.laloosh.textmuse.GroupEditActivity -> com.laloosh.textmuse.GroupEditActivity:
     android.widget.TextView mEmptyTextView -> o
     android.widget.ListView mListView -> p
@@ -10196,19 +10196,19 @@ com.laloosh.textmuse.SplashScreenActivity -> com.laloosh.textmuse.SplashScreenAc
     com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult mFinishedLoadingResult -> p
     java.util.Timer mTimer -> q
     boolean mFirstLaunch -> r
-    30:44:void onCreate(android.os.Bundle) -> onCreate
-    49:53:void loadRawContent() -> k
-    56:58:void getNewContent() -> l
-    61:63:void cleanImageCacheTask() -> m
-    67:75:void scheduleTimerForFinish() -> n
-    79:104:void timerFinished() -> o
-    108:115:boolean isFirstLaunch() -> p
-    119:123:void setLaunchedBefore() -> q
-    127:132:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
+    30:48:void onCreate(android.os.Bundle) -> onCreate
+    53:57:void loadRawContent() -> k
+    60:62:void getNewContent() -> l
+    65:67:void cleanImageCacheTask() -> m
+    71:79:void scheduleTimerForFinish() -> n
+    83:109:void timerFinished() -> o
+    113:120:boolean isFirstLaunch() -> p
+    124:128:void setLaunchedBefore() -> q
+    132:137:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
     17:17:void access$000(com.laloosh.textmuse.SplashScreenActivity) -> a
 com.laloosh.textmuse.SplashScreenActivity$1 -> com.laloosh.textmuse.bt:
     com.laloosh.textmuse.SplashScreenActivity this$0 -> a
-    71:72:void run() -> run
+    75:76:void run() -> run
 com.laloosh.textmuse.WalkthroughActivity -> com.laloosh.textmuse.WalkthroughActivity:
     android.support.v4.view.ViewPager mViewPager -> n
     com.viewpagerindicator.CirclePageIndicator mPageIndicator -> o
@@ -10320,21 +10320,23 @@ com.laloosh.textmuse.datamodel.Note -> com.laloosh.textmuse.datamodel.Note:
     boolean savedInternally -> savedInternally
     boolean saveFailed -> saveFailed
     android.os.Parcelable$Creator CREATOR -> CREATOR
-    31:31:java.lang.String getInternalFilename() -> a
-    36:36:boolean isLocalNote() -> b
-    40:44:boolean hasDisplayableText() -> c
-    48:57:boolean hasDisplayableMedia() -> d
-    63:66:boolean shouldCenterInside() -> e
-    71:74:boolean hasExternalLink() -> f
-    78:91:android.net.Uri getExternalLinkUri() -> g
-    95:108:boolean isMediaYoutube() -> h
-    113:113:int describeContents() -> describeContents
-    117:126:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    40:40:java.lang.String getInternalFilename() -> a
+    45:45:boolean isLocalNote() -> b
+    49:53:boolean hasDisplayableText() -> c
+    57:66:boolean hasDisplayableMedia() -> d
+    72:81:void updateSavedInternally(android.content.Context) -> a
+    84:94:java.lang.String getDisplayMediaUrl(android.content.Context) -> b
+    100:103:boolean shouldCenterInside() -> e
+    108:111:boolean hasExternalLink() -> f
+    115:128:android.net.Uri getExternalLinkUri() -> g
+    132:145:boolean isMediaYoutube() -> h
+    150:150:int describeContents() -> describeContents
+    154:163:void writeToParcel(android.os.Parcel,int) -> writeToParcel
 com.laloosh.textmuse.datamodel.Note$1 -> com.laloosh.textmuse.datamodel.e:
-    130:130:com.laloosh.textmuse.datamodel.Note createFromParcel(android.os.Parcel) -> a
-    134:134:com.laloosh.textmuse.datamodel.Note[] newArray(int) -> a
-    128:128:java.lang.Object[] newArray(int) -> newArray
-    128:128:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    167:167:com.laloosh.textmuse.datamodel.Note createFromParcel(android.os.Parcel) -> a
+    171:171:com.laloosh.textmuse.datamodel.Note[] newArray(int) -> a
+    165:165:java.lang.Object[] newArray(int) -> newArray
+    165:165:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 com.laloosh.textmuse.datamodel.ParcelUtils -> com.laloosh.textmuse.datamodel.f:
     14:18:void writeString(android.os.Parcel,java.lang.String) -> a
     21:24:java.lang.String readString(android.os.Parcel) -> a
@@ -10363,9 +10365,10 @@ com.laloosh.textmuse.datamodel.TextMuseData -> com.laloosh.textmuse.datamodel.Te
     37:40:void save(android.content.Context) -> a
     44:44:com.laloosh.textmuse.datamodel.TextMuseData load(android.content.Context) -> b
     48:56:com.laloosh.textmuse.datamodel.TextMuseData loadRawContent(android.content.Context) -> c
-    65:100:boolean isDataSimilar(com.laloosh.textmuse.datamodel.TextMuseData) -> a
-    104:118:void setupNewLocalNotes() -> a
-    121:162:void updatePhotos(android.content.Context) -> d
+    64:80:void updateNoteImageFlags(android.content.Context) -> d
+    88:123:boolean isDataSimilar(com.laloosh.textmuse.datamodel.TextMuseData) -> a
+    127:141:void setupNewLocalNotes() -> a
+    144:185:void updatePhotos(android.content.Context) -> e
 com.laloosh.textmuse.datamodel.TextMuseGroup -> com.laloosh.textmuse.datamodel.TextMuseGroup:
     java.lang.String displayName -> displayName
     java.util.List contactList -> contactList
@@ -10505,11 +10508,11 @@ com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment -> com.laloosh.textmuse
     int mDialogHeight -> ak
     android.widget.ImageView mImageView -> al
     com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget mTarget -> am
-    37:46:com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment newInstance(com.laloosh.textmuse.datamodel.Note) -> a
-    52:78:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    83:132:void doneLoadingBitmap(android.graphics.Bitmap) -> a
-    137:140:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
-    146:151:void onResume() -> r
+    38:47:com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment newInstance(com.laloosh.textmuse.datamodel.Note) -> a
+    53:69:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    74:123:void doneLoadingBitmap(android.graphics.Bitmap) -> a
+    128:131:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    137:142:void onResume() -> r
 com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget -> com.laloosh.textmuse.a.q:
     java.lang.ref.WeakReference mHandler -> a
     24:25:void onBitmapFailed(android.graphics.drawable.Drawable) -> a
@@ -10866,7 +10869,6 @@ com.squareup.picasso.Picasso -> com.a.a.ak:
     211:212:void cancelRequest(com.squareup.picasso.Target) -> a
     273:273:com.squareup.picasso.RequestCreator load(android.net.Uri) -> a
     293:299:com.squareup.picasso.RequestCreator load(java.lang.String) -> a
-    316:319:com.squareup.picasso.RequestCreator load(java.io.File) -> a
     451:451:java.util.List getRequestHandlers() -> a
     455:462:com.squareup.picasso.Request transformRequest(com.squareup.picasso.Request) -> a
     466:467:void defer(android.widget.ImageView,com.squareup.picasso.DeferredRequestCreator) -> a
