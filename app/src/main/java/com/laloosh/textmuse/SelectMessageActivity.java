@@ -239,7 +239,7 @@ public class SelectMessageActivity extends ActionBarActivity {
 
                 //Try out picasso library to see how it performs
                 Picasso.with(mActivity)
-                        .load(note.mediaUrl)
+                        .load(note.getDisplayMediaUrl(mActivity))
                         .error(R.drawable.placeholder_image)
                         .fit()
                         .centerCrop()

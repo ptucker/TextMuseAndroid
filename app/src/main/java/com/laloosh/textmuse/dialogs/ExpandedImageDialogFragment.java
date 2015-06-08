@@ -1,6 +1,7 @@
 package com.laloosh.textmuse.dialogs;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -59,21 +60,11 @@ public class ExpandedImageDialogFragment extends DialogFragment implements Image
 
         mTarget = new ImageSizeDownloadTarget(this);
 
-        if (note.savedInternally) {
-            File file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), note.getInternalFilename());
-
-            Log.d(Constants.TAG, "Attempting to load media url for expanded image view: " + file.getAbsolutePath());
-
-            Picasso.with(getActivity())
-                    .load(file)
-                    .into(mTarget);
-        } else {
-            Log.d(Constants.TAG, "Attempting to load media url for expanded image view: " + note.mediaUrl);
-
-            Picasso.with(getActivity())
-                    .load(note.mediaUrl)
-                    .into(mTarget);
-        }
+        Activity activity = getActivity();
+        Log.d(Constants.TAG, "Attempting to load media url for expanded image view: " + note.getDisplayMediaUrl(activity));
+        Picasso.with(activity)
+                .load(note.getDisplayMediaUrl(activity))
+                .into(mTarget);
 
         return view;
     }

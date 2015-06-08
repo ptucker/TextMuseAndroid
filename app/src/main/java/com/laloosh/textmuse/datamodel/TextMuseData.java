@@ -56,6 +56,29 @@ public class TextMuseData {
         return data;
     }
 
+    //Every note has a flag saying whether the image is saved locally or if we should reload it from the network
+    //These flags get reset on reload and when we load new data from the network.  We should set these back
+    //again
+    public void updateNoteImageFlags(Context context) {
+
+        if (context == null) {
+            return;
+        }
+
+        //We can ignore the local texts and local photos categories
+        if (categories != null && categories.size() > 0) {
+            for (Category category : categories) {
+                if (category.notes != null && category.notes.size() > 0) {
+                    for (Note note : category.notes) {
+                        if (note.hasDisplayableMedia()) {
+                            note.updateSavedInternally(context);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     //Compares the categories to see if they are similar enough.  This function is called when
     //we download a new TextMuseData from the server

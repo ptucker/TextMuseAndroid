@@ -91,6 +91,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
         Context context = mContext.get();
         if (context != null) {
             newData.updatePhotos(context);
+            newData.updateNoteImageFlags(context);
             newData.save(context);
         }
     }

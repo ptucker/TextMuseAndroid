@@ -1,9 +1,16 @@
 package com.laloosh.textmuse.datamodel;
 
 
+import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import com.laloosh.textmuse.Constants;
+
+import java.io.File;
 
 public class Note implements Parcelable {
 
@@ -15,6 +22,8 @@ public class Note implements Parcelable {
     public boolean liked;
 
     //Non-serialized value that are used temporarily
+    //savedInternally is a transient field since the external drive where we save these
+    //is possibly user accessible and can be deleted without the app knowing
     public transient boolean savedInternally;
     public transient boolean saveFailed;
 
@@ -55,6 +64,34 @@ public class Note implements Parcelable {
         }
 
         return true;
+    }
+
+    //Used to update our saved internally flag upon reload of the data set
+    public void updateSavedInternally(Context context) {
+        try {
+            File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), getInternalFilename());
+            if (file.exists()) {
+                savedInternally = true;
+            } else {
+                savedInternally = false;
+            }
+        } catch (Exception e) {
+            Log.e(Constants.TAG, "Could not check state of image for note id: " + noteId);
+        }
+    }
+
+    public String getDisplayMediaUrl(Context context) {
+        if (savedInternally) {
+            try {
+                File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), getInternalFilename());
+                return Uri.fromFile(file).toString();
+
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Could not get display media url for note id: " + noteId);
+            }
+        }
+
+        return mediaUrl;
     }
 
     //On certain images, we should center fit instead of crop.  Only do this for quotehd images
@@ -146,7 +183,5 @@ public class Note implements Parcelable {
         savedInternally = (in.readByte() != 0);
         saveFailed = (in.readByte() != 0);
     }
-
-
 
 }

@@ -455,7 +455,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
                         if (note.shouldCenterInside()) {
                             Picasso.with(mContext)
-                                    .load(note.mediaUrl)
+                                    .load(note.getDisplayMediaUrl(mContext))
                                     .error(R.drawable.placeholder_image)
                                     .fit()
                                     .centerInside()
@@ -463,7 +463,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                             imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                         } else {
                             Picasso.with(mContext)
-                                    .load(note.mediaUrl)
+                                    .load(note.getDisplayMediaUrl(mContext))
                                     .error(R.drawable.placeholder_image)
                                     .fit()
                                     .centerCrop()
@@ -693,7 +693,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             } else {
                 if (firstNote.shouldCenterInside()) {
                     Picasso.with(mContext)
-                            .load(firstNote.mediaUrl)
+                            .load(firstNote.getDisplayMediaUrl(mContext))
                             .error(R.drawable.placeholder_image)
                             .fit()
                             .centerInside()
@@ -701,7 +701,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                     holder.mBackgroundImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 } else {
                     Picasso.with(mContext)
-                            .load(firstNote.mediaUrl)
+                            .load(firstNote.getDisplayMediaUrl(mContext))
                             .error(R.drawable.placeholder_image)
                             .fit()
                             .centerCrop()
