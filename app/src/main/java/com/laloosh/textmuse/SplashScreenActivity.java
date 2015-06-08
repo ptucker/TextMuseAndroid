@@ -105,6 +105,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         startActivity(intent);
         SplashScreenActivity.this.finish();
 
+        overridePendingTransition(R.anim.activityfadein, R.anim.activityfadeout);
     }
 
     private boolean isFirstLaunch() {
