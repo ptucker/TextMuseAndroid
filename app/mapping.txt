@@ -10016,14 +10016,16 @@ com.laloosh.textmuse.RegisterActivity -> com.laloosh.textmuse.RegisterActivity:
     android.widget.EditText mEditTextBirthMonth -> p
     android.widget.EditText mEditTextBirthYear -> q
     boolean mRegistered -> r
-    35:63:void onCreate(android.os.Bundle) -> onCreate
-    68:69:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    77:84:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    89:148:void handleRegistrationSubmit() -> k
-    151:153:void showIncompleteInfoDialog() -> l
-    156:158:void showBadInputDialog() -> m
-    161:163:void showTooYoungDialog() -> n
-    167:180:void handleRegisterResult(boolean) -> b
+    boolean mAfterWalkthrough -> s
+    37:66:void onCreate(android.os.Bundle) -> onCreate
+    71:76:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    84:97:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    101:105:void goToMainActivity() -> k
+    110:170:boolean handleRegistrationSubmit() -> l
+    174:176:void showIncompleteInfoDialog() -> m
+    179:181:void showBadInputDialog() -> n
+    184:186:void showTooYoungDialog() -> o
+    190:203:void handleRegisterResult(boolean) -> b
 com.laloosh.textmuse.RegisterAsyncTask -> com.laloosh.textmuse.aw:
     java.lang.ref.WeakReference mHandler -> a
     java.lang.String mName -> b
@@ -10229,15 +10231,12 @@ com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment -> com.laloosh.text
     boolean mInitialLaunch -> b
     95:102:com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment newInstance(int,boolean) -> a
     107:110:void onCreate(android.os.Bundle) -> a
-    114:152:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    114:143:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
     90:90:boolean access$200(com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment) -> a
 com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment$1 -> com.laloosh.textmuse.bw:
     com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment this$0 -> a
-    127:130:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment$2 -> com.laloosh.textmuse.bx:
-    com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment this$0 -> a
-    136:149:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.by:
+    126:140:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.bx:
     25:50:com.laloosh.textmuse.datamodel.TextMuseData parse(java.lang.String) -> a
     55:91:com.laloosh.textmuse.datamodel.TextMuseData parseContent(org.xmlpull.v1.XmlPullParser) -> a
     95:115:void parseLocalNotifications(org.xmlpull.v1.XmlPullParser,com.laloosh.textmuse.datamodel.TextMuseData) -> a
