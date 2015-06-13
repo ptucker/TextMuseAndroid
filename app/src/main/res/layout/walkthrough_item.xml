@@ -51,17 +51,6 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/walkthroughRegister"
-        android:text="Get the most out of TextMuse and register today!"
-        android:textColor="@android:color/black"
-        android:gravity="center"
-        android:layout_above="@id/walkthroughDoneButton"
-        android:layout_centerHorizontal="true"
-        />
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,7 +58,7 @@
         android:id="@+id/walkthroughImage"
 
         android:layout_below="@id/walkthroughTextViewDescription"
-        android:layout_above="@id/walkthroughRegister"
+        android:layout_above="@id/walkthroughDoneButton"
         android:layout_margin="20dp"
 
         android:src="@drawable/page1_walkthrough"

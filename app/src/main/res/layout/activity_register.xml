@@ -4,81 +4,116 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.laloosh.textmuse.RegisterActivity">
+    tools:context="com.laloosh.textmuse.RegisterActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    >
 
-
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/registerEditTextName"
-        android:hint="Name"
-        android:inputType="textCapWords"
-        android:layout_marginBottom="16dp"
-        />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/registerEditTextEmail"
-        android:inputType="textEmailAddress"
-        android:hint="Email"
-        android:layout_below="@id/registerEditTextName"
-        android:layout_marginBottom="16dp"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/registerLayoutBirth"
-        android:orientation="horizontal"
-        android:layout_below="@id/registerEditTextEmail"
-        >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:id="@+id/registerTextViewHeading"
+                android:text="Get the most out of TextMuse"
+                android:gravity="center"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:textColor="#ff000000"
+                />
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:id="@+id/registerEditTextBirthMonth"
-            android:inputType="number"
-            android:hint="Birth Month (1-12)"
-            android:layout_marginRight="8dp"
-            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/registerTextViewDescription"
+                android:layout_marginTop="24dp"
+                android:singleLine="false"
+                android:text="Register today to get the latest offers and updates from TextMuse."
+                android:layout_below="@id/registerTextViewHeading"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="#ff000000"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                />
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:id="@+id/registerEditTextBirthYear"
-            android:inputType="number"
-            android:hint="Birth Year"
-            android:layout_marginLeft="8dp"
-            />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/registerTextViewDescription"
+                android:id="@+id/registerEditTextName"
+                android:hint="Name"
+                android:inputType="textCapWords"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                />
 
-    </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/registerEditTextEmail"
+                android:inputType="textEmailAddress"
+                android:hint="Email"
+                android:layout_below="@id/registerEditTextName"
+                android:layout_marginBottom="16dp"
+                />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:id="@+id/registerTextViewHeading"
-        android:text="Get the most out of TextMuse"
-        android:layout_below="@id/registerLayoutBirth"
-        android:gravity="center"
-        android:textSize="@dimen/abc_text_size_large_material"
-        android:textColor="#ff000000"
-        />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/registerLayoutBirth"
+                android:orientation="horizontal"
+                android:layout_below="@id/registerEditTextEmail"
+                >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:singleLine="false"
-        android:text="Register today and help us make TextMuse better. We promise not to sell or distribute your registration information, and we do not collect any personally identifiable information about your texts."
-        android:layout_below="@id/registerTextViewHeading"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:textColor="#ff000000"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        />
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/registerEditTextBirthMonth"
+                    android:inputType="number"
+                    android:hint="Birth Month (1-12)"
+                    android:layout_marginRight="8dp"
+                    />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/registerEditTextBirthYear"
+                    android:inputType="number"
+                    android:hint="Birth Year"
+                    android:layout_marginLeft="8dp"
+                    />
+
+            </LinearLayout>
+
+            <com.laloosh.textmuse.controls.AutoResizeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:singleLine="false"
+                android:text="We promise not to sell or distribute your registration information, and we do not collect any personally identifiable information about your texts."
+                android:layout_below="@id/registerLayoutBirth"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="#ff000000"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_alignParentBottom="true"
+                />
+
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
 </RelativeLayout>

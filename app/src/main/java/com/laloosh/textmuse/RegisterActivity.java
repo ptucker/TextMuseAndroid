@@ -22,6 +22,7 @@ import org.joda.time.DateTime;
 
 public class RegisterActivity extends ActionBarActivity implements RegisterAsyncTask.RegisterAsyncTaskHandler{
     public static final String REGISTER_THROUGH_WALKTHROUGH_EXTRA = "com.laloosh.textmuse.walkthrough";
+    public static final String REGISTER_AFTER_WALKTHROUGH_EXTRA = "com.laloosh.textmuse.afterwalkthrough";
 
     private EditText mEditTextName;
     private EditText mEditTextEmail;
@@ -29,6 +30,7 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
     private EditText mEditTextBirthYear;
 
     private boolean mRegistered;
+    private boolean mAfterWalkthrough;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,8 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
 
         Intent intent = getIntent();
         boolean fromWalkthrough = intent.getBooleanExtra(REGISTER_THROUGH_WALKTHROUGH_EXTRA, false);
-        if (fromWalkthrough) {
+        mAfterWalkthrough = intent.getBooleanExtra(REGISTER_AFTER_WALKTHROUGH_EXTRA, false);
+        if (fromWalkthrough || mAfterWalkthrough) {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
@@ -65,7 +68,11 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_register, menu);
+        if (mAfterWalkthrough) {
+            getMenuInflater().inflate(R.menu.menu_register_after_walkthrough, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_register, menu);
+        }
         return true;
     }
 
@@ -77,19 +84,33 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
         int id = item.getItemId();
 
         if (id == R.id.menu_send) {
-            handleRegistrationSubmit();
+            boolean result = handleRegistrationSubmit();
+            if (mAfterWalkthrough && result) {
+                goToMainActivity();
+            }
+            return true;
+        } else if (id == R.id.menu_skip) {
+            goToMainActivity();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void handleRegistrationSubmit() {
+    private void goToMainActivity() {
+        Intent intent = new Intent(this, MainCategoryActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    //Returns true on success or false on failure
+    private boolean handleRegistrationSubmit() {
 
         if (mRegistered) {
             AlreadyRegisteredDialogFragment fragment = AlreadyRegisteredDialogFragment.newInstance();
             fragment.show(getSupportFragmentManager(), "alreadyregisteredfragment");
-            return;
+            return false;
         }
 
         String name = mEditTextName.getText().toString();
@@ -101,7 +122,7 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
         if (name.length() <= 0 || email.length() <= 0 || birthMonthStr.length() <= 0 || birthYearStr.length() <= 0) {
             Log.e(Constants.TAG, "Incomplete name or email");
             showIncompleteInfoDialog();
-            return;
+            return false;
 
         }
 
@@ -111,7 +132,7 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
         } catch (Exception e) {
             Log.e(Constants.TAG, "Incorrent format of birth months");
             showBadInputDialog();
-            return;
+            return false;
         }
 
         DateTime now = DateTime.now();
@@ -119,13 +140,13 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
         if (birthMonth > 12 || birthMonth < 1 || birthYear < 1900 || birthYear > now.getYear()) {
             Log.e(Constants.TAG, "Incorrent format of birth months");
             showBadInputDialog();
-            return;
+            return false;
         }
 
         if (now.getYear() - birthYear < 13 || (now.getYear() - birthYear == 13 && now.getMonthOfYear() < birthMonth)) {
             Log.e(Constants.TAG, "Too young for registration: month: " + Integer.toString(now.getMonthOfYear()) + " and year: " + Integer.toString(now.getYear()));
             showTooYoungDialog();
-            return;
+            return false;
         }
 
         //The info appears ok, let's submit it
@@ -145,6 +166,8 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
 
         RegisterAsyncTask asyncTask = new RegisterAsyncTask(this, name, email, birthMonth, birthYear);
         asyncTask.execute();
+
+        return true;
    }
 
     private void showIncompleteInfoDialog(){

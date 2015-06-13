@@ -115,20 +115,10 @@ public class WalkthroughActivity extends ActionBarActivity {
 
             ImageView imageView = (ImageView) v.findViewById(R.id.walkthroughImage);
             TextView textView = (TextView) v.findViewById(R.id.walkthroughTextViewDescription);
-            TextView registerText = (TextView) v.findViewById(R.id.walkthroughRegister);
             ViewGroup doneButton = (ViewGroup) v.findViewById(R.id.walkthroughDoneButton);
 
             textView.setText(WALKTHROUGH_DESCRIPTIONS[mNum]);
             imageView.setImageResource(WALKTHROUGH_IMAGE_RESOURCES[mNum]);
-
-            registerText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                    intent.putExtra(RegisterActivity.REGISTER_THROUGH_WALKTHROUGH_EXTRA, true);
-                    startActivity(intent);
-                }
-            });
 
             doneButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -137,8 +127,9 @@ public class WalkthroughActivity extends ActionBarActivity {
                     if (activity != null) {
                         if (mInitialLaunch) {
                             //launched from initial walkthrough
-                            Intent intent = new Intent(activity, MainCategoryActivity.class);
+                            Intent intent = new Intent(activity, RegisterActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtra(RegisterActivity.REGISTER_AFTER_WALKTHROUGH_EXTRA, true);
                             startActivity(intent);
                             activity.finish();
                         } else {
