@@ -45,6 +45,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         getNewContent();
         cleanImageCacheTask();
         scheduleTimerForFinish();
+        startupAzureIntegration();
     }
 
     //If we've failed in loading new data, and we don't have any, then we'll get here.  Load the
@@ -134,5 +135,10 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
         mTimer.cancel();
         timerFinished();
+    }
+
+    private void startupAzureIntegration() {
+        AzureIntegrationSingleton azureIntegrationSingleton = AzureIntegrationSingleton.getInstance();
+        azureIntegrationSingleton.startupIntegration(this.getApplicationContext());
     }
 }
