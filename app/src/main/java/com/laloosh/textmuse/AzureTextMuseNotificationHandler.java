@@ -64,21 +64,44 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
     @Override
     public void onReceive(Context context, Bundle bundle) {
         String notificationMessage = bundle.getString("message");
+        String url = bundle.getString("messageUrl");
+        String inAppMessage = bundle.getString("inAppMessage");
+        String messageTitle = bundle.getString("messageTitle");
 
-        showReminderNotification(context, notificationMessage);
+        showReminderNotification(context, notificationMessage, url, inAppMessage, messageTitle);
     }
 
-    private void showReminderNotification(Context context, String text) {
+    private void showReminderNotification(Context context, String text, String url, String inAppMessage, String messageTitle) {
 
         //Build the intent that will start the activity on click
-        Intent resultIntent = new Intent(context, SplashScreenActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent resultIntent;
+        PendingIntent pendingIntent;
+        if (url != null) {
+            try {
+                resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            } catch (Exception e) {
+                resultIntent = new Intent(context, SplashScreenActivity.class);
+                Log.e(Constants.TAG, "Could not create intent to start web browser in notification");
+            }
+        } else {
+            resultIntent = new Intent(context, SplashScreenActivity.class);
+
+            if (inAppMessage != null) {
+                resultIntent.putExtra(Constants.LAUNCH_MESSAGE_EXTRA, inAppMessage);
+            }
+        }
+
+        pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Get a default sound to play
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
+        if (messageTitle == null || messageTitle.length() <= 0) {
+            messageTitle = "TextMuse";
+        }
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentTitle("TextMuse")
+        builder.setContentTitle(messageTitle)
                 .setContentText(text)
                 .setSmallIcon(R.drawable.notification_icon)
                 .setContentIntent(pendingIntent)

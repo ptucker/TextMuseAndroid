@@ -24,6 +24,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     private FetchNotesAsyncTask.FetchNotesResult mFinishedLoadingResult;
     private Timer mTimer;
     private boolean mFirstLaunch;
+    private String mLaunchMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,9 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         cleanImageCacheTask();
         scheduleTimerForFinish();
         startupAzureIntegration();
+
+        Intent intent = getIntent();
+        mLaunchMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
     }
 
     //If we've failed in loading new data, and we don't have any, then we'll get here.  Load the
@@ -99,6 +103,10 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
             if (mFinishedLoading && mFinishedLoadingResult != FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED) {
                 intent.putExtra(MainCategoryActivity.ALREADY_LOADED_DATA_EXTRA, true);
+            }
+
+            if (mLaunchMessage != null && mLaunchMessage.length() > 0) {
+                intent.putExtra(Constants.LAUNCH_MESSAGE_EXTRA, mLaunchMessage);
             }
         }
 

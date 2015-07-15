@@ -38,4 +38,6 @@ public class Constants {
     //64 mb image cache for saved images
     public static final long MAX_IMAGE_CACHE_SIZE = 64 * 1024 * 1024;
 
+    public static final String LAUNCH_MESSAGE_EXTRA = "com.laloosh.textmuse.launch.messageextra";
+
 }

@@ -26,6 +26,7 @@ import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
+import com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -134,6 +135,17 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             });
         } else {
             Log.d(Constants.TAG, "Already successfully loaded data from internet via splash screen. Skipping reload");
+        }
+
+        final String startMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
+        if (startMessage != null) {
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    LaunchMessageDialogFragment fragment = LaunchMessageDialogFragment.newInstance(startMessage);
+                    fragment.show(getSupportFragmentManager(), "launchmessagefragment");
+                }
+            });
         }
 
         mLastUserScrollMillis = System.currentTimeMillis();
