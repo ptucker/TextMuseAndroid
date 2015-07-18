@@ -64,8 +64,13 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
     @Override
     public void onReceive(Context context, Bundle bundle) {
         String notificationMessage = bundle.getString("message");
+        String alertMessage = bundle.getString("alert");
+        if (notificationMessage == null || notificationMessage.length() <= 0) {
+            notificationMessage = alertMessage;
+        }
+
         String url = bundle.getString("messageUrl");
-        String inAppMessage = bundle.getString("inAppMessage");
+        String inAppMessage = bundle.getString("extendedMessage");
         String messageTitle = bundle.getString("messageTitle");
 
         showReminderNotification(context, notificationMessage, url, inAppMessage, messageTitle);

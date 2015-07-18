@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.datamodel.TextMuseSettings;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -87,10 +88,16 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
 
         Log.d(Constants.TAG, "Updating and saving data");
 
+        TextMuseSettings settings = GlobalData.getInstance().getSettings();
+        if (settings != null) {
+            newData.reorderCategories(settings.getCategoryOrder());
+        }
+
         globalData.updateData(newData);
 
         Context context = mContext.get();
         if (context != null) {
+
             newData.updatePhotos(context);
             newData.updateNoteImageFlags(context);
             newData.save(context);

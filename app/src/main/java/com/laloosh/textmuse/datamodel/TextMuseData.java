@@ -183,4 +183,55 @@ public class TextMuseData {
             }
         }
     }
+
+    public void reorderCategories(ArrayList<String> orderedCategories) {
+
+        //Don't need to do anything if we don't have anything in our ordered categories
+        if (orderedCategories == null || orderedCategories.size() <= 0) {
+            return;
+        }
+
+        //Reorder our categories according to the list, with some adjustments.  We'll put things that
+        //aren't in the string list first, then go down the string list order
+
+        HashSet<String> categoryNames = new HashSet<String> ();
+        ArrayList<String> tempOrderedCategories = new ArrayList<String> ();
+        ArrayList<Category> reorderedCategories = new ArrayList<Category> ();
+
+        //Make a hash set with our category names just for easy lookup later
+        for (Category c : categories) {
+            categoryNames.add(c.name);
+        }
+
+        //Copy the string list, taking out trending and highlighted
+        for (String c : orderedCategories) {
+            if (c.equalsIgnoreCase("Trending") || c.equalsIgnoreCase("Highlighted")) {
+                continue;
+            } else {
+                //Don't copy over category names that aren't in our category list
+                if (categoryNames.contains(c)) {
+                    tempOrderedCategories.add(c);
+                }
+            }
+        }
+
+        //Add categories that aren't in the ordered list first
+        for (Category c : categories) {
+            if (!tempOrderedCategories.contains(c.name)) {
+                reorderedCategories.add(c);
+            }
+        }
+
+        //Then add the categories in the ordered list in order
+        for (String categoryName : tempOrderedCategories) {
+            for (Category c : categories) {
+                if (c.name.equalsIgnoreCase(categoryName)) {
+                    reorderedCategories.add(c);
+                    break;
+                }
+            }
+        }
+
+        categories = reorderedCategories;
+    }
 }

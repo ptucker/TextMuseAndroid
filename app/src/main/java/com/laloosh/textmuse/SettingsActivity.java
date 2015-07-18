@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
+import com.laloosh.textmuse.datamodel.TextMuseContact;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseRecentContact;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 public class SettingsActivity extends ActionBarActivity {
 
     public static final String SHOWN_CATEGORIES_CHANGED_EXTRA = "com.laloosh.textmuse.settings.categorieschanged";
+    private static int REORDER_CATEGORIES_REQUEST_CODE = 9999;
 
     private ListView mListView;
     private SettingsListAdapter mAdapter;
@@ -41,6 +45,8 @@ public class SettingsActivity extends ActionBarActivity {
 
     private boolean mShouldShowCategories;
     private boolean mChangedCategories;
+
+    private ActionMode mActionMode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,10 @@ public class SettingsActivity extends ActionBarActivity {
         } else {
             mShouldShowCategories = true;
         }
+
+        //Refresh the category order using the textmuse data
+        mSettings.syncCategoryOrderFromData(mData.categories);
+        mSettings.save(this);
 
         mStoredContacts = globalData.getStoredContacts();
         mChangedCategories = false;
@@ -112,6 +122,72 @@ public class SettingsActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REORDER_CATEGORIES_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            mChangedCategories = true;
+
+            //The order of the categories might have changed.  Let's take this list and reorder our data categories
+            mData.reorderCategories(mSettings.getCategoryOrder());
+            mData.save(this);
+
+            mAdapter.populateCategoryList();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void startActionMode() {
+        if (mActionMode == null) {
+            mActionMode = this.startSupportActionMode(mActionModeCallback);
+        }
+    }
+
+    private void clearActionMode() {
+        if (mActionMode != null) {
+            mActionMode.finish();
+        }
+    }
+
+    protected ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.menu_reorder_category_popup, menu);
+            return true;
+        }
+
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_reorder_category:
+                    mActionMode.finish();
+
+                    Intent intent = new Intent(SettingsActivity.this, SortableCategoryActivity.class);
+                    startActivityForResult(intent, REORDER_CATEGORIES_REQUEST_CODE);
+
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+        }
+    };
+
+
     public class SettingsListAdapter extends BaseAdapter {
 
         private ArrayList<String> mCategoryList;
@@ -119,13 +195,14 @@ public class SettingsActivity extends ActionBarActivity {
 
         public SettingsListAdapter() {
             if (mShouldShowCategories) {
-                mCategoryList = new ArrayList<String> ();
-                for (Category c : mData.categories) {
-                    mCategoryList.add(c.name);
-                }
+                populateCategoryList();
             }
 
             mLayoutInflater = SettingsActivity.this.getLayoutInflater();
+        }
+
+        public void populateCategoryList() {
+            mCategoryList = mSettings.getCategoryOrder();
         }
 
         @Override
@@ -320,6 +397,14 @@ public class SettingsActivity extends ActionBarActivity {
                 rowView = mLayoutInflater.inflate(R.layout.settings_category_header_ele, parent, false);
             }
 
+            rowView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    startActionMode();
+                    return true;
+                }
+            });
+
             return rowView;
         }
 
@@ -338,6 +423,7 @@ public class SettingsActivity extends ActionBarActivity {
             final String categoryName = mCategoryList.get(position);
 
             viewHolder.mTextView.setText(categoryName);
+            viewHolder.mCheckBox.setOnCheckedChangeListener(null);
             viewHolder.mCheckBox.setChecked(mSettings.shouldShowCategory(categoryName));
 
             viewHolder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -355,6 +441,14 @@ public class SettingsActivity extends ActionBarActivity {
                 public void onClick(View v) {
                     CategoryEleViewHolder viewHolder = (CategoryEleViewHolder) v.getTag();
                     viewHolder.mCheckBox.toggle();  //this calls the checked change listener
+                }
+            });
+
+            rowView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    startActionMode();
+                    return true;
                 }
             });
 

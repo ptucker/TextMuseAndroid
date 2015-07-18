@@ -32,6 +32,7 @@ dependencies {
     compile(group: 'com.microsoft.azure', name: 'azure-notifications-handler', version: '1.0.1', ext: 'jar')
     compile 'com.google.guava:guava:18.0'
     compile 'com.microsoft.azure:azure-mobile-services-android-sdk:2.0.2+'
+    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.2'
     compile 'commons-io:commons-io:2.4'
     compile 'com.google.code.gson:gson:2.3'
     compile 'joda-time:joda-time:2.3'

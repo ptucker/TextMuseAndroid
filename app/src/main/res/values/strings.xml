@@ -19,4 +19,5 @@
     <string name="title_activity_register">Register</string>
     <string name="title_activity_walkthrough">Walkthrough</string>
     <string name="title_activity_splash_screen">TextMuse</string>
+    <string name="title_activity_sortable_category">Reorder Categories</string>
 </resources>
