@@ -16339,26 +16339,26 @@ com.laloosh.textmuse.ContactsPickerActivity -> com.laloosh.textmuse.ContactsPick
     android.support.v7.view.ActionMode$Callback mActionModeCallback -> t
     72:107:void onCreate(android.os.Bundle) -> onCreate
     111:115:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
-    120:189:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    197:229:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    234:279:void findChosenNote(android.content.Intent,android.os.Bundle) -> a
-    282:285:void updateRecentContacts() -> q
-    288:296:void sendNoteIdToServer() -> r
-    299:317:java.util.HashSet getSelectedPhoneNumbers() -> s
-    323:335:android.support.v4.content.Loader onCreateLoader(int,android.os.Bundle) -> a
-    346:350:void onLoadFinished(android.support.v4.content.Loader,android.database.Cursor) -> a
-    354:357:void onLoaderReset(android.support.v4.content.Loader) -> a
-    371:376:void handleNewGroupName(java.lang.String) -> b
-    380:388:void handleRenameGroupName(java.lang.String,java.lang.String) -> a
-    392:393:void onGroupNameEditCancel() -> l
-    397:397:boolean isUsableGroupName(java.lang.String) -> c
-    402:405:void createNewGroup() -> m
-    409:413:void renameGroup() -> n
-    416:421:void removeGroup() -> o
-    424:433:void editGroup() -> p
-    437:450:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    453:456:void startActionMode() -> t
-    459:463:void clearActionMode() -> u
+    120:190:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    198:230:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    235:280:void findChosenNote(android.content.Intent,android.os.Bundle) -> a
+    283:286:void updateRecentContacts() -> q
+    289:297:void sendNoteIdToServer() -> r
+    300:318:java.util.HashSet getSelectedPhoneNumbers() -> s
+    324:336:android.support.v4.content.Loader onCreateLoader(int,android.os.Bundle) -> a
+    347:351:void onLoadFinished(android.support.v4.content.Loader,android.database.Cursor) -> a
+    355:358:void onLoaderReset(android.support.v4.content.Loader) -> a
+    372:377:void handleNewGroupName(java.lang.String) -> b
+    381:389:void handleRenameGroupName(java.lang.String,java.lang.String) -> a
+    393:394:void onGroupNameEditCancel() -> l
+    398:398:boolean isUsableGroupName(java.lang.String) -> c
+    403:406:void createNewGroup() -> m
+    410:414:void renameGroup() -> n
+    417:422:void removeGroup() -> o
+    425:434:void editGroup() -> p
+    438:451:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    454:457:void startActionMode() -> t
+    460:464:void clearActionMode() -> u
     48:48:void onLoadFinished(android.support.v4.content.Loader,java.lang.Object) -> a
     48:48:int access$000(com.laloosh.textmuse.ContactsPickerActivity) -> a
     48:48:android.support.v7.view.ActionMode access$100(com.laloosh.textmuse.ContactsPickerActivity) -> b
@@ -16373,16 +16373,16 @@ com.laloosh.textmuse.ContactsPickerActivity$1 -> com.laloosh.textmuse.r:
 com.laloosh.textmuse.ContactsPickerActivity$2 -> com.laloosh.textmuse.s:
     com.laloosh.textmuse.ContactsPickerActivity this$0 -> a
     159:159:boolean onMenuItemActionExpand(android.view.MenuItem) -> a
-    165:167:boolean onMenuItemActionCollapse(android.view.MenuItem) -> b
+    165:168:boolean onMenuItemActionCollapse(android.view.MenuItem) -> b
 com.laloosh.textmuse.ContactsPickerActivity$3 -> com.laloosh.textmuse.t:
     com.laloosh.textmuse.ContactsPickerActivity this$0 -> a
-    363:365:void phoneLookupFailed() -> a
+    364:366:void phoneLookupFailed() -> a
 com.laloosh.textmuse.ContactsPickerActivity$4 -> com.laloosh.textmuse.u:
     com.laloosh.textmuse.ContactsPickerActivity this$0 -> a
-    469:471:boolean onCreateActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> a
-    478:478:boolean onPrepareActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> b
-    484:516:boolean onActionItemClicked(android.support.v7.view.ActionMode,android.view.MenuItem) -> a
-    523:526:void onDestroyActionMode(android.support.v7.view.ActionMode) -> a
+    470:472:boolean onCreateActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> a
+    479:479:boolean onPrepareActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> b
+    485:517:boolean onActionItemClicked(android.support.v7.view.ActionMode,android.view.MenuItem) -> a
+    524:527:void onDestroyActionMode(android.support.v7.view.ActionMode) -> a
 com.laloosh.textmuse.ContactsPickerActivity$5 -> com.laloosh.textmuse.v:
     int[] $SwitchMap$com$laloosh$textmuse$ContactsPickerActivity$ContactItemType -> a
 com.laloosh.textmuse.ContactsPickerActivity$ContactGroupListAdapter -> com.laloosh.textmuse.w:
@@ -16390,21 +16390,21 @@ com.laloosh.textmuse.ContactsPickerActivity$ContactGroupListAdapter -> com.laloo
     android.support.v7.app.ActionBarActivity mContext -> c
     android.view.LayoutInflater mLayoutInflater -> d
     com.laloosh.textmuse.ContactsPickerActivity this$0 -> a
-    545:570:int getCount() -> getCount
-    575:575:java.lang.Object getItem(int) -> getItem
-    580:580:long getItemId(int) -> getItemId
-    586:645:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    650:664:android.view.View getTitleView(java.lang.String,android.view.View,android.view.ViewGroup) -> a
-    669:730:android.view.View getItemListView(int,com.laloosh.textmuse.ContactsPickerActivity$ContactItemType,android.view.View,android.view.ViewGroup) -> a
-    739:796:int getItemViewType(int) -> getItemViewType
-    804:804:int getViewTypeCount() -> getViewTypeCount
-    809:824:void onClick(android.view.View) -> onClick
-    829:854:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-    857:859:android.database.Cursor swapContactCursor(android.database.Cursor) -> a
+    546:571:int getCount() -> getCount
+    576:576:java.lang.Object getItem(int) -> getItem
+    581:581:long getItemId(int) -> getItemId
+    587:646:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    651:665:android.view.View getTitleView(java.lang.String,android.view.View,android.view.ViewGroup) -> a
+    670:731:android.view.View getItemListView(int,com.laloosh.textmuse.ContactsPickerActivity$ContactItemType,android.view.View,android.view.ViewGroup) -> a
+    740:797:int getItemViewType(int) -> getItemViewType
+    805:805:int getViewTypeCount() -> getViewTypeCount
+    810:825:void onClick(android.view.View) -> onClick
+    830:855:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+    858:860:android.database.Cursor swapContactCursor(android.database.Cursor) -> a
 com.laloosh.textmuse.ContactsPickerActivity$ContactGroupListAdapter$1 -> com.laloosh.textmuse.x:
     int val$index -> a
     com.laloosh.textmuse.ContactsPickerActivity$ContactGroupListAdapter this$1 -> b
-    706:709:boolean onLongClick(android.view.View) -> onLongClick
+    707:710:boolean onLongClick(android.view.View) -> onLongClick
 com.laloosh.textmuse.ContactsPickerActivity$ContactGroupListAdapter$GroupContactViewHolder -> com.laloosh.textmuse.y:
     com.laloosh.textmuse.ContactsPickerActivity$ContactItemType contactItemType -> c
     int itemIndex -> d
@@ -16416,8 +16416,8 @@ com.laloosh.textmuse.ContactsPickerActivity$ContactItemType -> com.laloosh.textm
     com.laloosh.textmuse.ContactsPickerActivity$ContactItemType GROUP_ITEM_PLACEHOLDER -> d
     com.laloosh.textmuse.ContactsPickerActivity$ContactItemType RECENT_ITEM_PLACEHOLDER -> e
     com.laloosh.textmuse.ContactsPickerActivity$ContactItemType[] $VALUES -> f
-    868:868:com.laloosh.textmuse.ContactsPickerActivity$ContactItemType[] values() -> values
-    868:868:com.laloosh.textmuse.ContactsPickerActivity$ContactItemType valueOf(java.lang.String) -> valueOf
+    869:869:com.laloosh.textmuse.ContactsPickerActivity$ContactItemType[] values() -> values
+    869:869:com.laloosh.textmuse.ContactsPickerActivity$ContactItemType valueOf(java.lang.String) -> valueOf
 com.laloosh.textmuse.FeedbackActivity -> com.laloosh.textmuse.FeedbackActivity:
     android.widget.EditText mNameEditText -> n
     android.widget.EditText mEmailEditText -> o

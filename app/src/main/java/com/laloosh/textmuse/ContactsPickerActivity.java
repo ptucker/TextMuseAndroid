@@ -163,6 +163,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             public boolean onMenuItemActionCollapse(MenuItem item) {
 
                 mSearchTerm = null;
+                mAdapter.notifyDataSetChanged();
                 getSupportLoaderManager().restartLoader(Queries.ContactsQuery.QUERY_ID, null, ContactsPickerActivity.this);
                 return true;
 

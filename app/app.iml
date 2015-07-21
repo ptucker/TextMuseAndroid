@@ -99,8 +99,8 @@
     <orderEntry type="library" exported="" name="commons-io-2.4" level="project" />
     <orderEntry type="library" exported="" name="joda-time-2.3" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
-    <orderEntry type="library" exported="" name="azure-notifications-handler-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="azure-mobile-services-android-sdk-2.0.2" level="project" />
+    <orderEntry type="library" exported="" name="azure-notifications-handler-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="guava-18.0" level="project" />
     <orderEntry type="module" module-name="viewpagerindicator" exported="" />
   </component>
