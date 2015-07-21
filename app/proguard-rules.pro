@@ -32,6 +32,16 @@
 -keep interface android.support.v7.widget.** { *; }
 -keep class android.support.v4.widget.** { *; }
 -keep interface android.support.v4.widget.** { *; }
+-keep class com.h6ah4i.android.** { *; }
+-keep interface com.h6ah4i.android.** { *; }
+-keep class com.microsoft.windowsazure.** { *; }
+-keep interface com.microsoft.windowsazure.** { *; }
+
+
+# used for guava stuff, used for azure libs
+-dontwarn javax.annotation.**
+-dontwarn javax.inject.**
+-dontwarn sun.misc.Unsafe
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard
