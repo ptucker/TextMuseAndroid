@@ -304,7 +304,7 @@ public class SelectMessageActivity extends ActionBarActivity {
                     @Override
                     public void onClick(View v) {
                         try {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, note.getExternalLinkUri());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, note.getExternalLinkUri(Integer.toString(mData.appId)));
                             mActivity.startActivity(intent);
                         } catch (Exception e) {
                             Log.e(Constants.TAG, "Could not open link!");

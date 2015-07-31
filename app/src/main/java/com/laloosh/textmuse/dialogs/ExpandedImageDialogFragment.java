@@ -74,6 +74,10 @@ public class ExpandedImageDialogFragment extends DialogFragment implements Image
         int imgWidth = bitmap.getWidth();
         int imgHeight = bitmap.getHeight();
 
+        if (getActivity() == null) {
+            return;
+        }
+
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point screenSize = new Point();
         display.getSize(screenSize);

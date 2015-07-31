@@ -111,12 +111,21 @@ public class Note implements Parcelable {
         return true;
     }
 
-    public Uri getExternalLinkUri() {
+    public Uri getExternalLinkUri(String appId) {
         if (!hasExternalLink()) {
             return null;
         }
 
         String url = extraUrl;
+
+        if (appId != null &&
+            extraUrl != null &&
+            extraUrl.toLowerCase().contains("textmuse") &&
+            extraUrl.toLowerCase().contains("%appid%")) {
+
+            extraUrl.replace("%appid%", appId);
+        }
+
         Uri uri = Uri.parse(url);
         String scheme = uri.getScheme();
 
