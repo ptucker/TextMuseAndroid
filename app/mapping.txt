@@ -17018,15 +17018,15 @@ com.laloosh.textmuse.datamodel.Note -> com.laloosh.textmuse.datamodel.Note:
     84:94:java.lang.String getDisplayMediaUrl(android.content.Context) -> b
     100:103:boolean shouldCenterInside() -> e
     108:111:boolean hasExternalLink() -> f
-    115:128:android.net.Uri getExternalLinkUri() -> g
-    132:145:boolean isMediaYoutube() -> h
-    150:150:int describeContents() -> describeContents
-    154:163:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    115:137:android.net.Uri getExternalLinkUri(java.lang.String) -> a
+    141:154:boolean isMediaYoutube() -> g
+    159:159:int describeContents() -> describeContents
+    163:172:void writeToParcel(android.os.Parcel,int) -> writeToParcel
 com.laloosh.textmuse.datamodel.Note$1 -> com.laloosh.textmuse.datamodel.e:
-    167:167:com.laloosh.textmuse.datamodel.Note createFromParcel(android.os.Parcel) -> a
-    171:171:com.laloosh.textmuse.datamodel.Note[] newArray(int) -> a
-    165:165:java.lang.Object[] newArray(int) -> newArray
-    165:165:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    176:176:com.laloosh.textmuse.datamodel.Note createFromParcel(android.os.Parcel) -> a
+    180:180:com.laloosh.textmuse.datamodel.Note[] newArray(int) -> a
+    174:174:java.lang.Object[] newArray(int) -> newArray
+    174:174:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 com.laloosh.textmuse.datamodel.ParcelUtils -> com.laloosh.textmuse.datamodel.f:
     14:18:void writeString(android.os.Parcel,java.lang.String) -> a
     21:24:java.lang.String readString(android.os.Parcel) -> a
@@ -17204,9 +17204,9 @@ com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment -> com.laloosh.textmuse
     com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget mTarget -> am
     38:47:com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment newInstance(com.laloosh.textmuse.datamodel.Note) -> a
     53:69:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    74:123:void doneLoadingBitmap(android.graphics.Bitmap) -> a
-    128:131:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
-    137:142:void onResume() -> r
+    74:127:void doneLoadingBitmap(android.graphics.Bitmap) -> a
+    132:135:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    141:146:void onResume() -> r
 com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget -> com.laloosh.textmuse.a.q:
     java.lang.ref.WeakReference mHandler -> a
     24:25:void onBitmapFailed(android.graphics.drawable.Drawable) -> a
