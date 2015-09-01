@@ -3,6 +3,10 @@ package com.laloosh.textmuse;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -17,9 +21,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
@@ -40,6 +50,9 @@ public class SelectMessageActivity extends ActionBarActivity {
     public static final String NOTE_INDEX_EXTRA = "com.lalaoosh.textmuse.noteid.extra";
 
     private static final String SAVE_STATE_POSITION = "savestateposition";
+    private static final int YOUTUBE_RECOVERY_DIALOG_REQUEST_CODE = 1222;
+    private static final int YOUTUBE_FRAMELAYOUT_BASE_ID = 10000000;
+    private static final String YOUTUBE_FRAGMENT_NAME = "youtubefragment";
 
     private ViewPager mViewPager;
     private CirclePageIndicator mPageIndicator;
@@ -174,6 +187,12 @@ public class SelectMessageActivity extends ActionBarActivity {
         fragment.show(getSupportFragmentManager(), "highlightfailedfragment");
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == YOUTUBE_RECOVERY_DIALOG_REQUEST_CODE) {
+            mPagerAdapter.notifyDataSetChanged();
+        }
+    }
 
     public static class NoteViewPagerAdapter extends PagerAdapter implements SetHighlightAsyncTask.SetHighlightAsyncTaskHandler {
 
@@ -269,6 +288,81 @@ public class SelectMessageActivity extends ActionBarActivity {
                         fragment.show(mActivity.getSupportFragmentManager(), "expandedimagefragment");
                     }
                 });
+
+                useImageLayout = true;
+
+            } else if (note.isMediaYoutube()) {
+                view = mLayoutInflater.inflate(R.layout.detail_view_textvideo, container, false);
+
+                final int framelayoutId = YOUTUBE_FRAMELAYOUT_BASE_ID + note.noteId;
+                FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.detailViewYoutubeFragmentPlaceholder);
+                frameLayout.setId(framelayoutId);
+
+                ImageView imageView = (ImageView) view.findViewById(R.id.detailViewYoutubeThumbnailImage);
+                final RelativeLayout previewLayout = (RelativeLayout) view.findViewById(R.id.detailViewYoutubeThumbnailLayout);
+
+                //Try out picasso library to see how it performs
+                Picasso.with(mActivity)
+                        .load(note.getYoutubeImgUrl())
+                        .error(R.drawable.placeholder_image)
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //On click of the image, let's load the youtube fragment
+                        previewLayout.setVisibility(View.GONE);
+
+                        //Search for the old fragment
+                        YouTubePlayerSupportFragment fragment = (YouTubePlayerSupportFragment) mActivity.getSupportFragmentManager().findFragmentByTag(YOUTUBE_FRAGMENT_NAME);
+                        if (fragment != null) {
+                            //If it exists, then remove it first
+                            try {
+                                View parentView = (View) fragment.getView().getParent();
+                                View thumbnailViewLayout = parentView.findViewById(R.id.detailViewYoutubeThumbnailLayout);
+                                thumbnailViewLayout.setVisibility(View.VISIBLE);
+                            } catch (Exception e) {
+                                //log and ignore this since the view parent could be out of scope
+                                Log.d(Constants.TAG, "Could not get parent of youtube fragment");
+                            }
+
+                            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
+                            transaction.remove(fragment);
+                            transaction.commit();
+                            mActivity.getSupportFragmentManager().executePendingTransactions();
+                        } else {
+                            //Create it if this is the first time
+                            fragment = YouTubePlayerSupportFragment.newInstance();
+                        }
+
+                        YouTubePlayer.OnInitializedListener listener = new YouTubePlayer.OnInitializedListener() {
+                            @Override
+                            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
+                                if (!wasRestored) {
+                                    youTubePlayer.loadVideo(note.getYoutubeVideoTag());
+                                }
+                            }
+
+                            @Override
+                            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                                if (youTubeInitializationResult.isUserRecoverableError()) {
+                                    youTubeInitializationResult.getErrorDialog(mActivity, YOUTUBE_RECOVERY_DIALOG_REQUEST_CODE).show();
+                                } else {
+                                    String errorMessage = "Could not initialize video player for the youtube video.";
+                                    Toast.makeText(mActivity, errorMessage, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        };
+
+                        FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
+                        transaction.add(framelayoutId, fragment, YOUTUBE_FRAGMENT_NAME);
+                        transaction.commit();
+                        fragment.initialize(Constants.GOOGLE_API_YOUTUBE, listener);
+                    }
+                });
+
 
                 useImageLayout = true;
 
@@ -378,7 +472,8 @@ public class SelectMessageActivity extends ActionBarActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             Log.d(Constants.TAG, "Destroying view at position " + position);
 
-            container.removeView((View) object);
+            View view = (View) object;
+            container.removeView(view);
         }
 
         @Override

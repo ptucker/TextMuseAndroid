@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailViewLayoutHighlight"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewImageViewHighlight"
+            android:src="@drawable/highlight_icon"
+            android:layout_alignBottom="@+id/detailViewTextViewHighlight"
+            android:layout_alignTop="@+id/detailViewTextViewHighlight"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewTextViewHighlight"
+            android:layout_toRightOf="@id/detailViewImageViewHighlight"
+            android:text="Highlight"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:padding="2dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailViewButtonSelectButton"
+        android:layout_above="@id/detailViewLayoutHighlight"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewImageViewSelect"
+            android:src="@drawable/newbadge"
+            android:scaleType="fitCenter"
+            android:layout_alignBottom="@+id/detailViewTextViewSelect"
+            android:layout_alignLeft="@+id/detailViewTextViewSelect"
+            android:layout_alignRight="@+id/detailViewTextViewSelect"
+            android:layout_alignTop="@+id/detailViewTextViewSelect"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewTextViewSelect"
+            android:text="Text It"
+            android:textSize="18sp"
+            android:textColor="#ffffffff"
+            android:textAllCaps="true"
+            android:padding="15dp"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/detailViewButtonSelectButton"
+        android:orientation="vertical"
+        >
+
+        <FrameLayout
+            android:id="@+id/detailViewYoutubeFragmentPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:layout_margin="15dp" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/detailViewYoutubeThumbnailLayout"
+                >
+
+                <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:id="@+id/detailViewYoutubeThumbnailImage"
+                    android:scaleType="centerCrop"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/play_video"
+                    android:scaleType="centerInside"
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:layout_above="@id/detailViewButtonSelectButton"
+            android:id="@+id/detailViewLayoutText"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailViewImageViewLeftQuote"
+                android:src="@drawable/leftquote"
+                android:scaleType="fitCenter"
+                android:layout_alignTop="@+id/detailViewTextViewText"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="8dp"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailViewImageViewRightQuote"
+                android:src="@drawable/rightquote"
+                android:scaleType="fitCenter"
+                android:layout_alignTop="@+id/detailViewTextViewText"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="8dp"
+                />
+
+            <com.laloosh.textmuse.controls.AutoResizeTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/detailViewTextViewText"
+                android:text="This is the text contents."
+                android:textSize="26sp"
+                android:gravity="center"
+                android:layout_toRightOf="@id/detailViewImageViewLeftQuote"
+                android:layout_toLeftOf="@id/detailViewImageViewRightQuote"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailViewLayoutLink"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailViewTextViewLink"
+                android:text="SEE IT"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/link_icon"
+                android:layout_toRightOf="@id/detailViewTextViewLink"
+                android:layout_alignBottom="@id/detailViewTextViewLink"
+                android:layout_alignTop="@id/detailViewTextViewLink"
+                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="2dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

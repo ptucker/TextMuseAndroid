@@ -154,6 +154,25 @@ public class Note implements Parcelable {
         return false;
     }
 
+    public String getYoutubeVideoTag() {
+        if (mediaUrl == null || mediaUrl.isEmpty()) {
+            return null;
+        }
+
+        String convertedMediaUrl = mediaUrl.trim();
+        Uri uri = Uri.parse(convertedMediaUrl);
+        return uri.getLastPathSegment();
+    }
+
+    public String getYoutubeImgUrl() {
+        if (mediaUrl == null || mediaUrl.isEmpty()) {
+            return null;
+        }
+
+        String videoTag = getYoutubeVideoTag();
+        return "http://img.youtube.com/vi/" + videoTag + "/hqdefault.jpg";
+    }
+
 
     public int describeContents() {
         return 0;

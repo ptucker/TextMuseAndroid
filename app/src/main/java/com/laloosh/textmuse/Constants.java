@@ -40,4 +40,6 @@ public class Constants {
 
     public static final String LAUNCH_MESSAGE_EXTRA = "com.laloosh.textmuse.launch.messageextra";
 
+    public static final String GOOGLE_API_YOUTUBE = "AIzaSyCwp-hP3BadhQKKfnsFSPqoGPV9wmNANM0";
+
 }
