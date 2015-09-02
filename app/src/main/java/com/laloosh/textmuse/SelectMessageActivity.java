@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -398,8 +399,11 @@ public class SelectMessageActivity extends ActionBarActivity {
                     @Override
                     public void onClick(View v) {
                         try {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, note.getExternalLinkUri(Integer.toString(mData.appId)));
+                            Intent intent = new Intent(mActivity, WebviewActivity.class);
+                            intent.putExtra(WebviewActivity.WEBVIEW_ACTIVITY_EXTRA, note.getExternalLinkUri(Integer.toString(mData.appId)).toString());
                             mActivity.startActivity(intent);
+//                            Intent intent = new Intent(Intent.ACTION_VIEW, note.getExternalLinkUri(Integer.toString(mData.appId)));
+//                            mActivity.startActivity(intent);
                         } catch (Exception e) {
                             Log.e(Constants.TAG, "Could not open link!");
                             //TODO: error popup?

@@ -52,7 +52,9 @@
             android:name=".SelectMessageActivity"
             android:label="@string/title_activity_select_message"
             android:parentActivityName=".MainCategoryActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.laloosh.textmuse.MainCategoryActivity" />
@@ -163,6 +165,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.laloosh.textmuse.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".WebviewActivity"
+            android:label="@string/title_activity_webview"
+            android:parentActivityName=".SelectMessageActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.laloosh.textmuse.SelectMessageActivity" />
         </activity>
     </application>
 
