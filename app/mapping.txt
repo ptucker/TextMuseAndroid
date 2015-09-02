@@ -224,152 +224,192 @@ android.support.v4.app.DialogFragment -> android.support.v4.app.l:
     181:204:void dismissInternal(boolean) -> a
     207:207:android.app.Dialog getDialog() -> b
     212:212:int getTheme() -> c
-    266:272:void onAttach(android.app.Activity) -> a
-    276:283:void onDetach() -> d
-    287:299:void onCreate(android.os.Bundle) -> a
-    304:323:android.view.LayoutInflater getLayoutInflater(android.os.Bundle) -> b
-    351:351:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    266:272:void onAttach(android.app.Activity) -> onAttach
+    276:283:void onDetach() -> onDetach
+    287:299:void onCreate(android.os.Bundle) -> onCreate
+    304:323:android.view.LayoutInflater getLayoutInflater(android.os.Bundle) -> getLayoutInflater
+    351:351:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
     355:355:void onCancel(android.content.DialogInterface) -> onCancel
     358:365:void onDismiss(android.content.DialogInterface) -> onDismiss
-    369:392:void onActivityCreated(android.os.Bundle) -> d
-    396:401:void onStart() -> e
-    405:427:void onSaveInstanceState(android.os.Bundle) -> e
-    431:435:void onStop() -> f
-    442:451:void onDestroyView() -> g
+    369:392:void onActivityCreated(android.os.Bundle) -> onActivityCreated
+    396:401:void onStart() -> onStart
+    405:427:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    431:435:void onStop() -> onStop
+    442:451:void onDestroyView() -> onDestroyView
 android.support.v4.app.Fragment -> android.support.v4.app.Fragment:
-    android.support.v4.util.SimpleArrayMap sClassMap -> a
-    java.lang.Object USE_DEFAULT_TRANSITION -> j
-    int mState -> k
-    android.view.View mAnimatingAway -> l
-    int mStateAfterAnimating -> m
-    android.os.Bundle mSavedFragmentState -> n
-    android.util.SparseArray mSavedViewState -> o
-    int mIndex -> p
-    java.lang.String mWho -> q
-    android.os.Bundle mArguments -> r
-    android.support.v4.app.Fragment mTarget -> s
-    int mTargetIndex -> t
-    int mTargetRequestCode -> u
-    boolean mAdded -> v
-    boolean mRemoving -> w
-    boolean mResumed -> x
-    boolean mFromLayout -> y
-    boolean mInLayout -> z
-    boolean mRestored -> A
-    int mBackStackNesting -> B
-    android.support.v4.app.FragmentManagerImpl mFragmentManager -> C
-    android.support.v4.app.FragmentActivity mActivity -> D
-    android.support.v4.app.FragmentManagerImpl mChildFragmentManager -> E
-    android.support.v4.app.Fragment mParentFragment -> F
-    int mFragmentId -> G
-    int mContainerId -> H
-    java.lang.String mTag -> I
-    boolean mHidden -> J
-    boolean mDetached -> K
-    boolean mRetainInstance -> L
-    boolean mRetaining -> M
-    boolean mHasMenu -> N
-    boolean mMenuVisible -> O
-    boolean mCalled -> P
-    int mNextAnim -> Q
-    android.view.ViewGroup mContainer -> R
-    android.view.View mView -> S
-    android.view.View mInnerView -> T
-    boolean mDeferStart -> U
-    boolean mUserVisibleHint -> V
-    android.support.v4.app.LoaderManagerImpl mLoaderManager -> W
-    boolean mLoadersStarted -> X
-    boolean mCheckedForLoaderManager -> Y
-    java.lang.Object mEnterTransition -> Z
-    java.lang.Object mReturnTransition -> aa
-    java.lang.Object mExitTransition -> ab
-    java.lang.Object mReenterTransition -> ac
-    java.lang.Object mSharedElementEnterTransition -> ad
-    java.lang.Object mSharedElementReturnTransition -> ae
-    java.lang.Boolean mAllowReturnTransitionOverlap -> af
-    java.lang.Boolean mAllowEnterTransitionOverlap -> ag
-    android.support.v4.app.SharedElementCallback mEnterTransitionCallback -> ah
-    android.support.v4.app.SharedElementCallback mExitTransitionCallback -> ai
-    396:396:android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String) -> a
-    415:436:android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String,android.os.Bundle) -> a
-    452:460:boolean isSupportFragmentClass(android.content.Context,java.lang.String) -> b
-    465:475:void restoreViewState(android.os.Bundle) -> f
-    478:484:void setIndex(int,android.support.v4.app.Fragment) -> a
-    487:487:boolean isInBackStack() -> h
+    android.support.v4.util.SimpleArrayMap sClassMap -> sClassMap
+    java.lang.Object USE_DEFAULT_TRANSITION -> USE_DEFAULT_TRANSITION
+    int INITIALIZING -> INITIALIZING
+    int CREATED -> CREATED
+    int ACTIVITY_CREATED -> ACTIVITY_CREATED
+    int STOPPED -> STOPPED
+    int STARTED -> STARTED
+    int RESUMED -> RESUMED
+    int mState -> mState
+    android.view.View mAnimatingAway -> mAnimatingAway
+    int mStateAfterAnimating -> mStateAfterAnimating
+    android.os.Bundle mSavedFragmentState -> mSavedFragmentState
+    android.util.SparseArray mSavedViewState -> mSavedViewState
+    int mIndex -> mIndex
+    java.lang.String mWho -> mWho
+    android.os.Bundle mArguments -> mArguments
+    android.support.v4.app.Fragment mTarget -> mTarget
+    int mTargetIndex -> mTargetIndex
+    int mTargetRequestCode -> mTargetRequestCode
+    boolean mAdded -> mAdded
+    boolean mRemoving -> mRemoving
+    boolean mResumed -> mResumed
+    boolean mFromLayout -> mFromLayout
+    boolean mInLayout -> mInLayout
+    boolean mRestored -> mRestored
+    int mBackStackNesting -> mBackStackNesting
+    android.support.v4.app.FragmentManagerImpl mFragmentManager -> mFragmentManager
+    android.support.v4.app.FragmentActivity mActivity -> mActivity
+    android.support.v4.app.FragmentManagerImpl mChildFragmentManager -> mChildFragmentManager
+    android.support.v4.app.Fragment mParentFragment -> mParentFragment
+    int mFragmentId -> mFragmentId
+    int mContainerId -> mContainerId
+    java.lang.String mTag -> mTag
+    boolean mHidden -> mHidden
+    boolean mDetached -> mDetached
+    boolean mRetainInstance -> mRetainInstance
+    boolean mRetaining -> mRetaining
+    boolean mHasMenu -> mHasMenu
+    boolean mMenuVisible -> mMenuVisible
+    boolean mCalled -> mCalled
+    int mNextAnim -> mNextAnim
+    android.view.ViewGroup mContainer -> mContainer
+    android.view.View mView -> mView
+    android.view.View mInnerView -> mInnerView
+    boolean mDeferStart -> mDeferStart
+    boolean mUserVisibleHint -> mUserVisibleHint
+    android.support.v4.app.LoaderManagerImpl mLoaderManager -> mLoaderManager
+    boolean mLoadersStarted -> mLoadersStarted
+    boolean mCheckedForLoaderManager -> mCheckedForLoaderManager
+    java.lang.Object mEnterTransition -> mEnterTransition
+    java.lang.Object mReturnTransition -> mReturnTransition
+    java.lang.Object mExitTransition -> mExitTransition
+    java.lang.Object mReenterTransition -> mReenterTransition
+    java.lang.Object mSharedElementEnterTransition -> mSharedElementEnterTransition
+    java.lang.Object mSharedElementReturnTransition -> mSharedElementReturnTransition
+    java.lang.Boolean mAllowReturnTransitionOverlap -> mAllowReturnTransitionOverlap
+    java.lang.Boolean mAllowEnterTransitionOverlap -> mAllowEnterTransitionOverlap
+    android.support.v4.app.SharedElementCallback mEnterTransitionCallback -> mEnterTransitionCallback
+    android.support.v4.app.SharedElementCallback mExitTransitionCallback -> mExitTransitionCallback
+    396:396:android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String) -> instantiate
+    415:436:android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String,android.os.Bundle) -> instantiate
+    452:460:boolean isSupportFragmentClass(android.content.Context,java.lang.String) -> isSupportFragmentClass
+    465:475:void restoreViewState(android.os.Bundle) -> restoreViewState
+    478:484:void setIndex(int,android.support.v4.app.Fragment) -> setIndex
+    487:487:boolean isInBackStack() -> isInBackStack
     494:494:boolean equals(java.lang.Object) -> equals
     501:501:int hashCode() -> hashCode
     506:521:java.lang.String toString() -> toString
-    548:552:void setArguments(android.os.Bundle) -> g
-    559:559:android.os.Bundle getArguments() -> i
-    612:612:android.support.v4.app.FragmentActivity getActivity() -> j
-    619:622:android.content.res.Resources getResources() -> k
-    642:642:java.lang.String getString(int) -> a
-    669:669:android.support.v4.app.FragmentManager getFragmentManager() -> l
-    677:689:android.support.v4.app.FragmentManager getChildFragmentManager() -> m
-    704:704:boolean isAdded() -> n
-    713:713:boolean isDetached() -> o
-    762:762:boolean isHidden() -> p
-    783:783:void onHiddenChanged(boolean) -> b
-    837:843:void setMenuVisibility(boolean) -> c
-    859:864:void setUserVisibleHint(boolean) -> d
-    894:898:void startActivity(android.content.Intent) -> a
-    926:926:void onActivityResult(int,int,android.content.Intent) -> a
-    934:937:android.view.LayoutInflater getLayoutInflater(android.os.Bundle) -> b
-    983:984:void onInflate(android.app.Activity,android.util.AttributeSet,android.os.Bundle) -> a
-    991:992:void onAttach(android.app.Activity) -> a
-    998:998:android.view.animation.Animation onCreateAnimation(int,boolean,int) -> a
-    1016:1017:void onCreate(android.os.Bundle) -> a
-    1041:1041:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    1055:1055:void onViewCreated(android.view.View,android.os.Bundle) -> a
-    1065:1065:android.view.View getView() -> q
-    1082:1083:void onActivityCreated(android.os.Bundle) -> d
-    1097:1098:void onViewStateRestored(android.os.Bundle) -> h
-    1106:1118:void onStart() -> e
-    1127:1128:void onResume() -> r
-    1150:1150:void onSaveInstanceState(android.os.Bundle) -> e
+    530:530:int getId() -> getId
+    537:537:java.lang.String getTag() -> getTag
+    548:552:void setArguments(android.os.Bundle) -> setArguments
+    559:559:android.os.Bundle getArguments() -> getArguments
+    571:576:void setInitialSavedState(android.support.v4.app.Fragment$SavedState) -> setInitialSavedState
+    590:592:void setTargetFragment(android.support.v4.app.Fragment,int) -> setTargetFragment
+    598:598:android.support.v4.app.Fragment getTargetFragment() -> getTargetFragment
+    605:605:int getTargetRequestCode() -> getTargetRequestCode
+    612:612:android.support.v4.app.FragmentActivity getActivity() -> getActivity
+    619:622:android.content.res.Resources getResources() -> getResources
+    632:632:java.lang.CharSequence getText(int) -> getText
+    642:642:java.lang.String getString(int) -> getString
+    655:655:java.lang.String getString(int,java.lang.Object[]) -> getString
+    669:669:android.support.v4.app.FragmentManager getFragmentManager() -> getFragmentManager
+    677:689:android.support.v4.app.FragmentManager getChildFragmentManager() -> getChildFragmentManager
+    697:697:android.support.v4.app.Fragment getParentFragment() -> getParentFragment
+    704:704:boolean isAdded() -> isAdded
+    713:713:boolean isDetached() -> isDetached
+    722:722:boolean isRemoving() -> isRemoving
+    733:733:boolean isInLayout() -> isInLayout
+    741:741:boolean isResumed() -> isResumed
+    750:750:boolean isVisible() -> isVisible
+    762:762:boolean isHidden() -> isHidden
+    767:767:boolean hasOptionsMenu() -> hasOptionsMenu
+    772:772:boolean isMenuVisible() -> isMenuVisible
+    783:783:void onHiddenChanged(boolean) -> onHiddenChanged
+    800:805:void setRetainInstance(boolean) -> setRetainInstance
+    808:808:boolean getRetainInstance() -> getRetainInstance
+    819:825:void setHasOptionsMenu(boolean) -> setHasOptionsMenu
+    837:843:void setMenuVisibility(boolean) -> setMenuVisibility
+    859:864:void setUserVisibleHint(boolean) -> setUserVisibleHint
+    871:871:boolean getUserVisibleHint() -> getUserVisibleHint
+    878:886:android.support.v4.app.LoaderManager getLoaderManager() -> getLoaderManager
+    894:898:void startActivity(android.content.Intent) -> startActivity
+    905:909:void startActivityForResult(android.content.Intent,int) -> startActivityForResult
+    926:926:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    934:937:android.view.LayoutInflater getLayoutInflater(android.os.Bundle) -> getLayoutInflater
+    983:984:void onInflate(android.app.Activity,android.util.AttributeSet,android.os.Bundle) -> onInflate
+    991:992:void onAttach(android.app.Activity) -> onAttach
+    998:998:android.view.animation.Animation onCreateAnimation(int,boolean,int) -> onCreateAnimation
+    1016:1017:void onCreate(android.os.Bundle) -> onCreate
+    1041:1041:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    1055:1055:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    1065:1065:android.view.View getView() -> getView
+    1082:1083:void onActivityCreated(android.os.Bundle) -> onActivityCreated
+    1097:1098:void onViewStateRestored(android.os.Bundle) -> onViewStateRestored
+    1106:1118:void onStart() -> onStart
+    1127:1128:void onResume() -> onResume
+    1150:1150:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     1153:1154:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
-    1162:1163:void onPause() -> s
-    1171:1172:void onStop() -> f
+    1162:1163:void onPause() -> onPause
+    1171:1172:void onStop() -> onStop
     1175:1176:void onLowMemory() -> onLowMemory
-    1188:1189:void onDestroyView() -> g
-    1196:1206:void onDestroy() -> t
-    1215:1236:void initState() -> u
-    1243:1244:void onDetach() -> d
-    1260:1260:void onCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> a
-    1277:1277:void onPrepareOptionsMenu(android.view.Menu) -> a
-    1287:1287:void onDestroyOptionsMenu() -> v
-    1308:1308:boolean onOptionsItemSelected(android.view.MenuItem) -> a
-    1319:1319:void onOptionsMenuClosed(android.view.Menu) -> b
+    1188:1189:void onDestroyView() -> onDestroyView
+    1196:1206:void onDestroy() -> onDestroy
+    1215:1236:void initState() -> initState
+    1243:1244:void onDetach() -> onDetach
+    1260:1260:void onCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> onCreateOptionsMenu
+    1277:1277:void onPrepareOptionsMenu(android.view.Menu) -> onPrepareOptionsMenu
+    1287:1287:void onDestroyOptionsMenu() -> onDestroyOptionsMenu
+    1308:1308:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    1319:1319:void onOptionsMenuClosed(android.view.Menu) -> onOptionsMenuClosed
     1339:1340:void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
-    1385:1385:boolean onContextItemSelected(android.view.MenuItem) -> b
-    1434:1434:java.lang.Object getEnterTransition() -> w
-    1468:1468:java.lang.Object getReturnTransition() -> x
-    1502:1502:java.lang.Object getExitTransition() -> y
-    1535:1535:java.lang.Object getReenterTransition() -> z
-    1562:1562:java.lang.Object getSharedElementEnterTransition() -> A
-    1594:1594:java.lang.Object getSharedElementReturnTransition() -> B
-    1619:1619:boolean getAllowEnterTransitionOverlap() -> C
-    1643:1643:boolean getAllowReturnTransitionOverlap() -> D
-    1656:1730:void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
-    1743:1759:void instantiateChildFragmentManager() -> E
-    1762:1782:void performCreate(android.os.Bundle) -> i
-    1786:1789:android.view.View performCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> b
-    1793:1805:void performActivityCreated(android.os.Bundle) -> j
-    1808:1824:void performStart() -> F
-    1827:1841:void performResume() -> G
-    1844:1848:void performConfigurationChanged(android.content.res.Configuration) -> a
-    1851:1855:void performLowMemory() -> H
-    1867:1877:boolean performCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> b
-    1881:1891:boolean performPrepareOptionsMenu(android.view.Menu) -> c
-    1895:1907:boolean performOptionsItemSelected(android.view.MenuItem) -> c
-    1911:1921:boolean performContextItemSelected(android.view.MenuItem) -> d
-    1925:1933:void performOptionsMenuClosed(android.view.Menu) -> d
-    1936:1943:void performSaveInstanceState(android.os.Bundle) -> k
-    1946:1955:void performPause() -> I
-    1958:1967:void performStop() -> J
-    1970:1987:void performReallyStop() -> K
-    1990:2002:void performDestroyView() -> L
-    2005:2014:void performDestroy() -> M
+    1353:1354:void registerForContextMenu(android.view.View) -> registerForContextMenu
+    1364:1365:void unregisterForContextMenu(android.view.View) -> unregisterForContextMenu
+    1385:1385:boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
+    1396:1397:void setEnterSharedElementCallback(android.support.v4.app.SharedElementCallback) -> setEnterSharedElementCallback
+    1407:1408:void setExitSharedElementCallback(android.support.v4.app.SharedElementCallback) -> setExitSharedElementCallback
+    1421:1422:void setEnterTransition(java.lang.Object) -> setEnterTransition
+    1434:1434:java.lang.Object getEnterTransition() -> getEnterTransition
+    1452:1453:void setReturnTransition(java.lang.Object) -> setReturnTransition
+    1468:1468:java.lang.Object getReturnTransition() -> getReturnTransition
+    1486:1487:void setExitTransition(java.lang.Object) -> setExitTransition
+    1502:1502:java.lang.Object getExitTransition() -> getExitTransition
+    1519:1520:void setReenterTransition(java.lang.Object) -> setReenterTransition
+    1535:1535:java.lang.Object getReenterTransition() -> getReenterTransition
+    1549:1550:void setSharedElementEnterTransition(java.lang.Object) -> setSharedElementEnterTransition
+    1562:1562:java.lang.Object getSharedElementEnterTransition() -> getSharedElementEnterTransition
+    1578:1579:void setSharedElementReturnTransition(java.lang.Object) -> setSharedElementReturnTransition
+    1594:1594:java.lang.Object getSharedElementReturnTransition() -> getSharedElementReturnTransition
+    1607:1608:void setAllowEnterTransitionOverlap(boolean) -> setAllowEnterTransitionOverlap
+    1619:1619:boolean getAllowEnterTransitionOverlap() -> getAllowEnterTransitionOverlap
+    1631:1632:void setAllowReturnTransitionOverlap(boolean) -> setAllowReturnTransitionOverlap
+    1643:1643:boolean getAllowReturnTransitionOverlap() -> getAllowReturnTransitionOverlap
+    1656:1730:void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> dump
+    1733:1739:android.support.v4.app.Fragment findFragmentByWho(java.lang.String) -> findFragmentByWho
+    1743:1759:void instantiateChildFragmentManager() -> instantiateChildFragmentManager
+    1762:1782:void performCreate(android.os.Bundle) -> performCreate
+    1786:1789:android.view.View performCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> performCreateView
+    1793:1805:void performActivityCreated(android.os.Bundle) -> performActivityCreated
+    1808:1824:void performStart() -> performStart
+    1827:1841:void performResume() -> performResume
+    1844:1848:void performConfigurationChanged(android.content.res.Configuration) -> performConfigurationChanged
+    1851:1855:void performLowMemory() -> performLowMemory
+    1867:1877:boolean performCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> performCreateOptionsMenu
+    1881:1891:boolean performPrepareOptionsMenu(android.view.Menu) -> performPrepareOptionsMenu
+    1895:1907:boolean performOptionsItemSelected(android.view.MenuItem) -> performOptionsItemSelected
+    1911:1921:boolean performContextItemSelected(android.view.MenuItem) -> performContextItemSelected
+    1925:1933:void performOptionsMenuClosed(android.view.Menu) -> performOptionsMenuClosed
+    1936:1943:void performSaveInstanceState(android.os.Bundle) -> performSaveInstanceState
+    1946:1955:void performPause() -> performPause
+    1958:1967:void performStop() -> performStop
+    1970:1987:void performReallyStop() -> performReallyStop
+    1990:2002:void performDestroyView() -> performDestroyView
+    2005:2014:void performDestroy() -> performDestroy
 android.support.v4.app.Fragment$1 -> android.support.v4.app.m:
     android.support.v4.app.Fragment this$0 -> a
     1748:1751:android.view.View findViewById(int) -> a
@@ -517,6 +557,7 @@ android.support.v4.app.FragmentManagerImpl -> android.support.v4.app.w:
     1298:1317:void attachFragment(android.support.v4.app.Fragment,int,int) -> e
     1320:1338:android.support.v4.app.Fragment findFragmentById(int) -> a
     1342:1360:android.support.v4.app.Fragment findFragmentByTag(java.lang.String) -> a
+    1364:1372:android.support.v4.app.Fragment findFragmentByWho(java.lang.String) -> b
     1376:1384:void checkStateLoss() -> u
     1394:1410:void enqueueAction(java.lang.Runnable,boolean) -> a
     1413:1429:int allocBackStackIndex(android.support.v4.app.BackStackRecord) -> a
@@ -4895,17 +4936,18 @@ android.support.v4.widget.ViewDragHelper$Callback -> android.support.v4.widget.V
     304:304:int clampViewPositionHorizontal(android.view.View,int,int) -> clampViewPositionHorizontal
     319:319:int clampViewPositionVertical(android.view.View,int,int) -> clampViewPositionVertical
 android.support.v7.app.ActionBar -> android.support.v7.app.a:
-    void setDisplayHomeAsUpEnabled(boolean) -> a
+    void setDisplayShowHomeEnabled(boolean) -> a
+    void setDisplayHomeAsUpEnabled(boolean) -> b
     int getDisplayOptions() -> a
     void hide() -> b
-    835:835:void setHomeButtonEnabled(boolean) -> b
+    835:835:void setHomeButtonEnabled(boolean) -> c
     847:847:android.content.Context getThemedContext() -> c
-    953:957:void setHideOnContentScrollEnabled(boolean) -> c
+    953:957:void setHideOnContentScrollEnabled(boolean) -> d
     1008:1012:void setElevation(float) -> a
-    1028:1028:void setDefaultDisplayHomeAsUpEnabled(boolean) -> d
-    1032:1032:void setShowHideAnimationEnabled(boolean) -> e
+    1028:1028:void setDefaultDisplayHomeAsUpEnabled(boolean) -> e
+    1032:1032:void setShowHideAnimationEnabled(boolean) -> f
     1036:1036:void onConfigurationChanged(android.content.res.Configuration) -> a
-    1040:1040:void dispatchMenuVisibilityChanged(boolean) -> f
+    1040:1040:void dispatchMenuVisibilityChanged(boolean) -> g
     1044:1044:android.support.v7.view.ActionMode startActionMode(android.support.v7.view.ActionMode$Callback) -> a
     1054:1054:boolean invalidateOptionsMenu() -> d
     1064:1064:boolean onKeyShortcut(int,android.view.KeyEvent) -> a
@@ -6619,35 +6661,36 @@ android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.inter
     243:248:android.support.v7.internal.widget.DecorToolbar getDecorToolbar(android.view.View) -> b
     255:259:void setElevation(float) -> a
     267:268:void onConfigurationChanged(android.content.res.Configuration) -> a
-    271:293:void setHasEmbeddedTabs(boolean) -> k
+    271:293:void setHasEmbeddedTabs(boolean) -> l
     320:325:void completeDeferredDestroyActionMode() -> f
     328:329:void onWindowVisibilityChanged(int) -> a
-    339:343:void setShowHideAnimationEnabled(boolean) -> e
-    354:363:void dispatchMenuVisibilityChanged(boolean) -> f
-    383:384:void setDisplayHomeAsUpEnabled(boolean) -> a
-    398:399:void setHomeButtonEnabled(boolean) -> b
+    339:343:void setShowHideAnimationEnabled(boolean) -> f
+    354:363:void dispatchMenuVisibilityChanged(boolean) -> g
+    378:379:void setDisplayShowHomeEnabled(boolean) -> a
+    383:384:void setDisplayHomeAsUpEnabled(boolean) -> b
+    398:399:void setHomeButtonEnabled(boolean) -> c
     446:447:void setWindowTitle(java.lang.CharSequence) -> a
     461:466:void setDisplayOptions(int,int) -> a
     495:495:int getNavigationMode() -> g
     499:499:int getDisplayOptions() -> a
     503:527:android.support.v7.view.ActionMode startActionMode(android.support.v7.view.ActionMode$Callback) -> a
-    660:661:void enableContentAnimations(boolean) -> g
+    660:661:void enableContentAnimations(boolean) -> h
     672:679:void showForActionMode() -> l
     682:686:void showForSystem() -> h
     690:694:void hide() -> b
     697:704:void hideForActionMode() -> m
     707:711:void hideForSystem() -> i
-    715:721:void setHideOnContentScrollEnabled(boolean) -> c
+    715:721:void setHideOnContentScrollEnabled(boolean) -> d
     744:749:boolean checkShowingFlags(boolean,boolean,boolean) -> b
-    755:769:void updateVisibility(boolean) -> l
-    772:830:void doShow(boolean) -> h
-    833:867:void doHide(boolean) -> i
-    876:885:void animateToMode(boolean) -> j
+    755:769:void updateVisibility(boolean) -> m
+    772:830:void doShow(boolean) -> i
+    833:867:void doHide(boolean) -> j
+    876:885:void animateToMode(boolean) -> k
     888:900:android.content.Context getThemedContext() -> c
     930:934:void onContentScrollStarted() -> j
     938:938:void onContentScrollStopped() -> k
     942:946:boolean collapseActionView() -> e
-    1357:1360:void setDefaultDisplayHomeAsUpEnabled(boolean) -> d
+    1357:1360:void setDefaultDisplayHomeAsUpEnabled(boolean) -> e
     75:75:boolean access$000(android.support.v7.internal.app.WindowDecorActionBar) -> a
     75:75:android.view.View access$100(android.support.v7.internal.app.WindowDecorActionBar) -> b
     75:75:android.support.v7.internal.widget.ActionBarContainer access$200(android.support.v7.internal.app.WindowDecorActionBar) -> c
@@ -7812,7 +7855,7 @@ android.support.v7.internal.widget.ActionBarOverlayLayout$ActionBarVisibilityCal
     void onWindowVisibilityChanged(int) -> a
     void showForSystem() -> h
     void hideForSystem() -> i
-    void enableContentAnimations(boolean) -> g
+    void enableContentAnimations(boolean) -> h
     void onContentScrollStarted() -> j
     void onContentScrollStopped() -> k
 android.support.v7.internal.widget.ActionBarOverlayLayout$LayoutParams -> android.support.v7.internal.widget.m:
@@ -12424,6 +12467,845 @@ com.google.android.gms.internal.ow -> com.google.android.gms.internal.ac:
     void a(com.google.android.gms.internal.ov,android.os.Parcel,int) -> a
     java.lang.Object[] newArray(int) -> newArray
     java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+com.google.android.youtube.player.YouTubeApiServiceUtil -> com.google.android.youtube.player.YouTubeApiServiceUtil:
+    byte[][] a -> a
+    com.google.android.youtube.player.YouTubeInitializationResult isYouTubeApiServiceAvailable(android.content.Context) -> isYouTubeApiServiceAvailable
+    boolean a(android.content.pm.PackageInfo) -> a
+com.google.android.youtube.player.YouTubeBaseActivity -> com.google.android.youtube.player.YouTubeBaseActivity:
+    com.google.android.youtube.player.YouTubeBaseActivity$a a -> a
+    com.google.android.youtube.player.YouTubePlayerView b -> b
+    int c -> c
+    android.os.Bundle d -> d
+    com.google.android.youtube.player.YouTubePlayerView$b a() -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    void onStart() -> onStart
+    void onResume() -> onResume
+    void onPause() -> onPause
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onStop() -> onStop
+    void onDestroy() -> onDestroy
+    android.os.Bundle a(com.google.android.youtube.player.YouTubeBaseActivity) -> a
+    android.os.Bundle b(com.google.android.youtube.player.YouTubeBaseActivity) -> b
+    com.google.android.youtube.player.YouTubePlayerView c(com.google.android.youtube.player.YouTubeBaseActivity) -> c
+    com.google.android.youtube.player.YouTubePlayerView a(com.google.android.youtube.player.YouTubeBaseActivity,com.google.android.youtube.player.YouTubePlayerView) -> a
+    int d(com.google.android.youtube.player.YouTubeBaseActivity) -> d
+com.google.android.youtube.player.YouTubeBaseActivity$a -> com.google.android.youtube.player.YouTubeBaseActivity$a:
+    com.google.android.youtube.player.YouTubeBaseActivity a -> a
+    void a(com.google.android.youtube.player.YouTubePlayerView,java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener) -> a
+    void a(com.google.android.youtube.player.YouTubePlayerView) -> a
+com.google.android.youtube.player.YouTubeInitializationResult -> com.google.android.youtube.player.YouTubeInitializationResult:
+    com.google.android.youtube.player.YouTubeInitializationResult SUCCESS -> SUCCESS
+    com.google.android.youtube.player.YouTubeInitializationResult INTERNAL_ERROR -> INTERNAL_ERROR
+    com.google.android.youtube.player.YouTubeInitializationResult UNKNOWN_ERROR -> UNKNOWN_ERROR
+    com.google.android.youtube.player.YouTubeInitializationResult SERVICE_MISSING -> SERVICE_MISSING
+    com.google.android.youtube.player.YouTubeInitializationResult SERVICE_VERSION_UPDATE_REQUIRED -> SERVICE_VERSION_UPDATE_REQUIRED
+    com.google.android.youtube.player.YouTubeInitializationResult SERVICE_DISABLED -> SERVICE_DISABLED
+    com.google.android.youtube.player.YouTubeInitializationResult SERVICE_INVALID -> SERVICE_INVALID
+    com.google.android.youtube.player.YouTubeInitializationResult ERROR_CONNECTING_TO_SERVICE -> ERROR_CONNECTING_TO_SERVICE
+    com.google.android.youtube.player.YouTubeInitializationResult CLIENT_LIBRARY_UPDATE_REQUIRED -> CLIENT_LIBRARY_UPDATE_REQUIRED
+    com.google.android.youtube.player.YouTubeInitializationResult NETWORK_ERROR -> NETWORK_ERROR
+    com.google.android.youtube.player.YouTubeInitializationResult DEVELOPER_KEY_INVALID -> DEVELOPER_KEY_INVALID
+    com.google.android.youtube.player.YouTubeInitializationResult INVALID_APPLICATION_SIGNATURE -> INVALID_APPLICATION_SIGNATURE
+    com.google.android.youtube.player.YouTubeInitializationResult[] a -> a
+    com.google.android.youtube.player.YouTubeInitializationResult[] values() -> values
+    com.google.android.youtube.player.YouTubeInitializationResult valueOf(java.lang.String) -> valueOf
+    boolean isUserRecoverableError() -> isUserRecoverableError
+    android.app.Dialog getErrorDialog(android.app.Activity,int) -> getErrorDialog
+    android.app.Dialog getErrorDialog(android.app.Activity,int,android.content.DialogInterface$OnCancelListener) -> getErrorDialog
+com.google.android.youtube.player.YouTubeInitializationResult$1 -> com.google.android.youtube.player.YouTubeInitializationResult$1:
+    int[] a -> a
+com.google.android.youtube.player.YouTubeInitializationResult$a -> com.google.android.youtube.player.YouTubeInitializationResult$a:
+    android.app.Activity a -> a
+    android.content.Intent b -> b
+    int c -> c
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.google.android.youtube.player.YouTubeIntents -> com.google.android.youtube.player.YouTubeIntents:
+    boolean isYouTubeInstalled(android.content.Context) -> isYouTubeInstalled
+    java.lang.String getInstalledYouTubeVersionName(android.content.Context) -> getInstalledYouTubeVersionName
+    int getInstalledYouTubeVersionCode(android.content.Context) -> getInstalledYouTubeVersionCode
+    boolean canResolvePlayVideoIntent(android.content.Context) -> canResolvePlayVideoIntent
+    android.content.Intent createPlayVideoIntent(android.content.Context,java.lang.String) -> createPlayVideoIntent
+    boolean canResolvePlayVideoIntentWithOptions(android.content.Context) -> canResolvePlayVideoIntentWithOptions
+    android.content.Intent createPlayVideoIntentWithOptions(android.content.Context,java.lang.String,boolean,boolean) -> createPlayVideoIntentWithOptions
+    boolean canResolveSearchIntent(android.content.Context) -> canResolveSearchIntent
+    android.content.Intent createSearchIntent(android.content.Context,java.lang.String) -> createSearchIntent
+    boolean canResolveOpenPlaylistIntent(android.content.Context) -> canResolveOpenPlaylistIntent
+    android.content.Intent createOpenPlaylistIntent(android.content.Context,java.lang.String) -> createOpenPlaylistIntent
+    boolean canResolvePlayPlaylistIntent(android.content.Context) -> canResolvePlayPlaylistIntent
+    android.content.Intent createPlayPlaylistIntent(android.content.Context,java.lang.String) -> createPlayPlaylistIntent
+    boolean canResolveUserIntent(android.content.Context) -> canResolveUserIntent
+    android.content.Intent createUserIntent(android.content.Context,java.lang.String) -> createUserIntent
+    boolean canResolveUploadIntent(android.content.Context) -> canResolveUploadIntent
+    android.content.Intent createUploadIntent(android.content.Context,android.net.Uri) -> createUploadIntent
+    boolean a(android.content.Context,android.net.Uri) -> a
+    android.content.Intent b(android.content.Context,android.net.Uri) -> b
+    android.content.Intent a(android.content.Intent,android.content.Context) -> a
+    boolean a(android.content.Context,android.content.Intent) -> a
+    java.lang.String a(android.content.Context) -> a
+    android.net.Uri a(java.lang.String) -> a
+com.google.android.youtube.player.YouTubePlayer -> com.google.android.youtube.player.YouTubePlayer:
+    int FULLSCREEN_FLAG_CONTROL_ORIENTATION -> FULLSCREEN_FLAG_CONTROL_ORIENTATION
+    int FULLSCREEN_FLAG_CONTROL_SYSTEM_UI -> FULLSCREEN_FLAG_CONTROL_SYSTEM_UI
+    int FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE -> FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE
+    int FULLSCREEN_FLAG_CUSTOM_LAYOUT -> FULLSCREEN_FLAG_CUSTOM_LAYOUT
+    void release() -> release
+    void cueVideo(java.lang.String) -> cueVideo
+    void cueVideo(java.lang.String,int) -> cueVideo
+    void loadVideo(java.lang.String) -> loadVideo
+    void loadVideo(java.lang.String,int) -> loadVideo
+    void cuePlaylist(java.lang.String) -> cuePlaylist
+    void cuePlaylist(java.lang.String,int,int) -> cuePlaylist
+    void loadPlaylist(java.lang.String) -> loadPlaylist
+    void loadPlaylist(java.lang.String,int,int) -> loadPlaylist
+    void cueVideos(java.util.List) -> cueVideos
+    void cueVideos(java.util.List,int,int) -> cueVideos
+    void loadVideos(java.util.List) -> loadVideos
+    void loadVideos(java.util.List,int,int) -> loadVideos
+    void play() -> play
+    void pause() -> pause
+    boolean isPlaying() -> isPlaying
+    boolean hasNext() -> hasNext
+    boolean hasPrevious() -> hasPrevious
+    void next() -> next
+    void previous() -> previous
+    int getCurrentTimeMillis() -> getCurrentTimeMillis
+    int getDurationMillis() -> getDurationMillis
+    void seekToMillis(int) -> seekToMillis
+    void seekRelativeMillis(int) -> seekRelativeMillis
+    void setFullscreen(boolean) -> setFullscreen
+    void setOnFullscreenListener(com.google.android.youtube.player.YouTubePlayer$OnFullscreenListener) -> setOnFullscreenListener
+    void setFullscreenControlFlags(int) -> setFullscreenControlFlags
+    int getFullscreenControlFlags() -> getFullscreenControlFlags
+    void addFullscreenControlFlag(int) -> addFullscreenControlFlag
+    void setPlayerStyle(com.google.android.youtube.player.YouTubePlayer$PlayerStyle) -> setPlayerStyle
+    void setShowFullscreenButton(boolean) -> setShowFullscreenButton
+    void setManageAudioFocus(boolean) -> setManageAudioFocus
+    void setPlaylistEventListener(com.google.android.youtube.player.YouTubePlayer$PlaylistEventListener) -> setPlaylistEventListener
+    void setPlayerStateChangeListener(com.google.android.youtube.player.YouTubePlayer$PlayerStateChangeListener) -> setPlayerStateChangeListener
+    void setPlaybackEventListener(com.google.android.youtube.player.YouTubePlayer$PlaybackEventListener) -> setPlaybackEventListener
+com.google.android.youtube.player.YouTubePlayer$ErrorReason -> com.google.android.youtube.player.YouTubePlayer$ErrorReason:
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason EMBEDDING_DISABLED -> EMBEDDING_DISABLED
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason BLOCKED_FOR_APP -> BLOCKED_FOR_APP
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason NOT_PLAYABLE -> NOT_PLAYABLE
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason NETWORK_ERROR -> NETWORK_ERROR
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason UNAUTHORIZED_OVERLAY -> UNAUTHORIZED_OVERLAY
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason PLAYER_VIEW_TOO_SMALL -> PLAYER_VIEW_TOO_SMALL
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason PLAYER_VIEW_NOT_VISIBLE -> PLAYER_VIEW_NOT_VISIBLE
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason EMPTY_PLAYLIST -> EMPTY_PLAYLIST
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason AUTOPLAY_DISABLED -> AUTOPLAY_DISABLED
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason USER_DECLINED_RESTRICTED_CONTENT -> USER_DECLINED_RESTRICTED_CONTENT
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason USER_DECLINED_HIGH_BANDWIDTH -> USER_DECLINED_HIGH_BANDWIDTH
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason UNEXPECTED_SERVICE_DISCONNECTION -> UNEXPECTED_SERVICE_DISCONNECTION
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason INTERNAL_ERROR -> INTERNAL_ERROR
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason UNKNOWN -> UNKNOWN
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason[] a -> a
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason[] values() -> values
+    com.google.android.youtube.player.YouTubePlayer$ErrorReason valueOf(java.lang.String) -> valueOf
+com.google.android.youtube.player.YouTubePlayer$OnFullscreenListener -> com.google.android.youtube.player.YouTubePlayer$OnFullscreenListener:
+    void onFullscreen(boolean) -> onFullscreen
+com.google.android.youtube.player.YouTubePlayer$OnInitializedListener -> com.google.android.youtube.player.YouTubePlayer$OnInitializedListener:
+    void onInitializationSuccess(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubePlayer,boolean) -> onInitializationSuccess
+    void onInitializationFailure(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubeInitializationResult) -> onInitializationFailure
+com.google.android.youtube.player.YouTubePlayer$PlaybackEventListener -> com.google.android.youtube.player.YouTubePlayer$PlaybackEventListener:
+    void onPlaying() -> onPlaying
+    void onPaused() -> onPaused
+    void onStopped() -> onStopped
+    void onBuffering(boolean) -> onBuffering
+    void onSeekTo(int) -> onSeekTo
+com.google.android.youtube.player.YouTubePlayer$PlayerStateChangeListener -> com.google.android.youtube.player.YouTubePlayer$PlayerStateChangeListener:
+    void onLoading() -> onLoading
+    void onLoaded(java.lang.String) -> onLoaded
+    void onAdStarted() -> onAdStarted
+    void onVideoStarted() -> onVideoStarted
+    void onVideoEnded() -> onVideoEnded
+    void onError(com.google.android.youtube.player.YouTubePlayer$ErrorReason) -> onError
+com.google.android.youtube.player.YouTubePlayer$PlayerStyle -> com.google.android.youtube.player.YouTubePlayer$PlayerStyle:
+    com.google.android.youtube.player.YouTubePlayer$PlayerStyle DEFAULT -> DEFAULT
+    com.google.android.youtube.player.YouTubePlayer$PlayerStyle MINIMAL -> MINIMAL
+    com.google.android.youtube.player.YouTubePlayer$PlayerStyle CHROMELESS -> CHROMELESS
+    com.google.android.youtube.player.YouTubePlayer$PlayerStyle[] a -> a
+    com.google.android.youtube.player.YouTubePlayer$PlayerStyle[] values() -> values
+    com.google.android.youtube.player.YouTubePlayer$PlayerStyle valueOf(java.lang.String) -> valueOf
+com.google.android.youtube.player.YouTubePlayer$PlaylistEventListener -> com.google.android.youtube.player.YouTubePlayer$PlaylistEventListener:
+    void onPrevious() -> onPrevious
+    void onNext() -> onNext
+    void onPlaylistEnded() -> onPlaylistEnded
+com.google.android.youtube.player.YouTubePlayer$Provider -> com.google.android.youtube.player.YouTubePlayer$Provider:
+    void initialize(java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener) -> initialize
+com.google.android.youtube.player.YouTubePlayerFragment -> com.google.android.youtube.player.YouTubePlayerFragment:
+    com.google.android.youtube.player.YouTubePlayerFragment$a a -> a
+    android.os.Bundle b -> b
+    com.google.android.youtube.player.YouTubePlayerView c -> c
+    java.lang.String d -> d
+    com.google.android.youtube.player.YouTubePlayer$OnInitializedListener e -> e
+    boolean f -> f
+    com.google.android.youtube.player.YouTubePlayerFragment newInstance() -> newInstance
+    void initialize(java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener) -> initialize
+    void a() -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    void onStart() -> onStart
+    void onResume() -> onResume
+    void onPause() -> onPause
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onStop() -> onStop
+    void onDestroyView() -> onDestroyView
+    void onDestroy() -> onDestroy
+    com.google.android.youtube.player.YouTubePlayer$OnInitializedListener a(com.google.android.youtube.player.YouTubePlayerFragment) -> a
+com.google.android.youtube.player.YouTubePlayerFragment$a -> com.google.android.youtube.player.YouTubePlayerFragment$a:
+    com.google.android.youtube.player.YouTubePlayerFragment a -> a
+    void a(com.google.android.youtube.player.YouTubePlayerView,java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener) -> a
+    void a(com.google.android.youtube.player.YouTubePlayerView) -> a
+com.google.android.youtube.player.YouTubePlayerSupportFragment -> com.google.android.youtube.player.YouTubePlayerSupportFragment:
+    com.google.android.youtube.player.YouTubePlayerSupportFragment$a a -> a
+    android.os.Bundle b -> b
+    com.google.android.youtube.player.YouTubePlayerView c -> c
+    java.lang.String d -> d
+    com.google.android.youtube.player.YouTubePlayer$OnInitializedListener e -> e
+    boolean f -> f
+    com.google.android.youtube.player.YouTubePlayerSupportFragment newInstance() -> newInstance
+    void initialize(java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener) -> initialize
+    void a() -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    void onStart() -> onStart
+    void onResume() -> onResume
+    void onPause() -> onPause
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onStop() -> onStop
+    void onDestroyView() -> onDestroyView
+    void onDestroy() -> onDestroy
+    com.google.android.youtube.player.YouTubePlayer$OnInitializedListener a(com.google.android.youtube.player.YouTubePlayerSupportFragment) -> a
+com.google.android.youtube.player.YouTubePlayerSupportFragment$a -> com.google.android.youtube.player.YouTubePlayerSupportFragment$a:
+    com.google.android.youtube.player.YouTubePlayerSupportFragment a -> a
+    void a(com.google.android.youtube.player.YouTubePlayerView,java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener) -> a
+    void a(com.google.android.youtube.player.YouTubePlayerView) -> a
+com.google.android.youtube.player.YouTubePlayerView -> com.google.android.youtube.player.YouTubePlayerView:
+    com.google.android.youtube.player.YouTubePlayerView$a a -> a
+    java.util.Set b -> b
+    com.google.android.youtube.player.YouTubePlayerView$b c -> c
+    com.google.android.youtube.player.internal.b d -> d
+    com.google.android.youtube.player.internal.s e -> e
+    android.view.View f -> f
+    com.google.android.youtube.player.internal.n g -> g
+    com.google.android.youtube.player.YouTubePlayer$Provider h -> h
+    android.os.Bundle i -> i
+    com.google.android.youtube.player.YouTubePlayer$OnInitializedListener j -> j
+    boolean k -> k
+    boolean l -> l
+    void initialize(java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener) -> initialize
+    void a(boolean) -> a
+    void a(android.app.Activity,com.google.android.youtube.player.YouTubePlayer$Provider,java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener,android.os.Bundle) -> a
+    void a(com.google.android.youtube.player.YouTubeInitializationResult) -> a
+    void a() -> a
+    void b() -> b
+    void c() -> c
+    void d() -> d
+    void b(boolean) -> b
+    void c(boolean) -> c
+    void a(android.view.View) -> a
+    void setPadding(int,int,int,int) -> setPadding
+    void setClipToPadding(boolean) -> setClipToPadding
+    void addView(android.view.View) -> addView
+    void addView(android.view.View,int) -> addView
+    void addView(android.view.View,int,android.view.ViewGroup$LayoutParams) -> addView
+    void addView(android.view.View,int,int) -> addView
+    void addView(android.view.View,android.view.ViewGroup$LayoutParams) -> addView
+    void onMeasure(int,int) -> onMeasure
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    void onAttachedToWindow() -> onAttachedToWindow
+    void onDetachedFromWindow() -> onDetachedFromWindow
+    void clearChildFocus(android.view.View) -> clearChildFocus
+    void requestChildFocus(android.view.View,android.view.View) -> requestChildFocus
+    void focusableViewAvailable(android.view.View) -> focusableViewAvailable
+    void addFocusables(java.util.ArrayList,int) -> addFocusables
+    void addFocusables(java.util.ArrayList,int,int) -> addFocusables
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    boolean dispatchKeyEvent(android.view.KeyEvent) -> dispatchKeyEvent
+    android.os.Bundle e() -> e
+    com.google.android.youtube.player.internal.b a(com.google.android.youtube.player.YouTubePlayerView) -> a
+    void a(com.google.android.youtube.player.YouTubePlayerView,android.app.Activity) -> a
+    com.google.android.youtube.player.internal.b b(com.google.android.youtube.player.YouTubePlayerView) -> b
+    boolean c(com.google.android.youtube.player.YouTubePlayerView) -> c
+    com.google.android.youtube.player.internal.s d(com.google.android.youtube.player.YouTubePlayerView) -> d
+    com.google.android.youtube.player.internal.n e(com.google.android.youtube.player.YouTubePlayerView) -> e
+    android.view.View f(com.google.android.youtube.player.YouTubePlayerView) -> f
+    android.view.View g(com.google.android.youtube.player.YouTubePlayerView) -> g
+    com.google.android.youtube.player.internal.s h(com.google.android.youtube.player.YouTubePlayerView) -> h
+    void a(com.google.android.youtube.player.YouTubePlayerView,com.google.android.youtube.player.YouTubeInitializationResult) -> a
+    java.util.Set i(com.google.android.youtube.player.YouTubePlayerView) -> i
+com.google.android.youtube.player.YouTubePlayerView$1 -> com.google.android.youtube.player.YouTubePlayerView$1:
+    android.app.Activity a -> a
+    com.google.android.youtube.player.YouTubePlayerView b -> b
+    void a() -> a
+    void b() -> b
+com.google.android.youtube.player.YouTubePlayerView$2 -> com.google.android.youtube.player.YouTubePlayerView$2:
+    com.google.android.youtube.player.YouTubePlayerView a -> a
+    void a(com.google.android.youtube.player.YouTubeInitializationResult) -> a
+com.google.android.youtube.player.YouTubePlayerView$a -> com.google.android.youtube.player.YouTubePlayerView$a:
+    com.google.android.youtube.player.YouTubePlayerView a -> a
+    void onGlobalFocusChanged(android.view.View,android.view.View) -> onGlobalFocusChanged
+com.google.android.youtube.player.YouTubePlayerView$b -> com.google.android.youtube.player.YouTubePlayerView$b:
+    void a(com.google.android.youtube.player.YouTubePlayerView,java.lang.String,com.google.android.youtube.player.YouTubePlayer$OnInitializedListener) -> a
+    void a(com.google.android.youtube.player.YouTubePlayerView) -> a
+com.google.android.youtube.player.YouTubeStandalonePlayer -> com.google.android.youtube.player.YouTubeStandalonePlayer:
+    android.content.Intent createVideoIntent(android.app.Activity,java.lang.String,java.lang.String) -> createVideoIntent
+    android.content.Intent createVideoIntent(android.app.Activity,java.lang.String,java.lang.String,int,boolean,boolean) -> createVideoIntent
+    android.content.Intent createPlaylistIntent(android.app.Activity,java.lang.String,java.lang.String) -> createPlaylistIntent
+    android.content.Intent createPlaylistIntent(android.app.Activity,java.lang.String,java.lang.String,int,int,boolean,boolean) -> createPlaylistIntent
+    android.content.Intent createVideosIntent(android.app.Activity,java.lang.String,java.util.List) -> createVideosIntent
+    android.content.Intent createVideosIntent(android.app.Activity,java.lang.String,java.util.List,int,int,boolean,boolean) -> createVideosIntent
+    android.content.Intent a(android.content.Intent,android.app.Activity,java.lang.String,int,boolean,boolean) -> a
+    com.google.android.youtube.player.YouTubeInitializationResult getReturnedInitializationResult(android.content.Intent) -> getReturnedInitializationResult
+com.google.android.youtube.player.YouTubeThumbnailLoader -> com.google.android.youtube.player.YouTubeThumbnailLoader:
+    void setOnThumbnailLoadedListener(com.google.android.youtube.player.YouTubeThumbnailLoader$OnThumbnailLoadedListener) -> setOnThumbnailLoadedListener
+    void setVideo(java.lang.String) -> setVideo
+    void setPlaylist(java.lang.String) -> setPlaylist
+    void setPlaylist(java.lang.String,int) -> setPlaylist
+    void next() -> next
+    void previous() -> previous
+    void first() -> first
+    boolean hasNext() -> hasNext
+    boolean hasPrevious() -> hasPrevious
+    void release() -> release
+com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason -> com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason:
+    com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason NETWORK_ERROR -> NETWORK_ERROR
+    com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason INTERNAL_ERROR -> INTERNAL_ERROR
+    com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason UNKNOWN -> UNKNOWN
+    com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason[] a -> a
+    com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason[] values() -> values
+    com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason valueOf(java.lang.String) -> valueOf
+com.google.android.youtube.player.YouTubeThumbnailLoader$OnThumbnailLoadedListener -> com.google.android.youtube.player.YouTubeThumbnailLoader$OnThumbnailLoadedListener:
+    void onThumbnailLoaded(com.google.android.youtube.player.YouTubeThumbnailView,java.lang.String) -> onThumbnailLoaded
+    void onThumbnailError(com.google.android.youtube.player.YouTubeThumbnailView,com.google.android.youtube.player.YouTubeThumbnailLoader$ErrorReason) -> onThumbnailError
+com.google.android.youtube.player.YouTubeThumbnailView -> com.google.android.youtube.player.YouTubeThumbnailView:
+    com.google.android.youtube.player.internal.b a -> a
+    com.google.android.youtube.player.internal.a b -> b
+    void initialize(java.lang.String,com.google.android.youtube.player.YouTubeThumbnailView$OnInitializedListener) -> initialize
+    void finalize() -> finalize
+    com.google.android.youtube.player.internal.b a(com.google.android.youtube.player.YouTubeThumbnailView) -> a
+    com.google.android.youtube.player.internal.a a(com.google.android.youtube.player.YouTubeThumbnailView,com.google.android.youtube.player.internal.a) -> a
+    com.google.android.youtube.player.internal.a b(com.google.android.youtube.player.YouTubeThumbnailView) -> b
+    com.google.android.youtube.player.internal.b c(com.google.android.youtube.player.YouTubeThumbnailView) -> c
+com.google.android.youtube.player.YouTubeThumbnailView$OnInitializedListener -> com.google.android.youtube.player.YouTubeThumbnailView$OnInitializedListener:
+    void onInitializationSuccess(com.google.android.youtube.player.YouTubeThumbnailView,com.google.android.youtube.player.YouTubeThumbnailLoader) -> onInitializationSuccess
+    void onInitializationFailure(com.google.android.youtube.player.YouTubeThumbnailView,com.google.android.youtube.player.YouTubeInitializationResult) -> onInitializationFailure
+com.google.android.youtube.player.YouTubeThumbnailView$a -> com.google.android.youtube.player.YouTubeThumbnailView$a:
+    com.google.android.youtube.player.YouTubeThumbnailView a -> a
+    com.google.android.youtube.player.YouTubeThumbnailView$OnInitializedListener b -> b
+    void a() -> a
+    void b() -> b
+    void a(com.google.android.youtube.player.YouTubeInitializationResult) -> a
+    void c() -> c
+com.google.android.youtube.player.internal.a -> com.google.android.youtube.player.internal.a:
+    java.lang.ref.WeakReference a -> a
+    com.google.android.youtube.player.YouTubeThumbnailLoader$OnThumbnailLoadedListener b -> b
+    boolean c -> c
+    boolean d -> d
+    boolean a() -> a
+    void i() -> i
+    void setOnThumbnailLoadedListener(com.google.android.youtube.player.YouTubeThumbnailLoader$OnThumbnailLoadedListener) -> setOnThumbnailLoadedListener
+    void setPlaylist(java.lang.String) -> setPlaylist
+    void setPlaylist(java.lang.String,int) -> setPlaylist
+    void setVideo(java.lang.String) -> setVideo
+    void next() -> next
+    void previous() -> previous
+    void first() -> first
+    boolean hasNext() -> hasNext
+    boolean hasPrevious() -> hasPrevious
+    void release() -> release
+    void b() -> b
+    void a(java.lang.String) -> a
+    void a(java.lang.String,int) -> a
+    void c() -> c
+    void d() -> d
+    void e() -> e
+    boolean f() -> f
+    boolean g() -> g
+    void h() -> h
+    void a(android.graphics.Bitmap,java.lang.String) -> a
+    void b(java.lang.String) -> b
+com.google.android.youtube.player.internal.aa -> com.google.android.youtube.player.internal.aa:
+    com.google.android.youtube.player.internal.aa a -> a
+    com.google.android.youtube.player.internal.aa b() -> b
+    com.google.android.youtube.player.internal.aa a() -> a
+    com.google.android.youtube.player.internal.b a(android.content.Context,java.lang.String,com.google.android.youtube.player.internal.t$a,com.google.android.youtube.player.internal.t$b) -> a
+    com.google.android.youtube.player.internal.d a(android.app.Activity,com.google.android.youtube.player.internal.b,boolean) -> a
+    com.google.android.youtube.player.internal.a a(com.google.android.youtube.player.internal.b,com.google.android.youtube.player.YouTubeThumbnailView) -> a
+com.google.android.youtube.player.internal.ab -> com.google.android.youtube.player.internal.ab:
+    java.lang.Object a(java.lang.Object) -> a
+    java.lang.Object a(java.lang.Object,java.lang.Object) -> a
+    java.lang.String a(java.lang.String,java.lang.Object) -> a
+    void a(boolean) -> a
+com.google.android.youtube.player.internal.ac -> com.google.android.youtube.player.internal.ac:
+    com.google.android.youtube.player.internal.b a(android.content.Context,java.lang.String,com.google.android.youtube.player.internal.t$a,com.google.android.youtube.player.internal.t$b) -> a
+    com.google.android.youtube.player.internal.d a(android.app.Activity,com.google.android.youtube.player.internal.b,boolean) -> a
+    com.google.android.youtube.player.internal.a a(com.google.android.youtube.player.internal.b,com.google.android.youtube.player.YouTubeThumbnailView) -> a
+com.google.android.youtube.player.internal.b -> com.google.android.youtube.player.internal.b:
+    android.os.IBinder a() -> a
+    com.google.android.youtube.player.internal.k a(com.google.android.youtube.player.internal.j) -> a
+    void a(boolean) -> a
+com.google.android.youtube.player.internal.c -> com.google.android.youtube.player.internal.c:
+    void a(java.lang.String,android.os.IBinder) -> a
+com.google.android.youtube.player.internal.c$a -> com.google.android.youtube.player.internal.c$a:
+    android.os.IBinder asBinder() -> asBinder
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.c$a$a -> com.google.android.youtube.player.internal.c$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a(java.lang.String,android.os.IBinder) -> a
+com.google.android.youtube.player.internal.d -> com.google.android.youtube.player.internal.d:
+    void a(boolean) -> a
+    void a(java.lang.String,int) -> a
+    void b(java.lang.String,int) -> b
+    void a(java.lang.String,int,int) -> a
+    void b(java.lang.String,int,int) -> b
+    void a(java.util.List,int,int) -> a
+    void b(java.util.List,int,int) -> b
+    void a() -> a
+    void b() -> b
+    boolean c() -> c
+    boolean d() -> d
+    boolean e() -> e
+    void f() -> f
+    void g() -> g
+    int h() -> h
+    int i() -> i
+    void a(int) -> a
+    void b(int) -> b
+    void b(boolean) -> b
+    void c(int) -> c
+    int j() -> j
+    void d(int) -> d
+    void a(java.lang.String) -> a
+    void c(boolean) -> c
+    void d(boolean) -> d
+    void a(com.google.android.youtube.player.internal.e) -> a
+    void a(com.google.android.youtube.player.internal.h) -> a
+    void a(com.google.android.youtube.player.internal.g) -> a
+    void a(com.google.android.youtube.player.internal.f) -> a
+    void k() -> k
+    void l() -> l
+    void a(android.content.res.Configuration) -> a
+    void m() -> m
+    void n() -> n
+    void o() -> o
+    void p() -> p
+    void e(boolean) -> e
+    void q() -> q
+    android.os.Bundle r() -> r
+    boolean a(android.os.Bundle) -> a
+    boolean a(int,android.view.KeyEvent) -> a
+    boolean b(int,android.view.KeyEvent) -> b
+    com.google.android.youtube.player.internal.u s() -> s
+com.google.android.youtube.player.internal.d$a -> com.google.android.youtube.player.internal.d$a:
+    com.google.android.youtube.player.internal.d a(android.os.IBinder) -> a
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.d$a$a -> com.google.android.youtube.player.internal.d$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a(boolean) -> a
+    void a(java.lang.String,int) -> a
+    void b(java.lang.String,int) -> b
+    void a(java.lang.String,int,int) -> a
+    void b(java.lang.String,int,int) -> b
+    void a(java.util.List,int,int) -> a
+    void b(java.util.List,int,int) -> b
+    void a() -> a
+    void b() -> b
+    boolean c() -> c
+    boolean d() -> d
+    boolean e() -> e
+    void f() -> f
+    void g() -> g
+    int h() -> h
+    int i() -> i
+    void a(int) -> a
+    void b(int) -> b
+    void b(boolean) -> b
+    void c(int) -> c
+    int j() -> j
+    void d(int) -> d
+    void a(java.lang.String) -> a
+    void c(boolean) -> c
+    void d(boolean) -> d
+    void a(com.google.android.youtube.player.internal.e) -> a
+    void a(com.google.android.youtube.player.internal.h) -> a
+    void a(com.google.android.youtube.player.internal.g) -> a
+    void a(com.google.android.youtube.player.internal.f) -> a
+    void k() -> k
+    void l() -> l
+    void a(android.content.res.Configuration) -> a
+    void m() -> m
+    void n() -> n
+    void o() -> o
+    void p() -> p
+    void e(boolean) -> e
+    void q() -> q
+    android.os.Bundle r() -> r
+    boolean a(android.os.Bundle) -> a
+    boolean a(int,android.view.KeyEvent) -> a
+    boolean b(int,android.view.KeyEvent) -> b
+    com.google.android.youtube.player.internal.u s() -> s
+com.google.android.youtube.player.internal.e -> com.google.android.youtube.player.internal.e:
+    void a(boolean) -> a
+com.google.android.youtube.player.internal.e$a -> com.google.android.youtube.player.internal.e$a:
+    android.os.IBinder asBinder() -> asBinder
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.e$a$a -> com.google.android.youtube.player.internal.e$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a(boolean) -> a
+com.google.android.youtube.player.internal.f -> com.google.android.youtube.player.internal.f:
+    void a() -> a
+    void b() -> b
+    void c() -> c
+    void a(boolean) -> a
+    void a(int) -> a
+com.google.android.youtube.player.internal.f$a -> com.google.android.youtube.player.internal.f$a:
+    android.os.IBinder asBinder() -> asBinder
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.f$a$a -> com.google.android.youtube.player.internal.f$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a() -> a
+    void b() -> b
+    void c() -> c
+    void a(boolean) -> a
+    void a(int) -> a
+com.google.android.youtube.player.internal.g -> com.google.android.youtube.player.internal.g:
+    void a() -> a
+    void a(java.lang.String) -> a
+    void b() -> b
+    void c() -> c
+    void d() -> d
+    void b(java.lang.String) -> b
+com.google.android.youtube.player.internal.g$a -> com.google.android.youtube.player.internal.g$a:
+    android.os.IBinder asBinder() -> asBinder
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.g$a$a -> com.google.android.youtube.player.internal.g$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a() -> a
+    void a(java.lang.String) -> a
+    void b() -> b
+    void c() -> c
+    void d() -> d
+    void b(java.lang.String) -> b
+com.google.android.youtube.player.internal.h -> com.google.android.youtube.player.internal.h:
+    void a() -> a
+    void b() -> b
+    void c() -> c
+com.google.android.youtube.player.internal.h$a -> com.google.android.youtube.player.internal.h$a:
+    android.os.IBinder asBinder() -> asBinder
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.h$a$a -> com.google.android.youtube.player.internal.h$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a() -> a
+    void b() -> b
+    void c() -> c
+com.google.android.youtube.player.internal.i -> com.google.android.youtube.player.internal.i:
+    void a(com.google.android.youtube.player.internal.c,int,java.lang.String,java.lang.String,java.lang.String,android.os.Bundle) -> a
+com.google.android.youtube.player.internal.i$a -> com.google.android.youtube.player.internal.i$a:
+    com.google.android.youtube.player.internal.i a(android.os.IBinder) -> a
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.i$a$a -> com.google.android.youtube.player.internal.i$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a(com.google.android.youtube.player.internal.c,int,java.lang.String,java.lang.String,java.lang.String,android.os.Bundle) -> a
+com.google.android.youtube.player.internal.j -> com.google.android.youtube.player.internal.j:
+    void a(android.graphics.Bitmap,java.lang.String,boolean,boolean) -> a
+    void a(java.lang.String,boolean,boolean) -> a
+com.google.android.youtube.player.internal.j$a -> com.google.android.youtube.player.internal.j$a:
+    android.os.IBinder asBinder() -> asBinder
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.j$a$a -> com.google.android.youtube.player.internal.j$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a(android.graphics.Bitmap,java.lang.String,boolean,boolean) -> a
+    void a(java.lang.String,boolean,boolean) -> a
+com.google.android.youtube.player.internal.k -> com.google.android.youtube.player.internal.k:
+    void a(java.lang.String) -> a
+    void a(java.lang.String,int) -> a
+    void a() -> a
+    void b() -> b
+    void c() -> c
+    void d() -> d
+com.google.android.youtube.player.internal.k$a -> com.google.android.youtube.player.internal.k$a:
+    com.google.android.youtube.player.internal.k a(android.os.IBinder) -> a
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.k$a$a -> com.google.android.youtube.player.internal.k$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    void a(java.lang.String) -> a
+    void a(java.lang.String,int) -> a
+    void a() -> a
+    void b() -> b
+    void c() -> c
+    void d() -> d
+com.google.android.youtube.player.internal.l -> com.google.android.youtube.player.internal.l:
+    android.os.IBinder a() -> a
+    com.google.android.youtube.player.internal.k a(com.google.android.youtube.player.internal.j) -> a
+    void a(boolean) -> a
+com.google.android.youtube.player.internal.l$a -> com.google.android.youtube.player.internal.l$a:
+    com.google.android.youtube.player.internal.l a(android.os.IBinder) -> a
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.l$a$a -> com.google.android.youtube.player.internal.l$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+    android.os.IBinder a() -> a
+    com.google.android.youtube.player.internal.k a(com.google.android.youtube.player.internal.j) -> a
+    void a(boolean) -> a
+com.google.android.youtube.player.internal.m -> com.google.android.youtube.player.internal.m:
+    java.lang.String a -> a
+    java.lang.String b -> b
+    java.lang.String c -> c
+    java.lang.String d -> d
+    java.lang.String e -> e
+    java.lang.String f -> f
+    java.lang.String g -> g
+    java.lang.String h -> h
+    java.lang.String i -> i
+    java.lang.String j -> j
+com.google.android.youtube.player.internal.n -> com.google.android.youtube.player.internal.n:
+    android.widget.ProgressBar a -> a
+    android.widget.TextView b -> b
+    void a() -> a
+    void b() -> b
+    void c() -> c
+    void onMeasure(int,int) -> onMeasure
+com.google.android.youtube.player.internal.o -> com.google.android.youtube.player.internal.o:
+    java.lang.String b -> b
+    java.lang.String c -> c
+    java.lang.String d -> d
+    boolean e -> e
+    java.lang.String b() -> b
+    java.lang.String c() -> c
+    void k() -> k
+    void a(com.google.android.youtube.player.internal.i,com.google.android.youtube.player.internal.r$d) -> a
+    com.google.android.youtube.player.internal.k a(com.google.android.youtube.player.internal.j) -> a
+    android.os.IBinder a() -> a
+    void a(boolean) -> a
+    void d() -> d
+    android.os.IInterface a(android.os.IBinder) -> a
+com.google.android.youtube.player.internal.p -> com.google.android.youtube.player.internal.p:
+    android.os.Handler a -> a
+    com.google.android.youtube.player.internal.b b -> b
+    com.google.android.youtube.player.internal.k c -> c
+    boolean d -> d
+    boolean e -> e
+    boolean a() -> a
+    void a(java.lang.String) -> a
+    void a(java.lang.String,int) -> a
+    void c() -> c
+    void d() -> d
+    void e() -> e
+    boolean f() -> f
+    boolean g() -> g
+    void h() -> h
+    boolean a(com.google.android.youtube.player.internal.p,boolean) -> a
+    boolean b(com.google.android.youtube.player.internal.p,boolean) -> b
+    android.os.Handler a(com.google.android.youtube.player.internal.p) -> a
+com.google.android.youtube.player.internal.p$a -> com.google.android.youtube.player.internal.p$a:
+    com.google.android.youtube.player.internal.p a -> a
+    void a(android.graphics.Bitmap,java.lang.String,boolean,boolean) -> a
+    void a(java.lang.String,boolean,boolean) -> a
+com.google.android.youtube.player.internal.p$a$1 -> com.google.android.youtube.player.internal.p$a$1:
+    boolean a -> a
+    boolean b -> b
+    android.graphics.Bitmap c -> c
+    java.lang.String d -> d
+    com.google.android.youtube.player.internal.p$a e -> e
+    void run() -> run
+com.google.android.youtube.player.internal.p$a$2 -> com.google.android.youtube.player.internal.p$a$2:
+    boolean a -> a
+    boolean b -> b
+    java.lang.String c -> c
+    com.google.android.youtube.player.internal.p$a d -> d
+    void run() -> run
+com.google.android.youtube.player.internal.q -> com.google.android.youtube.player.internal.q:
+com.google.android.youtube.player.internal.r -> com.google.android.youtube.player.internal.r:
+    android.content.Context b -> b
+    android.os.Handler a -> a
+    android.os.IInterface c -> c
+    java.util.ArrayList d -> d
+    java.util.ArrayList e -> e
+    boolean f -> f
+    java.util.ArrayList g -> g
+    boolean h -> h
+    java.util.ArrayList i -> i
+    android.content.ServiceConnection j -> j
+    boolean k -> k
+    java.lang.String c() -> c
+    java.lang.String b() -> b
+    android.os.IInterface a(android.os.IBinder) -> a
+    com.google.android.youtube.player.YouTubeInitializationResult b(java.lang.String) -> b
+    void e() -> e
+    boolean f() -> f
+    void d() -> d
+    void a() -> a
+    void b(android.os.IBinder) -> b
+    void a(com.google.android.youtube.player.internal.i,com.google.android.youtube.player.internal.r$d) -> a
+    void g() -> g
+    void h() -> h
+    void a(com.google.android.youtube.player.YouTubeInitializationResult) -> a
+    void i() -> i
+    android.os.IInterface j() -> j
+    android.os.IInterface a(com.google.android.youtube.player.internal.r,android.os.IInterface) -> a
+    java.util.ArrayList a(com.google.android.youtube.player.internal.r) -> a
+    boolean b(com.google.android.youtube.player.internal.r) -> b
+    java.util.ArrayList c(com.google.android.youtube.player.internal.r) -> c
+    com.google.android.youtube.player.YouTubeInitializationResult a(java.lang.String) -> a
+    android.os.IInterface d(com.google.android.youtube.player.internal.r) -> d
+    void e(com.google.android.youtube.player.internal.r) -> e
+com.google.android.youtube.player.internal.r$1 -> com.google.android.youtube.player.internal.r$1:
+    int[] a -> a
+com.google.android.youtube.player.internal.r$a -> com.google.android.youtube.player.internal.r$a:
+    com.google.android.youtube.player.internal.r a -> a
+    void handleMessage(android.os.Message) -> handleMessage
+com.google.android.youtube.player.internal.r$b -> com.google.android.youtube.player.internal.r$b:
+    java.lang.Object b -> b
+    com.google.android.youtube.player.internal.r a -> a
+    void a(java.lang.Object) -> a
+    void a() -> a
+    void b() -> b
+com.google.android.youtube.player.internal.r$c -> com.google.android.youtube.player.internal.r$c:
+    com.google.android.youtube.player.YouTubeInitializationResult b -> b
+    android.os.IBinder c -> c
+    com.google.android.youtube.player.internal.r d -> d
+    void a(java.lang.Object) -> a
+com.google.android.youtube.player.internal.r$d -> com.google.android.youtube.player.internal.r$d:
+    com.google.android.youtube.player.internal.r a -> a
+    void a(java.lang.String,android.os.IBinder) -> a
+com.google.android.youtube.player.internal.r$e -> com.google.android.youtube.player.internal.r$e:
+    com.google.android.youtube.player.internal.r a -> a
+    void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
+    void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
+com.google.android.youtube.player.internal.s -> com.google.android.youtube.player.internal.s:
+    com.google.android.youtube.player.internal.b a -> a
+    com.google.android.youtube.player.internal.d b -> b
+    void a(boolean) -> a
+    void cueVideo(java.lang.String) -> cueVideo
+    void loadVideo(java.lang.String) -> loadVideo
+    void cuePlaylist(java.lang.String) -> cuePlaylist
+    void loadPlaylist(java.lang.String) -> loadPlaylist
+    void cueVideos(java.util.List) -> cueVideos
+    void loadVideos(java.util.List) -> loadVideos
+    android.view.View a() -> a
+    void b() -> b
+    void c() -> c
+    void d() -> d
+    void e() -> e
+    void b(boolean) -> b
+    void a(android.content.res.Configuration) -> a
+    void f() -> f
+    void g() -> g
+    boolean a(int,android.view.KeyEvent) -> a
+    boolean b(int,android.view.KeyEvent) -> b
+    android.os.Bundle h() -> h
+    boolean a(android.os.Bundle) -> a
+    void release() -> release
+    void cueVideo(java.lang.String,int) -> cueVideo
+    void loadVideo(java.lang.String,int) -> loadVideo
+    void cuePlaylist(java.lang.String,int,int) -> cuePlaylist
+    void loadPlaylist(java.lang.String,int,int) -> loadPlaylist
+    void cueVideos(java.util.List,int,int) -> cueVideos
+    void loadVideos(java.util.List,int,int) -> loadVideos
+    void play() -> play
+    void pause() -> pause
+    boolean isPlaying() -> isPlaying
+    boolean hasNext() -> hasNext
+    boolean hasPrevious() -> hasPrevious
+    void next() -> next
+    void previous() -> previous
+    int getCurrentTimeMillis() -> getCurrentTimeMillis
+    int getDurationMillis() -> getDurationMillis
+    void seekToMillis(int) -> seekToMillis
+    void seekRelativeMillis(int) -> seekRelativeMillis
+    void setFullscreen(boolean) -> setFullscreen
+    void setFullscreenControlFlags(int) -> setFullscreenControlFlags
+    int getFullscreenControlFlags() -> getFullscreenControlFlags
+    void addFullscreenControlFlag(int) -> addFullscreenControlFlag
+    void setPlayerStyle(com.google.android.youtube.player.YouTubePlayer$PlayerStyle) -> setPlayerStyle
+    void setShowFullscreenButton(boolean) -> setShowFullscreenButton
+    void setManageAudioFocus(boolean) -> setManageAudioFocus
+    void setOnFullscreenListener(com.google.android.youtube.player.YouTubePlayer$OnFullscreenListener) -> setOnFullscreenListener
+    void setPlaylistEventListener(com.google.android.youtube.player.YouTubePlayer$PlaylistEventListener) -> setPlaylistEventListener
+    void setPlayerStateChangeListener(com.google.android.youtube.player.YouTubePlayer$PlayerStateChangeListener) -> setPlayerStateChangeListener
+    void setPlaybackEventListener(com.google.android.youtube.player.YouTubePlayer$PlaybackEventListener) -> setPlaybackEventListener
+com.google.android.youtube.player.internal.s$1 -> com.google.android.youtube.player.internal.s$1:
+    com.google.android.youtube.player.YouTubePlayer$OnFullscreenListener a -> a
+    com.google.android.youtube.player.internal.s b -> b
+    void a(boolean) -> a
+com.google.android.youtube.player.internal.s$2 -> com.google.android.youtube.player.internal.s$2:
+    com.google.android.youtube.player.YouTubePlayer$PlaylistEventListener a -> a
+    com.google.android.youtube.player.internal.s b -> b
+    void a() -> a
+    void c() -> c
+    void b() -> b
+com.google.android.youtube.player.internal.s$3 -> com.google.android.youtube.player.internal.s$3:
+    com.google.android.youtube.player.YouTubePlayer$PlayerStateChangeListener a -> a
+    com.google.android.youtube.player.internal.s b -> b
+    void c() -> c
+    void d() -> d
+    void a() -> a
+    void a(java.lang.String) -> a
+    void b(java.lang.String) -> b
+    void b() -> b
+com.google.android.youtube.player.internal.s$4 -> com.google.android.youtube.player.internal.s$4:
+    com.google.android.youtube.player.YouTubePlayer$PlaybackEventListener a -> a
+    com.google.android.youtube.player.internal.s b -> b
+    void c() -> c
+    void a(int) -> a
+    void a() -> a
+    void b() -> b
+    void a(boolean) -> a
+com.google.android.youtube.player.internal.t -> com.google.android.youtube.player.internal.t:
+    void e() -> e
+    void d() -> d
+com.google.android.youtube.player.internal.t$a -> com.google.android.youtube.player.internal.t$a:
+    void a() -> a
+    void b() -> b
+com.google.android.youtube.player.internal.t$b -> com.google.android.youtube.player.internal.t$b:
+    void a(com.google.android.youtube.player.YouTubeInitializationResult) -> a
+com.google.android.youtube.player.internal.u -> com.google.android.youtube.player.internal.u:
+com.google.android.youtube.player.internal.u$a -> com.google.android.youtube.player.internal.u$a:
+    com.google.android.youtube.player.internal.u a(android.os.IBinder) -> a
+    android.os.IBinder asBinder() -> asBinder
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.google.android.youtube.player.internal.u$a$a -> com.google.android.youtube.player.internal.u$a$a:
+    android.os.IBinder a -> a
+    android.os.IBinder asBinder() -> asBinder
+com.google.android.youtube.player.internal.v -> com.google.android.youtube.player.internal.v:
+    java.lang.Object a -> a
+    com.google.android.youtube.player.internal.u a(java.lang.Object) -> a
+    java.lang.Object a(com.google.android.youtube.player.internal.u) -> a
+com.google.android.youtube.player.internal.w -> com.google.android.youtube.player.internal.w:
+    com.google.android.youtube.player.internal.d a(android.app.Activity,android.os.IBinder,boolean) -> a
+    android.os.IBinder a(java.lang.ClassLoader,java.lang.String,android.os.IBinder,android.os.IBinder,android.os.IBinder,boolean) -> a
+    android.os.IBinder a(java.lang.Class,android.os.IBinder,android.os.IBinder,android.os.IBinder,boolean) -> a
+com.google.android.youtube.player.internal.w$a -> com.google.android.youtube.player.internal.w$a:
+com.google.android.youtube.player.internal.x -> com.google.android.youtube.player.internal.x:
+    java.util.Map a(java.util.Locale) -> a
+    void a(java.util.Map,java.lang.String) -> a
+com.google.android.youtube.player.internal.y -> com.google.android.youtube.player.internal.y:
+    void a(java.lang.String,java.lang.Object[]) -> a
+    void a(java.lang.String,java.lang.Throwable) -> a
+com.google.android.youtube.player.internal.z -> com.google.android.youtube.player.internal.z:
+    android.net.Uri a -> a
+    java.lang.String[] b -> b
+    java.lang.String a(android.content.Context) -> a
+    boolean a(android.content.Context,java.lang.String) -> a
+    android.content.Context b(android.content.Context) -> b
+    int c(android.content.Context) -> c
+    java.lang.String d(android.content.Context) -> d
+    java.lang.String a() -> a
+    android.content.Intent a(java.lang.String) -> a
+    android.content.Intent b(java.lang.String) -> b
+    boolean a(android.content.pm.PackageManager) -> a
+    boolean b(android.content.pm.PackageManager) -> b
 com.google.common.base.Function -> com.google.a.a.a:
     java.lang.Object apply(java.lang.Object) -> a
     boolean equals(java.lang.Object) -> equals
@@ -16681,18 +17563,19 @@ com.laloosh.textmuse.SelectMessageActivity -> com.laloosh.textmuse.SelectMessage
     int mColorOffset -> r
     com.laloosh.textmuse.datamodel.TextMuseData mData -> s
     boolean mRequireSave -> t
-    57:131:void onCreate(android.os.Bundle) -> onCreate
-    135:140:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
-    144:148:void onPause() -> onPause
-    153:154:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    162:169:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    173:175:void showHighlightFailedDialog() -> l
-    36:36:com.laloosh.textmuse.datamodel.TextMuseData access$000(com.laloosh.textmuse.SelectMessageActivity) -> a
+    71:145:void onCreate(android.os.Bundle) -> onCreate
+    149:154:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    158:162:void onPause() -> onPause
+    167:168:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    176:183:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    187:189:void showHighlightFailedDialog() -> l
+    193:196:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    47:47:com.laloosh.textmuse.datamodel.TextMuseData access$000(com.laloosh.textmuse.SelectMessageActivity) -> a
 com.laloosh.textmuse.SelectMessageActivity$1 -> com.laloosh.textmuse.be:
     com.laloosh.textmuse.SelectMessageActivity this$0 -> a
-    109:109:void onPageScrolled(int,float,int) -> a
-    113:114:void onPageSelected(int) -> a
-    119:119:void onPageScrollStateChanged(int) -> b
+    123:123:void onPageScrolled(int,float,int) -> a
+    127:128:void onPageSelected(int) -> a
+    133:133:void onPageScrollStateChanged(int) -> b
 com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter -> com.laloosh.textmuse.bf:
     java.util.List mNotes -> a
     android.view.LayoutInflater mLayoutInflater -> b
@@ -16701,38 +17584,48 @@ com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter -> com.laloosh.t
     java.util.HashMap mDownloadTargets -> e
     int mCategoryPosition -> f
     com.laloosh.textmuse.datamodel.TextMuseData mData -> g
-    200:200:int getCount() -> b
-    206:374:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
-    379:382:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
-    386:386:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    393:421:void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
-    178:178:android.support.v7.app.ActionBarActivity access$100(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> a
-    178:178:com.laloosh.textmuse.datamodel.TextMuseData access$200(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> b
-    178:178:int access$300(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> c
+    220:220:int getCount() -> b
+    226:472:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
+    477:481:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
+    485:485:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
+    492:520:void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
+    198:198:android.support.v7.app.ActionBarActivity access$100(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> a
+    198:198:com.laloosh.textmuse.datamodel.TextMuseData access$200(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> b
+    198:198:int access$300(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> c
 com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$1 -> com.laloosh.textmuse.bg:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    224:224:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
-    228:228:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-    232:233:void afterTextChanged(android.text.Editable) -> afterTextChanged
+    244:244:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
+    248:248:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
+    252:253:void afterTextChanged(android.text.Editable) -> afterTextChanged
 com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$2 -> com.laloosh.textmuse.bh:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    268:270:void onClick(android.view.View) -> onClick
+    288:290:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3 -> com.laloosh.textmuse.bi:
+    android.widget.RelativeLayout val$previewLayout -> a
+    com.laloosh.textmuse.datamodel.Note val$note -> b
+    int val$framelayoutId -> c
+    com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> d
+    317:364:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3$1 -> com.laloosh.textmuse.bj:
+    com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3 this$1 -> a
+    344:347:void onInitializationSuccess(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubePlayer,boolean) -> onInitializationSuccess
+    351:357:void onInitializationFailure(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubeInitializationResult) -> onInitializationFailure
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$4 -> com.laloosh.textmuse.bk:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    307:313:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$4 -> com.laloosh.textmuse.bj:
+    402:411:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$5 -> com.laloosh.textmuse.bl:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    330:347:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$5 -> com.laloosh.textmuse.bk:
+    428:445:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$6 -> com.laloosh.textmuse.bm:
     int val$position -> a
     com.laloosh.textmuse.datamodel.Note val$note -> b
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> c
-    364:369:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SetHighlightAsyncTask -> com.laloosh.textmuse.bl:
+    462:467:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.SetHighlightAsyncTask -> com.laloosh.textmuse.bn:
     java.lang.ref.WeakReference mHandler -> a
     java.lang.ref.WeakReference mView -> b
     com.laloosh.textmuse.datamodel.Note mNote -> c
@@ -16743,7 +17636,7 @@ com.laloosh.textmuse.SetHighlightAsyncTask -> com.laloosh.textmuse.bl:
     55:64:void onPostExecute(java.lang.String) -> a
     13:13:void onPostExecute(java.lang.Object) -> onPostExecute
     13:13:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.SetHighlightAsyncTask$SetHighlightAsyncTaskHandler -> com.laloosh.textmuse.bm:
+com.laloosh.textmuse.SetHighlightAsyncTask$SetHighlightAsyncTaskHandler -> com.laloosh.textmuse.bo:
     void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
 com.laloosh.textmuse.SettingsActivity -> com.laloosh.textmuse.SettingsActivity:
     int REORDER_CATEGORIES_REQUEST_CODE -> o
@@ -16770,19 +17663,19 @@ com.laloosh.textmuse.SettingsActivity -> com.laloosh.textmuse.SettingsActivity:
     35:35:com.laloosh.textmuse.datamodel.TextMuseStoredContacts access$400(com.laloosh.textmuse.SettingsActivity) -> d
     35:35:void access$600(com.laloosh.textmuse.SettingsActivity) -> e
     35:35:boolean access$802(com.laloosh.textmuse.SettingsActivity,boolean) -> a
-com.laloosh.textmuse.SettingsActivity$1 -> com.laloosh.textmuse.bn:
+com.laloosh.textmuse.SettingsActivity$1 -> com.laloosh.textmuse.bp:
     com.laloosh.textmuse.SettingsActivity this$0 -> a
     155:157:boolean onCreateActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> a
     164:164:boolean onPrepareActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> b
     170:179:boolean onActionItemClicked(android.support.v7.view.ActionMode,android.view.MenuItem) -> a
     186:187:void onDestroyActionMode(android.support.v7.view.ActionMode) -> a
-com.laloosh.textmuse.SettingsActivity$2 -> com.laloosh.textmuse.bo:
+com.laloosh.textmuse.SettingsActivity$2 -> com.laloosh.textmuse.bq:
     int[] $SwitchMap$com$laloosh$textmuse$SettingsActivity$TextOnlyViewType -> a
-com.laloosh.textmuse.SettingsActivity$CategoryEleViewHolder -> com.laloosh.textmuse.bp:
+com.laloosh.textmuse.SettingsActivity$CategoryEleViewHolder -> com.laloosh.textmuse.br:
     android.widget.TextView mTextView -> a
     android.widget.CheckBox mCheckBox -> b
     com.laloosh.textmuse.SettingsActivity this$0 -> c
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter -> com.laloosh.textmuse.bq:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter -> com.laloosh.textmuse.bs:
     java.util.ArrayList mCategoryList -> b
     android.view.LayoutInflater mLayoutInflater -> c
     com.laloosh.textmuse.SettingsActivity this$0 -> a
@@ -16798,39 +17691,39 @@ com.laloosh.textmuse.SettingsActivity$SettingsListAdapter -> com.laloosh.textmus
     412:455:android.view.View getCategoryElementView(int,android.view.View,android.view.ViewGroup) -> a
     461:477:int getItemViewType(int) -> getItemViewType
     484:484:int getViewTypeCount() -> getViewTypeCount
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$1 -> com.laloosh.textmuse.br:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$1 -> com.laloosh.textmuse.bt:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     267:269:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$2 -> com.laloosh.textmuse.bs:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$2 -> com.laloosh.textmuse.bu:
     android.widget.SeekBar val$seekBar -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
     297:309:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$3 -> com.laloosh.textmuse.bt:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$3 -> com.laloosh.textmuse.bv:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     315:315:void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
     319:319:void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
     324:333:void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$4 -> com.laloosh.textmuse.bu:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$4 -> com.laloosh.textmuse.bw:
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType val$viewType -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
     371:388:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$5 -> com.laloosh.textmuse.bv:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$5 -> com.laloosh.textmuse.bx:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     403:404:boolean onLongClick(android.view.View) -> onLongClick
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$6 -> com.laloosh.textmuse.bw:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$6 -> com.laloosh.textmuse.by:
     java.lang.String val$categoryName -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
     432:436:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$7 -> com.laloosh.textmuse.bx:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$7 -> com.laloosh.textmuse.bz:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     442:444:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$8 -> com.laloosh.textmuse.by:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$8 -> com.laloosh.textmuse.ca:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     450:451:boolean onLongClick(android.view.View) -> onLongClick
-com.laloosh.textmuse.SettingsActivity$TextItemViewHolder -> com.laloosh.textmuse.bz:
+com.laloosh.textmuse.SettingsActivity$TextItemViewHolder -> com.laloosh.textmuse.cb:
     android.widget.TextView mTextView -> a
     com.laloosh.textmuse.SettingsActivity this$0 -> b
-com.laloosh.textmuse.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.ca:
+com.laloosh.textmuse.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.cc:
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType FEEDBACK_VIEW -> a
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType PRIVACY_POLICY_VIEW -> b
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType REGISTER_VIEW -> c
@@ -16838,7 +17731,7 @@ com.laloosh.textmuse.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.c
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType[] $VALUES -> e
     489:489:com.laloosh.textmuse.SettingsActivity$TextOnlyViewType[] values() -> values
     489:489:com.laloosh.textmuse.SettingsActivity$TextOnlyViewType valueOf(java.lang.String) -> valueOf
-com.laloosh.textmuse.SmsUtils -> com.laloosh.textmuse.cb:
+com.laloosh.textmuse.SmsUtils -> com.laloosh.textmuse.cd:
     33:39:android.content.Intent createSmsIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> a
     44:64:java.lang.String getToList(java.util.Set) -> a
     69:69:java.lang.String getSmsTo(java.util.Set) -> b
@@ -16862,7 +17755,7 @@ com.laloosh.textmuse.SortableCategoryActivity -> com.laloosh.textmuse.SortableCa
     113:126:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     132:134:void onBackPressed() -> onBackPressed
     138:140:void setActivityResultValue() -> l
-com.laloosh.textmuse.SortableCategoryAdapter -> com.laloosh.textmuse.cc:
+com.laloosh.textmuse.SortableCategoryAdapter -> com.laloosh.textmuse.ce:
     java.util.ArrayList mCategoryList -> a
     int mFirstUnlockedIndex -> b
     64:64:long getItemId(int) -> getItemId
@@ -16877,7 +17770,7 @@ com.laloosh.textmuse.SortableCategoryAdapter -> com.laloosh.textmuse.cc:
     22:22:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> onCreateViewHolder
     22:22:com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange onGetItemDraggableRange(android.support.v7.widget.RecyclerView$ViewHolder,int) -> onGetItemDraggableRange
     22:22:boolean onCheckCanStartDrag(android.support.v7.widget.RecyclerView$ViewHolder,int,int,int) -> onCheckCanStartDrag
-com.laloosh.textmuse.SortableCategoryAdapter$CategoryViewHolder -> com.laloosh.textmuse.cd:
+com.laloosh.textmuse.SortableCategoryAdapter$CategoryViewHolder -> com.laloosh.textmuse.cf:
     android.widget.FrameLayout mContainer -> a
     android.widget.TextView mTextView -> b
     android.widget.ImageView mLockImageView -> c
@@ -16899,7 +17792,7 @@ com.laloosh.textmuse.SplashScreenActivity -> com.laloosh.textmuse.SplashScreenAc
     141:146:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
     149:151:void startupAzureIntegration() -> s
     17:17:void access$000(com.laloosh.textmuse.SplashScreenActivity) -> a
-com.laloosh.textmuse.SplashScreenActivity$1 -> com.laloosh.textmuse.ce:
+com.laloosh.textmuse.SplashScreenActivity$1 -> com.laloosh.textmuse.cg:
     com.laloosh.textmuse.SplashScreenActivity this$0 -> a
     80:81:void run() -> run
 com.laloosh.textmuse.WalkthroughActivity -> com.laloosh.textmuse.WalkthroughActivity:
@@ -16913,27 +17806,40 @@ com.laloosh.textmuse.WalkthroughActivity -> com.laloosh.textmuse.WalkthroughActi
     67:69:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     20:20:java.lang.String[] access$000() -> l
     20:20:int[] access$100() -> m
-com.laloosh.textmuse.WalkthroughActivity$WalkthroughAdapter -> com.laloosh.textmuse.cf:
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughAdapter -> com.laloosh.textmuse.ch:
     boolean mInitialLaunch -> a
     81:81:android.support.v4.app.Fragment getItem(int) -> a
     86:86:int getCount() -> b
-com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment -> com.laloosh.textmuse.cg:
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment -> com.laloosh.textmuse.ci:
     int mNum -> a
     boolean mInitialLaunch -> b
     95:102:com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment newInstance(int,boolean) -> a
-    107:110:void onCreate(android.os.Bundle) -> a
-    114:143:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    107:110:void onCreate(android.os.Bundle) -> onCreate
+    114:143:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     90:90:boolean access$200(com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment) -> a
-com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment$1 -> com.laloosh.textmuse.ch:
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment$1 -> com.laloosh.textmuse.cj:
     com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment this$0 -> a
     126:140:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.ci:
+com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.ck:
     25:50:com.laloosh.textmuse.datamodel.TextMuseData parse(java.lang.String) -> a
     55:91:com.laloosh.textmuse.datamodel.TextMuseData parseContent(org.xmlpull.v1.XmlPullParser) -> a
     95:115:void parseLocalNotifications(org.xmlpull.v1.XmlPullParser,com.laloosh.textmuse.datamodel.TextMuseData) -> a
     118:154:com.laloosh.textmuse.datamodel.Category parseCategory(org.xmlpull.v1.XmlPullParser) -> b
     158:198:com.laloosh.textmuse.datamodel.Note parseNote(org.xmlpull.v1.XmlPullParser) -> c
     202:207:java.lang.String readText(org.xmlpull.v1.XmlPullParser) -> d
+com.laloosh.textmuse.WebviewActivity -> com.laloosh.textmuse.WebviewActivity:
+    java.lang.String mUrl -> n
+    android.webkit.WebView mWebView -> o
+    android.widget.ProgressBar mProgressBar -> p
+    26:67:void onCreate(android.os.Bundle) -> onCreate
+    72:73:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    81:90:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    16:16:android.widget.ProgressBar access$000(com.laloosh.textmuse.WebviewActivity) -> a
+com.laloosh.textmuse.WebviewActivity$1 -> com.laloosh.textmuse.cl:
+    com.laloosh.textmuse.WebviewActivity this$0 -> a
+    40:43:void onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) -> onReceivedError
+    47:49:void onPageStarted(android.webkit.WebView,java.lang.String,android.graphics.Bitmap) -> onPageStarted
+    53:55:void onPageFinished(android.webkit.WebView,java.lang.String) -> onPageFinished
 com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver -> com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver:
     39:49:void onReceive(android.content.Context,android.content.Intent) -> onReceive
     54:90:boolean shouldCreateNotification(android.content.Context) -> b
@@ -17020,13 +17926,15 @@ com.laloosh.textmuse.datamodel.Note -> com.laloosh.textmuse.datamodel.Note:
     108:111:boolean hasExternalLink() -> f
     115:137:android.net.Uri getExternalLinkUri(java.lang.String) -> a
     141:154:boolean isMediaYoutube() -> g
-    159:159:int describeContents() -> describeContents
-    163:172:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    158:164:java.lang.String getYoutubeVideoTag() -> h
+    168:173:java.lang.String getYoutubeImgUrl() -> i
+    178:178:int describeContents() -> describeContents
+    182:191:void writeToParcel(android.os.Parcel,int) -> writeToParcel
 com.laloosh.textmuse.datamodel.Note$1 -> com.laloosh.textmuse.datamodel.e:
-    176:176:com.laloosh.textmuse.datamodel.Note createFromParcel(android.os.Parcel) -> a
-    180:180:com.laloosh.textmuse.datamodel.Note[] newArray(int) -> a
-    174:174:java.lang.Object[] newArray(int) -> newArray
-    174:174:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    195:195:com.laloosh.textmuse.datamodel.Note createFromParcel(android.os.Parcel) -> a
+    199:199:com.laloosh.textmuse.datamodel.Note[] newArray(int) -> a
+    193:193:java.lang.Object[] newArray(int) -> newArray
+    193:193:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 com.laloosh.textmuse.datamodel.ParcelUtils -> com.laloosh.textmuse.datamodel.f:
     14:18:void writeString(android.os.Parcel,java.lang.String) -> a
     21:24:java.lang.String readString(android.os.Parcel) -> a
@@ -17123,19 +18031,19 @@ com.laloosh.textmuse.datamodel.gson.DateTimeConverter -> com.laloosh.textmuse.da
 com.laloosh.textmuse.datamodel.gson.GsonConverter -> com.laloosh.textmuse.datamodel.gson.GsonConverter:
     10:14:com.google.gson.GsonBuilder registerDateTime(com.google.gson.GsonBuilder) -> registerDateTime
 com.laloosh.textmuse.dialogs.AlreadyRegisteredDialogFragment -> com.laloosh.textmuse.a.a:
-    11:11:com.laloosh.textmuse.dialogs.AlreadyRegisteredDialogFragment newInstance() -> N
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    11:11:com.laloosh.textmuse.dialogs.AlreadyRegisteredDialogFragment newInstance() -> d
+    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.BadRegisterDataDialogFragment -> com.laloosh.textmuse.a.b:
-    11:11:com.laloosh.textmuse.dialogs.BadRegisterDataDialogFragment newInstance() -> N
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    11:11:com.laloosh.textmuse.dialogs.BadRegisterDataDialogFragment newInstance() -> d
+    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment -> com.laloosh.textmuse.a.c:
-    11:11:com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment newInstance() -> N
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    11:11:com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment newInstance() -> d
+    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment -> com.laloosh.textmuse.a.d:
-    com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment$PhoneChoiceAdapter mAdapter -> aj
-    com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment$ChoosePhoneNumberDialogHandler mHandler -> ak
+    com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment$PhoneChoiceAdapter mAdapter -> j
+    com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment$ChoosePhoneNumberDialogHandler mHandler -> k
     31:36:com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment newInstance(java.util.ArrayList) -> a
-    41:64:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    41:64:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
     69:73:void onCancel(android.content.DialogInterface) -> onCancel
     76:77:void setHandler(com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment$ChoosePhoneNumberDialogHandler) -> a
     24:24:com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment$ChoosePhoneNumberDialogHandler access$000(com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment) -> a
@@ -17171,13 +18079,13 @@ com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment$PhoneChoiceAdapter$
     android.widget.RadioButton radioButton -> c
     com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment$PhoneChoiceAdapter this$1 -> d
 com.laloosh.textmuse.dialogs.EnterGroupDialogFragment -> com.laloosh.textmuse.a.k:
-    com.laloosh.textmuse.dialogs.EnterGroupDialogFragment$GroupNameChangeHandler mHandler -> aj
-    28:28:com.laloosh.textmuse.dialogs.EnterGroupDialogFragment newInstance() -> N
+    com.laloosh.textmuse.dialogs.EnterGroupDialogFragment$GroupNameChangeHandler mHandler -> j
+    28:28:com.laloosh.textmuse.dialogs.EnterGroupDialogFragment newInstance() -> d
     33:42:com.laloosh.textmuse.dialogs.EnterGroupDialogFragment newInstance(java.lang.String) -> a
-    47:55:void onAttach(android.app.Activity) -> a
-    59:61:void onDetach() -> d
+    47:55:void onAttach(android.app.Activity) -> onAttach
+    59:61:void onDetach() -> onDetach
     65:69:void onCancel(android.content.DialogInterface) -> onCancel
-    75:154:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    75:154:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
     20:20:com.laloosh.textmuse.dialogs.EnterGroupDialogFragment$GroupNameChangeHandler access$000(com.laloosh.textmuse.dialogs.EnterGroupDialogFragment) -> a
 com.laloosh.textmuse.dialogs.EnterGroupDialogFragment$1 -> com.laloosh.textmuse.a.l:
     com.laloosh.textmuse.dialogs.EnterGroupDialogFragment this$0 -> a
@@ -17198,15 +18106,15 @@ com.laloosh.textmuse.dialogs.EnterGroupDialogFragment$GroupNameChangeHandler -> 
     boolean isUsableGroupName(java.lang.String) -> c
     void onGroupNameEditCancel() -> l
 com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment -> com.laloosh.textmuse.a.p:
-    int mDialogWidth -> aj
-    int mDialogHeight -> ak
-    android.widget.ImageView mImageView -> al
-    com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget mTarget -> am
+    int mDialogWidth -> j
+    int mDialogHeight -> k
+    android.widget.ImageView mImageView -> l
+    com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget mTarget -> m
     38:47:com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment newInstance(com.laloosh.textmuse.datamodel.Note) -> a
-    53:69:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    53:69:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     74:127:void doneLoadingBitmap(android.graphics.Bitmap) -> a
-    132:135:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
-    141:146:void onResume() -> r
+    132:135:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
+    141:146:void onResume() -> onResume
 com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget -> com.laloosh.textmuse.a.q:
     java.lang.ref.WeakReference mHandler -> a
     24:25:void onBitmapFailed(android.graphics.drawable.Drawable) -> a
@@ -17216,22 +18124,22 @@ com.laloosh.textmuse.dialogs.ImageSizeDownloadTarget$ImageSizeDownloadTargetHand
     void doneLoadingBitmap(android.graphics.Bitmap) -> a
 com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment -> com.laloosh.textmuse.a.s:
     13:19:com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment newInstance(java.lang.String) -> a
-    26:37:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    26:37:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment -> com.laloosh.textmuse.a.t:
-    11:11:com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment newInstance() -> N
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    11:11:com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment newInstance() -> d
+    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.NoFeedbackDialogFragment -> com.laloosh.textmuse.a.u:
-    11:11:com.laloosh.textmuse.dialogs.NoFeedbackDialogFragment newInstance() -> N
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    11:11:com.laloosh.textmuse.dialogs.NoFeedbackDialogFragment newInstance() -> d
+    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.NoRegisterDataDialogFragment -> com.laloosh.textmuse.a.v:
-    11:11:com.laloosh.textmuse.dialogs.NoRegisterDataDialogFragment newInstance() -> N
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    11:11:com.laloosh.textmuse.dialogs.NoRegisterDataDialogFragment newInstance() -> d
+    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.NoUsersDialogFragment -> com.laloosh.textmuse.a.w:
-    com.laloosh.textmuse.dialogs.NoUsersDialogFragment$NoUsersDialogHandler mHandler -> aj
-    18:18:com.laloosh.textmuse.dialogs.NoUsersDialogFragment newInstance() -> N
-    24:31:void onAttach(android.app.Activity) -> a
-    35:38:void onDetach() -> d
-    42:63:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    com.laloosh.textmuse.dialogs.NoUsersDialogFragment$NoUsersDialogHandler mHandler -> j
+    18:18:com.laloosh.textmuse.dialogs.NoUsersDialogFragment newInstance() -> d
+    24:31:void onAttach(android.app.Activity) -> onAttach
+    35:38:void onDetach() -> onDetach
+    42:63:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
     14:14:com.laloosh.textmuse.dialogs.NoUsersDialogFragment$NoUsersDialogHandler access$000(com.laloosh.textmuse.dialogs.NoUsersDialogFragment) -> a
 com.laloosh.textmuse.dialogs.NoUsersDialogFragment$1 -> com.laloosh.textmuse.a.x:
     com.laloosh.textmuse.dialogs.NoUsersDialogFragment this$0 -> a
@@ -17243,17 +18151,17 @@ com.laloosh.textmuse.dialogs.NoUsersDialogFragment$NoUsersDialogHandler -> com.l
     void noUsersProceedToDelete() -> l
     void noUsersCancel() -> m
 com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment -> com.laloosh.textmuse.a.aa:
-    12:12:com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment newInstance() -> N
-    17:27:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    12:12:com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment newInstance() -> d
+    17:27:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment$1 -> com.laloosh.textmuse.a.ab:
     com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment this$0 -> a
     23:24:void onClick(android.content.DialogInterface,int) -> onClick
 com.laloosh.textmuse.dialogs.RegistrationTooYoungDialogFragment -> com.laloosh.textmuse.a.ac:
-    11:11:com.laloosh.textmuse.dialogs.RegistrationTooYoungDialogFragment newInstance() -> N
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    11:11:com.laloosh.textmuse.dialogs.RegistrationTooYoungDialogFragment newInstance() -> d
+    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment -> com.laloosh.textmuse.a.ad:
-    11:11:com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment newInstance() -> N
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> c
+    11:11:com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment newInstance() -> d
+    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.microsoft.windowsazure.mobileservices.ApiJsonOperationCallback -> com.microsoft.windowsazure.mobileservices.ApiJsonOperationCallback:
     void onCompleted(com.google.gson.JsonElement,java.lang.Exception,com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse) -> onCompleted
 com.microsoft.windowsazure.mobileservices.ApiOperationCallback -> com.microsoft.windowsazure.mobileservices.ApiOperationCallback:

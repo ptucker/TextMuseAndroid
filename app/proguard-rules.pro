@@ -36,6 +36,8 @@
 -keep interface com.h6ah4i.android.** { *; }
 -keep class com.microsoft.windowsazure.** { *; }
 -keep interface com.microsoft.windowsazure.** { *; }
+-keep class com.google.android.youtube.** { *; }
+-keep interface com.google.android.youtube.** { *; }
 
 
 # used for guava stuff, used for azure libs
