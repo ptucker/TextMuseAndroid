@@ -29,6 +29,10 @@ public class Constants {
     public static final String SHARED_PREF_KEY_REGISTER_BMONTH = "registerbmonth";
     public static final String SHARED_PREF_KEY_REGISTER_BYEAR = "registerbyear";
 
+    public static final String SHARED_PREF_KEY_SKIN_COUNT = "skincount";
+    public static final String SHARED_PREF_KEY_SKIN_BASE = "skinnum";
+    public static final String SHARED_PREF_KEY_SKIN_CURRENT_ID = "currentskinid";
+
     //We will do a backoff on the notifications based on this frequency.  We'll first
     //notify the user after 3 days of non-use, then 6 days after that, then 9 days after that, etc.
     public static final int NOTIFICATION_FREQUENCY = 3;

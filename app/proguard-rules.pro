@@ -69,4 +69,8 @@
 -keep class com.laloosh.textmuse.datamodel.TextMuseRecentContact { <fields>; }
 -keep class com.laloosh.textmuse.datamodel.TextMuseSettings { <fields>; }
 -keep class com.laloosh.textmuse.datamodel.TextMuseStoredContacts { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseCurrentSkinData { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseLaunchIcon { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseSkin { <fields>; }
+-keep class com.laloosh.textmuse.datamodel.TextMuseSkinData { <fields>; }
 

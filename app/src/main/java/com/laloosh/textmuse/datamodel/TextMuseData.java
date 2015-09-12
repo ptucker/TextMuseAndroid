@@ -28,6 +28,8 @@ public class TextMuseData {
     public DateTime timestamp;
     public int appId;
 
+    public TextMuseCurrentSkinData skinData;
+
     public TextMuseData() {
         setupNewLocalNotes();
     }

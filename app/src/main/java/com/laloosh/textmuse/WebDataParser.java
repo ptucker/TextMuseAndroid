@@ -5,7 +5,11 @@ import android.util.Log;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.LocalNotification;
 import com.laloosh.textmuse.datamodel.Note;
+import com.laloosh.textmuse.datamodel.TextMuseCurrentSkinData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.datamodel.TextMuseLaunchIcon;
+import com.laloosh.textmuse.datamodel.TextMuseSkin;
+import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -50,6 +54,82 @@ public class WebDataParser {
         return null;
     }
 
+    //used to parse /admin/getskins.php
+    public TextMuseSkinData parseSkinData(String data) {
+        if (data == null) {
+            return null;
+        }
+
+        StringReader reader = new StringReader(data);
+
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            XmlPullParser xpp = factory.newPullParser();
+
+            xpp.setInput(reader);
+            xpp.nextTag();
+
+            return parseSkinContent(xpp);
+
+        } catch (XmlPullParserException e) {
+            Log.e(Constants.TAG, "Error parsing XML data", e);
+        } catch (IOException e) {
+            Log.e(Constants.TAG, "IOException when parsing XML data", e);
+        }
+
+        if (reader != null) {
+            reader.close();
+        }
+
+        return null;
+
+    }
+
+    protected TextMuseSkinData parseSkinContent(XmlPullParser xpp) throws XmlPullParserException, IOException {
+        xpp.require(XmlPullParser.START_TAG, null, "ss");
+
+        TextMuseSkinData parsedData = new TextMuseSkinData();
+        parsedData.skins = new ArrayList<TextMuseSkin>();
+
+        while (xpp.next() != XmlPullParser.END_DOCUMENT) {
+            if (xpp.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+
+            if (xpp.getName().equalsIgnoreCase("s")) {
+                parsedData.skins.add(parseSkin(xpp));
+            }
+        }
+
+        return parsedData;
+    }
+
+    protected TextMuseSkin parseSkin(XmlPullParser xpp) throws XmlPullParserException, IOException {
+        xpp.require(XmlPullParser.START_TAG, null, "s");
+
+        TextMuseSkin skin = new TextMuseSkin();
+
+        int attributeCount = xpp.getAttributeCount();
+        for (int i = 0; i < attributeCount; i++) {
+            String attributeName = xpp.getAttributeName(i);
+            String attributeValue = xpp.getAttributeValue(i);
+
+            if (attributeName.equalsIgnoreCase("id")) {
+                skin.skinId = Integer.parseInt(attributeValue);
+            } else if (attributeName.equalsIgnoreCase("color")) {
+                skin.color = Integer.parseInt(attributeValue, 16);
+            } else if (attributeName.equalsIgnoreCase("icon")) {
+                skin.iconUrl = attributeValue;
+            }
+        }
+
+        skin.name = readText(xpp);
+
+        xpp.require(XmlPullParser.END_TAG, null, "s");
+
+        return skin;
+    }
+
     protected TextMuseData parseContent(XmlPullParser xpp) throws XmlPullParserException, IOException {
 
         xpp.require(XmlPullParser.START_TAG, null, "notes");
@@ -85,10 +165,72 @@ public class WebDataParser {
                 parseLocalNotifications(xpp, parsedData);
             } else if (name.equals("c")) {
                 parsedData.categories.add(parseCategory(xpp));
+            } else if (name.equals("skin")) {
+                parseCurrentSkinData(xpp, parsedData);
             }
         }
 
         return parsedData;
+    }
+
+    protected void parseCurrentSkinData(XmlPullParser xpp, TextMuseData parsedData) throws XmlPullParserException, IOException {
+        xpp.require(XmlPullParser.START_TAG, null, "skin");
+
+        TextMuseCurrentSkinData skinData = new TextMuseCurrentSkinData();
+        skinData.launchIcons = new ArrayList<TextMuseLaunchIcon>();
+
+        int attributeCount = xpp.getAttributeCount();
+        for (int i = 0; i < attributeCount; i++) {
+            String attributeName = xpp.getAttributeName(i);
+            String attributeValue = xpp.getAttributeValue(i);
+            if (attributeName.equalsIgnoreCase("id")) {
+                skinData.skinId = Integer.parseInt(attributeValue);
+            } else if (attributeName.equalsIgnoreCase("name")) {
+                skinData.name = attributeValue;
+            } else if (attributeName.equalsIgnoreCase("c1")) {
+                skinData.c1 = Integer.parseInt(attributeValue, 16);
+            } else if (attributeName.equalsIgnoreCase("c2")) {
+                skinData.c2 = Integer.parseInt(attributeValue, 16);
+            } else if (attributeName.equalsIgnoreCase("c3")) {
+                skinData.c3 = Integer.parseInt(attributeValue, 16);
+            } else if (attributeName.equalsIgnoreCase("home")) {
+                skinData.home = attributeValue;
+            } else if (attributeName.equalsIgnoreCase("title")) {
+                skinData.title = attributeValue;
+            } else if (attributeName.equalsIgnoreCase("icon")) {
+                skinData.icon = attributeValue;
+            }
+        }
+
+        while (xpp.next() != XmlPullParser.END_TAG) {
+            if (xpp.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+
+            String name = xpp.getName();
+            if (name.equalsIgnoreCase("launch")) {
+                TextMuseLaunchIcon icon = new TextMuseLaunchIcon();
+
+                int launchAttributeCount = xpp.getAttributeCount();
+                for (int i = 0; i < launchAttributeCount; i++) {
+                    String attributeName = xpp.getAttributeName(i);
+                    String attributeValue = xpp.getAttributeValue(i);
+
+                    if (attributeName.equalsIgnoreCase("width")) {
+                        icon.width = Integer.parseInt(attributeValue);
+                    } else if (attributeName.equalsIgnoreCase("url")) {
+                        icon.url = attributeValue;
+                    }
+                }
+
+                skinData.launchIcons.add(icon);
+
+                xpp.require(XmlPullParser.END_TAG, null, "launch");
+            }
+
+        }
+
+        xpp.require(XmlPullParser.END_TAG, null, "skin");
     }
 
     protected void parseLocalNotifications(XmlPullParser xpp, TextMuseData parsedData) throws XmlPullParserException, IOException {
