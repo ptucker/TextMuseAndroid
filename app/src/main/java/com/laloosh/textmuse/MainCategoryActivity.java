@@ -78,6 +78,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         mData = instance.getData();
         mSettings = instance.getSettings();
 
+        setSkinTitle();
+
         generateRandomNotes();
 
         setLastNotified();
@@ -179,6 +181,15 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setSkinTitle() {
+        if (mData != null && mData.skinData != null) {
+            setTitle(mData.skinData.name + " TextMuse");
+
+        } else {
+            setTitle("TextMuse");
+        }
     }
 
     private void generateRandomNotes() {
@@ -351,6 +362,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                     //Refresh our data if the shown categories changed
 
                     mData = GlobalData.getInstance().getData();
+                    setSkinTitle();
 
                     mCategoryListAdapter.updateSettings(mSettings);
                     generateRandomNotes();
