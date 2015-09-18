@@ -111,7 +111,15 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
     }
 
     private void selectSkinId(int skinId) {
+        if (mLaunchedFromSplash) {
+            Toast toast = Toast.makeText(this, "Getting things ready...", Toast.LENGTH_SHORT);
+            toast.show();
+        }
         mProgressBar.setVisibility(View.VISIBLE);
+
+//        if (!mLaunchedFromSplash) {
+//            mProgressBar.setVisibility(View.VISIBLE);
+//        }
         TextMuseSkinData.setCurrentlySelectedSkin(SkinSelectActivity.this, skinId);
         reloadMainData();
         registerPushNotifications();
@@ -206,12 +214,16 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
         }
 
         if (result == FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED) {
-            Toast toast = Toast.makeText(this, "Could not change the skin of TextMuse. Please try again with a data connection.", Toast.LENGTH_LONG);
-            toast.show();
+            if (!mLaunchedFromSplash) {
+                Toast toast = Toast.makeText(this, "Could not change the skin of TextMuse. Please try again with a data connection.", Toast.LENGTH_LONG);
+                toast.show();
+            }
             TextMuseSkinData.setCurrentlySelectedSkin(SkinSelectActivity.this, mPreviousSkinId);
         } else {
-            Toast toast = Toast.makeText(this, "Changed the skin successfully", Toast.LENGTH_SHORT);
-            toast.show();
+            if (!mLaunchedFromSplash) {
+                Toast toast = Toast.makeText(this, "Changed the skin successfully", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 

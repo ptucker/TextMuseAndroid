@@ -7,7 +7,7 @@
     tools:context="com.laloosh.textmuse.SkinSelectActivity">
 
     <TextView
-        android:text="Select a Version"
+        android:text="Select a Skin"
         android:id="@+id/skinSelectText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
