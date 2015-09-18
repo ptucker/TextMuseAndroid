@@ -3,6 +3,15 @@ package com.laloosh.textmuse;
 public class ColorHelpers {
 
     public static int getTextColorForBackground(int backgroundColor) {
+
+        //Hard-code in the normal skin colors, since they measure out to be on the border
+        //of the brightness scale
+        for (int color : Constants.COLOR_LIST) {
+            if (backgroundColor == color) {
+                return 0xFFFFFFFF;
+            }
+        }
+
         int brightness = getColorBrightness(backgroundColor);
 
         //if the background is darker, return white, otherwise return black
@@ -10,6 +19,14 @@ public class ColorHelpers {
     }
 
     public static int getTextColorForWhiteBackground(int color) {
+        //Hard-code check for normal skin colors, because they are borderline on the
+        //brightness scale
+        for (int c : Constants.COLOR_LIST) {
+            if (c == color) {
+                return color;
+            }
+        }
+
         int brightness = getColorBrightness(color);
 
         //if the text is too bright, then return a dark gray, otherwise just return the color

@@ -456,24 +456,25 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
             TextMuseData data = GlobalData.getInstance().getData();
             int[] colorList = data.getColorList();
+            int headerColorIndex = (colorList == Constants.COLOR_LIST) ? 0 : 1;
             int color = colorList[position % colorList.length];
 
             if (mNotes == null || mNotes.size() <= 0) {
                 view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
 
-                view.setBackgroundColor(colorList[1]);
+                view.setBackgroundColor(colorList[headerColorIndex]);
 
                 TextView welcomeText = (TextView) view.findViewById(R.id.mainViewTextView);
-                welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[1]));
+                welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[headerColorIndex]));
 
             } else {
                 int realPosition = position % (mNotes.size() + 1);
                 if (realPosition == 0) {
                     view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
-                    view.setBackgroundColor(colorList[1]);
+                    view.setBackgroundColor(colorList[headerColorIndex]);
 
                     TextView welcomeText = (TextView) view.findViewById(R.id.mainViewTextView);
-                    welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[1]));
+                    welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[headerColorIndex]));
                 } else {
                     final int indexPosition = realPosition - 1;
                     final Note note = mNotes.get(indexPosition);
