@@ -12,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
@@ -22,15 +24,19 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class SkinSelectActivity extends ActionBarActivity {
+public class SkinSelectActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
 
     public static final String EXTRA_LAUNCH_FROM_SPLASH = "launch_from_splash";
 
+    ProgressBar mProgressBar;
     ListView mListView;
     SkinSelectListAdapter mAdapter;
     ArrayList<TextMuseSkin> mSkins;
+    int mPreviousSkinId;
     int mSelectedSkinIndex;
     boolean mLaunchedFromSplash;
+    boolean mLoadingSkinChange;
+    boolean mCloseInProcess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +54,14 @@ public class SkinSelectActivity extends ActionBarActivity {
 
         mSkins = skinData.skins;
 
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+
         mListView = (ListView) findViewById(R.id.skinSelectList);
         mAdapter = new SkinSelectListAdapter(this, mSkins);
         mListView.setAdapter(mAdapter);
 
         int selectedSkinId = TextMuseSkinData.getCurrentlySelectedSkin(this);
+        mPreviousSkinId = selectedSkinId;
         mSelectedSkinIndex = 0;
         for (int i = 0; i < mSkins.size(); i++) {
             TextMuseSkin skin = mSkins.get(i);
@@ -62,6 +71,7 @@ public class SkinSelectActivity extends ActionBarActivity {
             }
         }
 
+        mListView.clearFocus();
         mListView.post(new Runnable() {
             @Override
             public void run() {
@@ -74,6 +84,15 @@ public class SkinSelectActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
+
+                //At this point, the selected skin index is the old one. Use it to keep track of the
+                //previous skin ID in case of a failure
+                if (mSelectedSkinIndex == 0) {
+                    mPreviousSkinId = -1;
+                } else {
+                    TextMuseSkin skin = mSkins.get(mSelectedSkinIndex - 1);
+                    mPreviousSkinId = skin.skinId;
+                }
 
                 if (position != mSelectedSkinIndex) {
                     if (position == 0) {
@@ -92,6 +111,7 @@ public class SkinSelectActivity extends ActionBarActivity {
     }
 
     private void selectSkinId(int skinId) {
+        mProgressBar.setVisibility(View.VISIBLE);
         TextMuseSkinData.setCurrentlySelectedSkin(SkinSelectActivity.this, skinId);
         reloadMainData();
         registerPushNotifications();
@@ -101,7 +121,9 @@ public class SkinSelectActivity extends ActionBarActivity {
         GlobalData globalData = GlobalData.getInstance();
         TextMuseData data = globalData.getData();
 
-        FetchNotesAsyncTask task = new FetchNotesAsyncTask(null, getApplicationContext(), data == null ? -1 : data.appId);
+        mLoadingSkinChange = true;
+
+        FetchNotesAsyncTask task = new FetchNotesAsyncTask(this, getApplicationContext(), data == null ? -1 : data.appId);
         task.execute();
     }
 
@@ -142,11 +164,20 @@ public class SkinSelectActivity extends ActionBarActivity {
                 intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             } else {
                 setResult(Activity.RESULT_OK);
+
+                mCloseInProcess = true;
+                if (mLoadingSkinChange) {
+                    //if we launched from settings, wait for the load to finish or else some weird things will happen
+                    Toast toast = Toast.makeText(this, "Changing the skin, please wait...", Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    finish();
+                }
             }
 
-            finish();
             return true;
         }
 
@@ -156,7 +187,32 @@ public class SkinSelectActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         setResult(Activity.RESULT_OK);
-        super.onBackPressed();
+
+        if (mLoadingSkinChange) {
+            Toast toast = Toast.makeText(this, "Changing the skin, please wait...", Toast.LENGTH_LONG);
+            toast.show();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void handleFetchResult(FetchNotesAsyncTask.FetchNotesResult result) {
+        mProgressBar.setVisibility(View.GONE);
+        mLoadingSkinChange = false;
+
+        if (mCloseInProcess) {
+            finish();
+        }
+
+        if (result == FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED) {
+            Toast toast = Toast.makeText(this, "Could not change the skin of TextMuse. Please try again with a data connection.", Toast.LENGTH_LONG);
+            toast.show();
+            TextMuseSkinData.setCurrentlySelectedSkin(SkinSelectActivity.this, mPreviousSkinId);
+        } else {
+            Toast toast = Toast.makeText(this, "Changed the skin successfully", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     public static class SkinSelectListAdapter extends ArrayAdapter<TextMuseSkin> {

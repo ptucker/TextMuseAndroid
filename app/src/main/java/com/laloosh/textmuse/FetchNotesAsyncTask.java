@@ -31,6 +31,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
     int mAppId = -1;
     int mSkinId = -1;
 
+    //Uses the skin ID that's been chosen already
     public FetchNotesAsyncTask(FetchNotesAsyncTaskHandler handler, Context context, int appId) {
         mHandler = new WeakReference<FetchNotesAsyncTaskHandler>(handler);
 
@@ -39,6 +40,17 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
         mAppId = appId;
 
         mSkinId = TextMuseSkinData.getCurrentlySelectedSkin(context);
+    }
+
+    //Different constructor that expects an explicit skin ID
+    public FetchNotesAsyncTask(FetchNotesAsyncTaskHandler handler, Context context, int appId, int skinId) {
+        mHandler = new WeakReference<FetchNotesAsyncTaskHandler>(handler);
+
+        //Use the application context since the download might take longer than the current screen in the worst case
+        mContext = new WeakReference<Context>(context.getApplicationContext());
+        mAppId = appId;
+
+        mSkinId = skinId;
     }
 
     @Override

@@ -350,6 +350,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 if (data != null && data.getBooleanExtra(SettingsActivity.SHOWN_CATEGORIES_CHANGED_EXTRA, false)) {
                     //Refresh our data if the shown categories changed
 
+                    mData = GlobalData.getInstance().getData();
+
                     mCategoryListAdapter.updateSettings(mSettings);
                     generateRandomNotes();
                     mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);

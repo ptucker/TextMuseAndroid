@@ -125,17 +125,23 @@ public class SettingsActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if ((requestCode == REORDER_CATEGORIES_REQUEST_CODE && resultCode == Activity.RESULT_OK) ||
-            (requestCode == SELECT_SKIN_REQUEST_CODE && resultCode == Activity.RESULT_OK)) {
-            mChangedCategories = true;
-
-            //The order of the categories might have changed.  Let's take this list and reorder our data categories
-            mData.reorderCategories(mSettings.getCategoryOrder());
-            mData.save(this);
-
-            mAdapter.populateCategoryList();
-            mAdapter.notifyDataSetChanged();
+        if (requestCode == REORDER_CATEGORIES_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            changedCategoriesAndRefresh();
+        } else if (requestCode == SELECT_SKIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            mData = GlobalData.getInstance().getData();
+            changedCategoriesAndRefresh();
         }
+    }
+
+    private void changedCategoriesAndRefresh() {
+        mChangedCategories = true;
+
+        //The order of the categories might have changed.  Let's take this list and reorder our data categories
+        mData.reorderCategories(mSettings.getCategoryOrder());
+        mData.save(this);
+
+        mAdapter.populateCategoryList();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void startActionMode() {

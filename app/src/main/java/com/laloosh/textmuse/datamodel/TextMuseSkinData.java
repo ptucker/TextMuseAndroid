@@ -2,6 +2,7 @@ package com.laloosh.textmuse.datamodel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.laloosh.textmuse.Constants;
 
@@ -72,5 +73,7 @@ public class TextMuseSkinData {
             editor.putInt(Constants.SHARED_PREF_KEY_SKIN_CURRENT_ID, id);
         }
         editor.commit();
+
+        Log.d(Constants.TAG, "Saved selected skin as: " + Integer.toString(id));
     }
 }
