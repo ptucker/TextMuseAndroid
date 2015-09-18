@@ -142,6 +142,8 @@ public class SkinSelectActivity extends ActionBarActivity {
                 intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            } else {
+                setResult(Activity.RESULT_OK);
             }
 
             finish();
@@ -151,18 +153,11 @@ public class SkinSelectActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (mLaunchedFromSplash) {
-//            Intent intent = new Intent(this, WalkthroughActivity.class);
-//            intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(intent);
-//            finish();
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_OK);
+        super.onBackPressed();
+    }
 
     public static class SkinSelectListAdapter extends ArrayAdapter<TextMuseSkin> {
 

@@ -36,6 +36,7 @@ public class SettingsActivity extends ActionBarActivity {
 
     public static final String SHOWN_CATEGORIES_CHANGED_EXTRA = "com.laloosh.textmuse.settings.categorieschanged";
     private static int REORDER_CATEGORIES_REQUEST_CODE = 9999;
+    private static int SELECT_SKIN_REQUEST_CODE = 10000;
 
     private ListView mListView;
     private SettingsListAdapter mAdapter;
@@ -124,7 +125,8 @@ public class SettingsActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REORDER_CATEGORIES_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if ((requestCode == REORDER_CATEGORIES_REQUEST_CODE && resultCode == Activity.RESULT_OK) ||
+            (requestCode == SELECT_SKIN_REQUEST_CODE && resultCode == Activity.RESULT_OK)) {
             mChangedCategories = true;
 
             //The order of the categories might have changed.  Let's take this list and reorder our data categories
@@ -391,7 +393,7 @@ public class SettingsActivity extends ActionBarActivity {
                         startActivity(intent);
                     } else if (viewType == TextOnlyViewType.SKIN_VIEW) {
                         Intent intent = new Intent(SettingsActivity.this, SkinSelectActivity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, SELECT_SKIN_REQUEST_CODE);
                     }
                 }
             });

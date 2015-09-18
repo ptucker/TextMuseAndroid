@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -458,19 +459,19 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             if (mNotes == null || mNotes.size() <= 0) {
                 view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
 
-                view.setBackgroundColor(colorList[0]);
+                view.setBackgroundColor(colorList[1]);
 
                 TextView welcomeText = (TextView) view.findViewById(R.id.mainViewTextView);
-                welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[0]));
+                welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[1]));
 
             } else {
                 int realPosition = position % (mNotes.size() + 1);
                 if (realPosition == 0) {
                     view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
-                    view.setBackgroundColor(colorList[0]);
+                    view.setBackgroundColor(colorList[1]);
 
                     TextView welcomeText = (TextView) view.findViewById(R.id.mainViewTextView);
-                    welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[0]));
+                    welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[1]));
                 } else {
                     final int indexPosition = realPosition - 1;
                     final Note note = mNotes.get(indexPosition);
@@ -518,6 +519,9 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                         View background = view.findViewById(R.id.mainViewBackgroundView);
 
                         background.setBackgroundColor(color);
+
+                        TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
+                        textView.setTextColor(ColorHelpers.getTextColorForBackground(color));
                     }
 
                     TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
@@ -672,7 +676,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             int color = colorList[position % colorList.length];
 
             holder.mCategoryTitle.setText(category.name);
-            holder.mCategoryTitle.setTextColor(color);
+            holder.mCategoryTitle.setTextColor(ColorHelpers.getTextColorForWhiteBackground(color));
 
             int newCount = 0;
             for (Note note : category.notes) {
@@ -686,6 +690,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             } else {
                 holder.mNewBadgeText.setText("NEW");
             }
+
+            holder.mNewBadgeText.setTextColor(ColorHelpers.getTextColorForBackground(color));
 
             holder.mNewBadgeBackground.setColorFilter(color);
 
@@ -716,8 +722,12 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             holder.mNewBadge.setOnClickListener(onClickListener);
             holder.mTextLayout.setOnClickListener(onClickListener);
 
+            //Default the text color to white unless we change it
+            holder.mTextView.setTextColor(0xFFFFFFFF);
+
             if (!firstNote.hasDisplayableMedia()) {
                 holder.mBackgroundViewTextOnly.setBackgroundColor(color);
+                holder.mTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
             } else {
                 if (firstNote.shouldCenterInside()) {
                     Picasso.with(mContext)

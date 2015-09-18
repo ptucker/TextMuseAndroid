@@ -143,6 +143,7 @@ public class SelectMessageActivity extends ActionBarActivity {
         TextView categoryTextView = (TextView) findViewById(R.id.selectMessageTextViewCategory);
         categoryTextView.setText(category.name);
         categoryTextView.setBackgroundColor(color);
+        categoryTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
     }
 
     @Override
@@ -467,6 +468,9 @@ public class SelectMessageActivity extends ActionBarActivity {
                     mActivity.startActivity(intent);
                 }
             });
+
+            TextView selectText = (TextView) view.findViewById(R.id.detailViewTextViewSelect);
+            selectText.setTextColor(ColorHelpers.getTextColorForBackground(mColor));
 
             container.addView(view);
 

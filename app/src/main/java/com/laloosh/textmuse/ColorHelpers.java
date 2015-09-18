@@ -12,8 +12,8 @@ public class ColorHelpers {
     public static int getTextColorForWhiteBackground(int color) {
         int brightness = getColorBrightness(color);
 
-        //if the text is too bright, then return black, otherwise just return the color
-        return (brightness > 128) ? 0xFF000000 : color;
+        //if the text is too bright, then return a dark gray, otherwise just return the color
+        return (brightness > 128) ? 0xFF595959 : color;
     }
 
     public static int getColorBrightness(int color) {
