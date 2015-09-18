@@ -3,38 +3,54 @@ package com.laloosh.textmuse;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.datamodel.TextMuseLaunchIcon;
+import com.laloosh.textmuse.datamodel.TextMuseSkinData;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class SplashScreenActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
+public class SplashScreenActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler, FetchSkinsAsyncTask.FetchSkinsAsyncTaskHandler{
 
     //5 seconds is the max amount of time the splash screen is going to be up
     private static final long SPLASH_SCREEN_MAX_TIME = 5000;
 
     private TextMuseData mData;
     private boolean mFinishedLoading;
+    private boolean mFinishedLoadingSkins;
     private FetchNotesAsyncTask.FetchNotesResult mFinishedLoadingResult;
+    private FetchSkinsAsyncTask.FetchSkinsResult mFinishedLoadingSkinsResult;
     private Timer mTimer;
     private boolean mFirstLaunch;
     private String mLaunchMessage;
+    private boolean mTimerFired;
+
+    private FetchNotesAsyncTask mFetchNotesTask;
+    private FetchSkinsAsyncTask mFetchSkinsTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_splash_screen);
 
         GlobalData instance = GlobalData.getInstance();
         instance.loadData(this);
         mData = instance.getData();
+
+        setupLayout();
 
         if (mData != null) {
             mData.updateNoteImageFlags(this);
@@ -52,6 +68,68 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         mLaunchMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
     }
 
+    //Sets up the layout.  Must be called after we load the global data
+    private void setupLayout() {
+        int skinId = TextMuseSkinData.getCurrentlySelectedSkin(this);
+        if (skinId <= 0) {
+            setContentView(R.layout.activity_splash_screen);
+        } else {
+            if (mData == null || mData.skinData == null) {
+                setContentView(R.layout.activity_splash_screen);
+            } else {
+                //Use the current skin data to show a different splash screen
+                setContentView(R.layout.activity_splash_screen_skin);
+
+                ImageView splashScreenLogo = (ImageView) findViewById(R.id.splashScreenSkinLogo);
+                ImageView splashScreenIcon = (ImageView) findViewById(R.id.splashScreenSkinIcon);
+
+                File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), mData.skinData.getIconImageFilename());
+                if (file.exists()) {
+                    Picasso.with(this)
+                           .load(file)
+                           .into(splashScreenIcon);
+                } else {
+                    Picasso.with(this)
+                            .load(mData.skinData.icon)
+                            .into(splashScreenIcon);
+                }
+
+                //Pick a logo
+                //First get the screen size
+                DisplayMetrics displaymetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                int screenWidth = displaymetrics.widthPixels;
+
+                //Get the closest in size and just pick one
+                ArrayList<TextMuseLaunchIcon> closestSizeIcons = mData.skinData.getClosestSizeLaunchIcons(screenWidth);
+
+                if (closestSizeIcons == null || closestSizeIcons.size() <= 0) {
+                    setContentView(R.layout.activity_splash_screen);
+                    return;
+                }
+
+                Random ran = new Random();
+                int randIndex = ran.nextInt(closestSizeIcons.size());
+
+                TextMuseLaunchIcon icon = closestSizeIcons.get(randIndex);
+                File logoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), mData.skinData.getSplashImageFilename(icon, randIndex));
+                if (logoFile.exists()) {
+                    Picasso.with(this)
+                            .load(logoFile)
+                            .fit()
+                            .centerInside()
+                            .into(splashScreenLogo);
+                } else {
+                    Picasso.with(this)
+                            .load(icon.url)
+                            .fit()
+                            .centerInside()
+                            .into(splashScreenLogo);
+                }
+            }
+        }
+    }
+
     //If we've failed in loading new data, and we don't have any, then we'll get here.  Load the
     //cached copy of our content and just go with it for now
     private void loadRawContent() {
@@ -62,8 +140,11 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     }
 
     private void getNewContent() {
-        FetchNotesAsyncTask task = new FetchNotesAsyncTask(this, getApplicationContext(), mData == null ? -1 : mData.appId);
-        task.execute();
+        mFetchNotesTask = new FetchNotesAsyncTask(this, getApplicationContext(), mData == null ? -1 : mData.appId);
+        mFetchNotesTask.execute();
+
+        mFetchSkinsTask = new FetchSkinsAsyncTask(this, getApplicationContext());
+        mFetchSkinsTask.execute();
     }
 
     private void cleanImageCacheTask() {
@@ -84,6 +165,11 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     }
 
     private void timerFinished() {
+        if (mTimerFired) {
+            return;
+        }
+
+        mTimerFired = true;
 
         if (!mFinishedLoading || (mFinishedLoading && mFinishedLoadingResult == FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED)) {
             if (mData == null) {
@@ -94,10 +180,18 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         Intent intent;
 
         if (mFirstLaunch) {
-            //Go to the walkthrough screen
+            //Go to the skin selection screen
+            if (mFinishedLoadingSkins && mFinishedLoadingSkinsResult == FetchSkinsAsyncTask.FetchSkinsResult.FETCH_SUCCEEDED) {
+                intent = new Intent(SplashScreenActivity.this, SkinSelectActivity.class);
+                intent.putExtra(SkinSelectActivity.EXTRA_LAUNCH_FROM_SPLASH, true);
 
-            intent = new Intent(SplashScreenActivity.this, WalkthroughActivity.class);
-            intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
+            } else {
+                //Go to the walkthrough screen if there are no skins or no response
+
+                intent = new Intent(SplashScreenActivity.this, WalkthroughActivity.class);
+                intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
+            }
+
         } else {
             intent = new Intent(SplashScreenActivity.this, MainCategoryActivity.class);
 
@@ -141,8 +235,21 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         mFinishedLoading = true;
         mFinishedLoadingResult = result;
 
-        mTimer.cancel();
-        timerFinished();
+        if (mFinishedLoadingSkins) {
+            mTimer.cancel();
+            timerFinished();
+        }
+    }
+
+    @Override
+    public void handleFetchSkinsResult(FetchSkinsAsyncTask.FetchSkinsResult result) {
+        mFinishedLoadingSkins = true;
+        mFinishedLoadingSkinsResult = result;
+
+        if (mFinishedLoading) {
+            mTimer.cancel();
+            timerFinished();
+        }
     }
 
     private void startupAzureIntegration() {

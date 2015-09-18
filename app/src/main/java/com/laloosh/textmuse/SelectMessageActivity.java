@@ -108,7 +108,8 @@ public class SelectMessageActivity extends ActionBarActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.selectMessageViewPager);
 
-        int color = Constants.COLOR_LIST[mColorOffset % Constants.COLOR_LIST.length];
+        int[] colorList = mData.getColorList();
+        int color = colorList[mColorOffset % colorList.length];
 
         mPagerAdapter = new NoteViewPagerAdapter(category.notes, this, color, mCategoryIndex, mData);
         mViewPager.setAdapter(mPagerAdapter);

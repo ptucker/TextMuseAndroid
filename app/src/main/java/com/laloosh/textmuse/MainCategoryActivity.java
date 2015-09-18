@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver;
@@ -450,12 +451,26 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
             View view = null;
 
+            TextMuseData data = GlobalData.getInstance().getData();
+            int[] colorList = data.getColorList();
+            int color = colorList[position % colorList.length];
+
             if (mNotes == null || mNotes.size() <= 0) {
                 view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
+
+                view.setBackgroundColor(colorList[0]);
+
+                TextView welcomeText = (TextView) view.findViewById(R.id.mainViewTextView);
+                welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[0]));
+
             } else {
                 int realPosition = position % (mNotes.size() + 1);
                 if (realPosition == 0) {
                     view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
+                    view.setBackgroundColor(colorList[0]);
+
+                    TextView welcomeText = (TextView) view.findViewById(R.id.mainViewTextView);
+                    welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[0]));
                 } else {
                     final int indexPosition = realPosition - 1;
                     final Note note = mNotes.get(indexPosition);
@@ -501,9 +516,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                         view = mLayoutInflater.inflate(R.layout.item_category_main_textonly, container, false);
 
                         View background = view.findViewById(R.id.mainViewBackgroundView);
-                        int color = Constants.COLOR_LIST[position % Constants.COLOR_LIST.length];
-                        background.setBackgroundColor(color);
 
+                        background.setBackgroundColor(color);
                     }
 
                     TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
@@ -653,7 +667,9 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
             ViewHolder holder = (ViewHolder) rowView.getTag();
 
-            int color = Constants.COLOR_LIST[position % Constants.COLOR_LIST.length];
+            TextMuseData data = GlobalData.getInstance().getData();
+            int[] colorList = data.getColorList();
+            int color = colorList[position % colorList.length];
 
             holder.mCategoryTitle.setText(category.name);
             holder.mCategoryTitle.setTextColor(color);

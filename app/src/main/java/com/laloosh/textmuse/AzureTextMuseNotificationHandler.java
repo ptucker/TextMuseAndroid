@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 import com.microsoft.windowsazure.mobileservices.notifications.MobileServicePush;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class AzureTextMuseNotificationHandler extends NotificationsHandler {
 
     @Override
-    public void onRegistered(Context context, final String gcmRegistrationId) {
+    public void onRegistered(final Context context, final String gcmRegistrationId) {
         super.onRegistered(context, gcmRegistrationId);
 
         new AsyncTask<Void, Void, Void>() {
@@ -39,6 +40,12 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
                             if (data.appId > 0) {
                                 tags = new ArrayList<String>();
                                 tags.add(Integer.toString(data.appId));
+
+                                int skinId = TextMuseSkinData.getCurrentlySelectedSkin(context);
+                                if (skinId <= 0) {
+                                    skinId = 0;
+                                }
+                                tags.add("skin" + Integer.toString(skinId));
                             }
                         }
 

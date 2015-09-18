@@ -225,12 +225,18 @@ public class WebDataParser {
 
                 skinData.launchIcons.add(icon);
 
+                if (xpp.isEmptyElementTag()) {
+                    xpp.next();
+                }
+
                 xpp.require(XmlPullParser.END_TAG, null, "launch");
             }
 
         }
 
         xpp.require(XmlPullParser.END_TAG, null, "skin");
+
+        parsedData.skinData = skinData;
     }
 
     protected void parseLocalNotifications(XmlPullParser xpp, TextMuseData parsedData) throws XmlPullParserException, IOException {

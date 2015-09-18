@@ -97,6 +97,16 @@ public class TextMuseData {
             return false;
         }
 
+        if ((this.skinData == null && data.skinData != null) || (this.skinData != null && data.skinData == null)) {
+            Log.d(Constants.TAG, "Skin data presence different");
+            return false;
+        }
+
+        if ((this.skinData != null && data.skinData != null) && (this.skinData.skinId != data.skinData.skinId)) {
+            Log.d(Constants.TAG, "Skin data ID different");
+            return false;
+        }
+
         //For some reason, sometimes the new flag is not set correctly.  Just use a hashset to compare
         HashSet<String> notesHashset = new HashSet<String>();
 
@@ -235,5 +245,17 @@ public class TextMuseData {
         }
 
         categories = reorderedCategories;
+    }
+
+    public int[] getColorList() {
+        if (skinData == null) {
+            return Constants.COLOR_LIST;
+        } else {
+            int c1 = 0xff000000 + skinData.c1;
+            int c2 = 0xff000000 + skinData.c2;
+            int c3 = 0xff000000 + skinData.c3;
+
+            return new int[]{c1, c2, c3};
+        }
     }
 }

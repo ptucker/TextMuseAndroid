@@ -208,8 +208,8 @@ public class SettingsActivity extends ActionBarActivity {
         @Override
         public int getCount() {
 
-            //There are a base of 6 (notifications, recent contacts, feedback, register, privacy policy, walkthrough) items
-            int total = 6;
+            //There are a base of 7 (notifications, recent contacts, feedback, register, privacy policy, walkthrough, skins) items
+            int total = 7;
 
             if (mShouldShowCategories) {
                 total += mCategoryList.size() + 1;  //category list plus header
@@ -244,6 +244,8 @@ public class SettingsActivity extends ActionBarActivity {
                 case 5:
                     return getTextOnlyView(convertView, parent, TextOnlyViewType.WALKTHROUGH_VIEW);
                 case 6:
+                    return getTextOnlyView(convertView, parent, TextOnlyViewType.SKIN_VIEW);
+                case 7:
                     return getCategoryHeader(convertView, parent);
                 default:
                     int adjustedPosition = position - (getCount() - mCategoryList.size());
@@ -363,6 +365,9 @@ public class SettingsActivity extends ActionBarActivity {
                     break;
                 case WALKTHROUGH_VIEW:
                     viewHolder.mTextView.setText("Walkthrough");
+                    break;
+                case SKIN_VIEW:
+                    viewHolder.mTextView.setText("Skins");
             }
 
             rowView.setOnClickListener(new View.OnClickListener() {
@@ -383,6 +388,9 @@ public class SettingsActivity extends ActionBarActivity {
                         startActivity(intent);
                     } else if (viewType == TextOnlyViewType.WALKTHROUGH_VIEW) {
                         Intent intent = new Intent(SettingsActivity.this, WalkthroughActivity.class);
+                        startActivity(intent);
+                    } else if (viewType == TextOnlyViewType.SKIN_VIEW) {
+                        Intent intent = new Intent(SettingsActivity.this, SkinSelectActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -471,7 +479,9 @@ public class SettingsActivity extends ActionBarActivity {
                     return 2;
                 case 5:        //walkthrough
                     return 2;
-                case 6:        //Category header
+                case 6:        //skins
+                    return 2;
+                case 7:        //Category header
                     return 3;
                 default:        //category elements
                     return 4;
@@ -490,7 +500,8 @@ public class SettingsActivity extends ActionBarActivity {
         FEEDBACK_VIEW,
         PRIVACY_POLICY_VIEW,
         REGISTER_VIEW,
-        WALKTHROUGH_VIEW
+        WALKTHROUGH_VIEW,
+        SKIN_VIEW
     }
 
     private class TextItemViewHolder {

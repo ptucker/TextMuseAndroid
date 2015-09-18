@@ -46,12 +46,31 @@ public class TextMuseSkinData {
         editor.putInt(Constants.SHARED_PREF_KEY_SKIN_COUNT, skins.size());
         int curIndex = 0;
         for (TextMuseSkin skin : skins) {
-            String key = Constants.SHARED_PREF_KEY_SKIN_BASE + Integer.toString(curIndex);
+            String key = Constants.SHARED_PREF_KEY_SKIN_BASE + Integer.toString(curIndex++);
             String value = skin.getJson();
 
             editor.putString(key, value);
         }
 
+        editor.commit();
+    }
+
+    //Gets the currently selected skin, or -1 if no skin is selected
+    public static int getCurrentlySelectedSkin(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREF_FILE, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(Constants.SHARED_PREF_KEY_SKIN_CURRENT_ID, -1);
+    }
+
+    public static void setCurrentlySelectedSkin(Context context, int id) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREF_FILE, Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (id <= 0) {
+            editor.remove(Constants.SHARED_PREF_KEY_SKIN_CURRENT_ID);
+        } else {
+            editor.putInt(Constants.SHARED_PREF_KEY_SKIN_CURRENT_ID, id);
+        }
         editor.commit();
     }
 }
