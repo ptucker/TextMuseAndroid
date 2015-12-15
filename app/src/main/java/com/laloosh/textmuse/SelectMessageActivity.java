@@ -197,7 +197,7 @@ public class SelectMessageActivity extends ActionBarActivity {
         }
     }
 
-    public static class NoteViewPagerAdapter extends PagerAdapter implements SetHighlightAsyncTask.SetHighlightAsyncTaskHandler {
+    public static class NoteViewPagerAdapter extends PagerAdapter {
 
         private List<Note> mNotes;
         private LayoutInflater mLayoutInflater;
@@ -416,37 +416,6 @@ public class SelectMessageActivity extends ActionBarActivity {
                 linkLayout.setVisibility(View.GONE);
             }
 
-            //Highlight colors
-            ViewGroup highlightLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutHighlight);
-            ImageView highlightImage = (ImageView) view.findViewById(R.id.detailViewImageViewHighlight);
-            TextView highlightText = (TextView) view.findViewById(R.id.detailViewTextViewHighlight);
-            if (note.liked) {
-                highlightImage.setColorFilter(0xffefd830);
-                highlightText.setTextColor(0xffefd830);
-            }
-            highlightLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ImageView highlightImage = (ImageView) v.findViewById(R.id.detailViewImageViewHighlight);
-                    TextView highlightText = (TextView) v.findViewById(R.id.detailViewTextViewHighlight);
-
-                    if (!note.liked) {
-                        note.liked = true;
-                        highlightImage.setColorFilter(0xffefd830);
-                        highlightText.setTextColor(0xffefd830);
-                    } else {
-                        note.liked = false;
-                        highlightImage.setColorFilter(null);
-                        highlightText.setTextColor(0xffbcbec0);
-                    }
-
-                    if (!note.isLocalNote()) {
-                        SetHighlightAsyncTask task = new SetHighlightAsyncTask(NoteViewPagerAdapter.this, mData.appId, note.liked, note, v);
-                        task.execute();
-                    }
-                }
-            });
-
             //Select box color
             ImageView selectBackground = (ImageView) view.findViewById(R.id.detailViewImageViewSelect);
             selectBackground.setColorFilter(mColor);
@@ -490,38 +459,5 @@ public class SelectMessageActivity extends ActionBarActivity {
             return view == object;
         }
 
-        @Override
-        public void handlePostResult(String s, Note note, boolean liked, View view) {
-
-            //in the case of a post error, we'll try to set everything back to what it was before if possible
-            if (s == null) {
-                Log.e(Constants.TAG, "Failed to post to highlight URL, attempting to revert like data");
-
-                note.liked = !liked;
-
-                //in the case where we've passed this view, we don't need to re-set these
-                if (view != null) {
-                    ImageView highlightImage = (ImageView) view.findViewById(R.id.detailViewImageViewHighlight);
-                    TextView highlightText = (TextView) view.findViewById(R.id.detailViewTextViewHighlight);
-
-                    if (note.liked) {
-                        highlightImage.setColorFilter(0xffefd830);
-                        highlightText.setTextColor(0xffefd830);
-                    } else {
-                        highlightImage.setColorFilter(null);
-                        highlightText.setTextColor(0xffbcbec0);
-                    }
-
-                }
-
-                SelectMessageActivity activity = (SelectMessageActivity) mActivity;
-                activity.showHighlightFailedDialog();
-            } else {
-                Log.d(Constants.TAG, "Succeeded in posting like/highlight data to server");
-                note.liked = liked;
-            }
-
-            mData.save(mActivity);
-        }
     }
 }

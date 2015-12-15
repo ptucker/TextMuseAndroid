@@ -7,46 +7,12 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/detailViewLayoutHighlight"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detailViewImageViewHighlight"
-            android:src="@drawable/highlight_icon"
-            android:layout_alignBottom="@+id/detailViewTextViewHighlight"
-            android:layout_alignTop="@+id/detailViewTextViewHighlight"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detailViewTextViewHighlight"
-            android:layout_toRightOf="@id/detailViewImageViewHighlight"
-            android:text="Highlight"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:padding="2dp"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/detailViewButtonSelectButton"
-        android:layout_above="@id/detailViewLayoutHighlight"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         >
         <ImageView
             android:layout_width="wrap_content"
