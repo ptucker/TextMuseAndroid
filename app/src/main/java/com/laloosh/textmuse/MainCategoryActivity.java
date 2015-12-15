@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver;
@@ -37,33 +33,21 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class MainCategoryActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
 
     public static final String ALREADY_LOADED_DATA_EXTRA = "com.laloosh.textmuse.alreadyloadeddata";
 
-    private static final long INTERVAL_BEFORE_AUTOSLIDESHOW = 15000;  //At least 15 seconds after the user scrolls a page before we autoscroll again
-    private static final int RANDOM_NOTES_PER_CATEGORY = 3;
     private static final int REQUEST_CODE_SETTINGS = 2333;
 
     private TextMuseData mData;
     private TextMuseSettings mSettings;
-    private ViewPager mMainViewPager;
-    private HeaderViewPagerAdapter mMainPagerAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListView mListView;
     private MainCategoryListArrayAdapter mCategoryListAdapter;
-    private ArrayList<Note> mRandomNotes;
-    private HashMap<Integer, CategoryAndNoteIndex> mRandomNoteIndex;
-    private Timer mTimer;
-    private long mLastUserScrollMillis;
     private boolean mShowPhotos;
 
     @Override
@@ -80,8 +64,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
         setSkinTitle();
 
-        generateRandomNotes();
-
         setLastNotified();
         setNotificationAlarm();
 
@@ -92,32 +74,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             @Override
             public void onRefresh() {
                 loadDataFromInternet();
-            }
-        });
-
-        mMainViewPager = (ViewPager) findViewById(R.id.mainFragmentViewPagerTop);
-
-        mMainPagerAdapter = new HeaderViewPagerAdapter(this, mRandomNotes, mRandomNoteIndex);
-        mMainViewPager.setAdapter(mMainPagerAdapter);
-        mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
-
-        mMainViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                //In the off chance that the user does scroll to either end, wrap them to the midpoint again
-                if (position == mMainPagerAdapter.getCount() - 1 || position == 0) {
-                    Log.d(Constants.TAG, "At ends of view pager, moving to middle element");
-                    mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                mLastUserScrollMillis = System.currentTimeMillis();
             }
         });
 
@@ -151,10 +107,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 }
             });
         }
-
-        mLastUserScrollMillis = System.currentTimeMillis();
-        mTimer = new Timer();
-        mTimer.scheduleAtFixedRate(new ChangeHeaderTask(), 0, 10000);
     }
 
 
@@ -192,75 +144,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         }
     }
 
-    private void generateRandomNotes() {
-
-        if (mData == null || mData.categories == null) {
-            mRandomNotes = null;
-            mRandomNoteIndex = null;
-            return;
-        }
-
-        //if we have data, then get some of it
-        mRandomNotes = new ArrayList<Note> ();
-        mRandomNoteIndex = new HashMap<Integer, CategoryAndNoteIndex>();
-
-        for (int catIdx = 0; catIdx < mData.categories.size(); catIdx++) {
-            Category category = mData.categories.get(catIdx);
-
-            if (category.notes != null && category.notes.size() > 0 && mSettings.shouldShowCategory(category.name)) {
-                if (category.notes.size() <= RANDOM_NOTES_PER_CATEGORY) {
-
-                    for (int i = 0; i < category.notes.size(); i++) {
-                        Note note = category.notes.get(i);
-                        mRandomNotes.add(note);
-
-                        CategoryAndNoteIndex categoryAndNoteIndex = new CategoryAndNoteIndex();
-                        categoryAndNoteIndex.mCategoryIndex = catIdx;
-                        categoryAndNoteIndex.mNoteIndex = i;
-                        mRandomNoteIndex.put(note.noteId, categoryAndNoteIndex);
-                    }
-
-                } else {
-                    int indexGap = category.notes.size() / RANDOM_NOTES_PER_CATEGORY;
-                    for (int i = 0; i < RANDOM_NOTES_PER_CATEGORY; i++) {
-                        Note note = category.notes.get(i * indexGap);
-                        mRandomNotes.add(note);
-
-                        CategoryAndNoteIndex categoryAndNoteIndex = new CategoryAndNoteIndex();
-                        categoryAndNoteIndex.mCategoryIndex = catIdx;
-                        categoryAndNoteIndex.mNoteIndex = i * indexGap;
-                        mRandomNoteIndex.put(note.noteId, categoryAndNoteIndex);
-                    }
-                }
-            }
-        }
-
-        //De-dupe the notes since sometimes there are duplicates in different categories
-        HashSet<Integer> noteIds = new HashSet<Integer> ();
-        Iterator iterator = mRandomNotes.iterator();
-        while (iterator.hasNext()) {
-            Note note = (Note) iterator.next();
-
-            if (!noteIds.contains(note.noteId)) {
-                noteIds.add(note.noteId);
-            } else {
-                iterator.remove();
-            }
-        }
-
-        //Randomize the notes
-        Random rand = new Random();
-        for (int i = 0; i < mRandomNotes.size() - 1; i++) {
-            int index = rand.nextInt(mRandomNotes.size() - i);
-            if (index == 0) {
-                continue;
-            }
-
-            Note swapNote = mRandomNotes.get(i + index);
-            mRandomNotes.set(i + index, mRandomNotes.get(i));
-            mRandomNotes.set(i, swapNote);
-        }
-    }
 
     private void generateViewsFromData() {
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
@@ -345,9 +228,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 mData = data;
 
                 generateViewsFromData();
-                generateRandomNotes();
-                mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);
-                mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
             }
         }
     }
@@ -365,9 +245,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                     setSkinTitle();
 
                     mCategoryListAdapter.updateSettings(mSettings);
-                    generateRandomNotes();
-                    mMainPagerAdapter.updateNotes(mRandomNotes, mRandomNoteIndex);
-                    mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
 
                     mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
                 }
@@ -375,219 +252,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         }
     }
 
-    public class ChangeHeaderTask extends TimerTask {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (mMainPagerAdapter.getCount() > 1 && System.currentTimeMillis() - mLastUserScrollMillis > INTERVAL_BEFORE_AUTOSLIDESHOW) {
-                        //mMainViewPager.setCurrentItem(mMainPagerAdapter.getReasonablePseudoRandomIndex(), false);
-                        if (mMainViewPager.getCurrentItem() == mMainPagerAdapter.getCount() - 2) {
-                            mMainViewPager.setCurrentItem(mMainPagerAdapter.getMidpoint(), false);
-                        } else {
-                            mMainViewPager.setCurrentItem(mMainViewPager.getCurrentItem() + 1, true);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    public static class HeaderViewPagerAdapter extends PagerAdapter {
-
-        private static final int WRAPAROUND_MULTIPLIER = 300;
-        private static final int TIMES_SINCE_RANDOM_LOGO_LIMIT = 6;
-
-        private ArrayList<Note> mNotes;
-        private HashMap<Integer, CategoryAndNoteIndex> mNotesIndex;
-        private LayoutInflater mLayoutInflater;
-        private Activity mContext;
-        private int mTimesSinceRandomLogo;
-        private Random mRandom;
-
-        //Needed to download images.  Should be pulled out into a base class
-        private HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
-
-        public HeaderViewPagerAdapter(Activity activity, ArrayList<Note> notes, HashMap<Integer, CategoryAndNoteIndex> notesIndex) {
-            mNotes = notes;
-            mNotesIndex = notesIndex;
-            mLayoutInflater = activity.getLayoutInflater();
-            mContext = activity;
-            mDownloadTargets = new HashMap<Integer, ImageDownloadTarget>();
-            mTimesSinceRandomLogo = 0;
-            mRandom = new Random();
-        }
-
-        public void updateNotes(ArrayList<Note> notes, HashMap<Integer, CategoryAndNoteIndex> noteIndex) {
-            mNotes = notes;
-            mNotesIndex = noteIndex;
-            notifyDataSetChanged();
-        }
-
-        public int getMidpoint() {
-            if (mNotes == null) {
-                return 0;
-            }
-
-            return (WRAPAROUND_MULTIPLIER / 2) * (mNotes.size() + 1);
-        }
-
-        //Gets an element in the middle of the adapter in a reasonable index so that the user can
-        //still scroll "infinitely" from there
-        public int getReasonablePseudoRandomIndex() {
-            mTimesSinceRandomLogo++;
-            if (mTimesSinceRandomLogo > TIMES_SINCE_RANDOM_LOGO_LIMIT) {
-                mTimesSinceRandomLogo = 0;
-                return getMidpoint();
-            } else {
-                int offset = mRandom.nextInt(mNotes.size()) + 1;
-                return getMidpoint() + offset;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            //If we don't have any notes, then just show the textmuse welcome banner. If we do, then
-            //the first and last elements need to be the welcome banner for wraparound behavior to work
-            if (mNotes == null) {
-                return 1;
-            } else {
-                //In order to approximate infinite scrolling, multiply the actual count by a multiplier so that the
-                //user gets tired of scrolling before it runs out
-
-                return (mNotes.size() + 1) * WRAPAROUND_MULTIPLIER + 1;
-            }
-
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-
-            View view = null;
-
-            TextMuseData data = GlobalData.getInstance().getData();
-            int[] colorList = data.getColorList();
-            int headerColorIndex = (colorList == Constants.COLOR_LIST) ? 0 : 1;
-            int color = colorList[position % colorList.length];
-
-            if (mNotes == null || mNotes.size() <= 0) {
-                view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
-
-                view.setBackgroundColor(colorList[headerColorIndex]);
-
-                TextView welcomeText = (TextView) view.findViewById(R.id.mainViewTextView);
-                welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[headerColorIndex]));
-
-            } else {
-                int realPosition = position % (mNotes.size() + 1);
-                if (realPosition == 0) {
-                    view = mLayoutInflater.inflate(R.layout.item_category_header, container, false);
-                    view.setBackgroundColor(colorList[headerColorIndex]);
-
-                    TextView welcomeText = (TextView) view.findViewById(R.id.mainViewTextView);
-                    welcomeText.setTextColor(ColorHelpers.getTextColorForBackground(colorList[headerColorIndex]));
-                } else {
-                    final int indexPosition = realPosition - 1;
-                    final Note note = mNotes.get(indexPosition);
-
-                    if (note.hasDisplayableMedia()) {
-                        view = mLayoutInflater.inflate(R.layout.item_category_main_textimage, container, false);
-
-                        ImageView imageView = (ImageView) view.findViewById(R.id.mainViewImageViewItemBackground);
-
-                        if (note.shouldCenterInside()) {
-                            Picasso.with(mContext)
-                                    .load(note.getDisplayMediaUrl(mContext))
-                                    .error(R.drawable.placeholder_image)
-                                    .fit()
-                                    .centerInside()
-                                    .into(imageView);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                        } else {
-                            Picasso.with(mContext)
-                                    .load(note.getDisplayMediaUrl(mContext))
-                                    .error(R.drawable.placeholder_image)
-                                    .fit()
-                                    .centerCrop()
-                                    .into(imageView);
-                            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        }
-
-                        if (!mDownloadTargets.containsKey(note.noteId)) {
-
-                            //Do another picasso task to write the image file to external storage.  This will
-                            //reuse the same image in the cache so it won't go to network again
-                            ImageDownloadTarget downloadTarget = new ImageDownloadTarget(mContext, note);
-
-                            //Use a hashmap to keep track of these for 2 reasons--to prevent them from getting
-                            //garbage collected, and also so that we don't download twice
-                            mDownloadTargets.put(note.noteId, downloadTarget);
-                            Picasso.with(mContext)
-                                    .load(note.mediaUrl)
-                                    .into(downloadTarget);
-                        }
-
-                    } else {
-                        view = mLayoutInflater.inflate(R.layout.item_category_main_textonly, container, false);
-
-                        View background = view.findViewById(R.id.mainViewBackgroundView);
-
-                        background.setBackgroundColor(color);
-
-                        TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
-                        textView.setTextColor(ColorHelpers.getTextColorForBackground(color));
-                    }
-
-                    TextView textView = (TextView) view.findViewById(R.id.mainViewTextViewText);
-                    if (note.hasDisplayableText()) {
-                        textView.setText(note.text);
-                    } else {
-                        textView.setVisibility(View.GONE);
-                    }
-
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            CategoryAndNoteIndex categoryAndNoteIndex = mNotesIndex.get(note.noteId);
-
-                            if (categoryAndNoteIndex != null) {
-                                Intent intent = new Intent(mContext, SelectMessageActivity.class);
-                                intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, categoryAndNoteIndex.mCategoryIndex);
-                                intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
-                                intent.putExtra(SelectMessageActivity.NOTE_INDEX_EXTRA, categoryAndNoteIndex.mNoteIndex);
-                                mContext.startActivity(intent);
-
-                            } else {
-                                Intent intent = new Intent(mContext, ContactsPickerActivity.class);
-                                intent.putExtra(ContactsPickerActivity.NOTE_OBJECT_EXTRA, note);
-                                mContext.startActivity(intent);
-
-                            }
-                        }
-                    });
-                }
-
-            }
-
-            if (view != null) {
-                container.addView(view);
-            }
-
-            return view;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-    }
 
     public static class MainCategoryListArrayAdapter extends ArrayAdapter<Category> {
 
