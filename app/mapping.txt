@@ -658,44 +658,7 @@ android.support.v4.app.FragmentState$1 -> android.support.v4.app.ad:
     148:148:android.support.v4.app.FragmentState[] newArray(int) -> a
     142:142:java.lang.Object[] newArray(int) -> newArray
     142:142:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.app.FragmentTabHost -> android.support.v4.app.FragmentTabHost:
-    java.util.ArrayList mTabs -> a
-    android.content.Context mContext -> b
-    android.support.v4.app.FragmentManager mFragmentManager -> c
-    int mContainerId -> d
-    android.widget.TabHost$OnTabChangeListener mOnTabChangeListener -> e
-    android.support.v4.app.FragmentTabHost$TabInfo mLastTab -> f
-    boolean mAttached -> g
-    183:183:void setup() -> setup
-    223:224:void setOnTabChangedListener(android.widget.TabHost$OnTabChangeListener) -> setOnTabChangedListener
-    250:285:void onAttachedToWindow() -> onAttachedToWindow
-    289:291:void onDetachedFromWindow() -> onDetachedFromWindow
-    295:298:android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
-    303:306:void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
-    310:319:void onTabChanged(java.lang.String) -> onTabChanged
-    322:353:android.support.v4.app.FragmentTransaction doTabChanged(java.lang.String,android.support.v4.app.FragmentTransaction) -> a
-android.support.v4.app.FragmentTabHost$1 -> android.support.v4.app.ae:
-android.support.v4.app.FragmentTabHost$SavedState -> android.support.v4.app.FragmentTabHost$SavedState:
-    java.lang.String curTab -> a
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    104:106:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    110:110:java.lang.String toString() -> toString
-android.support.v4.app.FragmentTabHost$SavedState$1 -> android.support.v4.app.af:
-    118:118:android.support.v4.app.FragmentTabHost$SavedState createFromParcel(android.os.Parcel) -> a
-    122:122:android.support.v4.app.FragmentTabHost$SavedState[] newArray(int) -> a
-    116:116:java.lang.Object[] newArray(int) -> newArray
-    116:116:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.app.FragmentTabHost$TabInfo -> android.support.v4.app.ag:
-    java.lang.String tag -> a
-    java.lang.Class clss -> b
-    android.os.Bundle args -> c
-    android.support.v4.app.Fragment fragment -> d
-    61:61:android.support.v4.app.Fragment access$102(android.support.v4.app.FragmentTabHost$TabInfo,android.support.v4.app.Fragment) -> a
-    61:61:android.support.v4.app.Fragment access$100(android.support.v4.app.FragmentTabHost$TabInfo) -> a
-    61:61:java.lang.String access$200(android.support.v4.app.FragmentTabHost$TabInfo) -> b
-    61:61:java.lang.Class access$300(android.support.v4.app.FragmentTabHost$TabInfo) -> c
-    61:61:android.os.Bundle access$400(android.support.v4.app.FragmentTabHost$TabInfo) -> d
-android.support.v4.app.FragmentTransaction -> android.support.v4.app.ah:
+android.support.v4.app.FragmentTransaction -> android.support.v4.app.ae:
     android.support.v4.app.FragmentTransaction add(android.support.v4.app.Fragment,java.lang.String) -> a
     android.support.v4.app.FragmentTransaction add(int,android.support.v4.app.Fragment,java.lang.String) -> a
     android.support.v4.app.FragmentTransaction remove(android.support.v4.app.Fragment) -> a
@@ -703,7 +666,7 @@ android.support.v4.app.FragmentTransaction -> android.support.v4.app.ah:
     android.support.v4.app.FragmentTransaction attach(android.support.v4.app.Fragment) -> c
     int commit() -> a
     int commitAllowingStateLoss() -> b
-android.support.v4.app.FragmentTransitionCompat21 -> android.support.v4.app.ai:
+android.support.v4.app.FragmentTransitionCompat21 -> android.support.v4.app.af:
     37:37:java.lang.String getTransitionName(android.view.View) -> a
     41:44:java.lang.Object cloneTransition(java.lang.Object) -> a
     49:61:java.lang.Object captureExitingViews(java.lang.Object,android.view.View,java.util.ArrayList,java.util.Map,android.view.View) -> a
@@ -723,10 +686,10 @@ android.support.v4.app.FragmentTransitionCompat21 -> android.support.v4.app.ai:
     373:373:boolean isNullOrEmpty(java.util.List) -> a
     35:35:void access$000(java.util.ArrayList,android.view.View) -> a
     35:35:android.graphics.Rect access$100(android.view.View) -> b
-android.support.v4.app.FragmentTransitionCompat21$1 -> android.support.v4.app.aj:
+android.support.v4.app.FragmentTransitionCompat21$1 -> android.support.v4.app.ag:
     android.graphics.Rect val$epicenter -> a
     81:81:android.graphics.Rect onGetEpicenter(android.transition.Transition) -> onGetEpicenter
-android.support.v4.app.FragmentTransitionCompat21$2 -> android.support.v4.app.ak:
+android.support.v4.app.FragmentTransitionCompat21$2 -> android.support.v4.app.ah:
     android.view.View val$container -> a
     android.support.v4.app.FragmentTransitionCompat21$ViewRetriever val$inFragment -> b
     java.util.Map val$nameOverrides -> c
@@ -735,11 +698,11 @@ android.support.v4.app.FragmentTransitionCompat21$2 -> android.support.v4.app.ak
     java.util.ArrayList val$enteringViews -> f
     android.view.View val$nonExistentView -> g
     117:140:boolean onPreDraw() -> onPreDraw
-android.support.v4.app.FragmentTransitionCompat21$3 -> android.support.v4.app.al:
+android.support.v4.app.FragmentTransitionCompat21$3 -> android.support.v4.app.ai:
     android.graphics.Rect mEpicenter -> b
     android.support.v4.app.FragmentTransitionCompat21$EpicenterView val$epicenterView -> a
     216:219:android.graphics.Rect onGetEpicenter(android.transition.Transition) -> onGetEpicenter
-android.support.v4.app.FragmentTransitionCompat21$4 -> android.support.v4.app.am:
+android.support.v4.app.FragmentTransitionCompat21$4 -> android.support.v4.app.aj:
     android.view.View val$sceneRoot -> a
     android.transition.Transition val$enterTransition -> b
     android.view.View val$nonExistentView -> c
@@ -752,19 +715,19 @@ android.support.v4.app.FragmentTransitionCompat21$4 -> android.support.v4.app.am
     java.util.ArrayList val$hiddenViews -> j
     android.transition.Transition val$overallTransition -> k
     284:305:boolean onPreDraw() -> onPreDraw
-android.support.v4.app.FragmentTransitionCompat21$EpicenterView -> android.support.v4.app.an:
+android.support.v4.app.FragmentTransitionCompat21$EpicenterView -> android.support.v4.app.ak:
     android.view.View epicenter -> a
-android.support.v4.app.FragmentTransitionCompat21$ViewRetriever -> android.support.v4.app.ao:
+android.support.v4.app.FragmentTransitionCompat21$ViewRetriever -> android.support.v4.app.al:
     android.view.View getView() -> a
-android.support.v4.app.LoaderManager -> android.support.v4.app.ap:
+android.support.v4.app.LoaderManager -> android.support.v4.app.am:
     android.support.v4.content.Loader initLoader(int,android.os.Bundle,android.support.v4.app.LoaderManager$LoaderCallbacks) -> a
     android.support.v4.content.Loader restartLoader(int,android.os.Bundle,android.support.v4.app.LoaderManager$LoaderCallbacks) -> b
     184:184:boolean hasRunningLoaders() -> a
-android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.aq:
+android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.an:
     android.support.v4.content.Loader onCreateLoader(int,android.os.Bundle) -> a
     void onLoadFinished(android.support.v4.content.Loader,java.lang.Object) -> a
     void onLoaderReset(android.support.v4.content.Loader) -> a
-android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.ar:
+android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.ao:
     boolean DEBUG -> a
     android.support.v4.util.SparseArrayCompat mLoaders -> b
     android.support.v4.util.SparseArrayCompat mInactiveLoaders -> c
@@ -789,7 +752,7 @@ android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.ar:
     790:796:java.lang.String toString() -> toString
     801:821:void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
     825:831:boolean hasRunningLoaders() -> a
-android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.as:
+android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.ap:
     int mId -> a
     android.os.Bundle mArgs -> b
     android.support.v4.app.LoaderManager$LoaderCallbacks mCallbacks -> c
@@ -815,7 +778,7 @@ android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.as
     418:435:void callOnLoadFinished(android.support.v4.content.Loader,java.lang.Object) -> b
     439:447:java.lang.String toString() -> toString
     451:474:void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
-android.support.v4.app.NavUtils -> android.support.v4.app.at:
+android.support.v4.app.NavUtils -> android.support.v4.app.aq:
     android.support.v4.app.NavUtils$NavUtilsImpl IMPL -> a
     159:159:boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     202:203:void navigateUpTo(android.app.Activity,android.content.Intent) -> b
@@ -823,44 +786,44 @@ android.support.v4.app.NavUtils -> android.support.v4.app.at:
     256:266:android.content.Intent getParentActivityIntent(android.content.Context,android.content.ComponentName) -> a
     281:284:java.lang.String getParentActivityName(android.app.Activity) -> b
     300:303:java.lang.String getParentActivityName(android.content.Context,android.content.ComponentName) -> b
-android.support.v4.app.NavUtils$NavUtilsImpl -> android.support.v4.app.au:
+android.support.v4.app.NavUtils$NavUtilsImpl -> android.support.v4.app.ar:
     android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     void navigateUpTo(android.app.Activity,android.content.Intent) -> b
     java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> a
-android.support.v4.app.NavUtils$NavUtilsImplBase -> android.support.v4.app.av:
+android.support.v4.app.NavUtils$NavUtilsImplBase -> android.support.v4.app.as:
     53:67:android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     73:74:boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     79:82:void navigateUpTo(android.app.Activity,android.content.Intent) -> b
     86:92:java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> a
-android.support.v4.app.NavUtils$NavUtilsImplJB -> android.support.v4.app.aw:
+android.support.v4.app.NavUtils$NavUtilsImplJB -> android.support.v4.app.at:
     102:106:android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     110:110:android.content.Intent superGetParentActivityIntent(android.app.Activity) -> b
     115:115:boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     120:121:void navigateUpTo(android.app.Activity,android.content.Intent) -> b
     125:129:java.lang.String getParentActivityName(android.content.Context,android.content.pm.ActivityInfo) -> a
-android.support.v4.app.NavUtilsJB -> android.support.v4.app.ax:
+android.support.v4.app.NavUtilsJB -> android.support.v4.app.au:
     25:25:android.content.Intent getParentActivityIntent(android.app.Activity) -> a
     29:29:boolean shouldUpRecreateTask(android.app.Activity,android.content.Intent) -> a
     33:34:void navigateUpTo(android.app.Activity,android.content.Intent) -> b
     37:37:java.lang.String getParentActivityName(android.content.pm.ActivityInfo) -> a
-android.support.v4.app.NoSaveStateFrameLayout -> android.support.v4.app.ay:
+android.support.v4.app.NoSaveStateFrameLayout -> android.support.v4.app.av:
     32:41:android.view.ViewGroup wrap(android.view.View) -> a
     53:54:void dispatchSaveInstanceState(android.util.SparseArray) -> dispatchSaveInstanceState
     61:62:void dispatchRestoreInstanceState(android.util.SparseArray) -> dispatchRestoreInstanceState
-android.support.v4.app.NotificationBuilderWithActions -> android.support.v4.app.az:
+android.support.v4.app.NotificationBuilderWithActions -> android.support.v4.app.aw:
     void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
-android.support.v4.app.NotificationBuilderWithBuilderAccessor -> android.support.v4.app.ba:
+android.support.v4.app.NotificationBuilderWithBuilderAccessor -> android.support.v4.app.ax:
     android.app.Notification$Builder getBuilder() -> a
     android.app.Notification build() -> b
-android.support.v4.app.NotificationCompat -> android.support.v4.app.bb:
+android.support.v4.app.NotificationCompat -> android.support.v4.app.ay:
     android.support.v4.app.NotificationCompat$NotificationCompatImpl IMPL -> a
     792:795:void addActionsToBuilder(android.support.v4.app.NotificationBuilderWithActions,java.util.ArrayList) -> b
     799:825:void addStyleToBuilderJellybean(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style) -> b
     41:41:void access$000(android.support.v4.app.NotificationBuilderWithActions,java.util.ArrayList) -> a
     41:41:void access$100(android.support.v4.app.NotificationBuilderWithBuilderAccessor,android.support.v4.app.NotificationCompat$Style) -> a
     41:41:android.support.v4.app.NotificationCompat$NotificationCompatImpl access$200() -> a
-android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.bc:
+android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.az:
     android.os.Bundle mExtras -> e
     android.support.v4.app.RemoteInput[] mRemoteInputs -> f
     int icon -> a
@@ -873,14 +836,14 @@ android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.bc:
     1857:1857:android.os.Bundle getExtras() -> d
     1866:1866:android.support.v4.app.RemoteInput[] getRemoteInputs() -> e
     1806:1806:android.support.v4.app.RemoteInputCompatBase$RemoteInput[] getRemoteInputs() -> f
-android.support.v4.app.NotificationCompat$Action$1 -> android.support.v4.app.bd:
-android.support.v4.app.NotificationCompat$BigPictureStyle -> android.support.v4.app.be:
+android.support.v4.app.NotificationCompat$Action$1 -> android.support.v4.app.ba:
+android.support.v4.app.NotificationCompat$BigPictureStyle -> android.support.v4.app.bb:
     android.graphics.Bitmap mPicture -> a
     android.graphics.Bitmap mBigLargeIcon -> b
     boolean mBigLargeIconSet -> c
-android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.bf:
+android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.bc:
     java.lang.CharSequence mBigText -> a
-android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.bg:
+android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.bd:
     android.content.Context mContext -> a
     java.lang.CharSequence mContentTitle -> b
     java.lang.CharSequence mContentText -> c
@@ -918,64 +881,64 @@ android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.bg:
     1559:1559:android.app.Notification build() -> a
     1566:1566:android.support.v4.app.NotificationCompat$BuilderExtender getExtender() -> b
     1570:1574:java.lang.CharSequence limitCharSequenceLength(java.lang.CharSequence) -> c
-android.support.v4.app.NotificationCompat$BuilderExtender -> android.support.v4.app.bh:
+android.support.v4.app.NotificationCompat$BuilderExtender -> android.support.v4.app.be:
     469:469:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationBuilderWithBuilderAccessor) -> a
-android.support.v4.app.NotificationCompat$InboxStyle -> android.support.v4.app.bi:
+android.support.v4.app.NotificationCompat$InboxStyle -> android.support.v4.app.bf:
     java.util.ArrayList mTexts -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImpl -> android.support.v4.app.bj:
+android.support.v4.app.NotificationCompat$NotificationCompatImpl -> android.support.v4.app.bg:
     android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplApi20 -> android.support.v4.app.bk:
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi20 -> android.support.v4.app.bh:
     705:713:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplApi21 -> android.support.v4.app.bl:
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi21 -> android.support.v4.app.bi:
     759:768:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplBase -> android.support.v4.app.bm:
+android.support.v4.app.NotificationCompat$NotificationCompatImplBase -> android.support.v4.app.bj:
     476:483:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplGingerbread -> android.support.v4.app.bn:
+android.support.v4.app.NotificationCompat$NotificationCompatImplGingerbread -> android.support.v4.app.bk:
     553:562:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplHoneycomb -> android.support.v4.app.bo:
+android.support.v4.app.NotificationCompat$NotificationCompatImplHoneycomb -> android.support.v4.app.bl:
     569:569:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplIceCreamSandwich -> android.support.v4.app.bp:
+android.support.v4.app.NotificationCompat$NotificationCompatImplIceCreamSandwich -> android.support.v4.app.bm:
     578:583:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplJellybean -> android.support.v4.app.bq:
+android.support.v4.app.NotificationCompat$NotificationCompatImplJellybean -> android.support.v4.app.bn:
     590:598:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$NotificationCompatImplKitKat -> android.support.v4.app.br:
+android.support.v4.app.NotificationCompat$NotificationCompatImplKitKat -> android.support.v4.app.bo:
     654:662:android.app.Notification build(android.support.v4.app.NotificationCompat$Builder,android.support.v4.app.NotificationCompat$BuilderExtender) -> a
-android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.bs:
+android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.bp:
     java.lang.CharSequence mBigContentTitle -> d
     java.lang.CharSequence mSummaryText -> e
     boolean mSummaryTextSet -> f
-android.support.v4.app.NotificationCompatApi20 -> android.support.v4.app.bt:
+android.support.v4.app.NotificationCompatApi20 -> android.support.v4.app.bq:
     102:114:void addAction(android.app.Notification$Builder,android.support.v4.app.NotificationCompatBase$Action) -> a
-android.support.v4.app.NotificationCompatApi20$Builder -> android.support.v4.app.bu:
+android.support.v4.app.NotificationCompatApi20$Builder -> android.support.v4.app.br:
     android.app.Notification$Builder b -> a
     android.os.Bundle mExtras -> b
     86:87:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
     91:91:android.app.Notification$Builder getBuilder() -> a
     96:97:android.app.Notification build() -> b
-android.support.v4.app.NotificationCompatApi21 -> android.support.v4.app.bv:
-android.support.v4.app.NotificationCompatApi21$Builder -> android.support.v4.app.bw:
+android.support.v4.app.NotificationCompatApi21 -> android.support.v4.app.bs:
+android.support.v4.app.NotificationCompatApi21$Builder -> android.support.v4.app.bt:
     android.app.Notification$Builder b -> a
     110:111:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
     115:115:android.app.Notification$Builder getBuilder() -> a
     120:120:android.app.Notification build() -> b
-android.support.v4.app.NotificationCompatBase -> android.support.v4.app.bx:
-android.support.v4.app.NotificationCompatBase$Action -> android.support.v4.app.by:
+android.support.v4.app.NotificationCompatBase -> android.support.v4.app.bu:
+android.support.v4.app.NotificationCompatBase$Action -> android.support.v4.app.bv:
     int getIcon() -> a
     java.lang.CharSequence getTitle() -> b
     android.app.PendingIntent getActionIntent() -> c
     android.os.Bundle getExtras() -> d
     android.support.v4.app.RemoteInputCompatBase$RemoteInput[] getRemoteInputs() -> f
-android.support.v4.app.NotificationCompatBase$Action$Factory -> android.support.v4.app.bz:
-android.support.v4.app.NotificationCompatGingerbread -> android.support.v4.app.ca:
+android.support.v4.app.NotificationCompatBase$Action$Factory -> android.support.v4.app.bw:
+android.support.v4.app.NotificationCompatGingerbread -> android.support.v4.app.bx:
     27:29:android.app.Notification add(android.app.Notification,android.content.Context,java.lang.CharSequence,java.lang.CharSequence,android.app.PendingIntent,android.app.PendingIntent) -> a
-android.support.v4.app.NotificationCompatHoneycomb -> android.support.v4.app.cb:
+android.support.v4.app.NotificationCompatHoneycomb -> android.support.v4.app.by:
     30:52:android.app.Notification add(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap) -> a
-android.support.v4.app.NotificationCompatIceCreamSandwich -> android.support.v4.app.cc:
-android.support.v4.app.NotificationCompatIceCreamSandwich$Builder -> android.support.v4.app.cd:
+android.support.v4.app.NotificationCompatIceCreamSandwich -> android.support.v4.app.bz:
+android.support.v4.app.NotificationCompatIceCreamSandwich$Builder -> android.support.v4.app.ca:
     android.app.Notification$Builder b -> a
     61:61:android.app.Notification$Builder getBuilder() -> a
     66:66:android.app.Notification build() -> b
-android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.ce:
+android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.cb:
     java.lang.Object sExtrasLock -> a
     java.lang.reflect.Field sExtrasField -> b
     boolean sExtrasFieldAccessFailed -> c
@@ -986,22 +949,22 @@ android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.ce:
     194:204:android.util.SparseArray buildActionExtrasMap(java.util.List) -> a
     212:240:android.os.Bundle getExtras(android.app.Notification) -> a
     258:264:android.os.Bundle writeActionAndGetExtras(android.app.Notification$Builder,android.support.v4.app.NotificationCompatBase$Action) -> a
-android.support.v4.app.NotificationCompatJellybean$Builder -> android.support.v4.app.cf:
+android.support.v4.app.NotificationCompatJellybean$Builder -> android.support.v4.app.cc:
     android.app.Notification$Builder b -> a
     android.os.Bundle mExtras -> b
     java.util.List mActionExtrasList -> c
     124:125:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
     129:129:android.app.Notification$Builder getBuilder() -> a
     133:149:android.app.Notification build() -> b
-android.support.v4.app.NotificationCompatKitKat -> android.support.v4.app.cg:
-android.support.v4.app.NotificationCompatKitKat$Builder -> android.support.v4.app.ch:
+android.support.v4.app.NotificationCompatKitKat -> android.support.v4.app.cd:
+android.support.v4.app.NotificationCompatKitKat$Builder -> android.support.v4.app.ce:
     android.app.Notification$Builder b -> a
     android.os.Bundle mExtras -> b
     java.util.List mActionExtrasList -> c
     97:98:void addAction(android.support.v4.app.NotificationCompatBase$Action) -> a
     102:102:android.app.Notification$Builder getBuilder() -> a
     107:115:android.app.Notification build() -> b
-android.support.v4.app.RemoteInput -> android.support.v4.app.ci:
+android.support.v4.app.RemoteInput -> android.support.v4.app.cf:
     java.lang.String mResultKey -> b
     java.lang.CharSequence mLabel -> c
     java.lang.CharSequence[] mChoices -> d
@@ -1014,31 +977,31 @@ android.support.v4.app.RemoteInput -> android.support.v4.app.ci:
     71:71:java.lang.CharSequence[] getChoices() -> c
     81:81:boolean getAllowFreeFormInput() -> d
     88:88:android.os.Bundle getExtras() -> e
-android.support.v4.app.RemoteInput$1 -> android.support.v4.app.cj:
-android.support.v4.app.RemoteInput$Impl -> android.support.v4.app.ck:
-android.support.v4.app.RemoteInput$ImplApi20 -> android.support.v4.app.cl:
-android.support.v4.app.RemoteInput$ImplBase -> android.support.v4.app.cm:
-android.support.v4.app.RemoteInput$ImplJellybean -> android.support.v4.app.cn:
-android.support.v4.app.RemoteInputCompatApi20 -> android.support.v4.app.co:
+android.support.v4.app.RemoteInput$1 -> android.support.v4.app.cg:
+android.support.v4.app.RemoteInput$Impl -> android.support.v4.app.ch:
+android.support.v4.app.RemoteInput$ImplApi20 -> android.support.v4.app.ci:
+android.support.v4.app.RemoteInput$ImplBase -> android.support.v4.app.cj:
+android.support.v4.app.RemoteInput$ImplJellybean -> android.support.v4.app.ck:
+android.support.v4.app.RemoteInputCompatApi20 -> android.support.v4.app.cl:
     39:52:android.app.RemoteInput[] fromCompat(android.support.v4.app.RemoteInputCompatBase$RemoteInput[]) -> a
-android.support.v4.app.RemoteInputCompatBase -> android.support.v4.app.cp:
-android.support.v4.app.RemoteInputCompatBase$RemoteInput -> android.support.v4.app.cq:
+android.support.v4.app.RemoteInputCompatBase -> android.support.v4.app.cm:
+android.support.v4.app.RemoteInputCompatBase$RemoteInput -> android.support.v4.app.cn:
     java.lang.String getResultKey() -> a
     java.lang.CharSequence getLabel() -> b
     java.lang.CharSequence[] getChoices() -> c
     boolean getAllowFreeFormInput() -> d
     android.os.Bundle getExtras() -> e
-android.support.v4.app.RemoteInputCompatBase$RemoteInput$Factory -> android.support.v4.app.cr:
-android.support.v4.app.RemoteInputCompatJellybean -> android.support.v4.app.cs:
+android.support.v4.app.RemoteInputCompatBase$RemoteInput$Factory -> android.support.v4.app.co:
+android.support.v4.app.RemoteInputCompatJellybean -> android.support.v4.app.cp:
     47:53:android.os.Bundle toBundle(android.support.v4.app.RemoteInputCompatBase$RemoteInput) -> a
     69:76:android.os.Bundle[] toBundleArray(android.support.v4.app.RemoteInputCompatBase$RemoteInput[]) -> a
-android.support.v4.app.SharedElementCallback -> android.support.v4.app.ct:
+android.support.v4.app.SharedElementCallback -> android.support.v4.app.cq:
     int MAX_IMAGE_SIZE -> a
     65:65:void onSharedElementStart(java.util.List,java.util.List,java.util.List) -> a
     90:90:void onSharedElementEnd(java.util.List,java.util.List,java.util.List) -> b
     125:125:void onMapSharedElements(java.util.List,java.util.Map) -> a
-android.support.v4.app.SuperNotCalledException -> android.support.v4.app.cu:
-android.support.v4.app.TaskStackBuilder -> android.support.v4.app.cv:
+android.support.v4.app.SuperNotCalledException -> android.support.v4.app.cr:
+android.support.v4.app.TaskStackBuilder -> android.support.v4.app.cs:
     android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl IMPL -> a
     java.util.ArrayList mIntents -> b
     android.content.Context mSourceContext -> c
@@ -1049,11 +1012,11 @@ android.support.v4.app.TaskStackBuilder -> android.support.v4.app.cv:
     289:289:java.util.Iterator iterator() -> iterator
     301:302:void startActivities() -> a
     316:330:void startActivities(android.os.Bundle) -> a
-android.support.v4.app.TaskStackBuilder$SupportParentable -> android.support.v4.app.cw:
+android.support.v4.app.TaskStackBuilder$SupportParentable -> android.support.v4.app.ct:
     android.content.Intent getSupportParentActivityIntent() -> a
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl -> android.support.v4.app.cx:
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplBase -> android.support.v4.app.cy:
-android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplHoneycomb -> android.support.v4.app.cz:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImpl -> android.support.v4.app.cu:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplBase -> android.support.v4.app.cv:
+android.support.v4.app.TaskStackBuilder$TaskStackBuilderImplHoneycomb -> android.support.v4.app.cw:
 android.support.v4.content.AsyncTaskLoader -> android.support.v4.b.a:
     android.support.v4.content.AsyncTaskLoader$LoadTask mTask -> a
     android.support.v4.content.AsyncTaskLoader$LoadTask mCancellingTask -> b
@@ -1354,170 +1317,6 @@ android.support.v4.internal.view.SupportMenuItem -> android.support.v4.d.a.b:
     boolean isActionViewExpanded() -> isActionViewExpanded
     android.support.v4.internal.view.SupportMenuItem setSupportOnActionExpandListener(android.support.v4.view.MenuItemCompat$OnActionExpandListener) -> a
 android.support.v4.internal.view.SupportSubMenu -> android.support.v4.d.a.c:
-android.support.v4.media.MediaDescriptionCompat -> android.support.v4.media.MediaDescriptionCompat:
-    java.lang.String mMediaId -> a
-    java.lang.CharSequence mTitle -> b
-    java.lang.CharSequence mSubtitle -> c
-    java.lang.CharSequence mDescription -> d
-    android.graphics.Bitmap mIcon -> e
-    android.net.Uri mIconUri -> f
-    android.os.Bundle mExtras -> g
-    java.lang.Object mDescriptionObj -> h
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    151:151:int describeContents() -> describeContents
-    156:167:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    171:171:java.lang.String toString() -> toString
-    186:199:java.lang.Object getMediaDescription() -> a
-    215:230:android.support.v4.media.MediaDescriptionCompat fromMediaDescription(java.lang.Object) -> a
-android.support.v4.media.MediaDescriptionCompat$1 -> android.support.v4.media.a:
-    237:240:android.support.v4.media.MediaDescriptionCompat createFromParcel(android.os.Parcel) -> a
-    246:246:android.support.v4.media.MediaDescriptionCompat[] newArray(int) -> a
-    234:234:java.lang.Object[] newArray(int) -> newArray
-    234:234:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.media.MediaDescriptionCompat$Builder -> android.support.v4.media.b:
-    java.lang.String mMediaId -> a
-    java.lang.CharSequence mTitle -> b
-    java.lang.CharSequence mSubtitle -> c
-    java.lang.CharSequence mDescription -> d
-    android.graphics.Bitmap mIcon -> e
-    android.net.Uri mIconUri -> f
-    android.os.Bundle mExtras -> g
-    275:276:android.support.v4.media.MediaDescriptionCompat$Builder setMediaId(java.lang.String) -> a
-    286:287:android.support.v4.media.MediaDescriptionCompat$Builder setTitle(java.lang.CharSequence) -> a
-    297:298:android.support.v4.media.MediaDescriptionCompat$Builder setSubtitle(java.lang.CharSequence) -> b
-    309:310:android.support.v4.media.MediaDescriptionCompat$Builder setDescription(java.lang.CharSequence) -> c
-    321:322:android.support.v4.media.MediaDescriptionCompat$Builder setIconBitmap(android.graphics.Bitmap) -> a
-    333:334:android.support.v4.media.MediaDescriptionCompat$Builder setIconUri(android.net.Uri) -> a
-    344:345:android.support.v4.media.MediaDescriptionCompat$Builder setExtras(android.os.Bundle) -> a
-    355:355:android.support.v4.media.MediaDescriptionCompat build() -> a
-android.support.v4.media.MediaDescriptionCompatApi21 -> android.support.v4.media.c:
-    27:27:java.lang.String getMediaId(java.lang.Object) -> a
-    31:31:java.lang.CharSequence getTitle(java.lang.Object) -> b
-    35:35:java.lang.CharSequence getSubtitle(java.lang.Object) -> c
-    39:39:java.lang.CharSequence getDescription(java.lang.Object) -> d
-    43:43:android.graphics.Bitmap getIconBitmap(java.lang.Object) -> e
-    47:47:android.net.Uri getIconUri(java.lang.Object) -> f
-    51:51:android.os.Bundle getExtras(java.lang.Object) -> g
-    55:56:void writeToParcel(java.lang.Object,android.os.Parcel,int) -> a
-    59:59:java.lang.Object fromParcel(android.os.Parcel) -> a
-android.support.v4.media.MediaDescriptionCompatApi21$Builder -> android.support.v4.media.d:
-    64:64:java.lang.Object newInstance() -> a
-    69:70:void setMediaId(java.lang.Object,java.lang.String) -> a
-    73:74:void setTitle(java.lang.Object,java.lang.CharSequence) -> a
-    77:78:void setSubtitle(java.lang.Object,java.lang.CharSequence) -> b
-    81:82:void setDescription(java.lang.Object,java.lang.CharSequence) -> c
-    85:86:void setIconBitmap(java.lang.Object,android.graphics.Bitmap) -> a
-    89:90:void setIconUri(java.lang.Object,android.net.Uri) -> a
-    93:94:void setExtras(java.lang.Object,android.os.Bundle) -> a
-    97:97:java.lang.Object build(java.lang.Object) -> a
-android.support.v4.media.MediaMetadataCompat -> android.support.v4.media.MediaMetadataCompat:
-    android.support.v4.util.ArrayMap METADATA_KEYS_TYPE -> a
-    java.lang.String[] PREFERRED_DESCRIPTION_ORDER -> b
-    java.lang.String[] PREFERRED_BITMAP_ORDER -> c
-    java.lang.String[] PREFERRED_URI_ORDER -> d
-    android.os.Bundle mBundle -> e
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    421:421:int describeContents() -> describeContents
-    426:427:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-android.support.v4.media.MediaMetadataCompat$1 -> android.support.v4.media.e:
-    551:551:android.support.v4.media.MediaMetadataCompat createFromParcel(android.os.Parcel) -> a
-    556:556:android.support.v4.media.MediaMetadataCompat[] newArray(int) -> a
-    548:548:java.lang.Object[] newArray(int) -> newArray
-    548:548:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.media.RatingCompat -> android.support.v4.media.RatingCompat:
-    int mRatingStyle -> a
-    float mRatingValue -> b
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    87:87:java.lang.String toString() -> toString
-    93:93:int describeContents() -> describeContents
-    98:100:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-android.support.v4.media.RatingCompat$1 -> android.support.v4.media.f:
-    111:111:android.support.v4.media.RatingCompat createFromParcel(android.os.Parcel) -> a
-    116:116:android.support.v4.media.RatingCompat[] newArray(int) -> a
-    103:103:java.lang.Object[] newArray(int) -> newArray
-    103:103:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.media.session.MediaSessionCompat -> android.support.v4.media.session.MediaSessionCompat:
-android.support.v4.media.session.MediaSessionCompat$1 -> android.support.v4.media.session.a:
-android.support.v4.media.session.MediaSessionCompat$QueueItem -> android.support.v4.media.session.MediaSessionCompat$QueueItem:
-    android.support.v4.media.MediaDescriptionCompat mDescription -> a
-    long mId -> b
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    792:794:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    798:798:int describeContents() -> describeContents
-    851:851:java.lang.String toString() -> toString
-android.support.v4.media.session.MediaSessionCompat$QueueItem$1 -> android.support.v4.media.session.b:
-    840:840:android.support.v4.media.session.MediaSessionCompat$QueueItem createFromParcel(android.os.Parcel) -> a
-    845:845:android.support.v4.media.session.MediaSessionCompat$QueueItem[] newArray(int) -> a
-    836:836:java.lang.Object[] newArray(int) -> newArray
-    836:836:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.media.session.MediaSessionCompat$ResultReceiverWrapper -> android.support.v4.media.session.MediaSessionCompat$ResultReceiverWrapper:
-    android.os.ResultReceiver mResultReceiver -> a
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    888:888:int describeContents() -> describeContents
-    893:894:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-android.support.v4.media.session.MediaSessionCompat$ResultReceiverWrapper$1 -> android.support.v4.media.session.c:
-    877:877:android.support.v4.media.session.MediaSessionCompat$ResultReceiverWrapper createFromParcel(android.os.Parcel) -> a
-    882:882:android.support.v4.media.session.MediaSessionCompat$ResultReceiverWrapper[] newArray(int) -> a
-    874:874:java.lang.Object[] newArray(int) -> newArray
-    874:874:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.media.session.MediaSessionCompat$Token -> android.support.v4.media.session.MediaSessionCompat$Token:
-    java.lang.Object mInner -> a
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    688:688:int describeContents() -> describeContents
-    693:698:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-android.support.v4.media.session.MediaSessionCompat$Token$1 -> android.support.v4.media.session.d:
-    718:723:android.support.v4.media.session.MediaSessionCompat$Token createFromParcel(android.os.Parcel) -> a
-    728:728:android.support.v4.media.session.MediaSessionCompat$Token[] newArray(int) -> a
-    714:714:java.lang.Object[] newArray(int) -> newArray
-    714:714:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.media.session.ParcelableVolumeInfo -> android.support.v4.media.session.ParcelableVolumeInfo:
-    int volumeType -> a
-    int audioStream -> b
-    int controlType -> c
-    int maxVolume -> d
-    int currentVolume -> e
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    52:52:int describeContents() -> describeContents
-    57:62:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-android.support.v4.media.session.ParcelableVolumeInfo$1 -> android.support.v4.media.session.e:
-    69:69:android.support.v4.media.session.ParcelableVolumeInfo createFromParcel(android.os.Parcel) -> a
-    74:74:android.support.v4.media.session.ParcelableVolumeInfo[] newArray(int) -> a
-    66:66:java.lang.Object[] newArray(int) -> newArray
-    66:66:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.media.session.PlaybackStateCompat -> android.support.v4.media.session.PlaybackStateCompat:
-    int mState -> a
-    long mPosition -> b
-    long mBufferedPosition -> c
-    float mSpeed -> d
-    long mActions -> e
-    java.lang.CharSequence mErrorMessage -> f
-    long mUpdateTime -> g
-    java.util.List mCustomActions -> h
-    long mActiveItemId -> i
-    android.os.Bundle mExtras -> j
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    274:285:java.lang.String toString() -> toString
-    290:290:int describeContents() -> describeContents
-    295:305:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-android.support.v4.media.session.PlaybackStateCompat$1 -> android.support.v4.media.session.f:
-    499:499:android.support.v4.media.session.PlaybackStateCompat createFromParcel(android.os.Parcel) -> a
-    504:504:android.support.v4.media.session.PlaybackStateCompat[] newArray(int) -> a
-    496:496:java.lang.Object[] newArray(int) -> newArray
-    496:496:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v4.media.session.PlaybackStateCompat$CustomAction -> android.support.v4.media.session.PlaybackStateCompat$CustomAction:
-    java.lang.String mAction -> a
-    java.lang.CharSequence mName -> b
-    int mIcon -> c
-    android.os.Bundle mExtras -> d
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    540:544:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    548:548:int describeContents() -> describeContents
-    653:653:java.lang.String toString() -> toString
-android.support.v4.media.session.PlaybackStateCompat$CustomAction$1 -> android.support.v4.media.session.g:
-    601:601:android.support.v4.media.session.PlaybackStateCompat$CustomAction createFromParcel(android.os.Parcel) -> a
-    606:606:android.support.v4.media.session.PlaybackStateCompat$CustomAction[] newArray(int) -> a
-    597:597:java.lang.Object[] newArray(int) -> newArray
-    597:597:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 android.support.v4.os.AsyncTaskCompat -> android.support.v4.e.a:
     39:51:android.os.AsyncTask executeParallel(android.os.AsyncTask,java.lang.Object[]) -> a
 android.support.v4.os.AsyncTaskCompatHoneycomb -> android.support.v4.e.b:
@@ -2223,8 +2022,7 @@ android.support.v4.view.PagerAdapter -> android.support.v4.view.bw:
     276:277:void notifyDataSetChanged() -> c
     285:286:void registerDataSetObserver(android.database.DataSetObserver) -> a
     294:295:void unregisterDataSetObserver(android.database.DataSetObserver) -> b
-    307:307:java.lang.CharSequence getPageTitle(int) -> c
-    318:318:float getPageWidth(int) -> d
+    318:318:float getPageWidth(int) -> c
 android.support.v4.view.ScrollingView -> android.support.v4.view.bx:
     int computeHorizontalScrollRange() -> computeHorizontalScrollRange
     int computeHorizontalScrollOffset() -> computeHorizontalScrollOffset
@@ -4935,7 +4733,7 @@ android.support.v4.widget.ViewDragHelper$Callback -> android.support.v4.widget.V
     boolean tryCaptureView(android.view.View,int) -> tryCaptureView
     304:304:int clampViewPositionHorizontal(android.view.View,int,int) -> clampViewPositionHorizontal
     319:319:int clampViewPositionVertical(android.view.View,int,int) -> clampViewPositionVertical
-android.support.v7.app.ActionBar -> android.support.v7.app.a:
+android.support.v7.app.ActionBar -> android.support.v7.a.a:
     void setDisplayShowHomeEnabled(boolean) -> a
     void setDisplayHomeAsUpEnabled(boolean) -> b
     int getDisplayOptions() -> a
@@ -4953,18 +4751,18 @@ android.support.v7.app.ActionBar -> android.support.v7.app.a:
     1064:1064:boolean onKeyShortcut(int,android.view.KeyEvent) -> a
     1069:1069:boolean collapseActionView() -> e
     1074:1074:void setWindowTitle(java.lang.CharSequence) -> a
-android.support.v7.app.ActionBar$LayoutParams -> android.support.v7.app.b:
+android.support.v7.app.ActionBar$LayoutParams -> android.support.v7.a.b:
     int gravity -> gravity
-android.support.v7.app.ActionBar$OnMenuVisibilityListener -> android.support.v7.app.c:
+android.support.v7.app.ActionBar$OnMenuVisibilityListener -> android.support.v7.a.c:
     void onMenuVisibilityChanged(boolean) -> a
-android.support.v7.app.ActionBar$Tab -> android.support.v7.app.d:
+android.support.v7.app.ActionBar$Tab -> android.support.v7.a.d:
     android.graphics.drawable.Drawable getIcon() -> a
     java.lang.CharSequence getText() -> b
     android.view.View getCustomView() -> c
     void select() -> d
     java.lang.CharSequence getContentDescription() -> e
-android.support.v7.app.ActionBarActivity -> android.support.v7.app.e:
-android.support.v7.app.AlertController -> android.support.v7.app.f:
+android.support.v7.app.ActionBarActivity -> android.support.v7.a.e:
+android.support.v7.app.AlertController -> android.support.v7.a.f:
     android.content.Context mContext -> a
     android.support.v7.app.AppCompatDialog mDialog -> b
     android.view.Window mWindow -> c
@@ -5041,10 +4839,10 @@ android.support.v7.app.AlertController -> android.support.v7.app.f:
     57:57:android.widget.ListAdapter access$1202(android.support.v7.app.AlertController,android.widget.ListAdapter) -> a
     57:57:int access$1302(android.support.v7.app.AlertController,int) -> a
     57:57:android.widget.ListView access$1402(android.support.v7.app.AlertController,android.widget.ListView) -> a
-android.support.v7.app.AlertController$1 -> android.support.v7.app.g:
+android.support.v7.app.AlertController$1 -> android.support.v7.a.g:
     android.support.v7.app.AlertController this$0 -> a
     116:133:void onClick(android.view.View) -> onClick
-android.support.v7.app.AlertController$AlertParams -> android.support.v7.app.h:
+android.support.v7.app.AlertController$AlertParams -> android.support.v7.a.h:
     android.content.Context mContext -> a
     android.view.LayoutInflater mInflater -> b
     int mIconId -> c
@@ -5086,11 +4884,11 @@ android.support.v7.app.AlertController$AlertParams -> android.support.v7.app.h:
     boolean mRecycleOnMeasure -> M
     677:731:void apply(android.support.v7.app.AlertController) -> a
     734:837:void createListView(android.support.v7.app.AlertController) -> b
-android.support.v7.app.AlertController$AlertParams$1 -> android.support.v7.app.i:
+android.support.v7.app.AlertController$AlertParams$1 -> android.support.v7.a.i:
     android.widget.ListView val$listView -> a
     android.support.v7.app.AlertController$AlertParams this$0 -> b
     743:750:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-android.support.v7.app.AlertController$AlertParams$2 -> android.support.v7.app.j:
+android.support.v7.app.AlertController$AlertParams$2 -> android.support.v7.a.j:
     int mLabelIndex -> d
     int mIsCheckedIndex -> e
     android.widget.ListView val$listView -> a
@@ -5098,24 +4896,24 @@ android.support.v7.app.AlertController$AlertParams$2 -> android.support.v7.app.j
     android.support.v7.app.AlertController$AlertParams this$0 -> c
     766:771:void bindView(android.view.View,android.content.Context,android.database.Cursor) -> bindView
     775:775:android.view.View newView(android.content.Context,android.database.Cursor,android.view.ViewGroup) -> newView
-android.support.v7.app.AlertController$AlertParams$3 -> android.support.v7.app.k:
+android.support.v7.app.AlertController$AlertParams$3 -> android.support.v7.a.k:
     android.support.v7.app.AlertController val$dialog -> a
     android.support.v7.app.AlertController$AlertParams this$0 -> b
     807:811:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-android.support.v7.app.AlertController$AlertParams$4 -> android.support.v7.app.l:
+android.support.v7.app.AlertController$AlertParams$4 -> android.support.v7.a.l:
     android.widget.ListView val$listView -> a
     android.support.v7.app.AlertController val$dialog -> b
     android.support.v7.app.AlertController$AlertParams this$0 -> c
     817:822:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-android.support.v7.app.AlertController$AlertParams$OnPrepareListViewListener -> android.support.v7.app.m:
+android.support.v7.app.AlertController$AlertParams$OnPrepareListViewListener -> android.support.v7.a.m:
     void onPrepareListView(android.widget.ListView) -> a
-android.support.v7.app.AlertController$ButtonHandler -> android.support.v7.app.n:
+android.support.v7.app.AlertController$ButtonHandler -> android.support.v7.a.n:
     java.lang.ref.WeakReference mDialog -> a
     148:159:void handleMessage(android.os.Message) -> handleMessage
-android.support.v7.app.AlertController$CheckedItemAdapter -> android.support.v7.app.o:
+android.support.v7.app.AlertController$CheckedItemAdapter -> android.support.v7.a.o:
     848:848:boolean hasStableIds() -> hasStableIds
     853:853:long getItemId(int) -> getItemId
-android.support.v7.app.AlertDialog -> android.support.v7.app.p:
+android.support.v7.app.AlertDialog -> android.support.v7.a.p:
     android.support.v7.app.AlertController mAlert -> a
     104:109:int resolveDialogTheme(android.content.Context,int) -> a
     138:140:void setTitle(java.lang.CharSequence) -> setTitle
@@ -5123,7 +4921,7 @@ android.support.v7.app.AlertDialog -> android.support.v7.app.p:
     245:248:boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
     253:256:boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
     63:63:android.support.v7.app.AlertController access$000(android.support.v7.app.AlertDialog) -> a
-android.support.v7.app.AlertDialog$Builder -> android.support.v7.app.q:
+android.support.v7.app.AlertDialog$Builder -> android.support.v7.a.q:
     android.support.v7.app.AlertController$AlertParams P -> a
     int mTheme -> b
     295:295:android.content.Context getContext() -> a
@@ -5133,7 +4931,7 @@ android.support.v7.app.AlertDialog$Builder -> android.support.v7.app.q:
     514:515:android.support.v7.app.AlertDialog$Builder setOnKeyListener(android.content.DialogInterface$OnKeyListener) -> a
     554:556:android.support.v7.app.AlertDialog$Builder setAdapter(android.widget.ListAdapter,android.content.DialogInterface$OnClickListener) -> a
     882:893:android.support.v7.app.AlertDialog create() -> b
-android.support.v7.app.AppCompatActivity -> android.support.v7.app.r:
+android.support.v7.app.AppCompatActivity -> android.support.v7.a.r:
     android.support.v7.app.AppCompatDelegate mDelegate -> n
     57:60:void onCreate(android.os.Bundle) -> onCreate
     64:66:void onPostCreate(android.os.Bundle) -> onPostCreate
@@ -5164,11 +4962,11 @@ android.support.v7.app.AppCompatActivity -> android.support.v7.app.r:
     408:409:void onContentChanged() -> onContentChanged
     416:416:void onSupportContentChanged() -> j
     428:431:android.support.v7.app.AppCompatDelegate getDelegate() -> k
-android.support.v7.app.AppCompatCallback -> android.support.v7.app.s:
+android.support.v7.app.AppCompatCallback -> android.support.v7.a.s:
     void onSupportActionModeStarted(android.support.v7.view.ActionMode) -> a
     void onSupportActionModeFinished(android.support.v7.view.ActionMode) -> b
     android.support.v7.view.ActionMode onWindowStartingSupportActionMode(android.support.v7.view.ActionMode$Callback) -> a
-android.support.v7.app.AppCompatDelegate -> android.support.v7.app.t:
+android.support.v7.app.AppCompatDelegate -> android.support.v7.a.t:
     77:77:android.support.v7.app.AppCompatDelegate create(android.app.Activity,android.support.v7.app.AppCompatCallback) -> a
     86:86:android.support.v7.app.AppCompatDelegate create(android.app.Dialog,android.support.v7.app.AppCompatCallback) -> a
     91:97:android.support.v7.app.AppCompatDelegate create(android.content.Context,android.view.Window,android.support.v7.app.AppCompatCallback) -> a
@@ -5189,7 +4987,7 @@ android.support.v7.app.AppCompatDelegate -> android.support.v7.app.t:
     boolean requestWindowFeature(int) -> b
     android.support.v7.view.ActionMode startSupportActionMode(android.support.v7.view.ActionMode$Callback) -> a
     void installViewFactory() -> g
-android.support.v7.app.AppCompatDelegateImplBase -> android.support.v7.app.u:
+android.support.v7.app.AppCompatDelegateImplBase -> android.support.v7.a.u:
     android.content.Context mContext -> a
     android.view.Window mWindow -> b
     android.view.Window$Callback mOriginalWindowCallback -> c
@@ -5221,7 +5019,7 @@ android.support.v7.app.AppCompatDelegateImplBase -> android.support.v7.app.u:
     236:238:void setTitle(java.lang.CharSequence) -> a
     void onTitleChanged(java.lang.CharSequence) -> b
     244:248:java.lang.CharSequence getTitle() -> m
-android.support.v7.app.AppCompatDelegateImplBase$AppCompatWindowCallbackBase -> android.support.v7.app.v:
+android.support.v7.app.AppCompatDelegateImplBase$AppCompatWindowCallbackBase -> android.support.v7.a.v:
     android.support.v7.app.AppCompatDelegateImplBase this$0 -> a
     258:263:boolean dispatchKeyEvent(android.view.KeyEvent) -> dispatchKeyEvent
     268:273:boolean onCreatePanelMenu(int,android.view.Menu) -> onCreatePanelMenu
@@ -5230,17 +5028,17 @@ android.support.v7.app.AppCompatDelegateImplBase$AppCompatWindowCallbackBase -> 
     313:316:boolean dispatchKeyShortcutEvent(android.view.KeyEvent) -> dispatchKeyShortcutEvent
     323:323:void onContentChanged() -> onContentChanged
     327:331:void onPanelClosed(int,android.view.Menu) -> onPanelClosed
-android.support.v7.app.AppCompatDelegateImplV11 -> android.support.v7.app.w:
+android.support.v7.app.AppCompatDelegateImplV11 -> android.support.v7.a.w:
     34:45:android.view.View callActivityOnCreateView(android.view.View,java.lang.String,android.content.Context,android.util.AttributeSet) -> b
-android.support.v7.app.AppCompatDelegateImplV14 -> android.support.v7.app.x:
+android.support.v7.app.AppCompatDelegateImplV14 -> android.support.v7.a.x:
     boolean mHandleNativeActionModes -> n
     36:36:android.view.Window$Callback wrapWindowCallback(android.view.Window$Callback) -> a
     24:24:boolean access$000(android.support.v7.app.AppCompatDelegateImplV14) -> a
-android.support.v7.app.AppCompatDelegateImplV14$AppCompatWindowCallbackV14 -> android.support.v7.app.y:
+android.support.v7.app.AppCompatDelegateImplV14$AppCompatWindowCallbackV14 -> android.support.v7.a.y:
     android.support.v7.app.AppCompatDelegateImplV14 this$0 -> b
     57:61:android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode$Callback) -> onWindowStartingActionMode
     70:85:android.view.ActionMode startAsSupportActionMode(android.view.ActionMode$Callback) -> a
-android.support.v7.app.AppCompatDelegateImplV7 -> android.support.v7.app.AppCompatDelegateImplV7:
+android.support.v7.app.AppCompatDelegateImplV7 -> android.support.v7.a.z:
     android.support.v7.internal.widget.DecorContentParent mDecorContentParent -> n
     android.support.v7.app.AppCompatDelegateImplV7$ActionMenuPresenterCallback mActionMenuPresenterCallback -> o
     android.support.v7.app.AppCompatDelegateImplV7$PanelMenuPresenterCallback mPanelMenuPresenterCallback -> p
@@ -5325,36 +5123,36 @@ android.support.v7.app.AppCompatDelegateImplV7 -> android.support.v7.app.AppComp
     89:89:void access$800(android.support.v7.app.AppCompatDelegateImplV7,android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState,boolean) -> a
     89:89:void access$900(android.support.v7.app.AppCompatDelegateImplV7,android.support.v7.internal.view.menu.MenuBuilder) -> a
     89:89:void access$1200(android.support.v7.app.AppCompatDelegateImplV7,int) -> d
-android.support.v7.app.AppCompatDelegateImplV7$1 -> android.support.v7.app.z:
+android.support.v7.app.AppCompatDelegateImplV7$1 -> android.support.v7.a.aa:
     android.support.v7.app.AppCompatDelegateImplV7 this$0 -> a
     122:130:void run() -> run
-android.support.v7.app.AppCompatDelegateImplV7$2 -> android.support.v7.app.aa:
+android.support.v7.app.AppCompatDelegateImplV7$2 -> android.support.v7.a.ab:
     android.support.v7.app.AppCompatDelegateImplV7 this$0 -> a
     335:347:android.support.v4.view.WindowInsetsCompat onApplyWindowInsets(android.view.View,android.support.v4.view.WindowInsetsCompat) -> a
-android.support.v7.app.AppCompatDelegateImplV7$3 -> android.support.v7.app.ab:
+android.support.v7.app.AppCompatDelegateImplV7$3 -> android.support.v7.a.ac:
     android.support.v7.app.AppCompatDelegateImplV7 this$0 -> a
     356:357:void onFitSystemWindows(android.graphics.Rect) -> a
-android.support.v7.app.AppCompatDelegateImplV7$4 -> android.support.v7.app.ac:
+android.support.v7.app.AppCompatDelegateImplV7$4 -> android.support.v7.a.ad:
     android.support.v7.app.AppCompatDelegateImplV7 this$0 -> a
     640:643:void run() -> run
-android.support.v7.app.AppCompatDelegateImplV7$ActionMenuPresenterCallback -> android.support.v7.app.ad:
+android.support.v7.app.AppCompatDelegateImplV7$ActionMenuPresenterCallback -> android.support.v7.a.ae:
     android.support.v7.app.AppCompatDelegateImplV7 this$0 -> a
     1564:1568:boolean onOpenSubMenu(android.support.v7.internal.view.menu.MenuBuilder) -> onOpenSubMenu
     1573:1574:void onCloseMenu(android.support.v7.internal.view.menu.MenuBuilder,boolean) -> onCloseMenu
-android.support.v7.app.AppCompatDelegateImplV7$ActionModeCallbackWrapperV7 -> android.support.v7.app.ae:
+android.support.v7.app.AppCompatDelegateImplV7$ActionModeCallbackWrapperV7 -> android.support.v7.a.af:
     android.support.v7.view.ActionMode$Callback mWrapped -> b
     android.support.v7.app.AppCompatDelegateImplV7 this$0 -> a
     1499:1499:boolean onCreateActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> a
     1503:1503:boolean onPrepareActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> b
     1507:1507:boolean onActionItemClicked(android.support.v7.view.ActionMode,android.view.MenuItem) -> a
     1511:1528:void onDestroyActionMode(android.support.v7.view.ActionMode) -> a
-android.support.v7.app.AppCompatDelegateImplV7$ListMenuDecorView -> android.support.v7.app.af:
+android.support.v7.app.AppCompatDelegateImplV7$ListMenuDecorView -> android.support.v7.a.ag:
     android.support.v7.app.AppCompatDelegateImplV7 this$0 -> a
     1804:1804:boolean dispatchKeyEvent(android.view.KeyEvent) -> dispatchKeyEvent
     1809:1818:boolean onInterceptTouchEvent(android.view.MotionEvent) -> onInterceptTouchEvent
     1823:1824:void setBackgroundResource(int) -> setBackgroundResource
     1827:1827:boolean isOutOfBounds(int,int) -> a
-android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState -> android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState:
+android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState -> android.support.v7.a.ah:
     int featureId -> a
     int background -> b
     int gravity -> c
@@ -5378,25 +5176,11 @@ android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState -> android.supp
     1666:1695:void setStyle(android.content.Context) -> a
     1698:1707:void setMenu(android.support.v7.internal.view.menu.MenuBuilder) -> a
     1710:1721:android.support.v7.internal.view.menu.MenuView getListMenuView(android.support.v7.internal.view.menu.MenuPresenter$Callback) -> a
-android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState$SavedState -> android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState$SavedState:
-    int featureId -> a
-    boolean isOpen -> b
-    android.os.Bundle menuState -> c
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    1760:1760:int describeContents() -> describeContents
-    1764:1770:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    1773:1781:android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState$SavedState readFromParcel(android.os.Parcel) -> b
-    1754:1754:android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState$SavedState access$1100(android.os.Parcel) -> a
-android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState$SavedState$1 -> android.support.v7.app.ag:
-    1787:1787:android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState$SavedState createFromParcel(android.os.Parcel) -> a
-    1791:1791:android.support.v7.app.AppCompatDelegateImplV7$PanelFeatureState$SavedState[] newArray(int) -> a
-    1785:1785:java.lang.Object[] newArray(int) -> newArray
-    1785:1785:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-android.support.v7.app.AppCompatDelegateImplV7$PanelMenuPresenterCallback -> android.support.v7.app.ah:
+android.support.v7.app.AppCompatDelegateImplV7$PanelMenuPresenterCallback -> android.support.v7.a.ai:
     android.support.v7.app.AppCompatDelegateImplV7 this$0 -> a
     1534:1547:void onCloseMenu(android.support.v7.internal.view.menu.MenuBuilder,boolean) -> onCloseMenu
     1551:1557:boolean onOpenSubMenu(android.support.v7.internal.view.menu.MenuBuilder) -> onOpenSubMenu
-android.support.v7.app.AppCompatDialog -> android.support.v7.app.ai:
+android.support.v7.app.AppCompatDialog -> android.support.v7.a.aj:
     android.support.v7.app.AppCompatDelegate mDelegate -> a
     58:61:void onCreate(android.os.Bundle) -> onCreate
     76:77:void setContentView(int) -> setContentView
@@ -5413,8 +5197,8 @@ android.support.v7.app.AppCompatDialog -> android.support.v7.app.ai:
     159:159:void onSupportActionModeStarted(android.support.v7.view.ActionMode) -> a
     163:163:void onSupportActionModeFinished(android.support.v7.view.ActionMode) -> b
     168:168:android.support.v7.view.ActionMode onWindowStartingSupportActionMode(android.support.v7.view.ActionMode$Callback) -> a
-android.support.v7.appcompat.R -> android.support.v7.a.a:
-android.support.v7.appcompat.R$attr -> android.support.v7.a.b:
+android.support.v7.appcompat.R -> android.support.v7.b.a:
+android.support.v7.appcompat.R$attr -> android.support.v7.b.b:
     int actionBarDivider -> actionBarDivider
     int actionBarItemBackground -> actionBarItemBackground
     int actionBarPopupTheme -> actionBarPopupTheme
@@ -5616,7 +5400,7 @@ android.support.v7.appcompat.R$attr -> android.support.v7.a.b:
     int windowMinWidthMajor -> windowMinWidthMajor
     int windowMinWidthMinor -> windowMinWidthMinor
     int windowNoTitle -> windowNoTitle
-android.support.v7.appcompat.R$bool -> android.support.v7.a.c:
+android.support.v7.appcompat.R$bool -> android.support.v7.b.c:
     int abc_action_bar_embed_tabs -> abc_action_bar_embed_tabs
     int abc_action_bar_embed_tabs_pre_jb -> abc_action_bar_embed_tabs_pre_jb
     int abc_action_bar_expanded_action_views_exclusive -> abc_action_bar_expanded_action_views_exclusive
@@ -5624,7 +5408,7 @@ android.support.v7.appcompat.R$bool -> android.support.v7.a.c:
     int abc_config_allowActionMenuItemTextWithIcon -> abc_config_allowActionMenuItemTextWithIcon
     int abc_config_closeDialogWhenTouchOutside -> abc_config_closeDialogWhenTouchOutside
     int abc_config_showMenuShortcutsWhenKeyboardPresent -> abc_config_showMenuShortcutsWhenKeyboardPresent
-android.support.v7.appcompat.R$color -> android.support.v7.a.d:
+android.support.v7.appcompat.R$color -> android.support.v7.b.d:
     int abc_background_cache_hint_selector_material_dark -> abc_background_cache_hint_selector_material_dark
     int abc_background_cache_hint_selector_material_light -> abc_background_cache_hint_selector_material_light
     int abc_input_method_navigation_guard -> abc_input_method_navigation_guard
@@ -5687,7 +5471,7 @@ android.support.v7.appcompat.R$color -> android.support.v7.a.d:
     int switch_thumb_material_light -> switch_thumb_material_light
     int switch_thumb_normal_material_dark -> switch_thumb_normal_material_dark
     int switch_thumb_normal_material_light -> switch_thumb_normal_material_light
-android.support.v7.appcompat.R$dimen -> android.support.v7.a.e:
+android.support.v7.appcompat.R$dimen -> android.support.v7.b.e:
     int abc_action_bar_content_inset_material -> abc_action_bar_content_inset_material
     int abc_action_bar_default_height_material -> abc_action_bar_default_height_material
     int abc_action_bar_default_padding_material -> abc_action_bar_default_padding_material
@@ -5757,7 +5541,7 @@ android.support.v7.appcompat.R$dimen -> android.support.v7.a.e:
     int notification_large_icon_height -> notification_large_icon_height
     int notification_large_icon_width -> notification_large_icon_width
     int notification_subtext_size -> notification_subtext_size
-android.support.v7.appcompat.R$drawable -> android.support.v7.a.f:
+android.support.v7.appcompat.R$drawable -> android.support.v7.b.f:
     int abc_ab_share_pack_mtrl_alpha -> abc_ab_share_pack_mtrl_alpha
     int abc_btn_borderless_material -> abc_btn_borderless_material
     int abc_btn_check_material -> abc_btn_check_material
@@ -5818,7 +5602,7 @@ android.support.v7.appcompat.R$drawable -> android.support.v7.a.f:
     int abc_textfield_search_default_mtrl_alpha -> abc_textfield_search_default_mtrl_alpha
     int abc_textfield_search_material -> abc_textfield_search_material
     int notification_template_icon_bg -> notification_template_icon_bg
-android.support.v7.appcompat.R$id -> android.support.v7.a.g:
+android.support.v7.appcompat.R$id -> android.support.v7.b.g:
     int action0 -> action0
     int action_bar -> action_bar
     int action_bar_activity_content -> action_bar_activity_content
@@ -5911,13 +5695,13 @@ android.support.v7.appcompat.R$id -> android.support.v7.a.g:
     int useLogo -> useLogo
     int withText -> withText
     int wrap_content -> wrap_content
-android.support.v7.appcompat.R$integer -> android.support.v7.a.h:
+android.support.v7.appcompat.R$integer -> android.support.v7.b.h:
     int abc_config_activityDefaultDur -> abc_config_activityDefaultDur
     int abc_config_activityShortDur -> abc_config_activityShortDur
     int abc_max_action_buttons -> abc_max_action_buttons
     int cancel_button_image_alpha -> cancel_button_image_alpha
     int status_bar_notification_info_maxnum -> status_bar_notification_info_maxnum
-android.support.v7.appcompat.R$layout -> android.support.v7.a.i:
+android.support.v7.appcompat.R$layout -> android.support.v7.b.i:
     int abc_action_bar_title_item -> abc_action_bar_title_item
     int abc_action_bar_up_container -> abc_action_bar_up_container
     int abc_action_bar_view_list_nav_layout -> abc_action_bar_view_list_nav_layout
@@ -5955,7 +5739,7 @@ android.support.v7.appcompat.R$layout -> android.support.v7.a.i:
     int select_dialog_multichoice_material -> select_dialog_multichoice_material
     int select_dialog_singlechoice_material -> select_dialog_singlechoice_material
     int support_simple_spinner_dropdown_item -> support_simple_spinner_dropdown_item
-android.support.v7.appcompat.R$string -> android.support.v7.a.j:
+android.support.v7.appcompat.R$string -> android.support.v7.b.j:
     int abc_action_bar_home_description -> abc_action_bar_home_description
     int abc_action_bar_home_description_format -> abc_action_bar_home_description_format
     int abc_action_bar_home_subtitle_description_format -> abc_action_bar_home_subtitle_description_format
@@ -5974,7 +5758,7 @@ android.support.v7.appcompat.R$string -> android.support.v7.a.j:
     int abc_shareactionprovider_share_with_application -> abc_shareactionprovider_share_with_application
     int abc_toolbar_collapse_description -> abc_toolbar_collapse_description
     int status_bar_notification_info_overflow -> status_bar_notification_info_overflow
-android.support.v7.appcompat.R$style -> android.support.v7.a.k:
+android.support.v7.appcompat.R$style -> android.support.v7.b.k:
     int AlertDialog_AppCompat -> AlertDialog_AppCompat
     int AlertDialog_AppCompat_Light -> AlertDialog_AppCompat_Light
     int Animation_AppCompat_Dialog -> Animation_AppCompat_Dialog
@@ -6267,7 +6051,7 @@ android.support.v7.appcompat.R$style -> android.support.v7.a.k:
     int Widget_AppCompat_TextView_SpinnerItem -> Widget_AppCompat_TextView_SpinnerItem
     int Widget_AppCompat_Toolbar -> Widget_AppCompat_Toolbar
     int Widget_AppCompat_Toolbar_Button_Navigation -> Widget_AppCompat_Toolbar_Button_Navigation
-android.support.v7.appcompat.R$styleable -> android.support.v7.a.l:
+android.support.v7.appcompat.R$styleable -> android.support.v7.b.l:
     int[] ActionBar -> ActionBar
     int[] ActionBarLayout -> ActionBarLayout
     int ActionBarLayout_android_layout_gravity -> ActionBarLayout_android_layout_gravity
@@ -6576,7 +6360,7 @@ android.support.v7.appcompat.R$styleable -> android.support.v7.a.l:
     int View_paddingEnd -> View_paddingEnd
     int View_paddingStart -> View_paddingStart
     int View_theme -> View_theme
-android.support.v7.graphics.drawable.DrawableWrapper -> android.support.v7.b.a.a:
+android.support.v7.graphics.drawable.DrawableWrapper -> android.support.v7.c.a.a:
     android.graphics.drawable.Drawable mDrawable -> a
     47:48:void draw(android.graphics.Canvas) -> draw
     52:53:void onBoundsChange(android.graphics.Rect) -> onBoundsChange
@@ -8634,20 +8418,20 @@ android.support.v7.internal.widget.ViewUtils -> android.support.v7.internal.widg
     65:65:int combineMeasuredStates(int,int) -> a
     73:80:void computeFitSystemWindows(android.view.View,android.graphics.Rect,android.graphics.Rect) -> a
     87:104:void makeOptionalFitsSystemWindows(android.view.View) -> b
-android.support.v7.recyclerview.R -> android.support.v7.c.a:
-android.support.v7.recyclerview.R$dimen -> android.support.v7.c.b:
+android.support.v7.recyclerview.R -> android.support.v7.d.a:
+android.support.v7.recyclerview.R$dimen -> android.support.v7.d.b:
     int item_touch_helper_max_drag_scroll_per_frame -> item_touch_helper_max_drag_scroll_per_frame
-android.support.v7.recyclerview.R$id -> android.support.v7.c.c:
+android.support.v7.recyclerview.R$id -> android.support.v7.d.c:
     int item_touch_helper_previous_elevation -> item_touch_helper_previous_elevation
-android.support.v7.recyclerview.R$styleable -> android.support.v7.c.d:
+android.support.v7.recyclerview.R$styleable -> android.support.v7.d.d:
     int[] RecyclerView -> RecyclerView
     int RecyclerView_android_orientation -> RecyclerView_android_orientation
     int RecyclerView_layoutManager -> RecyclerView_layoutManager
     int RecyclerView_reverseLayout -> RecyclerView_reverseLayout
     int RecyclerView_spanCount -> RecyclerView_spanCount
     int RecyclerView_stackFromEnd -> RecyclerView_stackFromEnd
-android.support.v7.util.SortedList -> android.support.v7.d.a:
-android.support.v7.util.SortedList$Callback -> android.support.v7.d.b:
+android.support.v7.util.SortedList -> android.support.v7.e.a:
+android.support.v7.util.SortedList$Callback -> android.support.v7.e.b:
     int compare(java.lang.Object,java.lang.Object) -> compare
     void onInserted(int,int) -> onInserted
     void onRemoved(int,int) -> onRemoved
@@ -8655,7 +8439,7 @@ android.support.v7.util.SortedList$Callback -> android.support.v7.d.b:
     void onChanged(int,int) -> onChanged
     boolean areContentsTheSame(java.lang.Object,java.lang.Object) -> areContentsTheSame
     boolean areItemsTheSame(java.lang.Object,java.lang.Object) -> areItemsTheSame
-android.support.v7.view.ActionMode -> android.support.v7.e.a:
+android.support.v7.view.ActionMode -> android.support.v7.f.a:
     java.lang.Object mTag -> a
     boolean mTitleOptionalHint -> b
     53:54:void setTag(java.lang.Object) -> a
@@ -8675,12 +8459,12 @@ android.support.v7.view.ActionMode -> android.support.v7.e.a:
     java.lang.CharSequence getSubtitle() -> g
     android.view.View getCustomView() -> i
     android.view.MenuInflater getMenuInflater() -> a
-android.support.v7.view.ActionMode$Callback -> android.support.v7.e.b:
+android.support.v7.view.ActionMode$Callback -> android.support.v7.f.b:
     boolean onCreateActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> a
     boolean onPrepareActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> b
     boolean onActionItemClicked(android.support.v7.view.ActionMode,android.view.MenuItem) -> a
     void onDestroyActionMode(android.support.v7.view.ActionMode) -> a
-android.support.v7.view.CollapsibleActionView -> android.support.v7.e.c:
+android.support.v7.view.CollapsibleActionView -> android.support.v7.f.c:
     void onActionViewExpanded() -> onActionViewExpanded
     void onActionViewCollapsed() -> onActionViewCollapsed
 android.support.v7.widget.ActionMenuPresenter -> android.support.v7.widget.ActionMenuPresenter:
@@ -11793,294 +11577,8 @@ android.support.v7.widget.util.SortedListAdapterCallback -> android.support.v7.w
     47:48:void onRemoved(int,int) -> onRemoved
     52:53:void onMoved(int,int) -> onMoved
     57:58:void onChanged(int,int) -> onChanged
-com.google.android.gms.auth.AccountChangeEvent -> com.google.android.gms.auth.AccountChangeEvent:
-    com.google.android.gms.auth.AccountChangeEventCreator CREATOR -> CREATOR
-    int Ef -> a
-    long Eg -> b
-    java.lang.String DZ -> c
-    int Eh -> d
-    int Ei -> e
-    java.lang.String Ej -> f
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    java.lang.String toString() -> toString
-    int hashCode() -> hashCode
-    boolean equals(java.lang.Object) -> equals
-com.google.android.gms.auth.AccountChangeEventCreator -> com.google.android.gms.auth.a:
-    com.google.android.gms.auth.AccountChangeEvent createFromParcel(android.os.Parcel) -> a
-    com.google.android.gms.auth.AccountChangeEvent[] newArray(int) -> a
-    void a(com.google.android.gms.auth.AccountChangeEvent,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.auth.AccountChangeEventsRequest -> com.google.android.gms.auth.AccountChangeEventsRequest:
-    com.google.android.gms.auth.AccountChangeEventsRequestCreator CREATOR -> CREATOR
-    int Ef -> a
-    int Ei -> b
-    java.lang.String DZ -> c
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    int describeContents() -> describeContents
-com.google.android.gms.auth.AccountChangeEventsRequestCreator -> com.google.android.gms.auth.b:
-    com.google.android.gms.auth.AccountChangeEventsRequest createFromParcel(android.os.Parcel) -> a
-    com.google.android.gms.auth.AccountChangeEventsRequest[] newArray(int) -> a
-    void a(com.google.android.gms.auth.AccountChangeEventsRequest,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.auth.AccountChangeEventsResponse -> com.google.android.gms.auth.AccountChangeEventsResponse:
-    com.google.android.gms.auth.AccountChangeEventsResponseCreator CREATOR -> CREATOR
-    int Ef -> a
-    java.util.List mp -> b
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    int describeContents() -> describeContents
-com.google.android.gms.auth.AccountChangeEventsResponseCreator -> com.google.android.gms.auth.c:
-    com.google.android.gms.auth.AccountChangeEventsResponse createFromParcel(android.os.Parcel) -> a
-    com.google.android.gms.auth.AccountChangeEventsResponse[] newArray(int) -> a
-    void a(com.google.android.gms.auth.AccountChangeEventsResponse,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.common.api.CommonStatusCodes -> com.google.android.gms.common.api.a:
-    java.lang.String getStatusCodeString(int) -> a
-com.google.android.gms.common.api.Scope -> com.google.android.gms.common.api.Scope:
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    int CK -> a
-    java.lang.String Kv -> b
-    java.lang.String gO() -> a
-    boolean equals(java.lang.Object) -> equals
-    int hashCode() -> hashCode
-    java.lang.String toString() -> toString
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.common.api.Status -> com.google.android.gms.common.api.Status:
-    com.google.android.gms.common.api.Status Kw -> a
-    com.google.android.gms.common.api.Status Kx -> b
-    com.google.android.gms.common.api.Status Ky -> c
-    com.google.android.gms.common.api.Status Kz -> d
-    com.google.android.gms.common.api.Status KA -> e
-    com.google.android.gms.common.api.StatusCreator CREATOR -> CREATOR
-    int CK -> f
-    int Iv -> g
-    java.lang.String KB -> h
-    android.app.PendingIntent mPendingIntent -> i
-    android.app.PendingIntent gP() -> a
-    java.lang.String getStatusMessage() -> b
-    int getVersionCode() -> c
-    int getStatusCode() -> d
-    int hashCode() -> hashCode
-    boolean equals(java.lang.Object) -> equals
-    java.lang.String gt() -> e
-    java.lang.String toString() -> toString
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.common.api.StatusCreator -> com.google.android.gms.common.api.b:
-    com.google.android.gms.common.api.Status createFromParcel(android.os.Parcel) -> a
-    com.google.android.gms.common.api.Status[] newArray(int) -> a
-    void a(com.google.android.gms.common.api.Status,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.common.api.e -> com.google.android.gms.common.api.c:
-    com.google.android.gms.common.api.Scope z(android.os.Parcel) -> a
-    com.google.android.gms.common.api.Scope[] am(int) -> a
-    void a(com.google.android.gms.common.api.Scope,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.common.data.DataHolder -> com.google.android.gms.common.data.DataHolder:
-    com.google.android.gms.common.data.f CREATOR -> CREATOR
-    int CK -> e
-    java.lang.String[] Ld -> f
-    android.os.Bundle Le -> a
-    android.database.CursorWindow[] Lf -> g
-    int Iv -> h
-    android.os.Bundle Lg -> i
-    int[] Lh -> b
-    int Li -> c
-    boolean mClosed -> d
-    java.lang.Object Lj -> j
-    boolean Lk -> k
-    com.google.android.gms.common.data.DataHolder$a Ll -> l
-    void gX() -> a
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    int getVersionCode() -> b
-    java.lang.String[] gY() -> c
-    android.database.CursorWindow[] gZ() -> d
-    int getStatusCode() -> e
-    android.os.Bundle gV() -> f
-    boolean isClosed() -> g
-    void close() -> h
-    void finalize() -> finalize
-com.google.android.gms.common.data.DataHolder$1 -> com.google.android.gms.common.data.b:
-com.google.android.gms.common.data.DataHolder$a -> com.google.android.gms.common.data.c:
-    java.lang.String[] Ld -> a
-    java.util.ArrayList Lm -> b
-    java.lang.String Ln -> c
-    java.util.HashMap Lo -> d
-    boolean Lp -> e
-    java.lang.String Lq -> f
-com.google.android.gms.common.data.a -> com.google.android.gms.common.data.a:
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    int CK -> a
-    android.os.ParcelFileDescriptor KS -> b
-    int Gt -> c
-    android.graphics.Bitmap KT -> d
-    boolean KU -> e
-    java.io.File KV -> f
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    java.io.FileOutputStream gU() -> a
-    void a(java.io.Closeable) -> a
-com.google.android.gms.common.data.b -> com.google.android.gms.common.data.d:
-    com.google.android.gms.common.data.a A(android.os.Parcel) -> a
-    com.google.android.gms.common.data.a[] ar(int) -> a
-    void a(com.google.android.gms.common.data.a,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.common.data.f -> com.google.android.gms.common.data.e:
-    com.google.android.gms.common.data.DataHolder B(android.os.Parcel) -> a
-    com.google.android.gms.common.data.DataHolder[] aw(int) -> a
-    void a(com.google.android.gms.common.data.DataHolder,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.common.images.ImageManager -> com.google.android.gms.common.images.ImageManager:
-    java.lang.Object Lu -> a
-    java.util.HashSet Lv -> b
-    android.content.Context mContext -> c
-    android.os.Handler mHandler -> d
-    java.util.concurrent.ExecutorService Ly -> e
-    com.google.android.gms.common.images.ImageManager$b Lz -> f
-    com.google.android.gms.internal.jc LA -> g
-    java.util.Map LB -> h
-    java.util.Map LC -> i
-    java.util.Map LD -> j
-    java.util.Map a(com.google.android.gms.common.images.ImageManager) -> a
-    android.content.Context b(com.google.android.gms.common.images.ImageManager) -> b
-    com.google.android.gms.internal.jc c(com.google.android.gms.common.images.ImageManager) -> c
-    java.util.Map d(com.google.android.gms.common.images.ImageManager) -> d
-    java.util.Map e(com.google.android.gms.common.images.ImageManager) -> e
-    java.lang.Object he() -> a
-    java.util.HashSet hf() -> b
-    java.util.concurrent.ExecutorService f(com.google.android.gms.common.images.ImageManager) -> f
-    android.os.Handler g(com.google.android.gms.common.images.ImageManager) -> g
-    com.google.android.gms.common.images.ImageManager$b h(com.google.android.gms.common.images.ImageManager) -> h
-com.google.android.gms.common.images.ImageManager$ImageReceiver -> com.google.android.gms.common.images.ImageManager$ImageReceiver:
-    android.net.Uri mUri -> b
-    java.util.ArrayList LE -> c
-    com.google.android.gms.common.images.ImageManager LF -> a
-    void onReceiveResult(int,android.os.Bundle) -> onReceiveResult
-    java.util.ArrayList a(com.google.android.gms.common.images.ImageManager$ImageReceiver) -> a
-com.google.android.gms.common.images.ImageManager$OnImageLoadedListener -> com.google.android.gms.common.images.a:
-    void onImageLoaded(android.net.Uri,android.graphics.drawable.Drawable,boolean) -> a
-com.google.android.gms.common.images.ImageManager$b -> com.google.android.gms.common.images.b:
-    void a(boolean,com.google.android.gms.common.images.a$a,android.graphics.Bitmap,android.graphics.Bitmap) -> a
-    int a(com.google.android.gms.common.images.a$a,android.graphics.Bitmap) -> a
-    int sizeOf(java.lang.Object,java.lang.Object) -> a
-    void entryRemoved(boolean,java.lang.Object,java.lang.Object,java.lang.Object) -> a
-com.google.android.gms.common.images.ImageManager$c -> com.google.android.gms.common.images.c:
-    android.net.Uri mUri -> b
-    android.os.ParcelFileDescriptor LG -> c
-    com.google.android.gms.common.images.ImageManager LF -> a
-    void run() -> run
-com.google.android.gms.common.images.ImageManager$f -> com.google.android.gms.common.images.d:
-    android.net.Uri mUri -> b
-    android.graphics.Bitmap mBitmap -> c
-    java.util.concurrent.CountDownLatch mr -> d
-    boolean LI -> e
-    com.google.android.gms.common.images.ImageManager LF -> a
-    void run() -> run
-    void a(com.google.android.gms.common.images.ImageManager$ImageReceiver,boolean) -> a
-com.google.android.gms.common.images.WebImage -> com.google.android.gms.common.images.WebImage:
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    int CK -> a
-    android.net.Uri LU -> b
-    int li -> c
-    int lj -> d
-    int getVersionCode() -> a
-    android.net.Uri getUrl() -> b
-    int getWidth() -> c
-    int getHeight() -> d
-    java.lang.String toString() -> toString
-    boolean equals(java.lang.Object) -> equals
-    int hashCode() -> hashCode
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.common.images.a -> com.google.android.gms.common.images.e:
-    com.google.android.gms.common.images.a$a LJ -> a
-    int LL -> b
-    com.google.android.gms.common.images.ImageManager$OnImageLoadedListener LN -> c
-    int LR -> d
-    void a(android.content.Context,android.graphics.Bitmap,boolean) -> a
-    void a(android.content.Context,com.google.android.gms.internal.jc,boolean) -> a
-    android.graphics.drawable.Drawable a(android.content.Context,com.google.android.gms.internal.jc,int) -> a
-    android.graphics.drawable.Drawable a(android.content.res.Resources,android.graphics.drawable.Drawable) -> a
-    void a(android.graphics.drawable.Drawable,boolean,boolean,boolean) -> a
-com.google.android.gms.common.images.a$a -> com.google.android.gms.common.images.f:
-    android.net.Uri uri -> a
-    int hashCode() -> hashCode
-    boolean equals(java.lang.Object) -> equals
-com.google.android.gms.common.images.a$c -> com.google.android.gms.common.images.g:
-    java.lang.ref.WeakReference LT -> e
-    int hashCode() -> hashCode
-    boolean equals(java.lang.Object) -> equals
-    void a(android.graphics.drawable.Drawable,boolean,boolean,boolean) -> a
-com.google.android.gms.common.images.b -> com.google.android.gms.common.images.h:
-    com.google.android.gms.common.images.WebImage C(android.os.Parcel) -> a
-    com.google.android.gms.common.images.WebImage[] aA(int) -> a
-    void a(com.google.android.gms.common.images.WebImage,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 com.google.android.gms.common.internal.safeparcel.SafeParcelable -> com.google.android.gms.common.internal.safeparcel.SafeParcelable:
     java.lang.String NULL -> NULL
-com.google.android.gms.common.internal.safeparcel.a -> com.google.android.gms.common.internal.safeparcel.a:
-    int F(android.os.Parcel) -> a
-    int aH(int) -> a
-    int a(android.os.Parcel,int) -> a
-    void b(android.os.Parcel,int) -> b
-    void a(android.os.Parcel,int,int) -> a
-    int G(android.os.Parcel) -> b
-    boolean c(android.os.Parcel,int) -> c
-    int g(android.os.Parcel,int) -> d
-    long i(android.os.Parcel,int) -> e
-    java.math.BigInteger k(android.os.Parcel,int) -> f
-    float l(android.os.Parcel,int) -> g
-    double m(android.os.Parcel,int) -> h
-    java.math.BigDecimal n(android.os.Parcel,int) -> i
-    java.lang.String o(android.os.Parcel,int) -> j
-    android.os.IBinder p(android.os.Parcel,int) -> k
-    android.os.Parcelable a(android.os.Parcel,int,android.os.Parcelable$Creator) -> a
-    android.os.Bundle q(android.os.Parcel,int) -> l
-    byte[] r(android.os.Parcel,int) -> m
-    boolean[] t(android.os.Parcel,int) -> n
-    int[] u(android.os.Parcel,int) -> o
-    long[] v(android.os.Parcel,int) -> p
-    java.math.BigInteger[] w(android.os.Parcel,int) -> q
-    float[] x(android.os.Parcel,int) -> r
-    double[] y(android.os.Parcel,int) -> s
-    java.math.BigDecimal[] z(android.os.Parcel,int) -> t
-    java.lang.String[] A(android.os.Parcel,int) -> u
-    java.util.ArrayList C(android.os.Parcel,int) -> v
-    java.lang.Object[] b(android.os.Parcel,int,android.os.Parcelable$Creator) -> b
-    java.util.ArrayList c(android.os.Parcel,int,android.os.Parcelable$Creator) -> c
-    android.os.Parcel D(android.os.Parcel,int) -> w
-    android.os.Parcel[] E(android.os.Parcel,int) -> x
-com.google.android.gms.common.internal.safeparcel.a$a -> com.google.android.gms.common.internal.safeparcel.b:
-com.google.android.gms.common.internal.safeparcel.b -> com.google.android.gms.common.internal.safeparcel.c:
-    void b(android.os.Parcel,int,int) -> b
-    int F(android.os.Parcel,int) -> b
-    void G(android.os.Parcel,int) -> c
-    int H(android.os.Parcel) -> a
-    void H(android.os.Parcel,int) -> a
-    void a(android.os.Parcel,int,boolean) -> a
-    void c(android.os.Parcel,int,int) -> a
-    void a(android.os.Parcel,int,long) -> a
-    void a(android.os.Parcel,int,java.lang.String,boolean) -> a
-    void a(android.os.Parcel,int,android.os.IBinder,boolean) -> a
-    void a(android.os.Parcel,int,android.os.Parcelable,int,boolean) -> a
-    void a(android.os.Parcel,int,android.os.Bundle,boolean) -> a
-    void a(android.os.Parcel,int,byte[],boolean) -> a
-    void a(android.os.Parcel,int,java.lang.String[],boolean) -> a
-    void b(android.os.Parcel,int,java.util.List,boolean) -> a
-    void a(android.os.Parcel,int,android.os.Parcelable[],int,boolean) -> a
-    void c(android.os.Parcel,int,java.util.List,boolean) -> b
-    void a(android.os.Parcel,android.os.Parcelable,int) -> a
-    void a(android.os.Parcel,int,android.os.Parcel,boolean) -> a
 com.google.android.gms.gcm.GoogleCloudMessaging -> com.google.android.gms.a.a:
     com.google.android.gms.gcm.GoogleCloudMessaging afo -> a
     android.content.Context lM -> c
@@ -12098,375 +11596,6 @@ com.google.android.gms.gcm.GoogleCloudMessaging -> com.google.android.gms.a.a:
 com.google.android.gms.gcm.GoogleCloudMessaging$1 -> com.google.android.gms.a.b:
     com.google.android.gms.gcm.GoogleCloudMessaging aft -> a
     void handleMessage(android.os.Message) -> handleMessage
-com.google.android.gms.internal.ha -> com.google.android.gms.internal.ha:
-    java.lang.String CE -> a
-    java.lang.String CF -> b
-    java.lang.String mValue -> c
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    void readFromParcel(android.os.Parcel) -> a
-com.google.android.gms.internal.ha$1 -> com.google.android.gms.internal.a:
-    com.google.android.gms.internal.ha k(android.os.Parcel) -> a
-    com.google.android.gms.internal.ha[] I(int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.if -> com.google.android.gms.internal.if:
-    com.google.android.gms.internal.ig CREATOR -> CREATOR
-    int versionCode -> a
-    int responseCode -> b
-    android.os.Bundle Ep -> c
-    byte[] Eq -> d
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.internal.ig -> com.google.android.gms.internal.b:
-    com.google.android.gms.internal.if t(android.os.Parcel) -> a
-    com.google.android.gms.internal.if[] U(int) -> a
-    void a(com.google.android.gms.internal.if,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.ja -> com.google.android.gms.internal.c:
-    android.graphics.Bitmap a(android.graphics.Bitmap) -> a
-    android.graphics.drawable.Drawable a(android.content.res.Resources,android.graphics.drawable.Drawable) -> a
-    android.graphics.Bitmap a(android.graphics.drawable.Drawable) -> a
-com.google.android.gms.internal.jc -> com.google.android.gms.internal.d:
-com.google.android.gms.internal.jc$a -> com.google.android.gms.internal.e:
-    int Mt -> a
-    int Mu -> b
-    int hashCode() -> hashCode
-    boolean equals(java.lang.Object) -> equals
-com.google.android.gms.internal.je -> com.google.android.gms.internal.f:
-    void f(java.lang.Object) -> a
-    void aU(java.lang.String) -> a
-    void aV(java.lang.String) -> b
-com.google.android.gms.internal.jg -> com.google.android.gms.internal.jg:
-com.google.android.gms.internal.jg$a -> com.google.android.gms.internal.jg$a:
-    com.google.android.gms.internal.jw CREATOR -> CREATOR
-    int CK -> a
-    java.lang.String DZ -> b
-    java.util.List Kh -> c
-    int JI -> d
-    java.lang.String JK -> e
-    java.lang.String getAccountName() -> a
-    int hn() -> b
-    java.lang.String hq() -> c
-    java.util.List ho() -> d
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    int getVersionCode() -> e
-com.google.android.gms.internal.ji -> com.google.android.gms.internal.ji:
-    java.lang.Object Mz -> a
-    java.lang.ClassLoader MA -> b
-    java.lang.Integer MB -> c
-    boolean MC -> d
-com.google.android.gms.internal.jj -> com.google.android.gms.internal.jj:
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    int version -> a
-    int MD -> b
-    int ME -> c
-    java.lang.String MF -> d
-    android.os.IBinder MG -> e
-    com.google.android.gms.common.api.Scope[] MH -> f
-    android.os.Bundle MI -> g
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.internal.jk -> com.google.android.gms.internal.g:
-    com.google.android.gms.internal.jj D(android.os.Parcel) -> a
-    com.google.android.gms.internal.jj[] aC(int) -> a
-    void a(com.google.android.gms.internal.jj,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.jv -> com.google.android.gms.internal.h:
-    boolean equal(java.lang.Object,java.lang.Object) -> a
-    int hashCode(java.lang.Object[]) -> a
-    com.google.android.gms.internal.jv$a h(java.lang.Object) -> a
-com.google.android.gms.internal.jv$1 -> com.google.android.gms.internal.i:
-com.google.android.gms.internal.jv$a -> com.google.android.gms.internal.j:
-    java.util.List Nr -> a
-    java.lang.Object Ns -> b
-    com.google.android.gms.internal.jv$a a(java.lang.String,java.lang.Object) -> a
-    java.lang.String toString() -> toString
-com.google.android.gms.internal.jw -> com.google.android.gms.internal.k:
-    com.google.android.gms.internal.jg$a E(android.os.Parcel) -> a
-    com.google.android.gms.internal.jg$a[] aG(int) -> a
-    void a(com.google.android.gms.internal.jg$a,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.jx -> com.google.android.gms.internal.l:
-    java.lang.Object i(java.lang.Object) -> a
-    java.lang.String b(java.lang.String,java.lang.Object) -> a
-    java.lang.Object b(java.lang.Object,java.lang.Object) -> a
-    void a(boolean,java.lang.String,java.lang.Object[]) -> a
-com.google.android.gms.internal.kj -> com.google.android.gms.internal.m:
-    java.util.LinkedHashMap Nw -> a
-    int size -> b
-    int Nx -> c
-    int Ny -> d
-    int Nz -> e
-    int NA -> f
-    int NB -> g
-    int NC -> h
-    java.lang.Object get(java.lang.Object) -> a
-    java.lang.Object put(java.lang.Object,java.lang.Object) -> b
-    void trimToSize(int) -> a
-    void entryRemoved(boolean,java.lang.Object,java.lang.Object,java.lang.Object) -> a
-    java.lang.Object create(java.lang.Object) -> b
-    int c(java.lang.Object,java.lang.Object) -> c
-    int sizeOf(java.lang.Object,java.lang.Object) -> a
-    void evictAll() -> a
-    java.lang.String toString() -> toString
-com.google.android.gms.internal.kk -> com.google.android.gms.internal.kk:
-    com.google.android.gms.internal.kl CREATOR -> CREATOR
-    int CK -> a
-    java.lang.String ND -> b
-    int NE -> c
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    int describeContents() -> describeContents
-com.google.android.gms.internal.kl -> com.google.android.gms.internal.n:
-    com.google.android.gms.internal.kk I(android.os.Parcel) -> a
-    com.google.android.gms.internal.kk[] aJ(int) -> a
-    void a(com.google.android.gms.internal.kk,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.km -> com.google.android.gms.internal.km:
-    com.google.android.gms.internal.kn CREATOR -> CREATOR
-    int CK -> a
-    com.google.android.gms.internal.ko NF -> b
-    int getVersionCode() -> a
-    com.google.android.gms.internal.ko hF() -> b
-    com.google.android.gms.internal.km a(com.google.android.gms.internal.kr$b) -> a
-    com.google.android.gms.internal.kr$b hG() -> c
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.internal.kn -> com.google.android.gms.internal.o:
-    com.google.android.gms.internal.km J(android.os.Parcel) -> a
-    com.google.android.gms.internal.km[] aK(int) -> a
-    void a(com.google.android.gms.internal.km,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.ko -> com.google.android.gms.internal.ko:
-    com.google.android.gms.internal.kp CREATOR -> CREATOR
-    int CK -> a
-    java.util.HashMap NG -> b
-    java.util.HashMap NH -> c
-    java.util.ArrayList NI -> d
-    void b(java.util.ArrayList) -> a
-    int getVersionCode() -> a
-    java.util.ArrayList hH() -> b
-    com.google.android.gms.internal.ko h(java.lang.String,int) -> a
-    java.lang.String a(java.lang.Integer) -> a
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    java.lang.Object convertBack(java.lang.Object) -> a
-com.google.android.gms.internal.ko$a -> com.google.android.gms.internal.ko$a:
-    com.google.android.gms.internal.kq CREATOR -> CREATOR
-    int versionCode -> a
-    java.lang.String NJ -> b
-    int NK -> c
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.internal.kp -> com.google.android.gms.internal.p:
-    com.google.android.gms.internal.ko K(android.os.Parcel) -> a
-    com.google.android.gms.internal.ko[] aL(int) -> a
-    void a(com.google.android.gms.internal.ko,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.kq -> com.google.android.gms.internal.q:
-    com.google.android.gms.internal.ko$a L(android.os.Parcel) -> a
-    com.google.android.gms.internal.ko$a[] aM(int) -> a
-    void a(com.google.android.gms.internal.ko$a,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.kr -> com.google.android.gms.internal.kr:
-    java.util.HashMap hK() -> a
-    java.lang.Object bc(java.lang.String) -> a
-    boolean a(com.google.android.gms.internal.kr$a) -> a
-    boolean bd(java.lang.String) -> b
-    boolean be(java.lang.String) -> c
-    boolean bf(java.lang.String) -> d
-    java.lang.Object a(com.google.android.gms.internal.kr$a,java.lang.Object) -> a
-    java.util.HashMap hL() -> b
-    java.util.HashMap hM() -> c
-    java.lang.String toString() -> toString
-    java.lang.Object b(com.google.android.gms.internal.kr$a) -> b
-    void a(java.lang.StringBuilder,com.google.android.gms.internal.kr$a,java.lang.Object) -> a
-    void a(java.lang.StringBuilder,com.google.android.gms.internal.kr$a,java.util.ArrayList) -> a
-com.google.android.gms.internal.kr$a -> com.google.android.gms.internal.kr$a:
-    int CK -> i
-    int NL -> a
-    boolean NM -> b
-    int NN -> c
-    boolean NO -> d
-    java.lang.String NP -> e
-    int NQ -> f
-    java.lang.Class NR -> g
-    java.lang.String NS -> h
-    com.google.android.gms.internal.kv NT -> j
-    com.google.android.gms.internal.kr$b NU -> k
-    com.google.android.gms.internal.kt CREATOR -> CREATOR
-    int getVersionCode() -> a
-    int hI() -> b
-    boolean hO() -> c
-    int hJ() -> d
-    boolean hP() -> e
-    java.lang.String hQ() -> f
-    int hR() -> g
-    java.lang.Class hS() -> h
-    java.lang.String hT() -> i
-    boolean hU() -> j
-    void a(com.google.android.gms.internal.kv) -> a
-    com.google.android.gms.internal.km hV() -> k
-    java.util.HashMap hW() -> l
-    java.lang.Object convertBack(java.lang.Object) -> a
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    java.lang.String toString() -> toString
-    com.google.android.gms.internal.kr$b c(com.google.android.gms.internal.kr$a) -> a
-com.google.android.gms.internal.kr$b -> com.google.android.gms.internal.r:
-    java.lang.Object convertBack(java.lang.Object) -> a
-com.google.android.gms.internal.ks -> com.google.android.gms.internal.ks:
-com.google.android.gms.internal.kt -> com.google.android.gms.internal.s:
-    com.google.android.gms.internal.kr$a M(android.os.Parcel) -> a
-    com.google.android.gms.internal.kr$a[] aN(int) -> a
-    void a(com.google.android.gms.internal.kr$a,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.ku -> com.google.android.gms.internal.t:
-    com.google.android.gms.internal.kv$b N(android.os.Parcel) -> a
-    com.google.android.gms.internal.kv$b[] aO(int) -> a
-    void a(com.google.android.gms.internal.kv$b,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.kv -> com.google.android.gms.internal.kv:
-    com.google.android.gms.internal.kw CREATOR -> CREATOR
-    int CK -> a
-    java.util.HashMap NV -> b
-    java.util.ArrayList NW -> c
-    java.lang.String NX -> d
-    void hX() -> a
-    java.util.HashMap c(java.util.ArrayList) -> a
-    int getVersionCode() -> b
-    java.util.ArrayList hZ() -> c
-    java.util.HashMap bg(java.lang.String) -> a
-    java.lang.String ia() -> d
-    int describeContents() -> describeContents
-    java.lang.String toString() -> toString
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.internal.kv$a -> com.google.android.gms.internal.kv$a:
-    com.google.android.gms.internal.kx CREATOR -> CREATOR
-    int versionCode -> a
-    java.lang.String className -> b
-    java.util.ArrayList NY -> c
-    java.util.ArrayList a(java.util.HashMap) -> a
-    java.util.HashMap ib() -> a
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.internal.kv$b -> com.google.android.gms.internal.kv$b:
-    com.google.android.gms.internal.ku CREATOR -> CREATOR
-    int versionCode -> a
-    java.lang.String fv -> b
-    com.google.android.gms.internal.kr$a NZ -> c
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.google.android.gms.internal.kw -> com.google.android.gms.internal.u:
-    com.google.android.gms.internal.kv O(android.os.Parcel) -> a
-    com.google.android.gms.internal.kv[] aP(int) -> a
-    void a(com.google.android.gms.internal.kv,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.kx -> com.google.android.gms.internal.v:
-    com.google.android.gms.internal.kv$a P(android.os.Parcel) -> a
-    com.google.android.gms.internal.kv$a[] aQ(int) -> a
-    void a(com.google.android.gms.internal.kv$a,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.ky -> com.google.android.gms.internal.ky:
-    int CK -> a
-    android.os.Parcel Oa -> b
-    int Ob -> c
-    com.google.android.gms.internal.kv NT -> d
-    java.lang.String mClassName -> e
-    int Oc -> f
-    int Od -> g
-    com.google.android.gms.internal.kz CREATOR -> CREATOR
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    int getVersionCode() -> d
-    android.os.Parcel ic() -> e
-    com.google.android.gms.internal.kv id() -> f
-    java.util.HashMap hK() -> a
-    java.lang.Object bc(java.lang.String) -> a
-    boolean bd(java.lang.String) -> b
-    java.lang.String toString() -> toString
-    void a(java.lang.StringBuilder,java.util.HashMap,android.os.Parcel) -> a
-    java.util.HashMap b(java.util.HashMap) -> a
-    void a(java.lang.StringBuilder,java.lang.String,com.google.android.gms.internal.kr$a,android.os.Parcel,int) -> a
-    void a(java.lang.StringBuilder,com.google.android.gms.internal.kr$a,android.os.Parcel,int) -> a
-    void b(java.lang.StringBuilder,com.google.android.gms.internal.kr$a,android.os.Parcel,int) -> b
-    void b(java.lang.StringBuilder,com.google.android.gms.internal.kr$a,java.lang.Object) -> a
-    void b(java.lang.StringBuilder,com.google.android.gms.internal.kr$a,java.util.ArrayList) -> a
-    void a(java.lang.StringBuilder,int,java.lang.Object) -> a
-    java.util.HashMap g(android.os.Bundle) -> a
-com.google.android.gms.internal.kz -> com.google.android.gms.internal.w:
-    com.google.android.gms.internal.ky Q(android.os.Parcel) -> a
-    com.google.android.gms.internal.ky[] aR(int) -> a
-    void a(com.google.android.gms.internal.ky,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.la -> com.google.android.gms.internal.x:
-    void a(java.lang.StringBuilder,java.lang.Object[]) -> a
-    void a(java.lang.StringBuilder,int[]) -> a
-    void a(java.lang.StringBuilder,long[]) -> a
-    void a(java.lang.StringBuilder,float[]) -> a
-    void a(java.lang.StringBuilder,double[]) -> a
-    void a(java.lang.StringBuilder,boolean[]) -> a
-    void a(java.lang.StringBuilder,java.lang.String[]) -> a
-com.google.android.gms.internal.lb -> com.google.android.gms.internal.y:
-    java.lang.String d(byte[]) -> a
-    java.lang.String e(byte[]) -> b
-com.google.android.gms.internal.li -> com.google.android.gms.internal.z:
-    java.util.regex.Pattern Og -> a
-    java.util.regex.Pattern Oh -> b
-    java.lang.String bh(java.lang.String) -> a
-com.google.android.gms.internal.lj -> com.google.android.gms.internal.aa:
-    void a(java.lang.StringBuilder,java.util.HashMap) -> a
-com.google.android.gms.internal.or -> com.google.android.gms.internal.or:
-    com.google.android.gms.internal.ot CREATOR -> CREATOR
-    int versionCode -> a
-    long amW -> b
-    java.lang.String tag -> c
-    byte[] amX -> d
-    android.os.Bundle amY -> e
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    java.lang.String toString() -> toString
-com.google.android.gms.internal.ot -> com.google.android.gms.internal.ab:
-    com.google.android.gms.internal.or dt(android.os.Parcel) -> a
-    com.google.android.gms.internal.or[] fq(int) -> a
-    void a(com.google.android.gms.internal.or,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.google.android.gms.internal.ov -> com.google.android.gms.internal.ov:
-    com.google.android.gms.internal.ow CREATOR -> CREATOR
-    int versionCode -> a
-    java.lang.String packageName -> b
-    int ang -> c
-    int anh -> d
-    java.lang.String ani -> e
-    java.lang.String anj -> f
-    boolean ank -> g
-    java.lang.String anl -> h
-    int describeContents() -> describeContents
-    void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    int hashCode() -> hashCode
-    boolean equals(java.lang.Object) -> equals
-    java.lang.String toString() -> toString
-com.google.android.gms.internal.ow -> com.google.android.gms.internal.ac:
-    com.google.android.gms.internal.ov du(android.os.Parcel) -> a
-    com.google.android.gms.internal.ov[] fr(int) -> a
-    void a(com.google.android.gms.internal.ov,android.os.Parcel,int) -> a
-    java.lang.Object[] newArray(int) -> newArray
-    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 com.google.android.youtube.player.YouTubeApiServiceUtil -> com.google.android.youtube.player.YouTubeApiServiceUtil:
     byte[][] a -> a
     com.google.android.youtube.player.YouTubeInitializationResult isYouTubeApiServiceAvailable(android.content.Context) -> isYouTubeApiServiceAvailable
@@ -17769,28 +16898,30 @@ com.laloosh.textmuse.SkinSelectActivity -> com.laloosh.textmuse.SkinSelectActivi
     boolean mLaunchedFromSplash -> t
     boolean mLoadingSkinChange -> u
     boolean mCloseInProcess -> v
-    43:111:void onCreate(android.os.Bundle) -> onCreate
-    114:126:void selectSkinId(int) -> a
-    129:136:void reloadMainData() -> l
-    139:141:void registerPushNotifications() -> m
-    157:158:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    166:192:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    197:205:void onBackPressed() -> onBackPressed
-    209:228:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
+    43:116:void onCreate(android.os.Bundle) -> onCreate
+    119:131:void selectSkinId(int) -> a
+    134:141:void reloadMainData() -> l
+    144:146:void registerPushNotifications() -> m
+    162:163:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    171:179:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    183:201:void donePressed() -> n
+    205:213:void onBackPressed() -> onBackPressed
+    217:236:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
     27:27:void access$000(com.laloosh.textmuse.SkinSelectActivity,int) -> a
+    27:27:void access$100(com.laloosh.textmuse.SkinSelectActivity) -> a
 com.laloosh.textmuse.SkinSelectActivity$1 -> com.laloosh.textmuse.ch:
     com.laloosh.textmuse.SkinSelectActivity this$0 -> a
     78:80:void run() -> run
 com.laloosh.textmuse.SkinSelectActivity$2 -> com.laloosh.textmuse.ci:
     com.laloosh.textmuse.SkinSelectActivity this$0 -> a
-    86:109:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    86:114:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.laloosh.textmuse.SkinSelectActivity$SkinSelectListAdapter -> com.laloosh.textmuse.cj:
     android.app.Activity mActivity -> a
     java.util.ArrayList mSkins -> b
-    253:280:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    286:286:int getCount() -> getCount
-    291:291:int getItemViewType(int) -> getItemViewType
-    296:296:int getViewTypeCount() -> getViewTypeCount
+    261:288:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    294:294:int getCount() -> getCount
+    299:299:int getItemViewType(int) -> getItemViewType
+    304:304:int getViewTypeCount() -> getViewTypeCount
 com.laloosh.textmuse.SkinSelectActivity$SkinSelectListAdapter$ViewHolder -> com.laloosh.textmuse.ck:
     android.widget.TextView mTextView -> a
     android.widget.ImageView mImageView -> b
@@ -21824,56 +20955,9 @@ com.viewpagerindicator.CirclePageIndicator$SavedState$1 -> com.viewpagerindicato
     591:591:com.viewpagerindicator.CirclePageIndicator$SavedState[] newArray(int) -> a
     583:583:java.lang.Object[] newArray(int) -> newArray
     583:583:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.viewpagerindicator.LinePageIndicator -> com.viewpagerindicator.LinePageIndicator:
-    android.graphics.Paint mPaintUnselected -> a
-    android.graphics.Paint mPaintSelected -> b
-    android.support.v4.view.ViewPager mViewPager -> c
-    android.support.v4.view.ViewPager$OnPageChangeListener mListener -> d
-    int mCurrentPage -> e
-    boolean mCentered -> f
-    float mLineWidth -> g
-    float mGapWidth -> h
-    int mTouchSlop -> i
-    float mLastMotionX -> j
-    int mActivePointerId -> k
-    boolean mIsDragging -> l
-    102:104:void setCentered(boolean) -> setCentered
-    111:113:void setUnselectedColor(int) -> setUnselectedColor
-    116:116:int getUnselectedColor() -> getUnselectedColor
-    120:122:void setSelectedColor(int) -> setSelectedColor
-    125:125:int getSelectedColor() -> getSelectedColor
-    129:131:void setLineWidth(float) -> setLineWidth
-    134:134:float getLineWidth() -> getLineWidth
-    138:141:void setStrokeWidth(float) -> setStrokeWidth
-    144:144:float getStrokeWidth() -> getStrokeWidth
-    148:150:void setGapWidth(float) -> setGapWidth
-    153:153:float getGapWidth() -> getGapWidth
-    158:191:void onDraw(android.graphics.Canvas) -> onDraw
-    194:273:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
-    278:291:void setViewPager(android.support.v4.view.ViewPager) -> setViewPager
-    301:307:void setCurrentItem(int) -> setCurrentItem
-    316:319:void onPageScrollStateChanged(int) -> b
-    323:326:void onPageScrolled(int,float,int) -> a
-    330:336:void onPageSelected(int) -> a
-    340:341:void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener) -> setOnPageChangeListener
-    345:346:void onMeasure(int,int) -> onMeasure
-    357:372:int measureWidth(int) -> c
-    384:398:int measureHeight(int) -> d
-    403:407:void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
-    411:414:android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
-com.viewpagerindicator.LinePageIndicator$1 -> com.viewpagerindicator.c:
-com.viewpagerindicator.LinePageIndicator$SavedState -> com.viewpagerindicator.LinePageIndicator$SavedState:
-    int currentPage -> a
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    431:433:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.viewpagerindicator.LinePageIndicator$SavedState$1 -> com.viewpagerindicator.d:
-    439:439:com.viewpagerindicator.LinePageIndicator$SavedState createFromParcel(android.os.Parcel) -> a
-    444:444:com.viewpagerindicator.LinePageIndicator$SavedState[] newArray(int) -> a
-    436:436:java.lang.Object[] newArray(int) -> newArray
-    436:436:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.viewpagerindicator.PageIndicator -> com.viewpagerindicator.e:
-com.viewpagerindicator.R -> com.viewpagerindicator.f:
-com.viewpagerindicator.R$attr -> com.viewpagerindicator.g:
+com.viewpagerindicator.PageIndicator -> com.viewpagerindicator.c:
+com.viewpagerindicator.R -> com.viewpagerindicator.d:
+com.viewpagerindicator.R$attr -> com.viewpagerindicator.e:
     int actionBarDivider -> actionBarDivider
     int actionBarItemBackground -> actionBarItemBackground
     int actionBarPopupTheme -> actionBarPopupTheme
@@ -22074,7 +21158,7 @@ com.viewpagerindicator.R$attr -> com.viewpagerindicator.g:
     int windowFixedHeightMinor -> windowFixedHeightMinor
     int windowFixedWidthMajor -> windowFixedWidthMajor
     int windowFixedWidthMinor -> windowFixedWidthMinor
-com.viewpagerindicator.R$bool -> com.viewpagerindicator.h:
+com.viewpagerindicator.R$bool -> com.viewpagerindicator.f:
     int abc_action_bar_embed_tabs -> abc_action_bar_embed_tabs
     int abc_action_bar_embed_tabs_pre_jb -> abc_action_bar_embed_tabs_pre_jb
     int abc_action_bar_expanded_action_views_exclusive -> abc_action_bar_expanded_action_views_exclusive
@@ -22086,7 +21170,7 @@ com.viewpagerindicator.R$bool -> com.viewpagerindicator.h:
     int default_line_indicator_centered -> default_line_indicator_centered
     int default_title_indicator_selected_bold -> default_title_indicator_selected_bold
     int default_underline_indicator_fades -> default_underline_indicator_fades
-com.viewpagerindicator.R$color -> com.viewpagerindicator.i:
+com.viewpagerindicator.R$color -> com.viewpagerindicator.g:
     int abc_background_cache_hint_selector_material_dark -> abc_background_cache_hint_selector_material_dark
     int abc_background_cache_hint_selector_material_light -> abc_background_cache_hint_selector_material_light
     int abc_input_method_navigation_guard -> abc_input_method_navigation_guard
@@ -22164,7 +21248,7 @@ com.viewpagerindicator.R$color -> com.viewpagerindicator.i:
     int vpi__bright_foreground_inverse_holo_light -> vpi__bright_foreground_inverse_holo_light
     int vpi__dark_theme -> vpi__dark_theme
     int vpi__light_theme -> vpi__light_theme
-com.viewpagerindicator.R$dimen -> com.viewpagerindicator.j:
+com.viewpagerindicator.R$dimen -> com.viewpagerindicator.h:
     int abc_action_bar_default_height_material -> abc_action_bar_default_height_material
     int abc_action_bar_default_padding_material -> abc_action_bar_default_padding_material
     int abc_action_bar_icon_vertical_padding_material -> abc_action_bar_icon_vertical_padding_material
@@ -22221,14 +21305,14 @@ com.viewpagerindicator.R$dimen -> com.viewpagerindicator.j:
     int dialog_fixed_width_minor -> dialog_fixed_width_minor
     int disabled_alpha_material_dark -> disabled_alpha_material_dark
     int disabled_alpha_material_light -> disabled_alpha_material_light
-com.viewpagerindicator.R$integer -> com.viewpagerindicator.k:
+com.viewpagerindicator.R$integer -> com.viewpagerindicator.i:
     int abc_max_action_buttons -> abc_max_action_buttons
     int default_circle_indicator_orientation -> default_circle_indicator_orientation
     int default_title_indicator_footer_indicator_style -> default_title_indicator_footer_indicator_style
     int default_title_indicator_line_position -> default_title_indicator_line_position
     int default_underline_indicator_fade_delay -> default_underline_indicator_fade_delay
     int default_underline_indicator_fade_length -> default_underline_indicator_fade_length
-com.viewpagerindicator.R$styleable -> com.viewpagerindicator.l:
+com.viewpagerindicator.R$styleable -> com.viewpagerindicator.j:
     int[] ActionBar -> ActionBar
     int[] ActionBarLayout -> ActionBarLayout
     int ActionBarLayout_android_layout_gravity -> ActionBarLayout_android_layout_gravity
@@ -22538,159 +21622,6 @@ com.viewpagerindicator.R$styleable -> com.viewpagerindicator.l:
     int View_android_focusable -> View_android_focusable
     int View_paddingEnd -> View_paddingEnd
     int View_paddingStart -> View_paddingStart
-com.viewpagerindicator.TitlePageIndicator -> com.viewpagerindicator.TitlePageIndicator:
-    android.support.v4.view.ViewPager mViewPager -> a
-    android.support.v4.view.ViewPager$OnPageChangeListener mListener -> b
-    int mCurrentPage -> c
-    float mPageOffset -> d
-    int mScrollState -> e
-    android.graphics.Paint mPaintText -> f
-    boolean mBoldText -> g
-    int mColorText -> h
-    int mColorSelected -> i
-    android.graphics.Path mPath -> j
-    android.graphics.Rect mBounds -> k
-    android.graphics.Paint mPaintFooterLine -> l
-    com.viewpagerindicator.TitlePageIndicator$IndicatorStyle mFooterIndicatorStyle -> m
-    com.viewpagerindicator.TitlePageIndicator$LinePosition mLinePosition -> n
-    android.graphics.Paint mPaintFooterIndicator -> o
-    float mFooterIndicatorHeight -> p
-    float mFooterIndicatorUnderlinePadding -> q
-    float mFooterPadding -> r
-    float mTitlePadding -> s
-    float mTopPadding -> t
-    float mClipPadding -> u
-    float mFooterLineHeight -> v
-    int mTouchSlop -> w
-    float mLastMotionX -> x
-    int mActivePointerId -> y
-    boolean mIsDragging -> z
-    com.viewpagerindicator.TitlePageIndicator$OnCenterItemClickListener mCenterItemClickListener -> A
-    220:220:int getFooterColor() -> getFooterColor
-    224:227:void setFooterColor(int) -> setFooterColor
-    230:230:float getFooterLineHeight() -> getFooterLineHeight
-    234:237:void setFooterLineHeight(float) -> setFooterLineHeight
-    240:240:float getFooterIndicatorHeight() -> getFooterIndicatorHeight
-    244:246:void setFooterIndicatorHeight(float) -> setFooterIndicatorHeight
-    249:249:float getFooterIndicatorPadding() -> getFooterIndicatorPadding
-    253:255:void setFooterIndicatorPadding(float) -> setFooterIndicatorPadding
-    258:258:com.viewpagerindicator.TitlePageIndicator$IndicatorStyle getFooterIndicatorStyle() -> getFooterIndicatorStyle
-    262:264:void setFooterIndicatorStyle(com.viewpagerindicator.TitlePageIndicator$IndicatorStyle) -> setFooterIndicatorStyle
-    267:267:com.viewpagerindicator.TitlePageIndicator$LinePosition getLinePosition() -> getLinePosition
-    271:273:void setLinePosition(com.viewpagerindicator.TitlePageIndicator$LinePosition) -> setLinePosition
-    276:276:int getSelectedColor() -> getSelectedColor
-    280:282:void setSelectedColor(int) -> setSelectedColor
-    289:291:void setSelectedBold(boolean) -> setSelectedBold
-    294:294:int getTextColor() -> getTextColor
-    298:301:void setTextColor(int) -> setTextColor
-    304:304:float getTextSize() -> getTextSize
-    308:310:void setTextSize(float) -> setTextSize
-    313:313:float getTitlePadding() -> getTitlePadding
-    317:319:void setTitlePadding(float) -> setTitlePadding
-    322:322:float getTopPadding() -> getTopPadding
-    326:328:void setTopPadding(float) -> setTopPadding
-    331:331:float getClipPadding() -> getClipPadding
-    335:337:void setClipPadding(float) -> setClipPadding
-    340:342:void setTypeface(android.graphics.Typeface) -> setTypeface
-    345:345:android.graphics.Typeface getTypeface() -> getTypeface
-    355:542:void onDraw(android.graphics.Canvas) -> onDraw
-    545:636:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
-    648:650:void clipViewOnTheRight(android.graphics.Rect,float,int) -> a
-    661:663:void clipViewOnTheLeft(android.graphics.Rect,float,int) -> b
-    672:688:java.util.ArrayList calculateAllBounds(android.graphics.Paint) -> a
-    700:704:android.graphics.Rect calcBounds(int,android.graphics.Paint) -> a
-    709:721:void setViewPager(android.support.v4.view.ViewPager) -> setViewPager
-    740:741:void setOnCenterItemClickListener(com.viewpagerindicator.TitlePageIndicator$OnCenterItemClickListener) -> setOnCenterItemClickListener
-    745:751:void setCurrentItem(int) -> setCurrentItem
-    755:760:void onPageScrollStateChanged(int) -> b
-    764:771:void onPageScrolled(int,float,int) -> a
-    775:783:void onPageSelected(int) -> a
-    787:788:void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener) -> setOnPageChangeListener
-    793:813:void onMeasure(int,int) -> onMeasure
-    817:821:void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
-    825:828:android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
-    864:868:java.lang.CharSequence getTitle(int) -> c
-com.viewpagerindicator.TitlePageIndicator$1 -> com.viewpagerindicator.m:
-    int[] $SwitchMap$com$viewpagerindicator$TitlePageIndicator$IndicatorStyle -> a
-com.viewpagerindicator.TitlePageIndicator$IndicatorStyle -> com.viewpagerindicator.n:
-    com.viewpagerindicator.TitlePageIndicator$IndicatorStyle None -> a
-    com.viewpagerindicator.TitlePageIndicator$IndicatorStyle Triangle -> b
-    com.viewpagerindicator.TitlePageIndicator$IndicatorStyle Underline -> c
-    int value -> d
-    com.viewpagerindicator.TitlePageIndicator$IndicatorStyle[] $VALUES -> e
-    79:79:com.viewpagerindicator.TitlePageIndicator$IndicatorStyle[] values() -> values
-    79:79:com.viewpagerindicator.TitlePageIndicator$IndicatorStyle valueOf(java.lang.String) -> valueOf
-com.viewpagerindicator.TitlePageIndicator$LinePosition -> com.viewpagerindicator.o:
-    com.viewpagerindicator.TitlePageIndicator$LinePosition Bottom -> a
-    com.viewpagerindicator.TitlePageIndicator$LinePosition Top -> b
-    int value -> c
-    com.viewpagerindicator.TitlePageIndicator$LinePosition[] $VALUES -> d
-    98:98:com.viewpagerindicator.TitlePageIndicator$LinePosition[] values() -> values
-    98:98:com.viewpagerindicator.TitlePageIndicator$LinePosition valueOf(java.lang.String) -> valueOf
-com.viewpagerindicator.TitlePageIndicator$OnCenterItemClickListener -> com.viewpagerindicator.p:
-    void onCenterItemClick(int) -> a
-com.viewpagerindicator.TitlePageIndicator$SavedState -> com.viewpagerindicator.TitlePageIndicator$SavedState:
-    int currentPage -> a
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    845:847:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.viewpagerindicator.TitlePageIndicator$SavedState$1 -> com.viewpagerindicator.q:
-    853:853:com.viewpagerindicator.TitlePageIndicator$SavedState createFromParcel(android.os.Parcel) -> a
-    858:858:com.viewpagerindicator.TitlePageIndicator$SavedState[] newArray(int) -> a
-    850:850:java.lang.Object[] newArray(int) -> newArray
-    850:850:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.viewpagerindicator.UnderlinePageIndicator -> com.viewpagerindicator.UnderlinePageIndicator:
-    android.graphics.Paint mPaint -> a
-    boolean mFades -> b
-    int mFadeDelay -> c
-    int mFadeLength -> d
-    int mFadeBy -> e
-    android.support.v4.view.ViewPager mViewPager -> f
-    android.support.v4.view.ViewPager$OnPageChangeListener mListener -> g
-    int mScrollState -> h
-    int mCurrentPage -> i
-    float mPositionOffset -> j
-    int mTouchSlop -> k
-    float mLastMotionX -> l
-    int mActivePointerId -> m
-    boolean mIsDragging -> n
-    java.lang.Runnable mFadeRunnable -> o
-    113:113:boolean getFades() -> getFades
-    117:127:void setFades(boolean) -> setFades
-    130:130:int getFadeDelay() -> getFadeDelay
-    134:135:void setFadeDelay(int) -> setFadeDelay
-    138:138:int getFadeLength() -> getFadeLength
-    142:144:void setFadeLength(int) -> setFadeLength
-    147:147:int getSelectedColor() -> getSelectedColor
-    151:153:void setSelectedColor(int) -> setSelectedColor
-    157:179:void onDraw(android.graphics.Canvas) -> onDraw
-    182:261:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
-    266:286:void setViewPager(android.support.v4.view.ViewPager) -> setViewPager
-    296:302:void setCurrentItem(int) -> setCurrentItem
-    311:316:void onPageScrollStateChanged(int) -> b
-    320:335:void onPageScrolled(int,float,int) -> a
-    339:348:void onPageSelected(int) -> a
-    352:353:void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener) -> setOnPageChangeListener
-    357:361:void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
-    365:368:android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
-    38:38:boolean access$000(com.viewpagerindicator.UnderlinePageIndicator) -> a
-    38:38:android.graphics.Paint access$100(com.viewpagerindicator.UnderlinePageIndicator) -> b
-    38:38:int access$200(com.viewpagerindicator.UnderlinePageIndicator) -> c
-    38:38:java.lang.Runnable access$300(com.viewpagerindicator.UnderlinePageIndicator) -> d
-com.viewpagerindicator.UnderlinePageIndicator$1 -> com.viewpagerindicator.r:
-    com.viewpagerindicator.UnderlinePageIndicator this$0 -> a
-    62:70:void run() -> run
-com.viewpagerindicator.UnderlinePageIndicator$2 -> com.viewpagerindicator.s:
-    com.viewpagerindicator.UnderlinePageIndicator this$0 -> a
-    281:284:void run() -> run
-com.viewpagerindicator.UnderlinePageIndicator$SavedState -> com.viewpagerindicator.UnderlinePageIndicator$SavedState:
-    int currentPage -> a
-    android.os.Parcelable$Creator CREATOR -> CREATOR
-    385:387:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-com.viewpagerindicator.UnderlinePageIndicator$SavedState$1 -> com.viewpagerindicator.t:
-    393:393:com.viewpagerindicator.UnderlinePageIndicator$SavedState createFromParcel(android.os.Parcel) -> a
-    398:398:com.viewpagerindicator.UnderlinePageIndicator$SavedState[] newArray(int) -> a
-    390:390:java.lang.Object[] newArray(int) -> newArray
-    390:390:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 org.apache.commons.io.FileUtils -> a.a.a.a.a:
     java.math.BigInteger ONE_KB_BI -> a
     java.math.BigInteger ONE_MB_BI -> b

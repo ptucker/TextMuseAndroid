@@ -106,6 +106,11 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
                 }
 
                 mSelectedSkinIndex = position;
+
+                //Automatically go to the next screen if we are launched from the splash screen
+                if (mLaunchedFromSplash) {
+                    donePressed();
+                }
             }
         });
     }
@@ -167,29 +172,32 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_done) {
-            if (mLaunchedFromSplash) {
-                Intent intent = new Intent(this, WalkthroughActivity.class);
-                intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            } else {
-                setResult(Activity.RESULT_OK);
-
-                mCloseInProcess = true;
-                if (mLoadingSkinChange) {
-                    //if we launched from settings, wait for the load to finish or else some weird things will happen
-                    Toast toast = Toast.makeText(this, "Changing the skin, please wait...", Toast.LENGTH_LONG);
-                    toast.show();
-                } else {
-                    finish();
-                }
-            }
-
+            donePressed();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void donePressed() {
+        if (mLaunchedFromSplash) {
+            Intent intent = new Intent(this, WalkthroughActivity.class);
+            intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        } else {
+            setResult(Activity.RESULT_OK);
+
+            mCloseInProcess = true;
+            if (mLoadingSkinChange) {
+                //if we launched from settings, wait for the load to finish or else some weird things will happen
+                Toast toast = Toast.makeText(this, "Changing the skin, please wait...", Toast.LENGTH_LONG);
+                toast.show();
+            } else {
+                finish();
+            }
+        }
     }
 
     @Override
