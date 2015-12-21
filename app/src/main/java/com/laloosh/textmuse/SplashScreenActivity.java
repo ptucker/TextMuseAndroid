@@ -44,7 +44,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         GlobalData instance = GlobalData.getInstance();
         instance.loadData(this);

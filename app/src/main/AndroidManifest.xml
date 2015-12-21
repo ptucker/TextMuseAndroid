@@ -46,6 +46,7 @@
         <activity
             android:name=".MainCategoryActivity"
             android:label="@string/title_activity_main_category"
+            android:theme="@style/AppNoActionBar"
             android:screenOrientation="portrait" >
         </activity>
         <activity

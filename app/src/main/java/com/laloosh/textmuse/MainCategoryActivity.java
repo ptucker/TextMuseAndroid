@@ -1,5 +1,8 @@
 package com.laloosh.textmuse;
 
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +10,17 @@ import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,12 +55,22 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListView mListView;
     private MainCategoryListArrayAdapter mCategoryListAdapter;
+    private DrawerListArrayAdapter mDrawerListAdapter;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
     private boolean mShowPhotos;
+
+    private ImageButton mToolbarButton;
+    private Boolean mDrawerOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_category);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
+        toolbar.setTitleTextColor(0xffffffff);
+        setSupportActionBar(toolbar);
 
         GlobalData instance = GlobalData.getInstance();
         if (!instance.hasLoadedData()) {
@@ -79,6 +96,23 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
         mListView = (ListView) findViewById(R.id.mainFragmentListView);
         mListView.setVisibility(View.GONE);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.mainFragmentListViewCategories);
+
+        mToolbarButton = (ImageButton) findViewById(R.id.mainToolbarButton);
+        mDrawerOpen = false;
+
+        mToolbarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDrawerOpen) {
+                    mDrawerLayout.closeDrawers();
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
 
         generateViewsFromData();
 
@@ -130,17 +164,26 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             startActivityForResult(intent, REQUEST_CODE_SETTINGS);
 
             return true;
+        } else if (id == android.R.id.home) {
+            Log.d(Constants.TAG, "on options item selected -- home pushed!");
+        } else if (id == R.id.home) {
+            Log.d(Constants.TAG, "on options item selected2 -- home pushed!");
+
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
 
     private void setSkinTitle() {
+        setTitle("");
+        TextView textView = (TextView) findViewById(R.id.mainToolbarTitle);
         if (mData != null && mData.skinData != null) {
-            setTitle(mData.skinData.name + " TextMuse");
+            textView.setText(mData.skinData.name + " TextMuse");
 
         } else {
-            setTitle("TextMuse");
+            textView.setText("TextMuse");
         }
     }
 
@@ -150,9 +193,13 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
             if (mCategoryListAdapter != null) {
                 mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
+                mDrawerListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
             } else {
                 mCategoryListAdapter = new MainCategoryListArrayAdapter(this, mData.categories, mData.localTexts, mData.localPhotos, mSettings, mShowPhotos);
                 mListView.setAdapter(mCategoryListAdapter);
+
+                mDrawerListAdapter = new DrawerListArrayAdapter(this, mData.categories, mData.localTexts, mData.localPhotos, mSettings, mShowPhotos);
+                mDrawerList.setAdapter(mDrawerListAdapter);
             }
             mListView.setVisibility(View.VISIBLE);
         }
@@ -245,10 +292,152 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                     setSkinTitle();
 
                     mCategoryListAdapter.updateSettings(mSettings);
-
                     mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
+
+                    mDrawerListAdapter.updateSettings(mSettings);
+                    mDrawerListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
                 }
             }
+        }
+    }
+
+    public static class DrawerListArrayAdapter extends ArrayAdapter<Category> {
+
+        private Activity mContext;
+        private List<Category> mOriginalCategories;
+        private List<Category> mShownCategories;
+        private Category mLocalTexts;
+        private Category mLocalPhotos;
+        private TextMuseSettings mSettings;
+        private boolean mShowPhotos;
+
+        //view holder pattern to prevent repeated queries for ID
+        static class ViewHolder {
+            public TextView mCategoryTitle;
+        }
+
+        public DrawerListArrayAdapter(Activity context, List<Category> categories, Category localTexts, Category localPhotos, TextMuseSettings settings, boolean showPhotos) {
+            super(context, R.layout.item_main_category_list, categories);
+
+            this.mContext = context;
+            this.mOriginalCategories = categories;
+            this.mSettings = settings;
+            this.mShownCategories = new ArrayList<Category>();
+            this.mLocalTexts = localTexts;
+            this.mLocalPhotos = localPhotos;
+            this.mShowPhotos = showPhotos;
+            generateShownCategories();
+        }
+
+
+        @Override
+        public int getCount() {
+            if (mShowPhotos) {
+                //+2 for the local texts, photos category
+                return mShownCategories.size() + 2;
+            } else {
+                //+1 for the local texts
+                return mShownCategories.size() + 1;
+            }
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            View rowView = convertView;
+
+            final Category category;
+            if (position == mShownCategories.size()) {
+                category = mLocalTexts;
+            } else if (position > mShownCategories.size()) {
+                category = mLocalPhotos;
+            } else {
+                category = mShownCategories.get(position);
+            }
+
+            if (category.notes == null || category.notes.size() <= 0) {
+                return null;
+            }
+
+            Note firstNote = category.notes.get(0);
+
+            if (rowView == null) {
+                LayoutInflater inflater = mContext.getLayoutInflater();
+                ViewHolder viewHolder = new ViewHolder();
+
+                rowView = inflater.inflate(R.layout.item_main_category_list, parent, false);
+                viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewCategory);
+
+                rowView.setTag(viewHolder);
+            }
+
+            ViewHolder holder = (ViewHolder) rowView.getTag();
+
+            holder.mCategoryTitle.setText(category.name);
+
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int originalIndex = getOriginalIndex(category);
+                    if (originalIndex >= 0) {
+                        Intent intent = new Intent(mContext, SelectMessageActivity.class);
+                        intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, originalIndex);
+                        intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
+                        mContext.startActivity(intent);
+                    }
+                }
+            };
+
+            rowView.setOnClickListener(onClickListener);
+
+            return rowView;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 1;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return 0;
+        }
+
+        public void updateSettings(TextMuseSettings settings) {
+            mSettings = settings;
+        }
+
+        public void updateCategories(List<Category> categories, Category localNotes, Category localPhotos) {
+            mOriginalCategories = categories;
+            mLocalTexts = localNotes;
+            mLocalPhotos = localPhotos;
+            generateShownCategories();
+            this.notifyDataSetChanged();
+        }
+
+        private void generateShownCategories() {
+            mShownCategories.clear();
+            for (Category c : mOriginalCategories) {
+                if (mSettings.shouldShowCategory(c.name)) {
+                    mShownCategories.add(c);
+                }
+            }
+        }
+
+        private int getOriginalIndex(Category category) {
+            if (category == mLocalTexts) {
+                return mOriginalCategories.size();
+            } else if (category == mLocalPhotos) {
+                return mOriginalCategories.size() + 1;
+            } else {
+                for (int i = 0; i < mOriginalCategories.size(); i++) {
+                    Category c = mOriginalCategories.get(i);
+                    if (c.name.equals(category.name)) {
+                        return i;
+                    }
+                }
+            }
+
+            return -1;
         }
     }
 

@@ -43,7 +43,7 @@ public class WalkthroughActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         setContentView(R.layout.activity_walkthrough);
 
         if (savedInstanceState != null) {
