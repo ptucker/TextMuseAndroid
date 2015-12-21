@@ -1,8 +1,8 @@
 package com.laloosh.textmuse;
 
+import android.os.Environment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,15 +12,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,10 +35,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
 
 
 public class MainCategoryActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
@@ -60,7 +56,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
     private ListView mDrawerList;
     private boolean mShowPhotos;
 
-    private ImageButton mToolbarButton;
+    private ImageView mToolbarImage;
     private Boolean mDrawerOpen;
 
     @Override
@@ -70,6 +66,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.mainToolbar);
         toolbar.setTitleTextColor(0xffffffff);
+        mToolbarImage = (ImageView) findViewById(R.id.mainToolbarButton);
+
         setSupportActionBar(toolbar);
 
         GlobalData instance = GlobalData.getInstance();
@@ -100,10 +98,9 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.mainFragmentListViewCategories);
 
-        mToolbarButton = (ImageButton) findViewById(R.id.mainToolbarButton);
         mDrawerOpen = false;
 
-        mToolbarButton.setOnClickListener(new View.OnClickListener() {
+        mToolbarImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mDrawerOpen) {
@@ -179,12 +176,28 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
     private void setSkinTitle() {
         setTitle("");
         TextView textView = (TextView) findViewById(R.id.mainToolbarTitle);
+        mToolbarImage = (ImageView) findViewById(R.id.mainToolbarButton);
+
         if (mData != null && mData.skinData != null) {
             textView.setText(mData.skinData.name + " TextMuse");
 
+            File logoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), mData.skinData.getIconImageFilename());
+            if (logoFile.exists()) {
+                Picasso.with(this)
+                        .load(logoFile)
+                        .fit()
+                        //.placeholder(R.drawable.launcher_icon)
+                        .error(R.drawable.launcher_icon)
+                        .centerInside()
+                        .into(mToolbarImage);
+            } else {
+                mToolbarImage.setImageResource(R.drawable.launcher_icon);
+            }
         } else {
             textView.setText("TextMuse");
+            mToolbarImage.setImageResource(R.drawable.launcher_icon);
         }
+
     }
 
 
