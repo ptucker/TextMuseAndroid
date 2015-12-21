@@ -16940,9 +16940,8 @@ com.laloosh.textmuse.SkinSelectActivity -> com.laloosh.textmuse.SkinSelectActivi
     171:179:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     183:201:void donePressed() -> n
     205:213:void onBackPressed() -> onBackPressed
-    217:236:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
+    217:241:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
     27:27:void access$000(com.laloosh.textmuse.SkinSelectActivity,int) -> a
-    27:27:void access$100(com.laloosh.textmuse.SkinSelectActivity) -> a
 com.laloosh.textmuse.SkinSelectActivity$1 -> com.laloosh.textmuse.cc:
     com.laloosh.textmuse.SkinSelectActivity this$0 -> a
     78:80:void run() -> run
@@ -16952,10 +16951,10 @@ com.laloosh.textmuse.SkinSelectActivity$2 -> com.laloosh.textmuse.cd:
 com.laloosh.textmuse.SkinSelectActivity$SkinSelectListAdapter -> com.laloosh.textmuse.ce:
     android.app.Activity mActivity -> a
     java.util.ArrayList mSkins -> b
-    261:288:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    294:294:int getCount() -> getCount
-    299:299:int getItemViewType(int) -> getItemViewType
-    304:304:int getViewTypeCount() -> getViewTypeCount
+    266:293:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    299:299:int getCount() -> getCount
+    304:304:int getItemViewType(int) -> getItemViewType
+    309:309:int getViewTypeCount() -> getViewTypeCount
 com.laloosh.textmuse.SkinSelectActivity$SkinSelectListAdapter$ViewHolder -> com.laloosh.textmuse.cf:
     android.widget.TextView mTextView -> a
     android.widget.ImageView mImageView -> b

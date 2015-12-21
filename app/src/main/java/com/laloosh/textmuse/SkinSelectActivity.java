@@ -107,10 +107,10 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
 
                 mSelectedSkinIndex = position;
 
-                //Automatically go to the next screen if we are launched from the splash screen
-                if (mLaunchedFromSplash) {
-                    donePressed();
-                }
+//                //Automatically go to the next screen if we are launched from the splash screen
+//                if (mLaunchedFromSplash) {
+//                    donePressed();
+//                }
             }
         });
     }
@@ -216,6 +216,11 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
     public void handleFetchResult(FetchNotesAsyncTask.FetchNotesResult result) {
         mProgressBar.setVisibility(View.GONE);
         mLoadingSkinChange = false;
+
+        //Go to the next screen if we are done loading from splash
+        if (mLaunchedFromSplash) {
+            donePressed();
+        }
 
         if (mCloseInProcess) {
             finish();

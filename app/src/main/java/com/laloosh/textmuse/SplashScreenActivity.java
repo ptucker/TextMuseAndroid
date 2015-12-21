@@ -25,8 +25,8 @@ import java.util.TimerTask;
 
 public class SplashScreenActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler, FetchSkinsAsyncTask.FetchSkinsAsyncTaskHandler{
 
-    //5 seconds is the max amount of time the splash screen is going to be up
-    private static final long SPLASH_SCREEN_MAX_TIME = 5000;
+    //10 seconds is the max amount of time the splash screen is going to be up
+    private static final long SPLASH_SCREEN_MAX_TIME = 10000;
 
     private TextMuseData mData;
     private boolean mFinishedLoading;
