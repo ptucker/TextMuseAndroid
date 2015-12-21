@@ -4737,9 +4737,8 @@ android.support.v7.app.ActionBar -> android.support.v7.a.a:
     void setDisplayShowHomeEnabled(boolean) -> a
     void setDisplayHomeAsUpEnabled(boolean) -> b
     int getDisplayOptions() -> a
-    void hide() -> b
     835:835:void setHomeButtonEnabled(boolean) -> c
-    847:847:android.content.Context getThemedContext() -> c
+    847:847:android.content.Context getThemedContext() -> b
     953:957:void setHideOnContentScrollEnabled(boolean) -> d
     1008:1012:void setElevation(float) -> a
     1028:1028:void setDefaultDisplayHomeAsUpEnabled(boolean) -> e
@@ -4747,9 +4746,9 @@ android.support.v7.app.ActionBar -> android.support.v7.a.a:
     1036:1036:void onConfigurationChanged(android.content.res.Configuration) -> a
     1040:1040:void dispatchMenuVisibilityChanged(boolean) -> g
     1044:1044:android.support.v7.view.ActionMode startActionMode(android.support.v7.view.ActionMode$Callback) -> a
-    1054:1054:boolean invalidateOptionsMenu() -> d
+    1054:1054:boolean invalidateOptionsMenu() -> c
     1064:1064:boolean onKeyShortcut(int,android.view.KeyEvent) -> a
-    1069:1069:boolean collapseActionView() -> e
+    1069:1069:boolean collapseActionView() -> d
     1074:1074:void setWindowTitle(java.lang.CharSequence) -> a
 android.support.v7.app.ActionBar$LayoutParams -> android.support.v7.a.b:
     int gravity -> gravity
@@ -4936,6 +4935,7 @@ android.support.v7.app.AppCompatActivity -> android.support.v7.a.r:
     57:60:void onCreate(android.os.Bundle) -> onCreate
     64:66:void onPostCreate(android.os.Bundle) -> onPostCreate
     77:77:android.support.v7.app.ActionBar getSupportActionBar() -> h
+    96:97:void setSupportActionBar(android.support.v7.widget.Toolbar) -> a
     101:101:android.view.MenuInflater getMenuInflater() -> getMenuInflater
     106:107:void setContentView(int) -> setContentView
     111:112:void setContentView(android.view.View) -> setContentView
@@ -4971,6 +4971,7 @@ android.support.v7.app.AppCompatDelegate -> android.support.v7.a.t:
     86:86:android.support.v7.app.AppCompatDelegate create(android.app.Dialog,android.support.v7.app.AppCompatCallback) -> a
     91:97:android.support.v7.app.AppCompatDelegate create(android.content.Context,android.view.Window,android.support.v7.app.AppCompatCallback) -> a
     android.support.v7.app.ActionBar getSupportActionBar() -> a
+    void setSupportActionBar(android.support.v7.widget.Toolbar) -> a
     android.view.MenuInflater getMenuInflater() -> b
     void onCreate(android.os.Bundle) -> a
     void onPostCreate(android.os.Bundle) -> b
@@ -5005,6 +5006,7 @@ android.support.v7.app.AppCompatDelegateImplBase -> android.support.v7.a.u:
     81:81:android.view.Window$Callback wrapWindowCallback(android.view.Window$Callback) -> a
     88:97:android.support.v7.app.ActionBar getSupportActionBar() -> a
     101:101:android.support.v7.app.ActionBar peekSupportActionBar() -> i
+    105:106:void setSupportActionBar(android.support.v7.app.ActionBar) -> a
     110:113:android.view.MenuInflater getMenuInflater() -> b
     118:138:void onCreate(android.os.Bundle) -> a
     boolean onPanelClosed(int,android.view.Menu) -> a
@@ -5066,6 +5068,7 @@ android.support.v7.app.AppCompatDelegateImplV7 -> android.support.v7.a.z:
     146:161:void onCreate(android.os.Bundle) -> a
     166:167:void onPostCreate(android.os.Bundle) -> b
     171:181:android.support.v7.app.ActionBar createSupportActionBar() -> h
+    186:203:void setSupportActionBar(android.support.v7.widget.Toolbar) -> a
     209:217:void onConfigurationChanged(android.content.res.Configuration) -> a
     221:225:void onStop() -> c
     229:233:void onPostResume() -> d
@@ -6405,7 +6408,66 @@ android.support.v7.internal.app.AppCompatViewInflater -> android.support.v7.inte
     116:137:android.view.View createViewFromTag(android.content.Context,java.lang.String,android.util.AttributeSet) -> a
     143:159:android.view.View createView(android.content.Context,java.lang.String,java.lang.String) -> a
     168:191:android.content.Context themifyContext(android.content.Context,android.util.AttributeSet,boolean,boolean) -> a
-android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.internal.a.b:
+android.support.v7.internal.app.ToolbarActionBar -> android.support.v7.internal.a.b:
+    android.support.v7.internal.widget.DecorToolbar mDecorToolbar -> a
+    boolean mToolbarMenuPrepared -> b
+    android.view.Window$Callback mWindowCallback -> c
+    boolean mMenuCallbackSet -> d
+    boolean mLastMenuVisibility -> e
+    java.util.ArrayList mMenuVisibilityListeners -> f
+    android.view.Window mWindow -> g
+    android.support.v7.internal.view.menu.ListMenuPresenter mListMenuPresenter -> h
+    java.lang.Runnable mMenuInvalidator -> i
+    android.support.v7.widget.Toolbar$OnMenuItemClickListener mMenuClicker -> j
+    89:89:android.view.Window$Callback getWrappedWindowCallback() -> e
+    142:142:void setHomeButtonEnabled(boolean) -> c
+    146:147:void setElevation(float) -> a
+    156:156:android.content.Context getThemedContext() -> b
+    182:182:void setDefaultDisplayHomeAsUpEnabled(boolean) -> e
+    192:192:void setShowHideAnimationEnabled(boolean) -> f
+    196:197:void onConfigurationChanged(android.content.res.Configuration) -> a
+    238:239:void setWindowTitle(java.lang.CharSequence) -> a
+    258:260:void setDisplayOptions(int,int) -> a
+    269:270:void setDisplayShowHomeEnabled(boolean) -> a
+    274:275:void setDisplayHomeAsUpEnabled(boolean) -> b
+    322:322:int getDisplayOptions() -> a
+    427:429:boolean invalidateOptionsMenu() -> c
+    434:438:boolean collapseActionView() -> d
+    442:458:void populateOptionsMenu() -> f
+    470:471:boolean onKeyShortcut(int,android.view.KeyEvent) -> a
+    483:492:void dispatchMenuVisibilityChanged(boolean) -> g
+    495:504:android.view.View getListMenuView(android.view.Menu) -> a
+    508:532:void ensureListMenuPresenter(android.view.Menu) -> b
+    564:569:android.view.Menu getMenu() -> g
+    50:50:android.view.Window$Callback access$000(android.support.v7.internal.app.ToolbarActionBar) -> a
+    50:50:boolean access$200(android.support.v7.internal.app.ToolbarActionBar) -> b
+    50:50:android.support.v7.internal.widget.DecorToolbar access$300(android.support.v7.internal.app.ToolbarActionBar) -> c
+    50:50:boolean access$202(android.support.v7.internal.app.ToolbarActionBar,boolean) -> a
+    50:50:android.view.View access$400(android.support.v7.internal.app.ToolbarActionBar,android.view.Menu) -> a
+android.support.v7.internal.app.ToolbarActionBar$1 -> android.support.v7.internal.a.c:
+    android.support.v7.internal.app.ToolbarActionBar this$0 -> a
+    66:67:void run() -> run
+android.support.v7.internal.app.ToolbarActionBar$2 -> android.support.v7.internal.a.d:
+    android.support.v7.internal.app.ToolbarActionBar this$0 -> a
+    74:74:boolean onMenuItemClick(android.view.MenuItem) -> onMenuItemClick
+android.support.v7.internal.app.ToolbarActionBar$ActionMenuPresenterCallback -> android.support.v7.internal.a.e:
+    boolean mClosingActionMenu -> b
+    android.support.v7.internal.app.ToolbarActionBar this$0 -> a
+    577:581:boolean onOpenSubMenu(android.support.v7.internal.view.menu.MenuBuilder) -> onOpenSubMenu
+    586:596:void onCloseMenu(android.support.v7.internal.view.menu.MenuBuilder,boolean) -> onCloseMenu
+android.support.v7.internal.app.ToolbarActionBar$MenuBuilderCallback -> android.support.v7.internal.a.f:
+    android.support.v7.internal.app.ToolbarActionBar this$0 -> a
+    620:620:boolean onMenuItemSelected(android.support.v7.internal.view.menu.MenuBuilder,android.view.MenuItem) -> onMenuItemSelected
+    625:633:void onMenuModeChange(android.support.v7.internal.view.menu.MenuBuilder) -> onMenuModeChange
+android.support.v7.internal.app.ToolbarActionBar$PanelMenuPresenterCallback -> android.support.v7.internal.a.g:
+    android.support.v7.internal.app.ToolbarActionBar this$0 -> a
+    602:605:void onCloseMenu(android.support.v7.internal.view.menu.MenuBuilder,boolean) -> onCloseMenu
+    609:612:boolean onOpenSubMenu(android.support.v7.internal.view.menu.MenuBuilder) -> onOpenSubMenu
+android.support.v7.internal.app.ToolbarActionBar$ToolbarCallbackWrapper -> android.support.v7.internal.a.h:
+    android.support.v7.internal.app.ToolbarActionBar this$0 -> a
+    541:546:boolean onPreparePanel(int,android.view.View,android.view.Menu) -> onPreparePanel
+    551:559:android.view.View onCreatePanelView(int) -> onCreatePanelView
+android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.internal.a.i:
     boolean ALLOW_SHOW_HIDE_ANIMATIONS -> i
     android.content.Context mContext -> j
     android.content.Context mThemedContext -> k
@@ -6446,7 +6508,7 @@ android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.inter
     255:259:void setElevation(float) -> a
     267:268:void onConfigurationChanged(android.content.res.Configuration) -> a
     271:293:void setHasEmbeddedTabs(boolean) -> l
-    320:325:void completeDeferredDestroyActionMode() -> f
+    320:325:void completeDeferredDestroyActionMode() -> e
     328:329:void onWindowVisibilityChanged(int) -> a
     339:343:void setShowHideAnimationEnabled(boolean) -> f
     354:363:void dispatchMenuVisibilityChanged(boolean) -> g
@@ -6455,25 +6517,24 @@ android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.inter
     398:399:void setHomeButtonEnabled(boolean) -> c
     446:447:void setWindowTitle(java.lang.CharSequence) -> a
     461:466:void setDisplayOptions(int,int) -> a
-    495:495:int getNavigationMode() -> g
+    495:495:int getNavigationMode() -> f
     499:499:int getDisplayOptions() -> a
     503:527:android.support.v7.view.ActionMode startActionMode(android.support.v7.view.ActionMode$Callback) -> a
     660:661:void enableContentAnimations(boolean) -> h
-    672:679:void showForActionMode() -> l
-    682:686:void showForSystem() -> h
-    690:694:void hide() -> b
-    697:704:void hideForActionMode() -> m
-    707:711:void hideForSystem() -> i
+    672:679:void showForActionMode() -> k
+    682:686:void showForSystem() -> g
+    697:704:void hideForActionMode() -> l
+    707:711:void hideForSystem() -> h
     715:721:void setHideOnContentScrollEnabled(boolean) -> d
     744:749:boolean checkShowingFlags(boolean,boolean,boolean) -> b
     755:769:void updateVisibility(boolean) -> m
     772:830:void doShow(boolean) -> i
     833:867:void doHide(boolean) -> j
     876:885:void animateToMode(boolean) -> k
-    888:900:android.content.Context getThemedContext() -> c
-    930:934:void onContentScrollStarted() -> j
-    938:938:void onContentScrollStopped() -> k
-    942:946:boolean collapseActionView() -> e
+    888:900:android.content.Context getThemedContext() -> b
+    930:934:void onContentScrollStarted() -> i
+    938:938:void onContentScrollStopped() -> j
+    942:946:boolean collapseActionView() -> d
     1357:1360:void setDefaultDisplayHomeAsUpEnabled(boolean) -> e
     75:75:boolean access$000(android.support.v7.internal.app.WindowDecorActionBar) -> a
     75:75:android.view.View access$100(android.support.v7.internal.app.WindowDecorActionBar) -> b
@@ -6488,16 +6549,16 @@ android.support.v7.internal.app.WindowDecorActionBar -> android.support.v7.inter
     75:75:android.support.v7.internal.widget.ActionBarContextView access$1000(android.support.v7.internal.app.WindowDecorActionBar) -> i
     75:75:android.support.v7.internal.widget.DecorToolbar access$1100(android.support.v7.internal.app.WindowDecorActionBar) -> j
     75:75:android.content.Context access$1200(android.support.v7.internal.app.WindowDecorActionBar) -> k
-android.support.v7.internal.app.WindowDecorActionBar$1 -> android.support.v7.internal.a.c:
+android.support.v7.internal.app.WindowDecorActionBar$1 -> android.support.v7.internal.a.j:
     android.support.v7.internal.app.WindowDecorActionBar this$0 -> a
     138:152:void onAnimationEnd(android.view.View) -> onAnimationEnd
-android.support.v7.internal.app.WindowDecorActionBar$2 -> android.support.v7.internal.a.d:
+android.support.v7.internal.app.WindowDecorActionBar$2 -> android.support.v7.internal.a.k:
     android.support.v7.internal.app.WindowDecorActionBar this$0 -> a
     158:160:void onAnimationEnd(android.view.View) -> onAnimationEnd
-android.support.v7.internal.app.WindowDecorActionBar$3 -> android.support.v7.internal.a.e:
+android.support.v7.internal.app.WindowDecorActionBar$3 -> android.support.v7.internal.a.l:
     android.support.v7.internal.app.WindowDecorActionBar this$0 -> a
     167:169:void onAnimationUpdate(android.view.View) -> a
-android.support.v7.internal.app.WindowDecorActionBar$ActionModeImpl -> android.support.v7.internal.a.f:
+android.support.v7.internal.app.WindowDecorActionBar$ActionModeImpl -> android.support.v7.internal.a.m:
     android.content.Context mActionModeContext -> b
     android.support.v7.internal.view.menu.MenuBuilder mMenu -> c
     android.support.v7.view.ActionMode$Callback mCallback -> d
@@ -7637,11 +7698,11 @@ android.support.v7.internal.widget.ActionBarOverlayLayout$4 -> android.support.v
     137:146:void run() -> run
 android.support.v7.internal.widget.ActionBarOverlayLayout$ActionBarVisibilityCallback -> android.support.v7.internal.widget.l:
     void onWindowVisibilityChanged(int) -> a
-    void showForSystem() -> h
-    void hideForSystem() -> i
+    void showForSystem() -> g
+    void hideForSystem() -> h
     void enableContentAnimations(boolean) -> h
-    void onContentScrollStarted() -> j
-    void onContentScrollStopped() -> k
+    void onContentScrollStarted() -> i
+    void onContentScrollStopped() -> j
 android.support.v7.internal.widget.ActionBarOverlayLayout$LayoutParams -> android.support.v7.internal.widget.m:
 android.support.v7.internal.widget.ActivityChooserModel -> android.support.v7.internal.widget.n:
     java.lang.String LOG_TAG -> a
@@ -7968,6 +8029,8 @@ android.support.v7.internal.widget.DecorToolbar -> android.support.v7.internal.w
     void setHomeButtonEnabled(boolean) -> b
     int getNavigationMode() -> q
     void animateToVisibility(int) -> d
+    void setMenuCallbacks(android.support.v7.internal.view.menu.MenuPresenter$Callback,android.support.v7.internal.view.menu.MenuBuilder$Callback) -> a
+    android.view.Menu getMenu() -> r
 android.support.v7.internal.widget.DialogTitle -> android.support.v7.internal.widget.DialogTitle:
     49:76:void onMeasure(int,int) -> onMeasure
 android.support.v7.internal.widget.DrawableUtils -> android.support.v7.internal.widget.am:
@@ -8336,7 +8399,7 @@ android.support.v7.internal.widget.ToolbarWidgetWrapper -> android.support.v7.in
     android.graphics.drawable.Drawable mDefaultNavigationIcon -> r
     207:214:void setDefaultNavigationContentDescription(int) -> e
     218:222:void setDefaultNavigationIcon(android.graphics.drawable.Drawable) -> b
-    225:230:int detectDisplayOptions() -> r
+    225:230:int detectDisplayOptions() -> s
     235:235:android.view.ViewGroup getViewGroup() -> a
     240:240:android.content.Context getContext() -> b
     245:245:boolean isSplit() -> c
@@ -8354,7 +8417,7 @@ android.support.v7.internal.widget.ToolbarWidgetWrapper -> android.support.v7.in
     350:352:void setIcon(android.graphics.drawable.Drawable) -> a
     356:357:void setLogo(int) -> b
     361:363:void setLogo(android.graphics.drawable.Drawable) -> c
-    366:375:void updateToolbarLogo() -> s
+    366:375:void updateToolbarLogo() -> t
     379:379:boolean canShowOverflowMenu() -> i
     384:384:boolean isOverflowMenuShowing() -> j
     389:389:boolean isOverflowMenuShowPending() -> k
@@ -8374,8 +8437,10 @@ android.support.v7.internal.widget.ToolbarWidgetWrapper -> android.support.v7.in
     631:633:void setNavigationIcon(android.graphics.drawable.Drawable) -> d
     644:646:void setNavigationContentDescription(java.lang.CharSequence) -> d
     650:651:void setNavigationContentDescription(int) -> f
-    654:661:void updateHomeAccessibility() -> t
-    664:667:void updateNavigationIcon() -> u
+    654:661:void updateHomeAccessibility() -> u
+    664:667:void updateNavigationIcon() -> v
+    703:704:void setMenuCallbacks(android.support.v7.internal.view.menu.MenuPresenter$Callback,android.support.v7.internal.view.menu.MenuBuilder$Callback) -> a
+    708:708:android.view.Menu getMenu() -> r
     54:54:android.support.v7.widget.Toolbar access$000(android.support.v7.internal.widget.ToolbarWidgetWrapper) -> a
     54:54:java.lang.CharSequence access$100(android.support.v7.internal.widget.ToolbarWidgetWrapper) -> b
     54:54:android.view.Window$Callback access$200(android.support.v7.internal.widget.ToolbarWidgetWrapper) -> c
@@ -16549,85 +16614,48 @@ com.laloosh.textmuse.ImageDownloadTarget -> com.laloosh.textmuse.an:
 com.laloosh.textmuse.MainCategoryActivity -> com.laloosh.textmuse.MainCategoryActivity:
     com.laloosh.textmuse.datamodel.TextMuseData mData -> n
     com.laloosh.textmuse.datamodel.TextMuseSettings mSettings -> o
-    android.support.v4.view.ViewPager mMainViewPager -> p
-    com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter mMainPagerAdapter -> q
-    android.support.v4.widget.SwipeRefreshLayout mSwipeRefreshLayout -> r
-    android.widget.ListView mListView -> s
-    com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter mCategoryListAdapter -> t
-    java.util.ArrayList mRandomNotes -> u
-    java.util.HashMap mRandomNoteIndex -> v
-    java.util.Timer mTimer -> w
-    long mLastUserScrollMillis -> x
-    boolean mShowPhotos -> y
-    71:158:void onCreate(android.os.Bundle) -> onCreate
-    164:165:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    173:183:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    187:193:void setSkinTitle() -> l
-    197:263:void generateRandomNotes() -> m
-    266:277:void generateViewsFromData() -> n
-    280:285:void loadDataFromInternet() -> o
-    289:296:void showFailureMessage() -> p
-    299:310:void setLastNotified() -> q
-    313:314:void setNotificationAlarm() -> r
-    318:327:void setShowPhotos() -> s
-    331:353:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
-    357:376:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    48:48:void access$000(com.laloosh.textmuse.MainCategoryActivity) -> a
-    48:48:com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter access$100(com.laloosh.textmuse.MainCategoryActivity) -> b
-    48:48:android.support.v4.view.ViewPager access$200(com.laloosh.textmuse.MainCategoryActivity) -> c
-    48:48:long access$302(com.laloosh.textmuse.MainCategoryActivity,long) -> a
-    48:48:android.support.v4.widget.SwipeRefreshLayout access$400(com.laloosh.textmuse.MainCategoryActivity) -> d
-    48:48:long access$300(com.laloosh.textmuse.MainCategoryActivity) -> e
+    android.support.v4.widget.SwipeRefreshLayout mSwipeRefreshLayout -> p
+    android.widget.ListView mListView -> q
+    com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter mCategoryListAdapter -> r
+    com.laloosh.textmuse.MainCategoryActivity$DrawerListArrayAdapter mDrawerListAdapter -> s
+    android.support.v4.widget.DrawerLayout mDrawerLayout -> t
+    android.widget.ListView mDrawerList -> u
+    boolean mShowPhotos -> v
+    android.widget.ImageView mToolbarImage -> w
+    java.lang.Boolean mDrawerOpen -> x
+    64:141:void onCreate(android.os.Bundle) -> onCreate
+    147:148:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    156:173:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    177:201:void setSkinTitle() -> l
+    205:220:void generateViewsFromData() -> m
+    223:228:void loadDataFromInternet() -> n
+    232:239:void showFailureMessage() -> o
+    242:253:void setLastNotified() -> p
+    256:257:void setNotificationAlarm() -> q
+    261:270:void setShowPhotos() -> r
+    274:293:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
+    297:315:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    43:43:void access$000(com.laloosh.textmuse.MainCategoryActivity) -> a
+    43:43:java.lang.Boolean access$100(com.laloosh.textmuse.MainCategoryActivity) -> b
+    43:43:android.support.v4.widget.DrawerLayout access$200(com.laloosh.textmuse.MainCategoryActivity) -> c
+    43:43:android.support.v4.widget.SwipeRefreshLayout access$300(com.laloosh.textmuse.MainCategoryActivity) -> d
 com.laloosh.textmuse.MainCategoryActivity$1 -> com.laloosh.textmuse.ao:
     com.laloosh.textmuse.MainCategoryActivity this$0 -> a
-    94:95:void onRefresh() -> onRefresh
+    91:92:void onRefresh() -> onRefresh
 com.laloosh.textmuse.MainCategoryActivity$2 -> com.laloosh.textmuse.ap:
     com.laloosh.textmuse.MainCategoryActivity this$0 -> a
-    107:107:void onPageScrolled(int,float,int) -> a
-    112:116:void onPageSelected(int) -> a
-    120:121:void onPageScrollStateChanged(int) -> b
+    106:111:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.MainCategoryActivity$3 -> com.laloosh.textmuse.aq:
     com.laloosh.textmuse.MainCategoryActivity this$0 -> a
-    137:138:void run() -> run
+    124:125:void run() -> run
 com.laloosh.textmuse.MainCategoryActivity$4 -> com.laloosh.textmuse.ar:
     java.lang.String val$startMessage -> a
     com.laloosh.textmuse.MainCategoryActivity this$0 -> b
-    149:151:void run() -> run
+    136:138:void run() -> run
 com.laloosh.textmuse.MainCategoryActivity$5 -> com.laloosh.textmuse.as:
     com.laloosh.textmuse.MainCategoryActivity this$0 -> a
-    334:335:void run() -> run
-com.laloosh.textmuse.MainCategoryActivity$CategoryAndNoteIndex -> com.laloosh.textmuse.at:
-    int mCategoryIndex -> a
-    int mNoteIndex -> b
-    com.laloosh.textmuse.MainCategoryActivity this$0 -> c
-com.laloosh.textmuse.MainCategoryActivity$ChangeHeaderTask -> com.laloosh.textmuse.au:
-    com.laloosh.textmuse.MainCategoryActivity this$0 -> a
-    381:394:void run() -> run
-com.laloosh.textmuse.MainCategoryActivity$ChangeHeaderTask$1 -> com.laloosh.textmuse.av:
-    com.laloosh.textmuse.MainCategoryActivity$ChangeHeaderTask this$1 -> a
-    384:392:void run() -> run
-com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter -> com.laloosh.textmuse.aw:
-    java.util.ArrayList mNotes -> a
-    java.util.HashMap mNotesIndex -> b
-    android.view.LayoutInflater mLayoutInflater -> c
-    android.app.Activity mContext -> d
-    int mTimesSinceRandomLogo -> e
-    java.util.Random mRandom -> f
-    java.util.HashMap mDownloadTargets -> g
-    423:426:void updateNotes(java.util.ArrayList,java.util.HashMap) -> a
-    429:433:int getMidpoint() -> d
-    453:459:int getCount() -> b
-    467:578:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
-    583:584:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
-    588:588:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    397:397:java.util.HashMap access$600(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> a
-    397:397:android.app.Activity access$700(com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter) -> b
-com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter$1 -> com.laloosh.textmuse.ax:
-    com.laloosh.textmuse.datamodel.Note val$note -> a
-    int val$position -> b
-    com.laloosh.textmuse.MainCategoryActivity$HeaderViewPagerAdapter this$0 -> c
-    553:568:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter -> com.laloosh.textmuse.ay:
+    277:278:void run() -> run
+com.laloosh.textmuse.MainCategoryActivity$DrawerListArrayAdapter -> com.laloosh.textmuse.at:
     android.app.Activity mContext -> a
     java.util.List mOriginalCategories -> b
     java.util.List mShownCategories -> c
@@ -16635,22 +16663,47 @@ com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter -> com.la
     com.laloosh.textmuse.datamodel.Category mLocalPhotos -> e
     com.laloosh.textmuse.datamodel.TextMuseSettings mSettings -> f
     boolean mShowPhotos -> g
-    634:639:int getCount() -> getCount
-    645:782:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    787:787:int getViewTypeCount() -> getViewTypeCount
-    793:803:int getItemViewType(int) -> getItemViewType
-    809:810:void updateSettings(com.laloosh.textmuse.datamodel.TextMuseSettings) -> a
-    813:818:void updateCategories(java.util.List,com.laloosh.textmuse.datamodel.Category,com.laloosh.textmuse.datamodel.Category) -> a
-    821:827:void generateShownCategories() -> a
-    830:843:int getOriginalIndex(com.laloosh.textmuse.datamodel.Category) -> a
-    592:592:int access$800(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter,com.laloosh.textmuse.datamodel.Category) -> a
-    592:592:android.app.Activity access$900(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter) -> a
-com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter$1 -> com.laloosh.textmuse.az:
+    348:353:int getCount() -> getCount
+    359:405:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    410:410:int getViewTypeCount() -> getViewTypeCount
+    415:415:int getItemViewType(int) -> getItemViewType
+    419:420:void updateSettings(com.laloosh.textmuse.datamodel.TextMuseSettings) -> a
+    423:428:void updateCategories(java.util.List,com.laloosh.textmuse.datamodel.Category,com.laloosh.textmuse.datamodel.Category) -> a
+    431:437:void generateShownCategories() -> a
+    440:453:int getOriginalIndex(com.laloosh.textmuse.datamodel.Category) -> a
+    317:317:int access$400(com.laloosh.textmuse.MainCategoryActivity$DrawerListArrayAdapter,com.laloosh.textmuse.datamodel.Category) -> a
+    317:317:android.app.Activity access$500(com.laloosh.textmuse.MainCategoryActivity$DrawerListArrayAdapter) -> a
+com.laloosh.textmuse.MainCategoryActivity$DrawerListArrayAdapter$1 -> com.laloosh.textmuse.au:
+    com.laloosh.textmuse.datamodel.Category val$category -> a
+    int val$position -> b
+    com.laloosh.textmuse.MainCategoryActivity$DrawerListArrayAdapter this$0 -> c
+    393:400:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.MainCategoryActivity$DrawerListArrayAdapter$ViewHolder -> com.laloosh.textmuse.av:
+    android.widget.TextView mCategoryTitle -> a
+com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter -> com.laloosh.textmuse.aw:
+    android.app.Activity mContext -> a
+    java.util.List mOriginalCategories -> b
+    java.util.List mShownCategories -> c
+    com.laloosh.textmuse.datamodel.Category mLocalTexts -> d
+    com.laloosh.textmuse.datamodel.Category mLocalPhotos -> e
+    com.laloosh.textmuse.datamodel.TextMuseSettings mSettings -> f
+    boolean mShowPhotos -> g
+    500:505:int getCount() -> getCount
+    511:648:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    653:653:int getViewTypeCount() -> getViewTypeCount
+    659:669:int getItemViewType(int) -> getItemViewType
+    675:676:void updateSettings(com.laloosh.textmuse.datamodel.TextMuseSettings) -> a
+    679:684:void updateCategories(java.util.List,com.laloosh.textmuse.datamodel.Category,com.laloosh.textmuse.datamodel.Category) -> a
+    687:693:void generateShownCategories() -> a
+    696:709:int getOriginalIndex(com.laloosh.textmuse.datamodel.Category) -> a
+    458:458:int access$600(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter,com.laloosh.textmuse.datamodel.Category) -> a
+    458:458:android.app.Activity access$700(com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter) -> a
+com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter$1 -> com.laloosh.textmuse.ax:
     com.laloosh.textmuse.datamodel.Category val$category -> a
     int val$position -> b
     com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter this$0 -> c
-    726:733:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter$ViewHolder -> com.laloosh.textmuse.ba:
+    592:599:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter$ViewHolder -> com.laloosh.textmuse.ay:
     android.widget.TextView mCategoryTitle -> a
     android.view.ViewGroup mNewBadge -> b
     android.widget.TextView mNewBadgeText -> c
@@ -16662,22 +16715,22 @@ com.laloosh.textmuse.MainCategoryActivity$MainCategoryListArrayAdapter$ViewHolde
     android.widget.ImageView mBackgroundImageView -> i
     android.view.ViewGroup mTextLayout -> j
     boolean mTextOnly -> k
-com.laloosh.textmuse.NoteSendAsyncTask -> com.laloosh.textmuse.bb:
+com.laloosh.textmuse.NoteSendAsyncTask -> com.laloosh.textmuse.az:
     int mAppId -> a
     int mNoteId -> b
     23:36:java.lang.String doInBackground(java.lang.Void[]) -> a
     8:8:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.Queries -> com.laloosh.textmuse.bc:
-com.laloosh.textmuse.Queries$ContactsQuery -> com.laloosh.textmuse.bd:
+com.laloosh.textmuse.Queries -> com.laloosh.textmuse.ba:
+com.laloosh.textmuse.Queries$ContactsQuery -> com.laloosh.textmuse.bb:
     android.net.Uri CONTENT_URI -> a
     android.net.Uri FILTER_URI -> b
     java.lang.String SELECTION -> c
     java.lang.String SORT_ORDER -> d
     java.lang.String[] PROJECTION -> e
-com.laloosh.textmuse.Queries$PhoneNumQuery -> com.laloosh.textmuse.be:
+com.laloosh.textmuse.Queries$PhoneNumQuery -> com.laloosh.textmuse.bc:
     android.net.Uri CONTENT_URI -> a
     java.lang.String[] PROJECTION -> b
-com.laloosh.textmuse.Queries$PhotoQuery -> com.laloosh.textmuse.bf:
+com.laloosh.textmuse.Queries$PhotoQuery -> com.laloosh.textmuse.bd:
     android.net.Uri CONTENT_URI -> a
     java.lang.String[] PROJECTION -> b
 com.laloosh.textmuse.RegisterActivity -> com.laloosh.textmuse.RegisterActivity:
@@ -16696,7 +16749,7 @@ com.laloosh.textmuse.RegisterActivity -> com.laloosh.textmuse.RegisterActivity:
     179:181:void showBadInputDialog() -> o
     184:186:void showTooYoungDialog() -> p
     190:203:void handleRegisterResult(boolean) -> b
-com.laloosh.textmuse.RegisterAsyncTask -> com.laloosh.textmuse.bg:
+com.laloosh.textmuse.RegisterAsyncTask -> com.laloosh.textmuse.be:
     java.lang.ref.WeakReference mHandler -> a
     java.lang.String mName -> b
     java.lang.String mEmail -> c
@@ -16706,7 +16759,7 @@ com.laloosh.textmuse.RegisterAsyncTask -> com.laloosh.textmuse.bg:
     57:66:void onPostExecute(java.lang.String) -> a
     10:10:void onPostExecute(java.lang.Object) -> onPostExecute
     10:10:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.RegisterAsyncTask$RegisterAsyncTaskHandler -> com.laloosh.textmuse.bh:
+com.laloosh.textmuse.RegisterAsyncTask$RegisterAsyncTaskHandler -> com.laloosh.textmuse.bf:
     void handleRegisterResult(boolean) -> b
 com.laloosh.textmuse.SelectMessageActivity -> com.laloosh.textmuse.SelectMessageActivity:
     android.support.v4.view.ViewPager mViewPager -> n
@@ -16721,15 +16774,14 @@ com.laloosh.textmuse.SelectMessageActivity -> com.laloosh.textmuse.SelectMessage
     160:164:void onPause() -> onPause
     169:170:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     178:185:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    189:191:void showHighlightFailedDialog() -> l
     195:198:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     47:47:com.laloosh.textmuse.datamodel.TextMuseData access$000(com.laloosh.textmuse.SelectMessageActivity) -> a
-com.laloosh.textmuse.SelectMessageActivity$1 -> com.laloosh.textmuse.bi:
+com.laloosh.textmuse.SelectMessageActivity$1 -> com.laloosh.textmuse.bg:
     com.laloosh.textmuse.SelectMessageActivity this$0 -> a
     124:124:void onPageScrolled(int,float,int) -> a
     128:129:void onPageSelected(int) -> a
     134:134:void onPageScrollStateChanged(int) -> b
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter -> com.laloosh.textmuse.bj:
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter -> com.laloosh.textmuse.bh:
     java.util.List mNotes -> a
     android.view.LayoutInflater mLayoutInflater -> b
     android.support.v7.app.ActionBarActivity mActivity -> c
@@ -16738,59 +16790,41 @@ com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter -> com.laloosh.t
     int mCategoryPosition -> f
     com.laloosh.textmuse.datamodel.TextMuseData mData -> g
     222:222:int getCount() -> b
-    228:477:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
-    482:486:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
-    490:490:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    497:525:void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
+    228:446:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
+    451:455:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
+    459:459:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
     200:200:android.support.v7.app.ActionBarActivity access$100(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> a
     200:200:com.laloosh.textmuse.datamodel.TextMuseData access$200(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> b
     200:200:int access$300(com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter) -> c
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$1 -> com.laloosh.textmuse.bk:
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$1 -> com.laloosh.textmuse.bi:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
     246:246:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     250:250:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     254:255:void afterTextChanged(android.text.Editable) -> afterTextChanged
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$2 -> com.laloosh.textmuse.bl:
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$2 -> com.laloosh.textmuse.bj:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
     290:292:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3 -> com.laloosh.textmuse.bm:
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3 -> com.laloosh.textmuse.bk:
     android.widget.RelativeLayout val$previewLayout -> a
     com.laloosh.textmuse.datamodel.Note val$note -> b
     int val$framelayoutId -> c
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> d
     319:366:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3$1 -> com.laloosh.textmuse.bn:
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3$1 -> com.laloosh.textmuse.bl:
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$3 this$1 -> a
     346:349:void onInitializationSuccess(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubePlayer,boolean) -> onInitializationSuccess
     353:359:void onInitializationFailure(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubeInitializationResult) -> onInitializationFailure
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$4 -> com.laloosh.textmuse.bo:
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$4 -> com.laloosh.textmuse.bm:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
     404:413:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$5 -> com.laloosh.textmuse.bp:
-    com.laloosh.textmuse.datamodel.Note val$note -> a
-    com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    430:447:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$6 -> com.laloosh.textmuse.bq:
+com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter$5 -> com.laloosh.textmuse.bn:
     int val$position -> a
     com.laloosh.textmuse.datamodel.Note val$note -> b
     com.laloosh.textmuse.SelectMessageActivity$NoteViewPagerAdapter this$0 -> c
-    464:469:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SetHighlightAsyncTask -> com.laloosh.textmuse.br:
-    java.lang.ref.WeakReference mHandler -> a
-    java.lang.ref.WeakReference mView -> b
-    com.laloosh.textmuse.datamodel.Note mNote -> c
-    int mAppId -> d
-    int mNoteId -> e
-    int mLike -> f
-    36:50:java.lang.String doInBackground(java.lang.Void[]) -> a
-    55:64:void onPostExecute(java.lang.String) -> a
-    13:13:void onPostExecute(java.lang.Object) -> onPostExecute
-    13:13:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.SetHighlightAsyncTask$SetHighlightAsyncTaskHandler -> com.laloosh.textmuse.bs:
-    void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
+    433:438:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.SettingsActivity -> com.laloosh.textmuse.SettingsActivity:
     int REORDER_CATEGORIES_REQUEST_CODE -> o
     int SELECT_SKIN_REQUEST_CODE -> p
@@ -16819,19 +16853,19 @@ com.laloosh.textmuse.SettingsActivity -> com.laloosh.textmuse.SettingsActivity:
     35:35:int access$600() -> m
     35:35:void access$700(com.laloosh.textmuse.SettingsActivity) -> e
     35:35:boolean access$902(com.laloosh.textmuse.SettingsActivity,boolean) -> a
-com.laloosh.textmuse.SettingsActivity$1 -> com.laloosh.textmuse.bt:
+com.laloosh.textmuse.SettingsActivity$1 -> com.laloosh.textmuse.bo:
     com.laloosh.textmuse.SettingsActivity this$0 -> a
     163:165:boolean onCreateActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> a
     172:172:boolean onPrepareActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> b
     178:187:boolean onActionItemClicked(android.support.v7.view.ActionMode,android.view.MenuItem) -> a
     194:195:void onDestroyActionMode(android.support.v7.view.ActionMode) -> a
-com.laloosh.textmuse.SettingsActivity$2 -> com.laloosh.textmuse.bu:
+com.laloosh.textmuse.SettingsActivity$2 -> com.laloosh.textmuse.bp:
     int[] $SwitchMap$com$laloosh$textmuse$SettingsActivity$TextOnlyViewType -> a
-com.laloosh.textmuse.SettingsActivity$CategoryEleViewHolder -> com.laloosh.textmuse.bv:
+com.laloosh.textmuse.SettingsActivity$CategoryEleViewHolder -> com.laloosh.textmuse.bq:
     android.widget.TextView mTextView -> a
     android.widget.CheckBox mCheckBox -> b
     com.laloosh.textmuse.SettingsActivity this$0 -> c
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter -> com.laloosh.textmuse.bw:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter -> com.laloosh.textmuse.br:
     java.util.ArrayList mCategoryList -> b
     android.view.LayoutInflater mLayoutInflater -> c
     com.laloosh.textmuse.SettingsActivity this$0 -> a
@@ -16847,39 +16881,39 @@ com.laloosh.textmuse.SettingsActivity$SettingsListAdapter -> com.laloosh.textmus
     428:471:android.view.View getCategoryElementView(int,android.view.View,android.view.ViewGroup) -> a
     477:495:int getItemViewType(int) -> getItemViewType
     502:502:int getViewTypeCount() -> getViewTypeCount
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$1 -> com.laloosh.textmuse.bx:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$1 -> com.laloosh.textmuse.bs:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     277:279:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$2 -> com.laloosh.textmuse.by:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$2 -> com.laloosh.textmuse.bt:
     android.widget.SeekBar val$seekBar -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
     307:319:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$3 -> com.laloosh.textmuse.bz:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$3 -> com.laloosh.textmuse.bu:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     325:325:void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
     329:329:void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
     334:343:void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$4 -> com.laloosh.textmuse.ca:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$4 -> com.laloosh.textmuse.bv:
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType val$viewType -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
     384:404:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$5 -> com.laloosh.textmuse.cb:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$5 -> com.laloosh.textmuse.bw:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     419:420:boolean onLongClick(android.view.View) -> onLongClick
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$6 -> com.laloosh.textmuse.cc:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$6 -> com.laloosh.textmuse.bx:
     java.lang.String val$categoryName -> a
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> b
     448:452:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$7 -> com.laloosh.textmuse.cd:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$7 -> com.laloosh.textmuse.by:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     458:460:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$8 -> com.laloosh.textmuse.ce:
+com.laloosh.textmuse.SettingsActivity$SettingsListAdapter$8 -> com.laloosh.textmuse.bz:
     com.laloosh.textmuse.SettingsActivity$SettingsListAdapter this$1 -> a
     466:467:boolean onLongClick(android.view.View) -> onLongClick
-com.laloosh.textmuse.SettingsActivity$TextItemViewHolder -> com.laloosh.textmuse.cf:
+com.laloosh.textmuse.SettingsActivity$TextItemViewHolder -> com.laloosh.textmuse.ca:
     android.widget.TextView mTextView -> a
     com.laloosh.textmuse.SettingsActivity this$0 -> b
-com.laloosh.textmuse.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.cg:
+com.laloosh.textmuse.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.cb:
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType FEEDBACK_VIEW -> a
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType PRIVACY_POLICY_VIEW -> b
     com.laloosh.textmuse.SettingsActivity$TextOnlyViewType REGISTER_VIEW -> c
@@ -16909,32 +16943,32 @@ com.laloosh.textmuse.SkinSelectActivity -> com.laloosh.textmuse.SkinSelectActivi
     217:236:void handleFetchResult(com.laloosh.textmuse.FetchNotesAsyncTask$FetchNotesResult) -> a
     27:27:void access$000(com.laloosh.textmuse.SkinSelectActivity,int) -> a
     27:27:void access$100(com.laloosh.textmuse.SkinSelectActivity) -> a
-com.laloosh.textmuse.SkinSelectActivity$1 -> com.laloosh.textmuse.ch:
+com.laloosh.textmuse.SkinSelectActivity$1 -> com.laloosh.textmuse.cc:
     com.laloosh.textmuse.SkinSelectActivity this$0 -> a
     78:80:void run() -> run
-com.laloosh.textmuse.SkinSelectActivity$2 -> com.laloosh.textmuse.ci:
+com.laloosh.textmuse.SkinSelectActivity$2 -> com.laloosh.textmuse.cd:
     com.laloosh.textmuse.SkinSelectActivity this$0 -> a
     86:114:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.laloosh.textmuse.SkinSelectActivity$SkinSelectListAdapter -> com.laloosh.textmuse.cj:
+com.laloosh.textmuse.SkinSelectActivity$SkinSelectListAdapter -> com.laloosh.textmuse.ce:
     android.app.Activity mActivity -> a
     java.util.ArrayList mSkins -> b
     261:288:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
     294:294:int getCount() -> getCount
     299:299:int getItemViewType(int) -> getItemViewType
     304:304:int getViewTypeCount() -> getViewTypeCount
-com.laloosh.textmuse.SkinSelectActivity$SkinSelectListAdapter$ViewHolder -> com.laloosh.textmuse.ck:
+com.laloosh.textmuse.SkinSelectActivity$SkinSelectListAdapter$ViewHolder -> com.laloosh.textmuse.cf:
     android.widget.TextView mTextView -> a
     android.widget.ImageView mImageView -> b
-com.laloosh.textmuse.SmsUtils -> com.laloosh.textmuse.cl:
+com.laloosh.textmuse.SmsUtils -> com.laloosh.textmuse.cg:
     33:39:android.content.Intent createSmsIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> a
     44:64:java.lang.String getToList(java.util.Set) -> a
     69:69:java.lang.String getSmsTo(java.util.Set) -> b
-    74:102:java.lang.String getText(com.laloosh.textmuse.datamodel.Note,boolean) -> a
-    106:118:android.net.Uri getMediaFile(android.content.Context,com.laloosh.textmuse.datamodel.Note) -> a
-    122:125:android.content.Intent getTextOnlyIntent(com.laloosh.textmuse.datamodel.Note,java.util.Set) -> a
-    134:195:android.content.Intent getPostKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> b
-    201:252:android.content.Intent getPreKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> c
-    258:291:boolean testIfPhotosSupported(android.content.Context) -> a
+    74:100:java.lang.String getText(com.laloosh.textmuse.datamodel.Note,boolean) -> a
+    104:116:android.net.Uri getMediaFile(android.content.Context,com.laloosh.textmuse.datamodel.Note) -> a
+    120:123:android.content.Intent getTextOnlyIntent(com.laloosh.textmuse.datamodel.Note,java.util.Set) -> a
+    132:193:android.content.Intent getPostKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> b
+    199:250:android.content.Intent getPreKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> c
+    256:289:boolean testIfPhotosSupported(android.content.Context) -> a
 com.laloosh.textmuse.SortableCategoryActivity -> com.laloosh.textmuse.SortableCategoryActivity:
     android.support.v7.widget.RecyclerView mRecyclerView -> n
     android.support.v7.widget.RecyclerView$LayoutManager mLayoutManager -> o
@@ -16949,7 +16983,7 @@ com.laloosh.textmuse.SortableCategoryActivity -> com.laloosh.textmuse.SortableCa
     113:126:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     132:134:void onBackPressed() -> onBackPressed
     138:140:void setActivityResultValue() -> l
-com.laloosh.textmuse.SortableCategoryAdapter -> com.laloosh.textmuse.cm:
+com.laloosh.textmuse.SortableCategoryAdapter -> com.laloosh.textmuse.ch:
     java.util.ArrayList mCategoryList -> a
     int mFirstUnlockedIndex -> b
     64:64:long getItemId(int) -> getItemId
@@ -16964,7 +16998,7 @@ com.laloosh.textmuse.SortableCategoryAdapter -> com.laloosh.textmuse.cm:
     22:22:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> onCreateViewHolder
     22:22:com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange onGetItemDraggableRange(android.support.v7.widget.RecyclerView$ViewHolder,int) -> onGetItemDraggableRange
     22:22:boolean onCheckCanStartDrag(android.support.v7.widget.RecyclerView$ViewHolder,int,int,int) -> onCheckCanStartDrag
-com.laloosh.textmuse.SortableCategoryAdapter$CategoryViewHolder -> com.laloosh.textmuse.cn:
+com.laloosh.textmuse.SortableCategoryAdapter$CategoryViewHolder -> com.laloosh.textmuse.ci:
     android.widget.FrameLayout mContainer -> a
     android.widget.TextView mTextView -> b
     android.widget.ImageView mLockImageView -> c
@@ -16993,7 +17027,7 @@ com.laloosh.textmuse.SplashScreenActivity -> com.laloosh.textmuse.SplashScreenAc
     246:253:void handleFetchSkinsResult(com.laloosh.textmuse.FetchSkinsAsyncTask$FetchSkinsResult) -> a
     256:258:void startupAzureIntegration() -> t
     26:26:void access$000(com.laloosh.textmuse.SplashScreenActivity) -> a
-com.laloosh.textmuse.SplashScreenActivity$1 -> com.laloosh.textmuse.co:
+com.laloosh.textmuse.SplashScreenActivity$1 -> com.laloosh.textmuse.cj:
     com.laloosh.textmuse.SplashScreenActivity this$0 -> a
     161:162:void run() -> run
 com.laloosh.textmuse.WalkthroughActivity -> com.laloosh.textmuse.WalkthroughActivity:
@@ -17007,21 +17041,21 @@ com.laloosh.textmuse.WalkthroughActivity -> com.laloosh.textmuse.WalkthroughActi
     67:69:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     20:20:java.lang.String[] access$000() -> l
     20:20:int[] access$100() -> m
-com.laloosh.textmuse.WalkthroughActivity$WalkthroughAdapter -> com.laloosh.textmuse.cp:
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughAdapter -> com.laloosh.textmuse.ck:
     boolean mInitialLaunch -> a
     81:81:android.support.v4.app.Fragment getItem(int) -> a
     86:86:int getCount() -> b
-com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment -> com.laloosh.textmuse.cq:
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment -> com.laloosh.textmuse.cl:
     int mNum -> a
     boolean mInitialLaunch -> b
     95:102:com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment newInstance(int,boolean) -> a
     107:110:void onCreate(android.os.Bundle) -> onCreate
     114:143:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     90:90:boolean access$200(com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment) -> a
-com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment$1 -> com.laloosh.textmuse.cr:
+com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment$1 -> com.laloosh.textmuse.cm:
     com.laloosh.textmuse.WalkthroughActivity$WalkthroughFragment this$0 -> a
     126:140:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.cs:
+com.laloosh.textmuse.WebDataParser -> com.laloosh.textmuse.cn:
     29:54:com.laloosh.textmuse.datamodel.TextMuseData parse(java.lang.String) -> a
     59:84:com.laloosh.textmuse.datamodel.TextMuseSkinData parseSkinData(java.lang.String) -> b
     89:104:com.laloosh.textmuse.datamodel.TextMuseSkinData parseSkinContent(org.xmlpull.v1.XmlPullParser) -> a
@@ -17040,7 +17074,7 @@ com.laloosh.textmuse.WebviewActivity -> com.laloosh.textmuse.WebviewActivity:
     72:73:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     81:90:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     16:16:android.widget.ProgressBar access$000(com.laloosh.textmuse.WebviewActivity) -> a
-com.laloosh.textmuse.WebviewActivity$1 -> com.laloosh.textmuse.ct:
+com.laloosh.textmuse.WebviewActivity$1 -> com.laloosh.textmuse.co:
     com.laloosh.textmuse.WebviewActivity this$0 -> a
     40:43:void onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) -> onReceivedError
     47:49:void onPageStarted(android.webkit.WebView,java.lang.String,android.graphics.Bitmap) -> onPageStarted
@@ -17123,16 +17157,15 @@ com.laloosh.textmuse.datamodel.Note -> com.laloosh.textmuse.datamodel.Note:
     android.os.Parcelable$Creator CREATOR -> CREATOR
     40:40:java.lang.String getInternalFilename() -> a
     45:45:boolean isLocalNote() -> b
-    49:53:boolean hasDisplayableText() -> c
-    57:66:boolean hasDisplayableMedia() -> d
+    57:66:boolean hasDisplayableMedia() -> c
     72:81:void updateSavedInternally(android.content.Context) -> a
     84:94:java.lang.String getDisplayMediaUrl(android.content.Context) -> b
-    100:103:boolean shouldCenterInside() -> e
-    108:111:boolean hasExternalLink() -> f
+    100:103:boolean shouldCenterInside() -> d
+    108:111:boolean hasExternalLink() -> e
     115:137:android.net.Uri getExternalLinkUri(java.lang.String) -> a
-    141:154:boolean isMediaYoutube() -> g
-    158:164:java.lang.String getYoutubeVideoTag() -> h
-    168:173:java.lang.String getYoutubeImgUrl() -> i
+    141:154:boolean isMediaYoutube() -> f
+    158:164:java.lang.String getYoutubeVideoTag() -> g
+    168:173:java.lang.String getYoutubeImgUrl() -> h
     178:178:int describeContents() -> describeContents
     182:191:void writeToParcel(android.os.Parcel,int) -> writeToParcel
 com.laloosh.textmuse.datamodel.Note$1 -> com.laloosh.textmuse.datamodel.e:
@@ -17394,9 +17427,6 @@ com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment$1 -> com.laloosh.t
     23:24:void onClick(android.content.DialogInterface,int) -> onClick
 com.laloosh.textmuse.dialogs.RegistrationTooYoungDialogFragment -> com.laloosh.textmuse.a.ac:
     11:11:com.laloosh.textmuse.dialogs.RegistrationTooYoungDialogFragment newInstance() -> d
-    16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
-com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment -> com.laloosh.textmuse.a.ad:
-    11:11:com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment newInstance() -> d
     16:21:android.app.Dialog onCreateDialog(android.os.Bundle) -> a
 com.microsoft.windowsazure.mobileservices.ApiJsonOperationCallback -> com.microsoft.windowsazure.mobileservices.ApiJsonOperationCallback:
     void onCompleted(com.google.gson.JsonElement,java.lang.Exception,com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse) -> onCompleted
