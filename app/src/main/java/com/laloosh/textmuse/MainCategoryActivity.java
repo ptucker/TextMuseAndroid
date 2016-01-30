@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -389,6 +390,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         //view holder pattern to prevent repeated queries for ID
         static class ViewHolder {
             public TextView mCategoryTitle;
+            public CheckBox mCheckbox;
         }
 
         public DrawerListArrayAdapter(Activity context, List<Category> categories, Category localTexts, Category localPhotos, TextMuseSettings settings, boolean showPhotos) {
@@ -421,10 +423,13 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             View rowView = convertView;
 
             final Category category;
+            boolean shouldShowCheckbox = true;
             if (position == mShownCategories.size()) {
                 category = mLocalTexts;
+                shouldShowCheckbox = false;
             } else if (position > mShownCategories.size()) {
                 category = mLocalPhotos;
+                shouldShowCheckbox = false;
             } else {
                 category = mShownCategories.get(position);
             }
@@ -441,11 +446,18 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
                 rowView = inflater.inflate(R.layout.item_main_category_list, parent, false);
                 viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewCategory);
+                viewHolder.mCheckbox = (CheckBox) rowView.findViewById(R.id.mainFragmentListItemCheckBox);
 
                 rowView.setTag(viewHolder);
             }
 
             ViewHolder holder = (ViewHolder) rowView.getTag();
+
+            if (shouldShowCheckbox) {
+                holder.mCheckbox.setVisibility(View.VISIBLE);
+            } else {
+                holder.mCheckbox.setVisibility(View.INVISIBLE);
+            }
 
             holder.mCategoryTitle.setText(category.name);
 
