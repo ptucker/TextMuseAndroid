@@ -15,6 +15,7 @@ import org.joda.time.DateTime;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class TextMuseData {
@@ -25,10 +26,14 @@ public class TextMuseData {
     public Category localTexts;
     public Category localPhotos;
 
+    public Category pinnedNotes;
+
     public DateTime timestamp;
     public int appId;
 
     public TextMuseCurrentSkinData skinData;
+
+    private transient HashSet<Integer> mPinnedNotesSet;
 
     public TextMuseData() {
         setupNewLocalNotes();
@@ -150,6 +155,11 @@ public class TextMuseData {
         localPhotos.name = "My Photos";
         localPhotos.requiredFlag = true;
         localPhotos.notes = new ArrayList<Note>();
+
+        pinnedNotes = new Category();
+        pinnedNotes.name = "Pinned Notes";
+        pinnedNotes.requiredFlag = true;
+        pinnedNotes.notes = new ArrayList<Note>();
     }
 
     public void updatePhotos(Context context) {
@@ -256,6 +266,50 @@ public class TextMuseData {
             int c3 = 0xff000000 + skinData.c3;
 
             return new int[]{c1, c2, c3};
+        }
+    }
+
+    public boolean hasPinnedNote(int noteId) {
+        if (pinnedNotes == null || pinnedNotes.notes == null) {
+            return false;
+        }
+
+        if (mPinnedNotesSet == null) {
+            mPinnedNotesSet = new HashSet<>();
+            for (Note note : pinnedNotes.notes) {
+                mPinnedNotesSet.add(note.noteId);
+            }
+        }
+
+        return mPinnedNotesSet.contains(noteId);
+    }
+
+    public void pinNote(Note noteToPin) {
+
+        if (hasPinnedNote(noteToPin.noteId)) {
+            return;
+        }
+
+        //If not already in, then just add it in
+        pinnedNotes.notes.add(noteToPin);
+
+        mPinnedNotesSet.add(noteToPin.noteId);
+    }
+
+    public void unPinNote(Note noteToUnpin) {
+
+        if (!hasPinnedNote(noteToUnpin.noteId)) {
+            return;
+        }
+
+        Iterator<Note> iter = pinnedNotes.notes.iterator();
+        while (iter.hasNext()) {
+            Note note = iter.next();
+            if (note.noteId == noteToUnpin.noteId) {
+                iter.remove();
+                mPinnedNotesSet.remove(note.noteId);
+                return;
+            }
         }
     }
 }

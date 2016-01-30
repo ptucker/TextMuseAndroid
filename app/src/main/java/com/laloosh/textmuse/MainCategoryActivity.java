@@ -26,6 +26,7 @@ import com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
+import com.laloosh.textmuse.datamodel.NoteExtended;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment;
@@ -37,10 +38,12 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 
-public class MainCategoryActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
+public class MainCategoryActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler {
 
     public static final String ALREADY_LOADED_DATA_EXTRA = "com.laloosh.textmuse.alreadyloadeddata";
 
@@ -50,7 +53,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
     private TextMuseSettings mSettings;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListView mListView;
-    private MainCategoryListArrayAdapter mCategoryListAdapter;
+    private MainNotesAdapter mAdapter;
     private DrawerListArrayAdapter mDrawerListAdapter;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -58,6 +61,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
     private ImageView mToolbarImage;
     private Boolean mDrawerOpen;
+
+    private ArrayList<NoteExtended> mSortedNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +174,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         }
 
 
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -186,7 +190,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 Picasso.with(this)
                         .load(logoFile)
                         .fit()
-                        //.placeholder(R.drawable.launcher_icon)
+                                //.placeholder(R.drawable.launcher_icon)
                         .error(R.drawable.launcher_icon)
                         .centerInside()
                         .into(mToolbarImage);
@@ -204,19 +208,77 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
     private void generateViewsFromData() {
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
 
-            if (mCategoryListAdapter != null) {
-                mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
+            if (mAdapter != null) {
+                generateNoteList();
+                mAdapter.updateNotes(mSortedNotes);
                 mDrawerListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
             } else {
-                mCategoryListAdapter = new MainCategoryListArrayAdapter(this, mData.categories, mData.localTexts, mData.localPhotos, mSettings, mShowPhotos);
-                mListView.setAdapter(mCategoryListAdapter);
+
+                generateNoteList();
+                mAdapter = new MainNotesAdapter(this, mSortedNotes, mData);
+                mListView.setAdapter(mAdapter);
 
                 mDrawerListAdapter = new DrawerListArrayAdapter(this, mData.categories, mData.localTexts, mData.localPhotos, mSettings, mShowPhotos);
                 mDrawerList.setAdapter(mDrawerListAdapter);
             }
+
             mListView.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    //Generates the pinned hash set and the sorted notes array.  These depend on your settings
+    private void generateNoteList() {
+        if (mData != null && mData.categories != null && mData.categories.size() > 0) {
+
+            mSortedNotes = new ArrayList<NoteExtended>();
+            ArrayList<NoteExtended> noImagesNotes = new ArrayList<>();
+            ArrayList<NoteExtended> imageNotes = new ArrayList<>();
+            Random rnd = new Random();
+
+            int categoryPos = -1;
+            for (Category category : mData.categories) {
+                categoryPos++;
+
+                if (!mSettings.shouldShowCategory(category.name)) {
+                    continue;
+                }
+
+                int inCategoryPos = 0;
+                for (Note note : category.notes) {
+                    int score = rnd.nextInt(3);
+                    score += note.newFlag ? 4 : 0;
+                    score += note.liked ? 1 : 0;
+                    score += mData.hasPinnedNote(note.noteId) ? 1 : 0;
+                    score += inCategoryPos / 3;
+
+                    if (note.hasDisplayableMedia()) {
+                        imageNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
+                    } else {
+                        noImagesNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
+                    }
+
+                    inCategoryPos++;
+                }
+
+            }
+
+            int i = 0;
+            for (NoteExtended note : imageNotes) {
+                if (i < 3) {
+                    note.score = -1;
+                }
+
+                mSortedNotes.add(note);
+                i++;
+            }
+
+            for (NoteExtended note : noImagesNotes) {
+                mSortedNotes.add(note);
+            }
+
+            Collections.sort(mSortedNotes);
+        }
     }
 
     private void loadDataFromInternet() {
@@ -304,8 +366,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                     mData = GlobalData.getInstance().getData();
                     setSkinTitle();
 
-                    mCategoryListAdapter.updateSettings(mSettings);
-                    mCategoryListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
+                    generateNoteList();
+                    mAdapter.updateNotes(mSortedNotes);
 
                     mDrawerListAdapter.updateSettings(mSettings);
                     mDrawerListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
@@ -455,195 +517,192 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
     }
 
 
-    public static class MainCategoryListArrayAdapter extends ArrayAdapter<Category> {
+    public static class MainNotesAdapter extends ArrayAdapter<NoteExtended> {
 
         private Activity mContext;
-        private List<Category> mOriginalCategories;
-        private List<Category> mShownCategories;
-        private Category mLocalTexts;
-        private Category mLocalPhotos;
-        private TextMuseSettings mSettings;
-        private boolean mShowPhotos;
+        private ArrayList<NoteExtended> mNotes;
+        private TextMuseData mData;
 
         //view holder pattern to prevent repeated queries for ID
         static class ViewHolder {
             public TextView mCategoryTitle;
-            public ViewGroup mNewBadge;
-            public TextView mNewBadgeText;
-            public ImageView mNewBadgeBackground;
             public ImageView mArrow;
 
             public View mBackgroundViewTextOnly;
-            public TextView mLatest;
             public TextView mTextView;
             public ImageView mBackgroundImageView;
+
+            public ImageView mLikeImageView;
+            public ImageView mPinImageView;
+            public ImageView mSendImageView;
+
+            public ViewGroup mLayoutLike;
+            public ViewGroup mLayoutPin;
+            public ViewGroup mLayoutSend;
 
             public ViewGroup mTextLayout;
 
             public boolean mTextOnly;
         }
 
-        public MainCategoryListArrayAdapter(Activity context, List<Category> categories, Category localTexts, Category localPhotos, TextMuseSettings settings, boolean showPhotos) {
-            super(context, R.layout.list_ele_category, categories);
+        public MainNotesAdapter(Activity context, ArrayList<NoteExtended> notes, TextMuseData data) {
+            super(context, R.layout.list_ele_category, notes);
+
             this.mContext = context;
-            this.mOriginalCategories = categories;
-            this.mSettings = settings;
-            this.mShownCategories = new ArrayList<Category>();
-            this.mLocalTexts = localTexts;
-            this.mLocalPhotos = localPhotos;
-            this.mShowPhotos = showPhotos;
-            generateShownCategories();
+            this.mData = data;
+            this.mNotes = notes;
         }
+
 
         @Override
         public int getCount() {
-            if (mShowPhotos) {
-                //+2 for the local texts, photos category
-                return mShownCategories.size() + 2;
-            } else {
-                //+1 for the local texts
-                return mShownCategories.size() + 1;
-            }
+            return mNotes.size();
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View rowView = convertView;
-
-            final Category category;
-            if (position == mShownCategories.size()) {
-                category = mLocalTexts;
-            } else if (position > mShownCategories.size()) {
-                category = mLocalPhotos;
-            } else {
-                category = mShownCategories.get(position);
-            }
-
-            if (category.notes == null || category.notes.size() <= 0) {
-                return null;
-            }
-
-            Note firstNote = category.notes.get(0);
+            final NoteExtended noteExtended = mNotes.get(position);
+            final Note note = noteExtended.note;
 
             if (rowView == null) {
+
                 LayoutInflater inflater = mContext.getLayoutInflater();
                 ViewHolder viewHolder = new ViewHolder();
 
-                if (firstNote.hasDisplayableMedia()) {
-                    rowView = inflater.inflate(R.layout.list_ele_category_textimage, parent, false);
+                if (note.hasDisplayableMedia()) {
+                    rowView = inflater.inflate(R.layout.list_ele_category_textimage2, parent, false);
                     viewHolder.mBackgroundImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewItemBackground);
                     viewHolder.mTextOnly = false;
                 } else {
-                    rowView = inflater.inflate(R.layout.list_ele_category_textonly, parent, false);
+                    rowView = inflater.inflate(R.layout.list_ele_category_textonly2, parent, false);
                     viewHolder.mBackgroundViewTextOnly = rowView.findViewById(R.id.mainViewBackgroundView);
                     viewHolder.mTextOnly = true;
                 }
 
                 viewHolder.mTextView = (TextView) rowView.findViewById(R.id.mainViewTextViewText);
-                viewHolder.mLatest = (TextView) rowView.findViewById(R.id.mainViewTextViewLatest);
                 viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewTitle);
                 viewHolder.mArrow = (ImageView) rowView.findViewById(R.id.mainFragmentListItemImageArrow);
-                viewHolder.mNewBadgeText = (TextView) rowView.findViewById(R.id.mainViewFragmentListItemTextViewNewBadge);
-                viewHolder.mNewBadgeBackground = (ImageView) rowView.findViewById(R.id.mainViewFragmentImageViewNewBadge);
-                viewHolder.mNewBadge = (ViewGroup) rowView.findViewById(R.id.mainViewFragmentListItemLayoutNewBadge);
                 viewHolder.mTextLayout = (ViewGroup) rowView.findViewById(R.id.mainViewRelativeLayoutTextItem);
+                viewHolder.mLikeImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewHeart);
+                viewHolder.mPinImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewPin);
+                viewHolder.mSendImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewSend);
+
+                viewHolder.mLayoutLike = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutHeart);
+                viewHolder.mLayoutPin = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutPin);
+                viewHolder.mLayoutSend = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutSend);
+
                 rowView.setTag(viewHolder);
             }
 
-            ViewHolder holder = (ViewHolder) rowView.getTag();
+            final ViewHolder holder = (ViewHolder) rowView.getTag();
 
             TextMuseData data = GlobalData.getInstance().getData();
             int[] colorList = data.getColorList();
             int color = colorList[position % colorList.length];
 
-            holder.mCategoryTitle.setText(category.name);
+            holder.mCategoryTitle.setText(noteExtended.categoryName);
             holder.mCategoryTitle.setTextColor(ColorHelpers.getTextColorForWhiteBackground(color));
-
-            int newCount = 0;
-            for (Note note : category.notes) {
-                if (note.newFlag) {
-                    newCount++;
-                }
-            }
-
-            if (newCount > 0) {
-                holder.mNewBadgeText.setText(Integer.toString(newCount) + " NEW");
-            } else {
-                holder.mNewBadgeText.setText("NEW");
-            }
-
-            holder.mNewBadgeText.setTextColor(ColorHelpers.getTextColorForBackground(color));
-
-            holder.mNewBadgeBackground.setColorFilter(color);
-
-            if (category == mLocalPhotos || category == mLocalTexts) {
-                holder.mNewBadge.setVisibility(View.GONE);
-                holder.mNewBadgeBackground.setVisibility(View.GONE);
-            } else {
-                holder.mNewBadge.setVisibility(View.VISIBLE);
-                holder.mNewBadgeBackground.setVisibility(View.VISIBLE);
-            }
 
             holder.mArrow.setColorFilter(color);
 
-            View.OnClickListener onClickListener = new View.OnClickListener() {
+            View.OnClickListener onCategoryClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int originalIndex = getOriginalIndex(category);
-                    if (originalIndex >= 0) {
-                        Intent intent = new Intent(mContext, SelectMessageActivity.class);
-                        intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, originalIndex);
-                        intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
-                        mContext.startActivity(intent);
-                    }
+                    Intent intent = new Intent(mContext, SelectMessageActivity.class);
+                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, noteExtended.categoryIndex);
+                    intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
+//                    intent.putExtra(SelectMessageActivity.NOTE_INDEX_EXTRA, noteExtended.notePos);
+                    mContext.startActivity(intent);
                 }
             };
 
-            holder.mArrow.setOnClickListener(onClickListener);
-            holder.mNewBadge.setOnClickListener(onClickListener);
-            holder.mTextLayout.setOnClickListener(onClickListener);
+            View.OnClickListener onNoteClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, SelectMessageActivity.class);
+                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, noteExtended.categoryIndex);
+                    intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
+                    intent.putExtra(SelectMessageActivity.NOTE_INDEX_EXTRA, noteExtended.notePos);
+                    mContext.startActivity(intent);
+                }
+            };
+
+            holder.mArrow.setOnClickListener(onCategoryClickListener);
+            holder.mCategoryTitle.setOnClickListener(onCategoryClickListener);
+            holder.mTextLayout.setOnClickListener(onNoteClickListener);
 
             //Default the text color to white unless we change it
             holder.mTextView.setTextColor(0xFFFFFFFF);
 
-            if (!firstNote.hasDisplayableMedia()) {
+            if (note.text == null || note.text.length() <= 0) {
+                holder.mTextView.setVisibility(View.INVISIBLE);
+            } else {
+                holder.mTextView.setVisibility(View.VISIBLE);
+                holder.mTextView.setText(note.text);
+            }
+
+            if (!note.hasDisplayableMedia()) {
                 holder.mBackgroundViewTextOnly.setBackgroundColor(color);
                 holder.mTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
             } else {
-                if (firstNote.shouldCenterInside()) {
-                    Picasso.with(mContext)
-                            .load(firstNote.getDisplayMediaUrl(mContext))
-                            .error(R.drawable.placeholder_image)
-                            .fit()
-                            .centerInside()
-                            .into(holder.mBackgroundImageView);
-                    holder.mBackgroundImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                } else {
-                    Picasso.with(mContext)
-                            .load(firstNote.getDisplayMediaUrl(mContext))
-                            .error(R.drawable.placeholder_image)
-                            .fit()
-                            .centerCrop()
-                            .into(holder.mBackgroundImageView);
-                    holder.mBackgroundImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                }
+
+                holder.mBackgroundImageView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Picasso.with(mContext)
+                                .load(note.getDisplayMediaUrl(mContext))
+                                .error(R.drawable.placeholder_image)
+                                .resize(holder.mBackgroundImageView.getWidth(), 0)
+                                .into(holder.mBackgroundImageView);
+                    }
+                });
             }
 
-            if (firstNote.text == null || firstNote.text.length() <= 0) {
-                if (category == mLocalTexts) {
-                    //The local texts not having any text means that the user has yet to add any
-                    holder.mTextView.setVisibility(View.VISIBLE);
-                    holder.mTextView.setText("Add your own texts here!");
-                    Log.d(Constants.TAG, "Category: " + category.name + " had empty first note, so putting in filler text");
-                } else {
-                    holder.mTextView.setVisibility(View.INVISIBLE);
-                    Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with empty text");
-                }
+            if (note.liked) {
+                holder.mLikeImageView.setColorFilter(0xffef1111);
             } else {
-                holder.mTextView.setVisibility(View.VISIBLE);
-                holder.mTextView.setText(firstNote.text);
-                Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with text: " + firstNote.text);
+                holder.mLikeImageView.setColorFilter(0xffdedede);
             }
+
+            if (mData.hasPinnedNote(note.noteId)) {
+                holder.mPinImageView.setColorFilter(0xffef1111);
+            } else {
+                holder.mPinImageView.setColorFilter(0xffdedede);
+            }
+
+            holder.mSendImageView.setColorFilter(0xff1a1a1a);
+
+            holder.mLayoutLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: actually do the like here....
+
+                }
+            });
+
+            holder.mLayoutPin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mData.hasPinnedNote(note.noteId)) {
+                        mData.unPinNote(note);
+                        holder.mPinImageView.setColorFilter(0xffdedede);
+                        mData.save(mContext);
+                    } else {
+                        mData.pinNote(note);
+                        holder.mPinImageView.setColorFilter(0xffef1111);
+                        mData.save(mContext);
+                    }
+                }
+            });
+
+            holder.mLayoutSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: actually do the send here...
+
+                }
+            });
 
             return rowView;
         }
@@ -656,59 +715,274 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         @Override
         public int getItemViewType(int position) {
             //Type 0 is an image one, type 1 is the text one
-            if (position == mShownCategories.size()) {
-                return 1;    //My texts
-            } else if (position > mShownCategories.size()) {
-                return 0;    //My photos
+            final NoteExtended note = mNotes.get(position);
+            if (note.note.hasDisplayableMedia()) {
+                return 0;
             } else {
-                Category category = mShownCategories.get(position);
-                Note firstNote = category.notes.get(0);
-                if (firstNote.hasDisplayableMedia()) {
-                    return 0;
-                } else {
-                    return 1;
-                }
+                return 1;
             }
         }
 
-        public void updateSettings(TextMuseSettings settings) {
-            mSettings = settings;
-        }
-
-        public void updateCategories(List<Category> categories, Category localNotes, Category localPhotos) {
-            mOriginalCategories = categories;
-            mLocalTexts = localNotes;
-            mLocalPhotos = localPhotos;
-            generateShownCategories();
+        public void updateNotes(ArrayList<NoteExtended> notes) {
+            mNotes = notes;
             this.notifyDataSetChanged();
         }
-
-        private void generateShownCategories() {
-            mShownCategories.clear();
-            for (Category c : mOriginalCategories) {
-                if (mSettings.shouldShowCategory(c.name)) {
-                    mShownCategories.add(c);
-                }
-            }
-        }
-
-        private int getOriginalIndex(Category category) {
-            if (category == mLocalTexts) {
-                return mOriginalCategories.size();
-            } else if (category == mLocalPhotos) {
-                return mOriginalCategories.size() + 1;
-            } else {
-                for (int i = 0; i < mOriginalCategories.size(); i++) {
-                    Category c = mOriginalCategories.get(i);
-                    if (c.name.equals(category.name)) {
-                        return i;
-                    }
-                }
-            }
-
-            return -1;
-        }
     }
+
+//    public static class MainCategoryListArrayAdapter extends ArrayAdapter<Category> {
+//
+//        private Activity mContext;
+//        private List<Category> mOriginalCategories;
+//        private List<Category> mShownCategories;
+//        private Category mLocalTexts;
+//        private Category mLocalPhotos;
+//        private TextMuseSettings mSettings;
+//        private boolean mShowPhotos;
+//
+//        //view holder pattern to prevent repeated queries for ID
+//        static class ViewHolder {
+//            public TextView mCategoryTitle;
+//            public ViewGroup mNewBadge;
+//            public TextView mNewBadgeText;
+//            public ImageView mNewBadgeBackground;
+//            public ImageView mArrow;
+//
+//            public View mBackgroundViewTextOnly;
+//            public TextView mLatest;
+//            public TextView mTextView;
+//            public ImageView mBackgroundImageView;
+//
+//            public ViewGroup mTextLayout;
+//
+//            public boolean mTextOnly;
+//        }
+//
+//        public MainCategoryListArrayAdapter(Activity context, List<Category> categories, Category localTexts, Category localPhotos, TextMuseSettings settings, boolean showPhotos) {
+//            super(context, R.layout.list_ele_category, categories);
+//            this.mContext = context;
+//            this.mOriginalCategories = categories;
+//            this.mSettings = settings;
+//            this.mShownCategories = new ArrayList<Category>();
+//            this.mLocalTexts = localTexts;
+//            this.mLocalPhotos = localPhotos;
+//            this.mShowPhotos = showPhotos;
+//            generateShownCategories();
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            if (mShowPhotos) {
+//                //+2 for the local texts, photos category
+//                return mShownCategories.size() + 2;
+//            } else {
+//                //+1 for the local texts
+//                return mShownCategories.size() + 1;
+//            }
+//        }
+//
+//        @Override
+//        public View getView(final int position, View convertView, ViewGroup parent) {
+//            View rowView = convertView;
+//
+//            final Category category;
+//            if (position == mShownCategories.size()) {
+//                category = mLocalTexts;
+//            } else if (position > mShownCategories.size()) {
+//                category = mLocalPhotos;
+//            } else {
+//                category = mShownCategories.get(position);
+//            }
+//
+//            if (category.notes == null || category.notes.size() <= 0) {
+//                return null;
+//            }
+//
+//            Note firstNote = category.notes.get(0);
+//
+//            if (rowView == null) {
+//                LayoutInflater inflater = mContext.getLayoutInflater();
+//                ViewHolder viewHolder = new ViewHolder();
+//
+//                if (firstNote.hasDisplayableMedia()) {
+//                    rowView = inflater.inflate(R.layout.list_ele_category_textimage, parent, false);
+//                    viewHolder.mBackgroundImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewItemBackground);
+//                    viewHolder.mTextOnly = false;
+//                } else {
+//                    rowView = inflater.inflate(R.layout.list_ele_category_textonly, parent, false);
+//                    viewHolder.mBackgroundViewTextOnly = rowView.findViewById(R.id.mainViewBackgroundView);
+//                    viewHolder.mTextOnly = true;
+//                }
+//
+//                viewHolder.mTextView = (TextView) rowView.findViewById(R.id.mainViewTextViewText);
+//                viewHolder.mLatest = (TextView) rowView.findViewById(R.id.mainViewTextViewLatest);
+//                viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewTitle);
+//                viewHolder.mArrow = (ImageView) rowView.findViewById(R.id.mainFragmentListItemImageArrow);
+//                viewHolder.mNewBadgeText = (TextView) rowView.findViewById(R.id.mainViewFragmentListItemTextViewNewBadge);
+//                viewHolder.mNewBadgeBackground = (ImageView) rowView.findViewById(R.id.mainViewFragmentImageViewNewBadge);
+//                viewHolder.mNewBadge = (ViewGroup) rowView.findViewById(R.id.mainViewFragmentListItemLayoutNewBadge);
+//                viewHolder.mTextLayout = (ViewGroup) rowView.findViewById(R.id.mainViewRelativeLayoutTextItem);
+//                rowView.setTag(viewHolder);
+//            }
+//
+//            ViewHolder holder = (ViewHolder) rowView.getTag();
+//
+//            TextMuseData data = GlobalData.getInstance().getData();
+//            int[] colorList = data.getColorList();
+//            int color = colorList[position % colorList.length];
+//
+//            holder.mCategoryTitle.setText(category.name);
+//            holder.mCategoryTitle.setTextColor(ColorHelpers.getTextColorForWhiteBackground(color));
+//
+//            int newCount = 0;
+//            for (Note note : category.notes) {
+//                if (note.newFlag) {
+//                    newCount++;
+//                }
+//            }
+//
+//            if (newCount > 0) {
+//                holder.mNewBadgeText.setText(Integer.toString(newCount) + " NEW");
+//            } else {
+//                holder.mNewBadgeText.setText("NEW");
+//            }
+//
+//            holder.mNewBadgeText.setTextColor(ColorHelpers.getTextColorForBackground(color));
+//
+//            holder.mNewBadgeBackground.setColorFilter(color);
+//
+//            if (category == mLocalPhotos || category == mLocalTexts) {
+//                holder.mNewBadge.setVisibility(View.GONE);
+//                holder.mNewBadgeBackground.setVisibility(View.GONE);
+//            } else {
+//                holder.mNewBadge.setVisibility(View.VISIBLE);
+//                holder.mNewBadgeBackground.setVisibility(View.VISIBLE);
+//            }
+//
+//            holder.mArrow.setColorFilter(color);
+//
+//            View.OnClickListener onClickListener = new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int originalIndex = getOriginalIndex(category);
+//                    if (originalIndex >= 0) {
+//                        Intent intent = new Intent(mContext, SelectMessageActivity.class);
+//                        intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, originalIndex);
+//                        intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
+//                        mContext.startActivity(intent);
+//                    }
+//                }
+//            };
+//
+//            holder.mArrow.setOnClickListener(onClickListener);
+//            holder.mNewBadge.setOnClickListener(onClickListener);
+//            holder.mTextLayout.setOnClickListener(onClickListener);
+//
+//            //Default the text color to white unless we change it
+//            holder.mTextView.setTextColor(0xFFFFFFFF);
+//
+//            if (!firstNote.hasDisplayableMedia()) {
+//                holder.mBackgroundViewTextOnly.setBackgroundColor(color);
+//                holder.mTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
+//            } else {
+//                if (firstNote.shouldCenterInside()) {
+//                    Picasso.with(mContext)
+//                            .load(firstNote.getDisplayMediaUrl(mContext))
+//                            .error(R.drawable.placeholder_image)
+//                            .fit()
+//                            .centerInside()
+//                            .into(holder.mBackgroundImageView);
+//                    holder.mBackgroundImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//                } else {
+//                    Picasso.with(mContext)
+//                            .load(firstNote.getDisplayMediaUrl(mContext))
+//                            .error(R.drawable.placeholder_image)
+//                            .fit()
+//                            .centerCrop()
+//                            .into(holder.mBackgroundImageView);
+//                    holder.mBackgroundImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                }
+//            }
+//
+//            if (firstNote.text == null || firstNote.text.length() <= 0) {
+//                if (category == mLocalTexts) {
+//                    //The local texts not having any text means that the user has yet to add any
+//                    holder.mTextView.setVisibility(View.VISIBLE);
+//                    holder.mTextView.setText("Add your own texts here!");
+//                    Log.d(Constants.TAG, "Category: " + category.name + " had empty first note, so putting in filler text");
+//                } else {
+//                    holder.mTextView.setVisibility(View.INVISIBLE);
+//                    Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with empty text");
+//                }
+//            } else {
+//                holder.mTextView.setVisibility(View.VISIBLE);
+//                holder.mTextView.setText(firstNote.text);
+//                Log.d(Constants.TAG, "Category: " + category.name + " had first note with id: " + firstNote.noteId + " with text: " + firstNote.text);
+//            }
+//
+//            return rowView;
+//        }
+//
+//        @Override
+//        public int getViewTypeCount() {
+//            return 2;
+//        }
+//
+//        @Override
+//        public int getItemViewType(int position) {
+//            //Type 0 is an image one, type 1 is the text one
+//            if (position == mShownCategories.size()) {
+//                return 1;    //My texts
+//            } else if (position > mShownCategories.size()) {
+//                return 0;    //My photos
+//            } else {
+//                Category category = mShownCategories.get(position);
+//                Note firstNote = category.notes.get(0);
+//                if (firstNote.hasDisplayableMedia()) {
+//                    return 0;
+//                } else {
+//                    return 1;
+//                }
+//            }
+//        }
+//
+//        public void updateSettings(TextMuseSettings settings) {
+//            mSettings = settings;
+//        }
+//
+//        public void updateCategories(List<Category> categories, Category localNotes, Category localPhotos) {
+//            mOriginalCategories = categories;
+//            mLocalTexts = localNotes;
+//            mLocalPhotos = localPhotos;
+//            generateShownCategories();
+//            this.notifyDataSetChanged();
+//        }
+//
+//        private void generateShownCategories() {
+//            mShownCategories.clear();
+//            for (Category c : mOriginalCategories) {
+//                if (mSettings.shouldShowCategory(c.name)) {
+//                    mShownCategories.add(c);
+//                }
+//            }
+//        }
+//
+//        private int getOriginalIndex(Category category) {
+//            if (category == mLocalTexts) {
+//                return mOriginalCategories.size();
+//            } else if (category == mLocalPhotos) {
+//                return mOriginalCategories.size() + 1;
+//            } else {
+//                for (int i = 0; i < mOriginalCategories.size(); i++) {
+//                    Category c = mOriginalCategories.get(i);
+//                    if (c.name.equals(category.name)) {
+//                        return i;
+//                    }
+//                }
+//            }
+//
+//            return -1;
+//        }
+//    }
 
     private class CategoryAndNoteIndex {
         public int mCategoryIndex;

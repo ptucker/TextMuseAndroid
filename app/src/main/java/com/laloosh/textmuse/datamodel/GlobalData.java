@@ -36,15 +36,18 @@ public class GlobalData {
     public void updateData(TextMuseData data) {
         Category localTexts = null;
         Category localPhotos = null;
+        Category pinnedNotes = null;
         if (mData != null) {
             localTexts = mData.localTexts;
             localPhotos = mData.localPhotos;
+            pinnedNotes = mData.pinnedNotes;
         }
 
         mData = data;
 
         mData.localTexts = localTexts;
         mData.localPhotos = localPhotos;
+        mData.pinnedNotes = pinnedNotes;
         if (mData.localTexts == null) {
             mData.setupNewLocalNotes();
         }

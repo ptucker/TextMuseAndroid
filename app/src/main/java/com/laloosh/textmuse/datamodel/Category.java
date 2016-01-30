@@ -8,6 +8,7 @@ public class Category {
     public String name;
     public boolean requiredFlag;
     public boolean newFlag;
+    public boolean versionFlag;
 
     public List<Note> notes;
 }

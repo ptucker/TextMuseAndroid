@@ -279,6 +279,8 @@ public class WebDataParser {
                 category.requiredFlag = (Integer.parseInt(attributeValue) > 0);
             } else if (attributeName.equalsIgnoreCase("new")) {
                 category.newFlag = (Integer.parseInt(attributeValue) > 0);
+            } else if (attributeName.equalsIgnoreCase("version")) {
+                category.versionFlag = (Integer.parseInt(attributeValue) > 0);
             }
         }
 
