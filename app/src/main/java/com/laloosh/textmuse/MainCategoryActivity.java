@@ -565,6 +565,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             public TextView mTextView;
             public ImageView mBackgroundImageView;
 
+            public TextView mTextViewLikeCount;
+
             public ImageView mLikeImageView;
             public ImageView mPinImageView;
             public ImageView mSendImageView;
@@ -620,6 +622,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 viewHolder.mLikeImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewHeart);
                 viewHolder.mPinImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewPin);
                 viewHolder.mSendImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewSend);
+                viewHolder.mTextViewLikeCount = (TextView) rowView.findViewById(R.id.mainViewTextViewHeartCount);
 
                 viewHolder.mLayoutLike = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutHeart);
                 viewHolder.mLayoutPin = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutPin);
@@ -698,6 +701,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 holder.mLikeImageView.setColorFilter(0xffdedede);
             }
 
+            holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
+
             if (mData.hasPinnedNote(note.noteId)) {
                 holder.mPinImageView.setColorFilter(0xffef1111);
             } else {
@@ -709,8 +714,42 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             holder.mLayoutLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: actually do the like here....
+                    note.liked = !note.liked;
+                    if (note.liked) {
+                        holder.mLikeImageView.setColorFilter(0xffef1111);
+                        note.likeCount++;
+                    } else {
+                        holder.mLikeImageView.setColorFilter(0xffdedede);
+                        note.likeCount--;
+                    }
+                    holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
 
+                    SetHighlightAsyncTask.SetHighlightAsyncTaskHandler handler = new SetHighlightAsyncTask.SetHighlightAsyncTaskHandler() {
+                        @Override
+                        public void handlePostResult(String s, Note note, boolean liked, View view) {
+
+                            if (s == null) {
+                                //In the case of failure, let's reverse what we did
+                                note.liked = !liked;
+
+                                if (note.liked) {
+                                    holder.mLikeImageView.setColorFilter(0xffef1111);
+                                    note.likeCount++;
+                                } else {
+                                    holder.mLikeImageView.setColorFilter(0xffdedede);
+                                    note.likeCount--;
+                                }
+                                holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
+                            } else {
+                                note.liked = liked;
+                            }
+
+                            mData.save(mContext);
+                        }
+                    };
+
+                    SetHighlightAsyncTask task = new SetHighlightAsyncTask(handler, mData.appId, note.liked, note, holder.mLayoutLike);
+                    task.execute();
                 }
             });
 
@@ -732,8 +771,11 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             holder.mLayoutSend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: actually do the send here...
-
+                    Intent intent = new Intent(mContext, ContactsPickerActivity.class);
+                    intent.putExtra(ContactsPickerActivity.CATEGORY_POSITION_EXTRA, noteExtended.categoryIndex);
+                    intent.putExtra(ContactsPickerActivity.NOTE_POSITION_EXTRA, noteExtended.notePos);
+                    intent.putExtra(ContactsPickerActivity.NOTE_ID_EXTRA, note.noteId);
+                    mContext.startActivity(intent);
                 }
             });
 

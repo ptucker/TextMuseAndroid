@@ -20,6 +20,7 @@ public class Note implements Parcelable {
     public String mediaUrl;
     public String extraUrl;
     public boolean liked;
+    public int likeCount;
 
     //Non-serialized value that are used temporarily
     //savedInternally is a transient field since the external drive where we save these
@@ -188,6 +189,8 @@ public class Note implements Parcelable {
 
         out.writeByte(savedInternally ? (byte) 1 : (byte) 0);
         out.writeByte(saveFailed ? (byte) 1 : (byte) 0);
+
+        out.writeInt(likeCount);
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
@@ -210,6 +213,8 @@ public class Note implements Parcelable {
 
         savedInternally = (in.readByte() != 0);
         saveFailed = (in.readByte() != 0);
+
+        likeCount = in.readInt();
     }
 
 }

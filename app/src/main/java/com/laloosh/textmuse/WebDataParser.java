@@ -320,6 +320,8 @@ public class WebDataParser {
                 note.newFlag = (Integer.parseInt(attributeValue) > 0);
             } else if (attributeName.equalsIgnoreCase("liked")) {
                 note.liked = (Integer.parseInt(attributeValue) > 0);
+            } else if (attributeName.equalsIgnoreCase("likecount")) {
+                note.likeCount =  Integer.parseInt(attributeValue);
             }
         }
 
