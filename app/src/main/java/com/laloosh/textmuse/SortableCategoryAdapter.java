@@ -1,8 +1,6 @@
 package com.laloosh.textmuse;
 
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.internal.widget.DrawableUtils;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;

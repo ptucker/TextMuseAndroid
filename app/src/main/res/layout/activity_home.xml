@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.laloosh.textmuse.HomeActivity">
+
+<android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/homeToolbar"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        >
+    </android.support.v7.widget.Toolbar>
+    -->
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainToolbar"
+
+        android:background="#222222"
+        android:elevation="4dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            >
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                android:id="@+id/mainToolbarButton"
+                android:src="@drawable/launcher_icon"
+                android:background="#222222"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                />
+
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mainToolbarTitle"
+
+                android:text="TextMuse"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/mainToolbarButton"
+                android:layout_marginLeft="10dp"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainTabLayout"
+        app:tabTextColor="#dedede"
+        app:tabSelectedTextColor="#ffffff"
+        >
+
+    </android.support.design.widget.TabLayout>
+
+</android.support.design.widget.AppBarLayout>
+
+<android.support.v4.view.ViewPager
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainViewPager"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+</android.support.v4.view.ViewPager>
+
+</android.support.design.widget.CoordinatorLayout>

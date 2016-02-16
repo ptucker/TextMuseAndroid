@@ -98,8 +98,11 @@ public class SelectMessageActivity extends ActionBarActivity {
         if (mCategoryIndex == mData.categories.size()) {
             category = mData.localTexts;
             mRequireSave = true;
-        } else if (mCategoryIndex > mData.categories.size()) {
+        } else if (mCategoryIndex == mData.categories.size() + 1) {
             category = mData.localPhotos;
+            mRequireSave = false;
+        } else if (mCategoryIndex == mData.categories.size() + 2) {
+            category = mData.pinnedNotes;
             mRequireSave = false;
         } else {
             category = mData.categories.get(mCategoryIndex);

@@ -193,10 +193,10 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
             }
 
         } else {
-            intent = new Intent(SplashScreenActivity.this, MainCategoryActivity.class);
+            intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
 
             if (mFinishedLoading && mFinishedLoadingResult != FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED) {
-                intent.putExtra(MainCategoryActivity.ALREADY_LOADED_DATA_EXTRA, true);
+                intent.putExtra(HomeActivity.ALREADY_LOADED_DATA_EXTRA, true);
             }
 
             if (mLaunchMessage != null && mLaunchMessage.length() > 0) {

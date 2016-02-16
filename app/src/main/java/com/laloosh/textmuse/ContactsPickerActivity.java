@@ -260,8 +260,10 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             Category category;
             if (categoryPosition == data.categories.size()) {
                 category = data.localTexts;
-            } else if (categoryPosition > data.categories.size()) {
+            } else if (categoryPosition == data.categories.size() + 1) {
                 category = data.localPhotos;
+            } else if (categoryPosition == data.categories.size() + 2) {
+                category = data.pinnedNotes;
             } else {
                 category = data.categories.get(categoryPosition);
             }

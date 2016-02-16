@@ -98,7 +98,7 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
     }
 
     private void goToMainActivity() {
-        Intent intent = new Intent(this, MainCategoryActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
