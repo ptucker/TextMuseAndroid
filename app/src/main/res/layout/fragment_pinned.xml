@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/pinnedFragmentTextView"
-        android:text="No pinned texts found.  Go to the Home tab and pin some items!"
+        android:text="No saved texts found.  Go to the Home tab and save some items!"
 
         android:textSize="20sp"
         android:textStyle="bold"

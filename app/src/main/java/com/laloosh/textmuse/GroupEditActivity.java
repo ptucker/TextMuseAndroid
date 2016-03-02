@@ -175,17 +175,9 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
             return true;
         } else if (id == android.R.id.home) {
 
-            if (mGroup.contactList == null || mGroup.contactList.size() <= 0) {
-                Log.e(Constants.TAG, "No users added to this group");
-
-                mBackPressed = false;
-                NoUsersDialogFragment fragment = NoUsersDialogFragment.newInstance();
-                fragment.show(getSupportFragmentManager(), "noUsersDialogFragment");
-            } else {
-                persistGroup();
-                setResult(Activity.RESULT_OK);
-                finish();
-            }
+            persistGroup();
+            setResult(Activity.RESULT_OK);
+            finish();
 
             return true;
         }
@@ -198,16 +190,9 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
 
         mBackPressed = true;
 
-        if (mGroup.contactList == null || mGroup.contactList.size() <= 0) {
-            Log.e(Constants.TAG, "No users added to this group");
-
-            NoUsersDialogFragment fragment = NoUsersDialogFragment.newInstance();
-            fragment.show(getSupportFragmentManager(), "noUsersDialogFragment");
-        } else {
-            persistGroup();
-            setResult(Activity.RESULT_OK);
-            super.onBackPressed();
-        }
+        persistGroup();
+        setResult(Activity.RESULT_OK);
+        super.onBackPressed();
 
     }
 
@@ -232,22 +217,10 @@ public class GroupEditActivity extends ActionBarActivity implements NoUsersDialo
 
     //Persists the group if there are members and deletes it if there are no members
     private void persistGroup() {
-        if (mAddingGroup) {
-            if (mGroup.contactList != null && mGroup.contactList.size() > 0) {
-                mStoredContacts.addGroup(mGroup);
-                mStoredContacts.save(this);
-                GlobalData.getInstance().updateStoredContacts(mStoredContacts);
-            }
-        } else {
-            mStoredContacts.removeGroup(mGroup.displayName);
-
-            if (mGroup.contactList != null && mGroup.contactList.size() > 0) {
-                mStoredContacts.addGroup(mGroup);
-            }
-
-            mStoredContacts.save(this);
-            GlobalData.getInstance().updateStoredContacts(mStoredContacts);
-        }
+        mStoredContacts.removeGroup(mGroup.displayName);
+        mStoredContacts.addGroup(mGroup);
+        mStoredContacts.save(this);
+        GlobalData.getInstance().updateStoredContacts(mStoredContacts);
     }
 
     private void startActionMode() {

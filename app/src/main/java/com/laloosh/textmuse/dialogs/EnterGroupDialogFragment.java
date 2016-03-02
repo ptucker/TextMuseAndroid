@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +48,15 @@ public class EnterGroupDialogFragment extends DialogFragment {
         super.onAttach(activity);
 
         try {
-            mHandler = (GroupNameChangeHandler) activity;
+            Fragment fragment = getTargetFragment();
+            if (fragment != null) {
+                mHandler = (GroupNameChangeHandler) fragment;
+            } else {
+                mHandler = (GroupNameChangeHandler) activity;
+            }
+
         } catch (ClassCastException e) {
-            Log.e(Constants.TAG, "Enter group name called from unsupported activity!");
+            Log.e(Constants.TAG, "Enter group name called from unsupported activity or fragment!");
             mHandler = null;
         }
     }

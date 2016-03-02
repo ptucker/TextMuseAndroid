@@ -25,6 +25,11 @@ public class GlobalData {
     public void loadData(Context context) {
         mData = TextMuseData.load(context);
         mStoredContacts = TextMuseStoredContacts.load(context);
+
+        if (mStoredContacts == null) {
+            mStoredContacts = new TextMuseStoredContacts();
+        }
+
         mSettings = TextMuseSettings.load(context);
         mLoaded = true;
     }

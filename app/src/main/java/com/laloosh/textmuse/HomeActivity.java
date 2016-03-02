@@ -225,7 +225,7 @@ public class HomeActivity extends AppCompatActivity {
             if (position == 0) {
                 return "Home";
             } else if (position == 1) {
-                return "Pinned";
+                return "Saved";
             } else {
                 return "Groups";
             }

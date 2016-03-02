@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/mainViewTextViewHeartCount"
-                        android:text="LIKE"
+                        android:text="LIKE IT"
                         android:textStyle="bold"
                         android:layout_marginLeft="5dp"
                         />
@@ -138,7 +138,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PIN"
+                        android:text="SAVE IT"
                         android:textStyle="bold"
                         android:gravity="center"
                         />
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SEND"
+                        android:text="TEXT IT"
                         android:textStyle="bold"
                         android:gravity="center"
                         />

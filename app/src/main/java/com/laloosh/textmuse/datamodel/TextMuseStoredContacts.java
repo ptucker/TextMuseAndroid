@@ -22,6 +22,7 @@ public class TextMuseStoredContacts {
 
     public TextMuseStoredContacts() {
         groups = new ArrayList<TextMuseGroup>();
+        addDefaultGroups();
         recentContacts = new ArrayList<TextMuseRecentContact>();
         maxRecentContacts = Constants.DEFAULT_NUMBER_RECENT_CONTACTS;
     }
@@ -256,6 +257,17 @@ public class TextMuseStoredContacts {
                 break;
             }
         }
+    }
+
+    private void addDefaultGroups() {
+        TextMuseGroup group = new TextMuseGroup("BFFs");
+        addGroup(group);
+
+        group = new TextMuseGroup(("Friends"));
+        addGroup(group);
+
+        group = new TextMuseGroup(("Family"));
+        addGroup(group);
     }
 
 }
