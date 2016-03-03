@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:id="@+id/detailViewButtonSelectButton"
         android:layout_alignParentBottom="true"
         android:gravity="center"
@@ -14,18 +15,12 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         >
+
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detailViewImageViewSelect"
-            android:src="@drawable/newbadge"
-            android:scaleType="fitCenter"
-            android:layout_alignBottom="@+id/detailViewTextViewSelect"
-            android:layout_alignLeft="@+id/detailViewTextViewSelect"
-            android:layout_alignRight="@+id/detailViewTextViewSelect"
-            android:layout_alignTop="@+id/detailViewTextViewSelect"
-            android:focusableInTouchMode="false"
-            android:focusable="false"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+
+            android:src="@drawable/textmuse_logo_small"
             />
 
         <TextView
@@ -34,14 +29,14 @@
             android:id="@+id/detailViewTextViewSelect"
             android:text="Text It"
             android:textSize="18sp"
-            android:textColor="#ffffffff"
+            android:textColor="@android:color/black"
             android:textAllCaps="true"
-            android:padding="15dp"
+            android:padding="8dp"
             android:focusableInTouchMode="false"
             android:focusable="false"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
@@ -54,38 +49,130 @@
         android:layout_alignParentTop="true"
         />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/detailViewLayoutLink"
+        android:orientation="horizontal"
         android:layout_above="@id/detailViewButtonSelectButton"
-        android:layout_centerHorizontal="true"
+        android:gravity="center"
         >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/detailViewTextViewLink"
-            android:text="See It"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:id="@+id/detailViewLayoutLikeParent"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/detailViewLayoutLike"
+                >
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/heart_white"
+                    android:id="@+id/detailViewImageViewHeart"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_marginRight="4dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailViewTextViewLike"
+                    android:text="Like It"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/link_icon"
-            android:layout_toRightOf="@id/detailViewTextViewLink"
-            android:layout_alignBottom="@id/detailViewTextViewLink"
-            android:layout_alignTop="@id/detailViewTextViewLink"
-            android:layout_marginLeft="3dp"
-            android:layout_marginBottom="2dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            />
-    </RelativeLayout>
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:id="@+id/detailViewLayoutLinkParent"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/detailViewLayoutLink"
+                >
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/link_icon"
+
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_marginRight="4dp"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailViewTextViewLink"
+                    android:text="See It"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:id="@+id/detailViewLayoutPinParent"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/detailViewLayoutPin"
+                >
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/pin_white"
+                    android:id="@+id/detailViewImagePin"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_marginRight="4dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save It"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

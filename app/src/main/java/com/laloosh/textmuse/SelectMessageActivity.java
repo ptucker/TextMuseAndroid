@@ -397,10 +397,12 @@ public class SelectMessageActivity extends ActionBarActivity {
             }
 
             //Link if necessary
-            ViewGroup linkLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLink);
+            ViewGroup linkLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLinkParent);
             if (note.hasExternalLink()) {
                 linkLayout.setVisibility(View.VISIBLE);
-                linkLayout.setOnClickListener(new View.OnClickListener() {
+
+                ViewGroup internalLinkLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLink);
+                internalLinkLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         try {
@@ -419,9 +421,91 @@ public class SelectMessageActivity extends ActionBarActivity {
                 linkLayout.setVisibility(View.GONE);
             }
 
-            //Select box color
-            ImageView selectBackground = (ImageView) view.findViewById(R.id.detailViewImageViewSelect);
-            selectBackground.setColorFilter(mColor);
+            //Like if necessary
+            ViewGroup likeLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLikeParent);
+            if (!note.isLocalNote()) {
+                likeLayout.setVisibility(View.VISIBLE);
+
+                final ImageView likeImage = (ImageView) view.findViewById(R.id.detailViewImageViewHeart);
+                final TextView likeText = (TextView) view.findViewById(R.id.detailViewTextViewLike);
+                if (note.liked) {
+                    likeImage.setColorFilter(0xffef1111);
+                } else {
+                    likeImage.setColorFilter(0xffdedede);
+                }
+
+                likeText.setText(Integer.toString(note.likeCount));
+
+                final ViewGroup internalLikeLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLike);
+                internalLikeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        note.liked = !note.liked;
+                        if (note.liked) {
+                            likeImage.setColorFilter(0xffef1111);
+                            note.likeCount++;
+                        } else {
+                            likeImage.setColorFilter(0xffdedede);
+                            note.likeCount--;
+                        }
+                        likeText.setText(Integer.toString(note.likeCount));
+
+                        SetHighlightAsyncTask.SetHighlightAsyncTaskHandler handler = new SetHighlightAsyncTask.SetHighlightAsyncTaskHandler() {
+                            @Override
+                            public void handlePostResult(String s, Note note, boolean liked, View view) {
+                                if (s == null) {
+                                    //In the case of failure, let's reverse what we did
+                                    note.liked = !liked;
+
+                                    if (note.liked) {
+                                        likeImage.setColorFilter(0xffef1111);
+                                        note.likeCount++;
+                                    } else {
+                                        likeImage.setColorFilter(0xffdedede);
+                                        note.likeCount--;
+                                    }
+                                    likeText.setText(Integer.toString(note.likeCount));
+                                } else {
+                                    note.liked = liked;
+                                }
+
+                                mData.save(mActivity);
+                            }
+                        };
+
+                        SetHighlightAsyncTask task = new SetHighlightAsyncTask(handler, mData.appId, note.liked, note, internalLikeLayout);
+                        task.execute();
+                    }
+                });
+            } else {
+                likeLayout.setVisibility(View.GONE);
+            }
+
+            //Pin
+            ViewGroup internalPinLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutPin);
+            final ImageView pinImage = (ImageView) view.findViewById(R.id.detailViewImagePin);
+
+            if (mData.hasPinnedNote(note.noteId)) {
+                pinImage.setColorFilter(0xffef1111);
+            } else {
+                pinImage.setColorFilter(0xffdedede);
+            }
+
+            internalPinLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mData.hasPinnedNote(note.noteId)) {
+                        mData.unPinNote(note);
+                        pinImage.setColorFilter(0xffdedede);
+                        mData.save(mActivity);
+                    } else {
+                        mData.pinNote(note);
+                        pinImage.setColorFilter(0xffef1111);
+                        mData.save(mActivity);
+                    }
+                }
+            });
 
             //Quote boxes
             ImageView quote = (ImageView) view.findViewById(R.id.detailViewImageViewLeftQuote);
@@ -440,9 +524,6 @@ public class SelectMessageActivity extends ActionBarActivity {
                     mActivity.startActivity(intent);
                 }
             });
-
-            TextView selectText = (TextView) view.findViewById(R.id.detailViewTextViewSelect);
-            selectText.setTextColor(ColorHelpers.getTextColorForBackground(mColor));
 
             container.addView(view);
 
