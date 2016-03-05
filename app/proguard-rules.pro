@@ -81,3 +81,7 @@
   **[] $VALUES;
   public *;
 }
+
+-dontwarn com.google.android.gms.**
+-dontwarn com.h6ah4i.android.**
+-dontwarn com.viewpagerindicator.**
