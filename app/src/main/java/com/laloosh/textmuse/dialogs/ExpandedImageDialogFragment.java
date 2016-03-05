@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.os.Environment;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +15,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
-import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.datamodel.Note;
 import com.squareup.picasso.Picasso;
-
-import java.io.File;
 
 public class ExpandedImageDialogFragment extends DialogFragment implements ImageSizeDownloadTarget.ImageSizeDownloadTargetHandler {
 

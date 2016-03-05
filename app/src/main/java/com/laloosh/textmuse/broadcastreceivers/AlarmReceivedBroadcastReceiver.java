@@ -13,8 +13,8 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.laloosh.textmuse.Constants;
-import com.laloosh.textmuse.MainCategoryActivity;
+import com.laloosh.textmuse.app.Constants;
+import com.laloosh.textmuse.ui.MainCategoryActivity;
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.LocalNotification;

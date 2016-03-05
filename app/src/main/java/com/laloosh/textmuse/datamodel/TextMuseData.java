@@ -6,9 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-import com.laloosh.textmuse.Constants;
-import com.laloosh.textmuse.Queries;
-import com.laloosh.textmuse.WebDataParser;
+import com.laloosh.textmuse.app.Constants;
+import com.laloosh.textmuse.utils.WebDataParser;
 
 import org.joda.time.DateTime;
 

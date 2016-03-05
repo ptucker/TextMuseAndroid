@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.laloosh.textmuse.SkinSelectActivity">
+    tools:context=".ui.SkinSelectActivity">
 
     <item android:id="@+id/action_done" android:title="Done"
         android:orderInCategory="1" app:showAsAction="ifRoom" />

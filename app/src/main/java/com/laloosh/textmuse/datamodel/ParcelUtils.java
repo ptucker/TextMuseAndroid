@@ -3,9 +3,6 @@ package com.laloosh.textmuse.datamodel;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-
-import com.laloosh.textmuse.Constants;
 
 import java.util.ArrayList;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.app.Constants;
 
 public class BootTimeBroadcastReceiver extends BroadcastReceiver {
 

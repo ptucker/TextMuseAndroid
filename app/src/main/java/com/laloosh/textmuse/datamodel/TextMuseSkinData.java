@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.app.Constants;
 
 import java.util.ArrayList;
 

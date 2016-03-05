@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context="com.laloosh.textmuse.WalkthroughActivity">
+    tools:context=".ui.WalkthroughActivity">
 
     <com.viewpagerindicator.CirclePageIndicator
         android:layout_width="match_parent"

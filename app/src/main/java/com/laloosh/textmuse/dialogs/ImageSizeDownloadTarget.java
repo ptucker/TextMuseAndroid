@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
-import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.app.Constants;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 

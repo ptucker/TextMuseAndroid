@@ -3,7 +3,7 @@ package com.laloosh.textmuse.datamodel;
 import android.content.Context;
 import android.util.Log;
 
-import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.app.Constants;
 
 import org.joda.time.DateTime;
 

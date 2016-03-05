@@ -27,13 +27,13 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".ContactsPickerActivity"
+            android:name=".ui.ContactsPickerActivity"
             android:label="@string/title_activity_contacts_picker"
-            android:parentActivityName=".SelectMessageActivity"
+            android:parentActivityName=".ui.SelectMessageActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.SelectMessageActivity" />
+                android:value=".ui.SelectMessageActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable_contacts" />
@@ -43,37 +43,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.HomeActivity"
             android:label="@string/title_activity_main_category"
             android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar" />
         <activity
-            android:name=".SelectMessageActivity"
+            android:name=".ui.SelectMessageActivity"
             android:label="@string/title_activity_select_message"
             android:launchMode="singleTop"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".ui.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.HomeActivity" />
+                android:value=".ui.HomeActivity" />
         </activity>
         <activity
-            android:name=".GroupEditActivity"
+            android:name=".ui.GroupEditActivity"
             android:label="@string/title_activity_group_edit"
-            android:parentActivityName=".ContactsPickerActivity"
+            android:parentActivityName=".ui.ContactsPickerActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.ContactsPickerActivity" />
+                android:value=".ui.ContactsPickerActivity" />
         </activity>
         <activity
-            android:name=".ContactOnlyPickerActivity"
+            android:name=".ui.ContactOnlyPickerActivity"
             android:label="@string/title_activity_contact_only_picker"
-            android:parentActivityName=".GroupEditActivity"
+            android:parentActivityName=".ui.GroupEditActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.GroupEditActivity" />
+                android:value=".ui.GroupEditActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable_contacts" />
@@ -102,39 +102,39 @@
         </receiver>
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".ui.HomeActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.HomeActivity" />
+                android:value=".ui.HomeActivity" />
         </activity>
         <activity
-            android:name=".FeedbackActivity"
+            android:name=".ui.FeedbackActivity"
             android:label="@string/title_activity_feedback"
-            android:parentActivityName=".SettingsActivity"
+            android:parentActivityName=".ui.SettingsActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.SettingsActivity" />
+                android:value=".ui.SettingsActivity" />
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:parentActivityName=".SettingsActivity"
+            android:parentActivityName=".ui.SettingsActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.SettingsActivity" />
+                android:value=".ui.SettingsActivity" />
         </activity>
         <activity
-            android:name=".WalkthroughActivity"
+            android:name=".ui.WalkthroughActivity"
             android:label="@string/title_activity_walkthrough"
             android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"></activity>
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".ui.SplashScreenActivity"
             android:label="@string/title_activity_splash_screen"
             android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar">
@@ -156,23 +156,23 @@
         </receiver>
 
         <activity
-            android:name=".SortableCategoryActivity"
+            android:name=".ui.SortableCategoryActivity"
             android:label="@string/title_activity_sortable_category"
-            android:parentActivityName=".SettingsActivity">
+            android:parentActivityName=".ui.SettingsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.SettingsActivity" />
+                android:value=".ui.SettingsActivity" />
         </activity>
         <activity
-            android:name=".WebviewActivity"
+            android:name=".ui.WebviewActivity"
             android:label="@string/title_activity_webview"
-            android:parentActivityName=".SelectMessageActivity">
+            android:parentActivityName=".ui.SelectMessageActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.laloosh.textmuse.SelectMessageActivity" />
+                android:value=".ui.SelectMessageActivity" />
         </activity>
         <activity
-            android:name=".SkinSelectActivity"
+            android:name=".ui.SkinSelectActivity"
             android:label="@string/title_activity_skin_select"></activity>
 
     </application>

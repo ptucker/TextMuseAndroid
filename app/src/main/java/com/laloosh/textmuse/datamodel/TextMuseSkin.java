@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.laloosh.textmuse.Constants;
+import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.datamodel.gson.GsonConverter;
 
 public class TextMuseSkin {
