@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -132,7 +132,7 @@
             android:name=".ui.WalkthroughActivity"
             android:label="@string/title_activity_walkthrough"
             android:screenOrientation="portrait"
-            android:theme="@style/AppNoActionBar"></activity>
+            android:theme="@style/AppNoActionBar" />
         <activity
             android:name=".ui.SplashScreenActivity"
             android:label="@string/title_activity_splash_screen"
@@ -173,8 +173,17 @@
         </activity>
         <activity
             android:name=".ui.SkinSelectActivity"
-            android:label="@string/title_activity_skin_select"></activity>
+            android:label="@string/title_activity_skin_select" />
+        <activity
+            android:name=".ui.SavedTextsActivity"
+            android:label="Saved Texts"
+            android:parentActivityName=".ui.HomeActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.HomeActivity" />
 
+        </activity>
     </application>
 
 </manifest>

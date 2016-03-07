@@ -54,6 +54,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:id="@+id/mainFragmentDrawerSettings"
+            android:text="Settings"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:id="@+id/mainFragmentDrawerSavedTexts"
+            android:text="Saved Texts"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:text="Categories"
             android:textSize="20sp"
             android:textColor="#ffffff"

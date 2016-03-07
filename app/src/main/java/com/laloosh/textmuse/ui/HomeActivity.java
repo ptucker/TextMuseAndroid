@@ -41,7 +41,7 @@ import de.greenrobot.event.EventBus;
 public class HomeActivity extends AppCompatActivity {
 
     public static final String ALREADY_LOADED_DATA_EXTRA = "com.laloosh.textmuse.alreadyloadeddata";
-    private static final int REQUEST_CODE_SETTINGS = 2333;
+    public static final int REQUEST_CODE_SETTINGS = 2333;
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
@@ -143,34 +143,34 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_category, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivityForResult(intent, REQUEST_CODE_SETTINGS);
-
-            return true;
-        } else if (id == android.R.id.home) {
-            Log.d(Constants.TAG, "on options item selected -- home pushed!");
-        } else if (id == R.id.home) {
-            Log.d(Constants.TAG, "on options item selected2 -- home pushed!");
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main_category, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        if (id == R.id.action_settings) {
+//
+//            Intent intent = new Intent(this, SettingsActivity.class);
+//            startActivityForResult(intent, REQUEST_CODE_SETTINGS);
+//
+//            return true;
+//        } else if (id == android.R.id.home) {
+//            Log.d(Constants.TAG, "on options item selected -- home pushed!");
+//        } else if (id == R.id.home) {
+//            Log.d(Constants.TAG, "on options item selected2 -- home pushed!");
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -219,8 +219,6 @@ public class HomeActivity extends AppCompatActivity {
                 return HomeFragment.newInstance(mAlreadyLoadedData, false, 0);
             } else if (position == 1) {
                 return HomeFragment.newInstance(mAlreadyLoadedData, true, 1);
-            } else if (position == 2) {
-                return new PinnedFragment();
             } else {
                 return new GroupsFragment();
             }
@@ -228,7 +226,7 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override
@@ -237,8 +235,6 @@ public class HomeActivity extends AppCompatActivity {
                 return "Home";
             } else if (position == 1) {
                 return "Events";
-            } else if (position == 2) {
-                return "Saved";
             } else {
                 return "Groups";
             }

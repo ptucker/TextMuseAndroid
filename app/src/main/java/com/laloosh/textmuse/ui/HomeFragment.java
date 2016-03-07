@@ -61,6 +61,8 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
     private MainNotesAdapter mAdapter;
     private DrawerListArrayAdapter mDrawerListAdapter;
     private DrawerLayout mDrawerLayout;
+    private TextView mTextViewDrawerSettings;
+    private TextView mTextViewDrawerSaved;
     private ListView mDrawerList;
     private ImageView mToolbarImage;
     private TextView mTextView;
@@ -130,6 +132,28 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
         mDrawerLayout = (DrawerLayout) v.findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) v.findViewById(R.id.mainFragmentListViewCategories);
+        mTextViewDrawerSaved = (TextView) v.findViewById(R.id.mainFragmentDrawerSavedTexts);
+        mTextViewDrawerSettings = (TextView) v.findViewById(R.id.mainFragmentDrawerSettings);
+
+        mTextViewDrawerSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerOpen = false;
+                mDrawerLayout.closeDrawers();
+                Intent intent = new Intent(v.getContext(), SettingsActivity.class);
+                startActivityForResult(intent, HomeActivity.REQUEST_CODE_SETTINGS);
+            }
+        });
+
+        mTextViewDrawerSaved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerOpen = false;
+                mDrawerLayout.closeDrawers();
+                Intent intent = new Intent(v.getContext(), SavedTextsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mDrawerOpen = false;
         mDrawerLayout.closeDrawers();
