@@ -4,6 +4,10 @@ package com.laloosh.textmuse.datamodel;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 import java.util.ArrayList;
 
 public class ParcelUtils {
@@ -18,6 +22,25 @@ public class ParcelUtils {
         if (source.readByte() == (byte) 1) {
             return source.readString();
         }
+        return null;
+    }
+
+    public static void writeDateTime(Parcel dest, DateTime dateTime) {
+        dest.writeByte((byte) (dateTime == null ? 0 : 1));
+        if (dateTime != null) {
+            final DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
+            String dateString =  fmt.print(dateTime);
+            dest.writeString(dateString);
+        }
+    }
+
+    public static DateTime readDateTime(Parcel source) {
+        if (source.readByte() == (byte) 1) {
+            final DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
+            DateTime result = fmt.parseDateTime(source.readString());
+            return result;
+        }
+
         return null;
     }
 

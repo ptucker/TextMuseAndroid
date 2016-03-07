@@ -71,7 +71,7 @@ public class SmsUtils {
     private static String getText(Note note, boolean imageAsUrl) {
         String text = "";
         if (note.text != null) {
-            text += note.text;
+            text += note.getText();
         }
 
         if (note.extraUrl != null && note.extraUrl.length() > 0) {

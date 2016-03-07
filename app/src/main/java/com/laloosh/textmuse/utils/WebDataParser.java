@@ -323,6 +323,10 @@ public class WebDataParser {
                 note.liked = (Integer.parseInt(attributeValue) > 0);
             } else if (attributeName.equalsIgnoreCase("likecount")) {
                 note.likeCount =  Integer.parseInt(attributeValue);
+            } else if (attributeName.equalsIgnoreCase("edate")) {
+                note.eventDate = attributeValue;
+            } else if (attributeName.equalsIgnoreCase("loc")) {
+                note.location = attributeValue;
             }
         }
 

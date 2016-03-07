@@ -6,9 +6,12 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.laloosh.textmuse.app.Constants;
+
+import org.joda.time.DateTime;
 
 import java.io.File;
 
@@ -21,6 +24,8 @@ public class Note implements Parcelable {
     public String extraUrl;
     public boolean liked;
     public int likeCount;
+    public String location;
+    public String eventDate;
 
     //Non-serialized value that are used temporarily
     //savedInternally is a transient field since the external drive where we save these
@@ -138,6 +143,24 @@ public class Note implements Parcelable {
         return uri;
     }
 
+    public boolean isEvent() {
+        return (!TextUtils.isEmpty(eventDate));
+    }
+
+    public String getText() {
+        String result = "";
+
+        if (!TextUtils.isEmpty(this.text)) {
+            result += this.text;
+        }
+
+        if (isEvent()) {
+            result += "\nWhere: " + location + "\nWhen: " + eventDate;
+        }
+
+        return result;
+    }
+
     public boolean isMediaYoutube() {
         String[] youtubeBaseUrls = {"http://youtu.be", "http://www.youtube.com", "https://youtu.be", "https://www.youtube.com"};
 
@@ -191,6 +214,8 @@ public class Note implements Parcelable {
         out.writeByte(saveFailed ? (byte) 1 : (byte) 0);
 
         out.writeInt(likeCount);
+        ParcelUtils.writeString(out, location);
+        ParcelUtils.writeString(out, eventDate);
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
@@ -215,6 +240,9 @@ public class Note implements Parcelable {
         saveFailed = (in.readByte() != 0);
 
         likeCount = in.readInt();
+
+        location = ParcelUtils.readString(in);
+        eventDate = ParcelUtils.readString(in);
     }
 
 }

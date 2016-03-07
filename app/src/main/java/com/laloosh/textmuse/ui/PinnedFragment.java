@@ -234,11 +234,11 @@ public class PinnedFragment extends Fragment {
             //Default the text color to white unless we change it
             holder.mTextView.setTextColor(0xFFFFFFFF);
 
-            if (note.text == null || note.text.length() <= 0) {
+            if (!note.hasDisplayableText()) {
                 holder.mTextView.setVisibility(View.INVISIBLE);
             } else {
                 holder.mTextView.setVisibility(View.VISIBLE);
-                holder.mTextView.setText(note.text);
+                holder.mTextView.setText(note.getText());
             }
 
             if (!note.hasDisplayableMedia()) {

@@ -108,6 +108,13 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
         }
+
+        mViewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                EventBus.getDefault().post(new TabSelectedEvent(0));
+            }
+        });
     }
 
     private void setSkinTitle() {
@@ -209,8 +216,10 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return HomeFragment.newInstance(mAlreadyLoadedData);
+                return HomeFragment.newInstance(mAlreadyLoadedData, false, 0);
             } else if (position == 1) {
+                return HomeFragment.newInstance(mAlreadyLoadedData, true, 1);
+            } else if (position == 2) {
                 return new PinnedFragment();
             } else {
                 return new GroupsFragment();
@@ -219,7 +228,7 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -227,6 +236,8 @@ public class HomeActivity extends AppCompatActivity {
             if (position == 0) {
                 return "Home";
             } else if (position == 1) {
+                return "Events";
+            } else if (position == 2) {
                 return "Saved";
             } else {
                 return "Groups";

@@ -380,7 +380,7 @@ public class SelectMessageActivity extends ActionBarActivity {
 
             if (!note.isLocalNote() || (note.isLocalNote() && note.hasDisplayableMedia())) {
                 TextView textView = (TextView) view.findViewById(R.id.detailViewTextViewText);
-                if (useImageLayout && (note.text == null || note.text.length() <= 0)) {
+                if (useImageLayout && (!note.hasDisplayableText())) {
                     ViewGroup textLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutText);
                     textLayout.setVisibility(View.GONE);
                 } else {
@@ -388,9 +388,9 @@ public class SelectMessageActivity extends ActionBarActivity {
                         //Due to a bug in android between some specific versions, text resizing doesn't
                         //work properly unless you add a double byte space around it
                         final String DOUBLE_BYTE_SPACE = "\u3000";
-                        textView.setText(DOUBLE_BYTE_SPACE + note.text + DOUBLE_BYTE_SPACE);
+                        textView.setText(DOUBLE_BYTE_SPACE + note.getText() + DOUBLE_BYTE_SPACE);
                     } else {
-                        textView.setText(note.text);
+                        textView.setText(note.getText());
                     }
                 }
             }

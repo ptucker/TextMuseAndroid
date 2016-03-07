@@ -46,12 +46,13 @@ import java.util.Random;
 import de.greenrobot.event.EventBus;
 
 public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler {
-    public static final int TAB_NUMBER = 0;
-
     private static final String ARG_ALREADY_LOADED_DATA = "arg.alreadyloadeddata";
+    private static final String ARG_EVENTS_ONLY = "arg.eventsonly";
+    private static final String ARG_TAB_NUMBER = "arg.tabnum";
 
     private boolean mAlreadyLoaded;
-
+    private boolean mEventsOnly;
+    private int mTabNumber;
 
     private TextMuseData mData;
     private TextMuseSettings mSettings;
@@ -75,10 +76,12 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(boolean alreadyLoaded) {
+    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly, int tabNumber) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARG_ALREADY_LOADED_DATA, alreadyLoaded);
+        args.putBoolean(ARG_EVENTS_ONLY, eventsOnly);
+        args.putInt(ARG_TAB_NUMBER, tabNumber);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,6 +91,8 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mAlreadyLoaded = getArguments().getBoolean(ARG_ALREADY_LOADED_DATA);
+            mEventsOnly = getArguments().getBoolean(ARG_EVENTS_ONLY);
+            mTabNumber = getArguments().getInt(ARG_TAB_NUMBER);
         }
     }
 
@@ -127,19 +132,8 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         mDrawerList = (ListView) v.findViewById(R.id.mainFragmentListViewCategories);
 
         mDrawerOpen = false;
-
-        mDrawerListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mDrawerOpen) {
-                    mDrawerLayout.closeDrawers();
-                } else {
-                    mDrawerLayout.openDrawer(GravityCompat.START);
-                    mDrawerOpen = true;
-                }
-            }
-        };
-        mToolbarImage.setOnClickListener(mDrawerListener);
+        mDrawerLayout.closeDrawers();
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         generateViewsFromData();
 
@@ -159,6 +153,26 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         return v;
     }
 
+    protected void setDrawerListener() {
+        mDrawerOpen = false;
+        mDrawerLayout.closeDrawers();
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDrawerOpen) {
+                    mDrawerLayout.closeDrawers();
+                    mDrawerOpen = false;
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                    mDrawerOpen = true;
+                }
+            }
+        };
+        mToolbarImage.setOnClickListener(mDrawerListener);
+
+    }
+
     @Override
     public void onStop() {
         EventBus.getDefault().unregister(this);
@@ -173,7 +187,6 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
     //This is used by eventbus once we get the event
     public void onEvent(ShowCategoriesChangedEvent event) {
-
         mData = GlobalData.getInstance().getData();
 
         generateNoteList();
@@ -184,18 +197,16 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
     }
 
     public void onEvent(TabSelectedEvent event) {
-        if (event.tabNumber == TAB_NUMBER) {
-            mToolbarImage.setOnClickListener(mDrawerListener);
-            mDrawerLayout.closeDrawers();
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            mDrawerOpen = false;
+        if (event.tabNumber == mTabNumber) {
+            Log.d(Constants.TAG, "Tab " + Integer.toString(mTabNumber) + " was selected");
+            setDrawerListener();
         }
     }
 
     public void onEvent(TabDeselectedEvent event) {
-        if (event.tabNumber == TAB_NUMBER) {
+        if (event.tabNumber == mTabNumber) {
+            Log.d(Constants.TAG, "Tab " + Integer.toString(mTabNumber) + " was deselected");
             mToolbarImage.setOnClickListener(null);
-            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             mDrawerOpen = false;
         }
     }
@@ -241,16 +252,18 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
                 int inCategoryPos = 0;
                 for (Note note : category.notes) {
-                    int score = rnd.nextInt(3);
-                    score += note.newFlag ? 4 : 0;
-                    score += note.liked ? 1 : 0;
-                    score += mData.hasPinnedNote(note.noteId) ? 1 : 0;
-                    score += inCategoryPos / 3;
+                    if ((mEventsOnly && note.isEvent()) || !mEventsOnly) {
+                        int score = rnd.nextInt(3);
+                        score += note.newFlag ? 4 : 0;
+                        score += note.liked ? 1 : 0;
+                        score += mData.hasPinnedNote(note.noteId) ? 1 : 0;
+                        score += inCategoryPos / 3;
 
-                    if (note.hasDisplayableMedia()) {
-                        imageNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
-                    } else {
-                        noImagesNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
+                        if (note.hasDisplayableMedia()) {
+                            imageNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
+                        } else {
+                            noImagesNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
+                        }
                     }
 
                     inCategoryPos++;
@@ -602,11 +615,11 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             //Default the text color to white unless we change it
             holder.mTextView.setTextColor(0xFFFFFFFF);
 
-            if (note.text == null || note.text.length() <= 0) {
+            if (!note.hasDisplayableText()) {
                 holder.mTextView.setVisibility(View.INVISIBLE);
             } else {
                 holder.mTextView.setVisibility(View.VISIBLE);
-                holder.mTextView.setText(note.text);
+                holder.mTextView.setText(note.getText());
             }
 
             if (!note.hasDisplayableMedia()) {
