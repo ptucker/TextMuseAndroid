@@ -10,6 +10,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -95,6 +98,10 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             mAlreadyLoaded = getArguments().getBoolean(ARG_ALREADY_LOADED_DATA);
             mEventsOnly = getArguments().getBoolean(ARG_EVENTS_ONLY);
             mTabNumber = getArguments().getInt(ARG_TAB_NUMBER);
+        }
+
+        if (mEventsOnly) {
+            setHasOptionsMenu(true);
         }
     }
 
@@ -207,6 +214,25 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (mEventsOnly) {
+            inflater.inflate(R.menu.menu_event, menu);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add_event) {
+            Intent intent = new Intent(getContext(), AddEventActivity.class);
+            startActivity(intent);
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //This is used by eventbus once we get the event

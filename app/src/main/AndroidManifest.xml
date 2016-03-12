@@ -182,7 +182,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.HomeActivity" />
-
+        </activity>
+        <activity
+            android:name=".ui.AddEventActivity"
+            android:label="Add Event"
+            android:parentActivityName=".ui.HomeActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.HomeActivity" />
         </activity>
     </application>
 
