@@ -4,8 +4,8 @@
     tools:context=".ui.SelectMessageActivity">
 
     <item
-        android:id="@+id/menu_remit"
-        android:title="$"
+        android:id="@+id/menu_flag"
+        android:title="FLAG"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
         />

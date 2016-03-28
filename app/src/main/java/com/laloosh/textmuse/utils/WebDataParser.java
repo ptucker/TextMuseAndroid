@@ -282,6 +282,8 @@ public class WebDataParser {
                 category.newFlag = (Integer.parseInt(attributeValue) > 0);
             } else if (attributeName.equalsIgnoreCase("version")) {
                 category.versionFlag = (Integer.parseInt(attributeValue) > 0);
+            } else if (attributeName.equalsIgnoreCase("event")) {
+                category.eventCategory = (Integer.parseInt(attributeValue) > 0);
             }
         }
 

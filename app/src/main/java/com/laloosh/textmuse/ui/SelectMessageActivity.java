@@ -31,7 +31,10 @@ import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment;
+import com.laloosh.textmuse.dialogs.GeneralDialogFragment;
 import com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment;
+import com.laloosh.textmuse.tasks.FlagContentAsyncTask;
+import com.laloosh.textmuse.tasks.RemitBadgeAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.AndroidUtils;
 import com.laloosh.textmuse.utils.ColorHelpers;
@@ -43,7 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class SelectMessageActivity extends ActionBarActivity {
+public class SelectMessageActivity extends ActionBarActivity implements FlagContentAsyncTask.FlagContentResultHandler, RemitBadgeAsyncTask.RemitBadgeEventHandler {
 
     public static final String CATEGORY_EXTRA = "com.laloosh.textmuse.category.extra";
     public static final String COLOR_OFFSET_EXTRA = "com.laloosh.textmuse.category.coloroffset.extra";
@@ -61,9 +64,14 @@ public class SelectMessageActivity extends ActionBarActivity {
     private int mCategoryIndex;
     private int mColorOffset;
 
+    private Category mCategory;
+    private Note mActiveNote;
+
     private TextMuseData mData;
 
     private boolean mRequireSave;
+
+    private boolean mIsBadge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,19 +101,23 @@ public class SelectMessageActivity extends ActionBarActivity {
             return;
         }
 
-        Category category;
         if (mCategoryIndex == mData.categories.size()) {
-            category = mData.localTexts;
+            mCategory = mData.localTexts;
             mRequireSave = true;
         } else if (mCategoryIndex == mData.categories.size() + 1) {
-            category = mData.localPhotos;
+            mCategory = mData.localPhotos;
             mRequireSave = false;
         } else if (mCategoryIndex == mData.categories.size() + 2) {
-            category = mData.pinnedNotes;
+            mCategory = mData.pinnedNotes;
             mRequireSave = false;
         } else {
-            category = mData.categories.get(mCategoryIndex);
+            mCategory = mData.categories.get(mCategoryIndex);
             mRequireSave = false;
+        }
+
+        if (mCategory.name.toLowerCase().contains("badge")) {
+            mIsBadge = true;
+            invalidateOptionsMenu();
         }
 
         mViewPager = (ViewPager) findViewById(R.id.selectMessageViewPager);
@@ -113,7 +125,7 @@ public class SelectMessageActivity extends ActionBarActivity {
         int[] colorList = mData.getColorList();
         int color = colorList[mColorOffset % colorList.length];
 
-        mPagerAdapter = new NoteViewPagerAdapter(category.notes, this, color, mCategoryIndex, mData);
+        mPagerAdapter = new NoteViewPagerAdapter(mCategory.notes, this, color, mCategoryIndex, mData);
         mViewPager.setAdapter(mPagerAdapter);
 
         mPageIndicator = (CirclePageIndicator) findViewById(R.id.selectMessagePageIndicator);
@@ -143,7 +155,7 @@ public class SelectMessageActivity extends ActionBarActivity {
         }
 
         TextView categoryTextView = (TextView) findViewById(R.id.selectMessageTextViewCategory);
-        categoryTextView.setText(category.name);
+        categoryTextView.setText(mCategory.name);
         categoryTextView.setBackgroundColor(color);
         categoryTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
     }
@@ -167,8 +179,11 @@ public class SelectMessageActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_select_message, menu);
+        if (mIsBadge) {
+            getMenuInflater().inflate(R.menu.menu_select_message, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_select_message_flag, menu);
+        }
         return true;
     }
 
@@ -180,11 +195,59 @@ public class SelectMessageActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_remit) {
+            remitClicked();
+            return true;
+        } else if (id == R.id.menu_flag) {
+            flagClicked();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void remitClicked() {
+        int index = mViewPager.getCurrentItem();
+        Note note = mCategory.notes.get(index);
+        mActiveNote = note;
+
+        RemitBadgeAsyncTask task = new RemitBadgeAsyncTask(this, mData.appId, note.noteId);
+        task.execute();
+    }
+
+    //Flags the current message
+    protected void flagClicked() {
+        int index = mViewPager.getCurrentItem();
+        Note note = mCategory.notes.get(index);
+        mActiveNote = note;
+
+        FlagContentAsyncTask task = new FlagContentAsyncTask(this, note.noteId);
+        task.execute();
+    }
+
+    @Override
+    public void handleFlagPostResult(String s) {
+        if (s != null) {
+            //Succeeded in flagging content, show a dialog
+            GeneralDialogFragment fragment = GeneralDialogFragment.newInstance("Flagged Content", "You have flagged this content as inappropriate.");
+            fragment.show(getSupportFragmentManager(), "flag_dialog");
+        } else {
+            //Failed in flagging content
+            GeneralDialogFragment fragment = GeneralDialogFragment.newInstance("Flagged Content", "There was an error contacting the server when flagging this content.");
+            fragment.show(getSupportFragmentManager(), "flag_dialog");
+        }
+    }
+
+    @Override
+    public void handleRemitPostResult(String s) {
+        GeneralDialogFragment fragment = GeneralDialogFragment.newInstance("Claimed Deal", "You have claimed this deal!");
+        fragment.show(getSupportFragmentManager(), "flag_dialog");
+
+        if (mActiveNote != null) {
+            mCategory.notes.remove(mActiveNote);
+            mData.save(this);
+            finish();
+        }
     }
 
     public void showHighlightFailedDialog() {

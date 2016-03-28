@@ -27,8 +27,8 @@ import java.util.HashMap;
 
 public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTask.FetchNotesResult> {
 
-    public static final String UPDATE_URL = "http://www.textmuse.com/html/notes.php";
-//    http://www.textmuse.com/html/notes.php?ts=2015-5-17%2021:04:32&app=25681&sponsor=7
+    public static final String UPDATE_URL = "http://www.textmuse.com/admin/notes.php";
+//    http://www.textmuse.com/admin/notes.php?ts=2015-5-17%2021:04:32&app=25681&sponsor=7
     WeakReference<FetchNotesAsyncTaskHandler> mHandler;
     WeakReference<Context> mContext;
     int mAppId = -1;

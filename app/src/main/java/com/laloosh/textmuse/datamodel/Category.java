@@ -9,6 +9,7 @@ public class Category {
     public boolean requiredFlag;
     public boolean newFlag;
     public boolean versionFlag;
+    public boolean eventCategory;
 
     public List<Note> notes;
 }

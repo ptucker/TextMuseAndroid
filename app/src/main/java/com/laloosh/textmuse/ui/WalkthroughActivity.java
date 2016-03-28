@@ -26,11 +26,11 @@ public class WalkthroughActivity extends ActionBarActivity {
     private WalkthroughAdapter mAdapter;
     private boolean mInitialLaunch;
 
-    private static final String[] WALKTHROUGH_DESCRIPTIONS = {"Choose a category to find a text message you want to send your friends",
-                                                              "Swipe through and select a message",
-                                                              "Choose a contact or select a few and then hit send",
-                                                              "Before you send it, you can make some edits to give it that personal touch",
-                                                              "Touch the cog to personalize TextMuse and choose your favorite categories"
+    private static final String[] WALKTHROUGH_DESCRIPTIONS = {"Every day, you'll find great local deals, great events, university news, and other fun stuff.",
+                                                              "Choose a text to see more, save it for later, or share it with someone.",
+                                                              "Choose a friend or group. If they have more than one number, tap the person's name.",
+                                                              "Before you send it, you can make some edits to give it that personal touch.",
+                                                              "Use the settings to personalize TextMuse - choose which categories you want to see and send us feedback."
                                                              };
 
     private static final int[] WALKTHROUGH_IMAGE_RESOURCES = {R.drawable.page1_walkthrough,
