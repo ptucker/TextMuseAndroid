@@ -31,6 +31,7 @@ import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment;
+import com.laloosh.textmuse.dialogs.GeneralDialogAndFinishFragment;
 import com.laloosh.textmuse.dialogs.GeneralDialogFragment;
 import com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment;
 import com.laloosh.textmuse.tasks.FlagContentAsyncTask;
@@ -51,6 +52,8 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
     public static final String CATEGORY_EXTRA = "com.laloosh.textmuse.category.extra";
     public static final String COLOR_OFFSET_EXTRA = "com.laloosh.textmuse.category.coloroffset.extra";
     public static final String NOTE_INDEX_EXTRA = "com.lalaoosh.textmuse.noteid.extra";
+
+    public static final String RESULT_EXTRA_NOTE_ID = "noteId";
 
     private static final String SAVE_STATE_POSITION = "savestateposition";
     private static final int YOUTUBE_RECOVERY_DIALOG_REQUEST_CODE = 1222;
@@ -227,27 +230,34 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
 
     @Override
     public void handleFlagPostResult(String s) {
-        if (s != null) {
-            //Succeeded in flagging content, show a dialog
-            GeneralDialogFragment fragment = GeneralDialogFragment.newInstance("Flagged Content", "You have flagged this content as inappropriate.");
-            fragment.show(getSupportFragmentManager(), "flag_dialog");
-        } else {
-            //Failed in flagging content
-            GeneralDialogFragment fragment = GeneralDialogFragment.newInstance("Flagged Content", "There was an error contacting the server when flagging this content.");
-            fragment.show(getSupportFragmentManager(), "flag_dialog");
+        if (mActiveNote != null) {
+            mData.flagNote(mActiveNote.noteId);
+            mData.removeEmptyCategories();
+            mData.save(this);
+
+            Intent intent = new Intent();
+            intent.putExtra(RESULT_EXTRA_NOTE_ID, mActiveNote.noteId);
+            setResult(RESULT_OK, intent);
         }
+
+        GeneralDialogAndFinishFragment fragment = GeneralDialogAndFinishFragment.newInstance("Flagged Content", "You have flagged this content as inappropriate.");
+        fragment.show(getSupportFragmentManager(), "flag_dialog");
     }
 
     @Override
     public void handleRemitPostResult(String s) {
-        GeneralDialogFragment fragment = GeneralDialogFragment.newInstance("Claimed Deal", "You have claimed this deal!");
-        fragment.show(getSupportFragmentManager(), "flag_dialog");
-
         if (mActiveNote != null) {
             mCategory.notes.remove(mActiveNote);
+            mData.removeEmptyCategories();
             mData.save(this);
-            finish();
+
+            Intent intent = new Intent();
+            intent.putExtra(RESULT_EXTRA_NOTE_ID, mActiveNote.noteId);
+            setResult(RESULT_OK, intent);
         }
+
+        GeneralDialogAndFinishFragment fragment = GeneralDialogAndFinishFragment.newInstance("Claimed Deal", "You have claimed this deal!");
+        fragment.show(getSupportFragmentManager(), "claimed_dialog");
     }
 
     public void showHighlightFailedDialog() {

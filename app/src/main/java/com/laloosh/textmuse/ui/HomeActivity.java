@@ -181,9 +181,12 @@ public class HomeActivity extends AppCompatActivity {
                     //Refresh our data if the shown categories changed
 
                     EventBus.getDefault().post(new ShowCategoriesChangedEvent());
+                    return;
                 }
             }
         }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 

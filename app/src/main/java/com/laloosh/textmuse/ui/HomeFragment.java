@@ -1,6 +1,7 @@
 package com.laloosh.textmuse.ui;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ import com.laloosh.textmuse.utils.SmsUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -52,10 +54,12 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
     private static final String ARG_ALREADY_LOADED_DATA = "arg.alreadyloadeddata";
     private static final String ARG_EVENTS_ONLY = "arg.eventsonly";
     private static final String ARG_TAB_NUMBER = "arg.tabnum";
+    private static final int REQUEST_SELECT_MESSAGE = 1005;
 
     private boolean mAlreadyLoaded;
     private boolean mEventsOnly;
     private int mTabNumber;
+    private boolean mTabSelected;
 
     private TextMuseData mData;
     private TextMuseSettings mSettings;
@@ -147,8 +151,11 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             public void onClick(View v) {
                 mDrawerOpen = false;
                 mDrawerLayout.closeDrawers();
-                Intent intent = new Intent(v.getContext(), SettingsActivity.class);
-                startActivityForResult(intent, HomeActivity.REQUEST_CODE_SETTINGS);
+                Activity activity = getActivity();
+                if (activity != null) {
+                    Intent intent = new Intent(v.getContext(), SettingsActivity.class);
+                    activity.startActivityForResult(intent, HomeActivity.REQUEST_CODE_SETTINGS);
+                }
             }
         });
 
@@ -235,6 +242,40 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(Constants.TAG, "on activity result in fragment");
+        if (requestCode == REQUEST_SELECT_MESSAGE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                refreshCurrentNotes(data.getIntExtra(SelectMessageActivity.RESULT_EXTRA_NOTE_ID, -1));
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    protected void refreshCurrentNotes(int noteIdToRemove) {
+        if (mSortedNotes == null) {
+            return;
+        }
+
+        boolean changed = false;
+        Iterator<NoteExtended> iterator = mSortedNotes.iterator();
+        while (iterator.hasNext()) {
+            NoteExtended noteExtended = iterator.next();
+            if (noteExtended.note.noteId == noteIdToRemove) {
+                iterator.remove();
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            mAdapter.updateNotes(mSortedNotes);
+        }
+
+        mDrawerListAdapter.updateSettings(mSettings);
+        mDrawerListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
+    }
+
     //This is used by eventbus once we get the event
     public void onEvent(ShowCategoriesChangedEvent event) {
         mData = GlobalData.getInstance().getData();
@@ -250,6 +291,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         if (event.tabNumber == mTabNumber) {
             Log.d(Constants.TAG, "Tab " + Integer.toString(mTabNumber) + " was selected");
             setDrawerListener();
+            mTabSelected = true;
         }
     }
 
@@ -258,10 +300,20 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             Log.d(Constants.TAG, "Tab " + Integer.toString(mTabNumber) + " was deselected");
             mToolbarImage.setOnClickListener(null);
             mDrawerOpen = false;
+            mTabSelected = false;
+        }
+    }
+
+    public void onEvent(ShowNoteDetailEvent event) {
+        Log.d(Constants.TAG, "On event to show note details");
+        if (mTabSelected) {
+            Log.d(Constants.TAG, "Actually firing event");
+            startActivityForResult(event.getIntent(), REQUEST_SELECT_MESSAGE);
         }
     }
 
     private void generateViewsFromData() {
+        Log.d(Constants.TAG, "Re-generating views from data");
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
 
             if (mAdapter != null) {
@@ -494,7 +546,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                         Intent intent = new Intent(mContext, SelectMessageActivity.class);
                         intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, originalIndex);
                         intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
-                        mContext.startActivity(intent);
+                        EventBus.getDefault().post(new ShowNoteDetailEvent(intent));
                     }
                 }
             };
@@ -642,8 +694,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                     Intent intent = new Intent(mContext, SelectMessageActivity.class);
                     intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, noteExtended.categoryIndex);
                     intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
-//                    intent.putExtra(SelectMessageActivity.NOTE_INDEX_EXTRA, noteExtended.notePos);
-                    mContext.startActivity(intent);
+                    EventBus.getDefault().post(new ShowNoteDetailEvent(intent));
                 }
             };
 
@@ -654,7 +705,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                     intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, noteExtended.categoryIndex);
                     intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
                     intent.putExtra(SelectMessageActivity.NOTE_INDEX_EXTRA, noteExtended.notePos);
-                    mContext.startActivity(intent);
+                    EventBus.getDefault().post(new ShowNoteDetailEvent(intent));
                 }
             };
 
@@ -804,7 +855,15 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         }
     }
 
+    public static class ShowNoteDetailEvent {
+        private Intent mIntent;
 
+        public ShowNoteDetailEvent(Intent intent) {
+            mIntent = intent;
+        }
 
-
+        public Intent getIntent() {
+            return mIntent;
+        }
+    }
 }

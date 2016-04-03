@@ -2,6 +2,9 @@ package com.laloosh.textmuse.datamodel;
 
 import android.content.Context;
 
+import java.util.HashSet;
+import java.util.Iterator;
+
 public class GlobalData {
 
     //Singleton details
@@ -42,10 +45,12 @@ public class GlobalData {
         Category localTexts = null;
         Category localPhotos = null;
         Category pinnedNotes = null;
+        HashSet<Integer> flaggedNotes = null;
         if (mData != null) {
             localTexts = mData.localTexts;
             localPhotos = mData.localPhotos;
             pinnedNotes = mData.pinnedNotes;
+            flaggedNotes = mData.flaggedNotesSet;
         }
 
         mData = data;
@@ -53,9 +58,12 @@ public class GlobalData {
         mData.localTexts = localTexts;
         mData.localPhotos = localPhotos;
         mData.pinnedNotes = pinnedNotes;
+        mData.flaggedNotesSet = flaggedNotes;
         if (mData.localTexts == null) {
             mData.setupNewLocalNotes();
         }
+
+        mData.filterFlaggedNotes();
     }
 
     public TextMuseStoredContacts getStoredContacts() {

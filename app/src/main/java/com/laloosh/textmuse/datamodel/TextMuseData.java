@@ -32,6 +32,8 @@ public class TextMuseData {
 
     public TextMuseCurrentSkinData skinData;
 
+    public HashSet<Integer> flaggedNotesSet;
+
     private transient HashSet<Integer> mPinnedNotesSet;
 
     public TextMuseData() {
@@ -159,6 +161,8 @@ public class TextMuseData {
         pinnedNotes.name = "Pinned Notes";
         pinnedNotes.requiredFlag = true;
         pinnedNotes.notes = new ArrayList<Note>();
+
+        flaggedNotesSet = new HashSet<>();
     }
 
     public void updatePhotos(Context context) {
@@ -308,6 +312,41 @@ public class TextMuseData {
                 iter.remove();
                 mPinnedNotesSet.remove(note.noteId);
                 return;
+            }
+        }
+    }
+
+    public void flagNote(int id) {
+        if (flaggedNotesSet == null) {
+            flaggedNotesSet = new HashSet<>();
+        }
+
+        flaggedNotesSet.add(id);
+
+        filterFlaggedNotes();
+    }
+
+    public void filterFlaggedNotes() {
+        //Filter out any flagged notes
+        if (flaggedNotesSet != null && flaggedNotesSet.size() > 0) {
+            for (Category category : categories) {
+                Iterator<Note> iterator = category.notes.iterator();
+                while (iterator.hasNext()) {
+                    Note note = iterator.next();
+                    if (flaggedNotesSet.contains(note.noteId)) {
+                        iterator.remove();
+                    }
+                }
+            }
+        }
+    }
+
+    public void removeEmptyCategories() {
+        Iterator<Category> iterator = categories.iterator();
+        while (iterator.hasNext()) {
+            Category category = iterator.next();
+            if (category.notes.size() <= 0) {
+                iterator.remove();
             }
         }
     }
