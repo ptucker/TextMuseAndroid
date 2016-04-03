@@ -692,7 +692,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, SelectMessageActivity.class);
-                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, noteExtended.categoryIndex);
+                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA_NAME, noteExtended.categoryName);
                     intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
                     EventBus.getDefault().post(new ShowNoteDetailEvent(intent));
                 }
@@ -702,9 +702,9 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, SelectMessageActivity.class);
-                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA, noteExtended.categoryIndex);
+                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA_NAME, noteExtended.categoryName);
                     intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
-                    intent.putExtra(SelectMessageActivity.NOTE_INDEX_EXTRA, noteExtended.notePos);
+                    intent.putExtra(SelectMessageActivity.NOTE_ID_EXTRA, noteExtended.note.noteId);
                     EventBus.getDefault().post(new ShowNoteDetailEvent(intent));
                 }
             };

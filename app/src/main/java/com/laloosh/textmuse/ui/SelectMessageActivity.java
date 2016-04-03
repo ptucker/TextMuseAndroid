@@ -51,7 +51,10 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
 
     public static final String CATEGORY_EXTRA = "com.laloosh.textmuse.category.extra";
     public static final String COLOR_OFFSET_EXTRA = "com.laloosh.textmuse.category.coloroffset.extra";
-    public static final String NOTE_INDEX_EXTRA = "com.lalaoosh.textmuse.noteid.extra";
+    public static final String NOTE_INDEX_EXTRA = "com.lalaoosh.textmuse.noteindex.extra";
+
+    public static final String CATEGORY_EXTRA_NAME = "com.laloosh.textmuse.categoryname.extra";
+    public static final String NOTE_ID_EXTRA = "com.laloosh.textmuse.note.id.extra";
 
     public static final String RESULT_EXTRA_NOTE_ID = "noteId";
 
@@ -81,6 +84,13 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_message);
 
+        mData = GlobalData.getInstance().getData();
+        if (mData == null || mData.categories == null) {
+            //quit the activity and go to the previous screen if somehow there's no data
+            finish();
+            return;
+        }
+
         int currentItem = -1;
         if (savedInstanceState != null) {
             mCategoryIndex = savedInstanceState.getInt(CATEGORY_EXTRA);
@@ -88,6 +98,7 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
             currentItem = savedInstanceState.getInt(SAVE_STATE_POSITION);
         } else {
             Intent intent = getIntent();
+
             mCategoryIndex = intent.getIntExtra(CATEGORY_EXTRA, 0);
             mColorOffset = intent.getIntExtra(COLOR_OFFSET_EXTRA, 0);
 
@@ -95,14 +106,36 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
             if (noteIndex > 0) {
                 currentItem = noteIndex;
             }
+
+            String categoryName = intent.getStringExtra(CATEGORY_EXTRA_NAME);
+            int noteId = intent.getIntExtra(NOTE_ID_EXTRA, -1);
+
+            if (categoryName != null) {
+                int i = 0;
+                for (Category category : mData.categories) {
+                    if (category.name.equals(categoryName)) {
+                        //Override the category index if a name was passed in
+                        mCategoryIndex = i;
+                        break;
+                    }
+                    i++;
+                }
+            }
+
+            if (noteId >= 0 && mCategoryIndex < mData.categories.size()) {
+                Category category = mData.categories.get(mCategoryIndex);
+                int i = 0;
+                for (Note note : category.notes) {
+                    if (note.noteId == noteId) {
+                        //Set the current item by ID if possible
+                        currentItem = i;
+                        break;
+                    }
+                    i++;
+                }
+            }
         }
 
-        mData = GlobalData.getInstance().getData();
-        if (mData == null || mData.categories == null) {
-            //quit the activity and go to the previous screen if somehow there's no data
-            finish();
-            return;
-        }
 
         if (mCategoryIndex == mData.categories.size()) {
             mCategory = mData.localTexts;
