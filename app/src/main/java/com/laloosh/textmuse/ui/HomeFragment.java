@@ -23,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -801,6 +802,11 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             holder.mLayoutPin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (noteExtended.categoryName.toLowerCase().contains("badge")) {
+                        Toast.makeText(mContext, "You can't save a badge.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     if (mData.hasPinnedNote(note.noteId)) {
                         mData.unPinNote(note);
                         holder.mPinImageView.setColorFilter(0xffdedede);

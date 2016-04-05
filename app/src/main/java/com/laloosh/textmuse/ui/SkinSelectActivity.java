@@ -1,6 +1,7 @@
 package com.laloosh.textmuse.ui;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
     public static final String EXTRA_LAUNCH_FROM_SPLASH = "launch_from_splash";
 
     ProgressBar mProgressBar;
+    ProgressDialog mProgressDialog;
     ListView mListView;
     SkinSelectListAdapter mAdapter;
     ArrayList<TextMuseSkin> mSkins;
@@ -45,6 +47,8 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skin_select);
+
+        mProgressDialog = new ProgressDialog(this);
 
         Intent intent = getIntent();
         mLaunchedFromSplash = intent.getBooleanExtra(EXTRA_LAUNCH_FROM_SPLASH, false);
@@ -123,7 +127,8 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
             Toast toast = Toast.makeText(this, "Getting things ready...", Toast.LENGTH_SHORT);
             toast.show();
         }
-        mProgressBar.setVisibility(View.VISIBLE);
+//        mProgressBar.setVisibility(View.VISIBLE);
+        mProgressDialog.show();
 
 //        if (!mLaunchedFromSplash) {
 //            mProgressBar.setVisibility(View.VISIBLE);
@@ -217,6 +222,7 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
 
     @Override
     public void handleFetchResult(FetchNotesAsyncTask.FetchNotesResult result) {
+        mProgressDialog.dismiss();
         mProgressBar.setVisibility(View.GONE);
         mLoadingSkinChange = false;
 

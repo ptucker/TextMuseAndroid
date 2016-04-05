@@ -585,28 +585,36 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
 
             //Pin
             ViewGroup internalPinLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutPin);
-            final ImageView pinImage = (ImageView) view.findViewById(R.id.detailViewImagePin);
 
-            if (mData.hasPinnedNote(note.noteId)) {
-                pinImage.setColorFilter(0xffef1111);
-            } else {
-                pinImage.setColorFilter(0xffdedede);
-            }
+            //Only allow a pin if this is not a badge
+            Category category = mData.categories.get(mCategoryPosition);
+            if (category == null || !category.name.toLowerCase().contains("badge")) {
+                internalPinLayout.setVisibility(View.VISIBLE);
+                final ImageView pinImage = (ImageView) view.findViewById(R.id.detailViewImagePin);
 
-            internalPinLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mData.hasPinnedNote(note.noteId)) {
-                        mData.unPinNote(note);
-                        pinImage.setColorFilter(0xffdedede);
-                        mData.save(mActivity);
-                    } else {
-                        mData.pinNote(note);
-                        pinImage.setColorFilter(0xffef1111);
-                        mData.save(mActivity);
-                    }
+                if (mData.hasPinnedNote(note.noteId)) {
+                    pinImage.setColorFilter(0xffef1111);
+                } else {
+                    pinImage.setColorFilter(0xffdedede);
                 }
-            });
+
+                internalPinLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mData.hasPinnedNote(note.noteId)) {
+                            mData.unPinNote(note);
+                            pinImage.setColorFilter(0xffdedede);
+                            mData.save(mActivity);
+                        } else {
+                            mData.pinNote(note);
+                            pinImage.setColorFilter(0xffef1111);
+                            mData.save(mActivity);
+                        }
+                    }
+                });
+            } else {
+                internalPinLayout.setVisibility(View.GONE);
+            }
 
             //Quote boxes
             ImageView quote = (ImageView) view.findViewById(R.id.detailViewImageViewLeftQuote);
