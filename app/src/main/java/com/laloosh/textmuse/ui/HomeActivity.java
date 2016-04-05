@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 import java.io.File;
+import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
 
@@ -86,13 +89,13 @@ public class HomeActivity extends AppCompatActivity {
         mTabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                EventBus.getDefault().post(new TabSelectedEvent(tab.getPosition()));
+                notifyTabSelected(tab.getPosition());
                 super.onTabSelected(tab);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                EventBus.getDefault().post(new TabDeselectedEvent(tab.getPosition()));
+                notifyTabDeselected(tab.getPosition());
                 super.onTabUnselected(tab);
             }
         });
@@ -109,22 +112,53 @@ public class HomeActivity extends AppCompatActivity {
             });
         }
 
+        //Post an extra selection event for 0, since we don't get that callback
         mViewPager.post(new Runnable() {
             @Override
             public void run() {
-                EventBus.getDefault().post(new TabSelectedEvent(0));
+                notifyTabSelected(0);
             }
         });
     }
 
-    private void setSkinTitle() {
+    protected void notifyTabSelected(int position) {
+        String tag = mAdapter.getTabFragmentTag(position);
+        if (tag != null) {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+            if (fragment != null && fragment instanceof TabSelectListener) {
+                Log.d(Constants.TAG, String.format("Tab %d was selected, firing listener", position));
+                TabSelectListener listener = (TabSelectListener) fragment;
+                listener.onTabSelected();
+            }
+        }
+    }
+
+    protected void notifyTabDeselected(int position) {
+        String tag = mAdapter.getTabFragmentTag(position);
+        if (tag != null) {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+            if (fragment != null && fragment instanceof TabSelectListener) {
+                Log.d(Constants.TAG, String.format("Tab %d was de-selected, firing listener", position));
+                TabSelectListener listener = (TabSelectListener) fragment;
+                listener.onTabDeselected();
+            }
+        }
+    }
+
+    public void setSkinTitle() {
         setTitle("");
         TextView textView = (TextView) findViewById(R.id.mainToolbarTitle);
-        mToolbarImage = (ImageView) findViewById(R.id.mainToolbarButton);
+        mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_white));
 
         if (mData != null && mData.skinData != null) {
             textView.setText(mData.skinData.name + " TextMuse");
+        } else {
+            textView.setText("TextMuse");
+        }
+    }
 
+    public void setSkinImage() {
+        if (mData != null && mData.skinData != null) {
             File logoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), mData.skinData.getIconImageFilename());
             if (logoFile.exists()) {
                 Picasso.with(this)
@@ -138,7 +172,6 @@ public class HomeActivity extends AppCompatActivity {
                 mToolbarImage.setImageResource(R.drawable.launcher_icon);
             }
         } else {
-            textView.setText("TextMuse");
             mToolbarImage.setImageResource(R.drawable.launcher_icon);
         }
     }
@@ -210,20 +243,22 @@ public class HomeActivity extends AppCompatActivity {
 
     public static class MainAdapter extends FragmentPagerAdapter {
         private boolean mAlreadyLoadedData = false;
+        private HashMap<Integer, String> mTabMap;
 
         public MainAdapter(FragmentManager fm, boolean alreadyLoadedData) {
             super(fm);
             mAlreadyLoadedData = alreadyLoadedData;
+            mTabMap = new HashMap<>(3);
         }
 
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return HomeFragment.newInstance(mAlreadyLoadedData, false, 0);
+                return HomeFragment.newInstance(mAlreadyLoadedData, false);
             } else if (position == 1) {
-                return HomeFragment.newInstance(mAlreadyLoadedData, true, 1);
+                return HomeFragment.newInstance(mAlreadyLoadedData, true);
             } else {
-                return new GroupsFragment();
+                return GroupsFragment.newInstance();
             }
         }
 
@@ -241,6 +276,17 @@ public class HomeActivity extends AppCompatActivity {
             } else {
                 return "Groups";
             }
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment createdFragment = (Fragment) super.instantiateItem(container, position);
+            mTabMap.put(position, createdFragment.getTag());
+            return createdFragment;
+        }
+
+        public String getTabFragmentTag(int position) {
+            return mTabMap.get(position);
         }
     }
 }

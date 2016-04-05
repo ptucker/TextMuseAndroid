@@ -263,6 +263,21 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
 
     @Override
     public void handleFlagPostResult(String s) {
+        removeActiveNote();
+
+        GeneralDialogAndFinishFragment fragment = GeneralDialogAndFinishFragment.newInstance("Flagged Content", "You have flagged this content as inappropriate.");
+        fragment.show(getSupportFragmentManager(), "flag_dialog");
+    }
+
+    @Override
+    public void handleRemitPostResult(String s) {
+        removeActiveNote();
+
+        GeneralDialogAndFinishFragment fragment = GeneralDialogAndFinishFragment.newInstance("Claimed Deal", "You have claimed this deal!");
+        fragment.show(getSupportFragmentManager(), "claimed_dialog");
+    }
+
+    protected void removeActiveNote() {
         if (mActiveNote != null) {
             mData.flagNote(mActiveNote.noteId);
             mData.removeEmptyCategories();
@@ -272,25 +287,6 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
             intent.putExtra(RESULT_EXTRA_NOTE_ID, mActiveNote.noteId);
             setResult(RESULT_OK, intent);
         }
-
-        GeneralDialogAndFinishFragment fragment = GeneralDialogAndFinishFragment.newInstance("Flagged Content", "You have flagged this content as inappropriate.");
-        fragment.show(getSupportFragmentManager(), "flag_dialog");
-    }
-
-    @Override
-    public void handleRemitPostResult(String s) {
-        if (mActiveNote != null) {
-            mCategory.notes.remove(mActiveNote);
-            mData.removeEmptyCategories();
-            mData.save(this);
-
-            Intent intent = new Intent();
-            intent.putExtra(RESULT_EXTRA_NOTE_ID, mActiveNote.noteId);
-            setResult(RESULT_OK, intent);
-        }
-
-        GeneralDialogAndFinishFragment fragment = GeneralDialogAndFinishFragment.newInstance("Claimed Deal", "You have claimed this deal!");
-        fragment.show(getSupportFragmentManager(), "claimed_dialog");
     }
 
     public void showHighlightFailedDialog() {

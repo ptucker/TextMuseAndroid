@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -50,15 +51,13 @@ import java.util.Random;
 
 import de.greenrobot.event.EventBus;
 
-public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler {
+public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler, TabSelectListener {
     private static final String ARG_ALREADY_LOADED_DATA = "arg.alreadyloadeddata";
     private static final String ARG_EVENTS_ONLY = "arg.eventsonly";
-    private static final String ARG_TAB_NUMBER = "arg.tabnum";
     private static final int REQUEST_SELECT_MESSAGE = 1005;
 
     private boolean mAlreadyLoaded;
     private boolean mEventsOnly;
-    private int mTabNumber;
     private boolean mTabSelected;
 
     private TextMuseData mData;
@@ -85,12 +84,11 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly, int tabNumber) {
+    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARG_ALREADY_LOADED_DATA, alreadyLoaded);
         args.putBoolean(ARG_EVENTS_ONLY, eventsOnly);
-        args.putInt(ARG_TAB_NUMBER, tabNumber);
         fragment.setArguments(args);
         return fragment;
     }
@@ -101,7 +99,6 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         if (getArguments() != null) {
             mAlreadyLoaded = getArguments().getBoolean(ARG_ALREADY_LOADED_DATA);
             mEventsOnly = getArguments().getBoolean(ARG_EVENTS_ONLY);
-            mTabNumber = getArguments().getInt(ARG_TAB_NUMBER);
         }
 
         if (mEventsOnly) {
@@ -287,21 +284,25 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         mDrawerListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
     }
 
-    public void onEvent(TabSelectedEvent event) {
-        if (event.tabNumber == mTabNumber) {
-            Log.d(Constants.TAG, "Tab " + Integer.toString(mTabNumber) + " was selected");
-            setDrawerListener();
-            mTabSelected = true;
-        }
+    @Override
+    public void onTabDeselected() {
+        mToolbarImage.setOnClickListener(null);
+        mDrawerOpen = false;
+        mTabSelected = false;
     }
 
-    public void onEvent(TabDeselectedEvent event) {
-        if (event.tabNumber == mTabNumber) {
-            Log.d(Constants.TAG, "Tab " + Integer.toString(mTabNumber) + " was deselected");
-            mToolbarImage.setOnClickListener(null);
-            mDrawerOpen = false;
-            mTabSelected = false;
-        }
+    @Override
+    public void onTabSelected() {
+        mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.ic_menu_white));
+        setDrawerListener();
+        mTabSelected = true;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Log.d(Constants.TAG, "On attach of eventsonly = " + Boolean.toString(mEventsOnly));
     }
 
     public void onEvent(ShowNoteDetailEvent event) {

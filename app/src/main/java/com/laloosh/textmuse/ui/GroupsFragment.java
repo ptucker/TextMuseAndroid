@@ -1,9 +1,11 @@
 package com.laloosh.textmuse.ui;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseGroup;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
+import com.laloosh.textmuse.datamodel.events.TabSelectedEvent;
 import com.laloosh.textmuse.dialogs.EnterGroupDialogFragment;
 
 import java.util.List;
@@ -28,7 +32,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 
-public class GroupsFragment extends Fragment implements EnterGroupDialogFragment.GroupNameChangeHandler {
+public class GroupsFragment extends Fragment implements EnterGroupDialogFragment.GroupNameChangeHandler, TabSelectListener {
 
     private static final int REQUEST_CODE_GROUPEDIT = 1234;
     private static final int REQUEST_CODE_DIALOG = 1111;
@@ -117,6 +121,21 @@ public class GroupsFragment extends Fragment implements EnterGroupDialogFragment
     public void onEvent(GroupActionEvent event) {
         mActionModeIndex = event.getIndex();
         startActionMode();
+    }
+
+    @Override
+    public void onTabDeselected() {
+        Log.d(Constants.TAG, "Deselected the groups fragment");
+    }
+
+    @Override
+    public void onTabSelected() {
+        Activity activity = getActivity();
+        if (activity != null) {
+            //Set the default skin title
+            HomeActivity homeActivity = (HomeActivity) activity;
+            homeActivity.setSkinImage();
+        }
     }
 
     private void startActionMode() {
