@@ -134,7 +134,7 @@ public class GroupsFragment extends Fragment implements EnterGroupDialogFragment
         if (activity != null) {
             //Set the default skin title
             HomeActivity homeActivity = (HomeActivity) activity;
-            homeActivity.setSkinImage();
+            homeActivity.disableTitleImageLook();
         }
     }
 

@@ -274,8 +274,6 @@ public class PinnedFragment extends Fragment {
                 holder.mPinImageView.setColorFilter(0xffdedede);
             }
 
-            holder.mSendImageView.setColorFilter(0xff1a1a1a);
-
             holder.mLayoutLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

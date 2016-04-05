@@ -36,8 +36,6 @@ import com.laloosh.textmuse.datamodel.NoteExtended;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
-import com.laloosh.textmuse.datamodel.events.TabDeselectedEvent;
-import com.laloosh.textmuse.datamodel.events.TabSelectedEvent;
 import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.ColorHelpers;
@@ -294,6 +292,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
     @Override
     public void onTabSelected() {
         mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.ic_menu_white));
+        mToolbarImage.setAlpha(1.0f);
         setDrawerListener();
         mTabSelected = true;
     }
@@ -739,12 +738,6 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                             .override(holder.mBackgroundImageView.getWidth(), Target.SIZE_ORIGINAL)
                             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                             .into(holder.mBackgroundImageView);
-
-//                        Picasso.with(mContext)
-//                                .load(note.getDisplayMediaUrl(mContext))
-//                                .error(R.drawable.placeholder_image)
-//                                .resize(holder.mBackgroundImageView.getWidth(), 0)
-//                                .into(holder.mBackgroundImageView);
                     }
                 });
             }

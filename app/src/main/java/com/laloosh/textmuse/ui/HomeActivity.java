@@ -4,19 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Environment;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,16 +24,12 @@ import com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
-import com.laloosh.textmuse.datamodel.events.TabDeselectedEvent;
-import com.laloosh.textmuse.datamodel.events.TabSelectedEvent;
 import com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment;
-import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
-import java.io.File;
 import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
@@ -157,53 +150,9 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void setSkinImage() {
-        if (mData != null && mData.skinData != null) {
-            File logoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), mData.skinData.getIconImageFilename());
-            if (logoFile.exists()) {
-                Picasso.with(this)
-                        .load(logoFile)
-                        .fit()
-                                //.placeholder(R.drawable.launcher_icon)
-                        .error(R.drawable.launcher_icon)
-                        .centerInside()
-                        .into(mToolbarImage);
-            } else {
-                mToolbarImage.setImageResource(R.drawable.launcher_icon);
-            }
-        } else {
-            mToolbarImage.setImageResource(R.drawable.launcher_icon);
-        }
+    public void disableTitleImageLook() {
+        mToolbarImage.setAlpha(0.4f);
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main_category, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.action_settings) {
-//
-//            Intent intent = new Intent(this, SettingsActivity.class);
-//            startActivityForResult(intent, REQUEST_CODE_SETTINGS);
-//
-//            return true;
-//        } else if (id == android.R.id.home) {
-//            Log.d(Constants.TAG, "on options item selected -- home pushed!");
-//        } else if (id == R.id.home) {
-//            Log.d(Constants.TAG, "on options item selected2 -- home pushed!");
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
