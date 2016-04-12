@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -34,12 +35,15 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     //10 seconds is the max amount of time the splash screen is going to be up
     private static final long SPLASH_SCREEN_MAX_TIME = 10000;
 
+    //30 seconds for first run max splash screen time
+    private static final long SPLASH_SCREEN_MAX_TIME_FIRST_RUN = 30000;
+
     private TextMuseData mData;
     private boolean mFinishedLoading;
     private boolean mFinishedLoadingSkins;
     private FetchNotesAsyncTask.FetchNotesResult mFinishedLoadingResult;
     private FetchSkinsAsyncTask.FetchSkinsResult mFinishedLoadingSkinsResult;
-    private Timer mTimer;
+    private Handler mHandler;
     private boolean mFirstLaunch;
     private String mLaunchMessage;
     private boolean mTimerFired;
@@ -64,6 +68,8 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
         mFirstLaunch = isFirstLaunch();
         setLaunchedBefore();
+
+        mHandler = new Handler();
 
         getNewContent();
         cleanImageCacheTask();
@@ -159,15 +165,13 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     }
 
     private void scheduleTimerForFinish() {
-
-        mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
+        long timeDelay = mFirstLaunch ?  SPLASH_SCREEN_MAX_TIME_FIRST_RUN : SPLASH_SCREEN_MAX_TIME;
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 timerFinished();
             }
-        }, SPLASH_SCREEN_MAX_TIME);
-
+        }, timeDelay);
     }
 
     private void timerFinished() {
@@ -238,22 +242,22 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
     @Override
     public void handleFetchResult(FetchNotesAsyncTask.FetchNotesResult result) {
+        Log.d(Constants.TAG, "Finished loading main data");
         mFinishedLoading = true;
         mFinishedLoadingResult = result;
 
         if (mFinishedLoadingSkins) {
-            mTimer.cancel();
             timerFinished();
         }
     }
 
     @Override
     public void handleFetchSkinsResult(FetchSkinsAsyncTask.FetchSkinsResult result) {
+        Log.d(Constants.TAG, "Finished loading skins");
         mFinishedLoadingSkins = true;
         mFinishedLoadingSkinsResult = result;
 
         if (mFinishedLoading) {
-            mTimer.cancel();
             timerFinished();
         }
     }

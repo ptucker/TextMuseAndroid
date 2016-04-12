@@ -6,7 +6,7 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "com.laloosh.textmuse"
+        applicationId "com.laloosh.textmuse.app"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 22

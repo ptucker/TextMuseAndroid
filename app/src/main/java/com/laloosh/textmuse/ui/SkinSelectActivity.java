@@ -49,6 +49,9 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
         setContentView(R.layout.activity_skin_select);
 
         mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Getting things ready...");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setIndeterminate(true);
 
         Intent intent = getIntent();
         mLaunchedFromSplash = intent.getBooleanExtra(EXTRA_LAUNCH_FROM_SPLASH, false);
@@ -123,10 +126,10 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
     }
 
     private void selectSkinId(int skinId) {
-        if (mLaunchedFromSplash) {
-            Toast toast = Toast.makeText(this, "Getting things ready...", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+//        if (mLaunchedFromSplash) {
+//            Toast toast = Toast.makeText(this, "Getting things ready...", Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
 //        mProgressBar.setVisibility(View.VISIBLE);
         mProgressDialog.show();
 
