@@ -25886,37 +25886,37 @@ com.laloosh.textmuse.ui.SkinSelectActivity -> com.laloosh.textmuse.ui.SkinSelect
     boolean mLaunchedFromSplash -> q
     boolean mLoadingSkinChange -> r
     boolean mCloseInProcess -> s
-    31:252:void <init>() -> <init>
-    48:123:void onCreate(android.os.Bundle) -> onCreate
-    126:139:void selectSkinId(int) -> b
-    142:149:void reloadMainData() -> l
-    152:154:void registerPushNotifications() -> m
-    170:171:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    179:187:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    191:209:void donePressed() -> n
-    213:221:void onBackPressed() -> onBackPressed
-    225:250:void handleFetchResult(com.laloosh.textmuse.tasks.FetchNotesAsyncTask$FetchNotesResult) -> a
+    31:255:void <init>() -> <init>
+    48:126:void onCreate(android.os.Bundle) -> onCreate
+    134:142:void selectSkinId(int) -> b
+    145:152:void reloadMainData() -> l
+    155:157:void registerPushNotifications() -> m
+    173:174:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    182:190:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    194:212:void donePressed() -> n
+    216:224:void onBackPressed() -> onBackPressed
+    228:253:void handleFetchResult(com.laloosh.textmuse.tasks.FetchNotesAsyncTask$FetchNotesResult) -> a
     31:31:void access$000(com.laloosh.textmuse.ui.SkinSelectActivity,int) -> a
 com.laloosh.textmuse.ui.SkinSelectActivity$1 -> com.laloosh.textmuse.ui.de:
     com.laloosh.textmuse.ui.SkinSelectActivity this$0 -> a
-    82:82:void <init>(com.laloosh.textmuse.ui.SkinSelectActivity) -> <init>
-    85:87:void run() -> run
+    85:85:void <init>(com.laloosh.textmuse.ui.SkinSelectActivity) -> <init>
+    88:90:void run() -> run
 com.laloosh.textmuse.ui.SkinSelectActivity$2 -> com.laloosh.textmuse.ui.df:
     com.laloosh.textmuse.ui.SkinSelectActivity this$0 -> a
-    90:90:void <init>(com.laloosh.textmuse.ui.SkinSelectActivity) -> <init>
-    93:121:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    93:93:void <init>(com.laloosh.textmuse.ui.SkinSelectActivity) -> <init>
+    96:124:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.laloosh.textmuse.ui.SkinSelectActivity$SkinSelectListAdapter -> com.laloosh.textmuse.ui.dg:
     android.app.Activity mActivity -> a
     java.util.ArrayList mSkins -> b
-    263:266:void <init>(android.app.Activity,java.util.ArrayList) -> <init>
-    275:302:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    308:308:int getCount() -> getCount
-    313:313:int getItemViewType(int) -> getItemViewType
-    318:318:int getViewTypeCount() -> getViewTypeCount
+    266:269:void <init>(android.app.Activity,java.util.ArrayList) -> <init>
+    278:305:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    311:311:int getCount() -> getCount
+    316:316:int getItemViewType(int) -> getItemViewType
+    321:321:int getViewTypeCount() -> getViewTypeCount
 com.laloosh.textmuse.ui.SkinSelectActivity$SkinSelectListAdapter$ViewHolder -> com.laloosh.textmuse.ui.dh:
     android.widget.TextView mTextView -> a
     android.widget.ImageView mImageView -> b
-    257:257:void <init>() -> <init>
+    260:260:void <init>() -> <init>
 com.laloosh.textmuse.ui.SortableCategoryActivity -> com.laloosh.textmuse.ui.SortableCategoryActivity:
     android.support.v7.widget.RecyclerView mRecyclerView -> j
     android.support.v7.widget.RecyclerView$LayoutManager mLayoutManager -> k
@@ -25959,30 +25959,30 @@ com.laloosh.textmuse.ui.SplashScreenActivity -> com.laloosh.textmuse.ui.SplashSc
     boolean mFinishedLoadingSkins -> l
     com.laloosh.textmuse.tasks.FetchNotesAsyncTask$FetchNotesResult mFinishedLoadingResult -> m
     com.laloosh.textmuse.tasks.FetchSkinsAsyncTask$FetchSkinsResult mFinishedLoadingSkinsResult -> n
-    java.util.Timer mTimer -> o
+    android.os.Handler mHandler -> o
     boolean mFirstLaunch -> p
     java.lang.String mLaunchMessage -> q
     boolean mTimerFired -> r
     com.laloosh.textmuse.tasks.FetchNotesAsyncTask mFetchNotesTask -> s
     com.laloosh.textmuse.tasks.FetchSkinsAsyncTask mFetchSkinsTask -> t
-    32:32:void <init>() -> <init>
-    52:75:void onCreate(android.os.Bundle) -> onCreate
-    79:137:void setupLayout() -> l
-    142:146:void loadRawContent() -> m
-    149:154:void getNewContent() -> n
-    157:159:void cleanImageCacheTask() -> o
-    163:171:void scheduleTimerForFinish() -> p
-    174:218:void timerFinished() -> q
-    222:229:boolean isFirstLaunch() -> r
-    233:237:void setLaunchedBefore() -> s
-    241:248:void handleFetchResult(com.laloosh.textmuse.tasks.FetchNotesAsyncTask$FetchNotesResult) -> a
-    252:259:void handleFetchSkinsResult(com.laloosh.textmuse.tasks.FetchSkinsAsyncTask$FetchSkinsResult) -> a
-    262:264:void startupAzureIntegration() -> t
-    32:32:void access$000(com.laloosh.textmuse.ui.SplashScreenActivity) -> a
+    33:33:void <init>() -> <init>
+    56:81:void onCreate(android.os.Bundle) -> onCreate
+    85:143:void setupLayout() -> l
+    148:152:void loadRawContent() -> m
+    155:160:void getNewContent() -> n
+    163:165:void cleanImageCacheTask() -> o
+    168:175:void scheduleTimerForFinish() -> p
+    178:222:void timerFinished() -> q
+    226:233:boolean isFirstLaunch() -> r
+    237:241:void setLaunchedBefore() -> s
+    245:252:void handleFetchResult(com.laloosh.textmuse.tasks.FetchNotesAsyncTask$FetchNotesResult) -> a
+    256:263:void handleFetchSkinsResult(com.laloosh.textmuse.tasks.FetchSkinsAsyncTask$FetchSkinsResult) -> a
+    266:268:void startupAzureIntegration() -> t
+    33:33:void access$000(com.laloosh.textmuse.ui.SplashScreenActivity) -> a
 com.laloosh.textmuse.ui.SplashScreenActivity$1 -> com.laloosh.textmuse.ui.dk:
     com.laloosh.textmuse.ui.SplashScreenActivity this$0 -> a
-    164:164:void <init>(com.laloosh.textmuse.ui.SplashScreenActivity) -> <init>
-    167:168:void run() -> run
+    169:169:void <init>(com.laloosh.textmuse.ui.SplashScreenActivity) -> <init>
+    172:173:void run() -> run
 com.laloosh.textmuse.ui.TabSelectListener -> com.laloosh.textmuse.ui.dl:
     void onTabSelected() -> d
     void onTabDeselected() -> c
