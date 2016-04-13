@@ -14,10 +14,12 @@ public class NoteSendAsyncTask extends AsyncTask<Void, Void, String> {
 
     int mAppId = -1;
     int mNoteId = -1;
+    int mCount = 0;
 
-    public NoteSendAsyncTask(int appId, int noteId) {
+    public NoteSendAsyncTask(int appId, int noteId, int count) {
         mAppId = appId;
         mNoteId = noteId;
+        mCount = count;
     }
 
     @Override
@@ -31,6 +33,7 @@ public class NoteSendAsyncTask extends AsyncTask<Void, Void, String> {
         HashMap<String, String> webParams = new HashMap<String, String>();
         webParams.put("app", Integer.toString(mAppId));
         webParams.put("id", Integer.toString(mNoteId));
+        webParams.put("cnt", Integer.toString(mCount));
 
         result = connUtils.postUrl(SEND_URL, webParams);
 
