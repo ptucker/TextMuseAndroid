@@ -35,8 +35,11 @@ import com.laloosh.textmuse.dialogs.GeneralDialogAndFinishFragment;
 import com.laloosh.textmuse.dialogs.GeneralDialogFragment;
 import com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment;
 import com.laloosh.textmuse.tasks.FlagContentAsyncTask;
+import com.laloosh.textmuse.tasks.NoteSeeItAsyncTask;
 import com.laloosh.textmuse.tasks.RemitBadgeAsyncTask;
+import com.laloosh.textmuse.tasks.RemitDealAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
+import com.laloosh.textmuse.tasks.ViewCategoryAsyncTask;
 import com.laloosh.textmuse.utils.AndroidUtils;
 import com.laloosh.textmuse.utils.ColorHelpers;
 import com.laloosh.textmuse.utils.ImageDownloadTarget;
@@ -151,9 +154,14 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
             mRequireSave = false;
         }
 
-        if (mCategory.name.toLowerCase().contains("badge")) {
+        if (mCategory.name.toLowerCase().contains("badge") || mCategory.name.toLowerCase().contains("deal")) {
             mIsBadge = true;
             invalidateOptionsMenu();
+        }
+
+        if (mCategory.id > 0) {
+            ViewCategoryAsyncTask task = new ViewCategoryAsyncTask(null, mData.appId, mCategory.id, this);
+            task.execute();
         }
 
         mViewPager = (ViewPager) findViewById(R.id.selectMessageViewPager);
@@ -247,8 +255,13 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
         Note note = mCategory.notes.get(index);
         mActiveNote = note;
 
-        RemitBadgeAsyncTask task = new RemitBadgeAsyncTask(this, mData.appId, note.noteId);
-        task.execute();
+        if (mCategory.name.toLowerCase().contains("deal")) {
+            RemitDealAsyncTask task = new RemitDealAsyncTask(null, mData.appId, note.noteId, this);
+            task.execute();
+        } else {
+            RemitBadgeAsyncTask task = new RemitBadgeAsyncTask(this, mData.appId, note.noteId);
+            task.execute();
+        }
     }
 
     //Flags the current message
@@ -510,8 +523,9 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
                             Intent intent = new Intent(mActivity, WebviewActivity.class);
                             intent.putExtra(WebviewActivity.WEBVIEW_ACTIVITY_EXTRA, note.getExternalLinkUri(Integer.toString(mData.appId)).toString());
                             mActivity.startActivity(intent);
-//                            Intent intent = new Intent(Intent.ACTION_VIEW, note.getExternalLinkUri(Integer.toString(mData.appId)));
-//                            mActivity.startActivity(intent);
+
+                            NoteSeeItAsyncTask task = new NoteSeeItAsyncTask(null, mData.appId, note.noteId, v.getContext());
+                            task.execute();
                         } catch (Exception e) {
                             Log.e(Constants.TAG, "Could not open link!");
                             //TODO: error popup?
@@ -587,33 +601,35 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
             ViewGroup internalPinLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutPin);
 
             //Only allow a pin if this is not a badge
-            Category category = mData.categories.get(mCategoryPosition);
-            if (category == null || !category.name.toLowerCase().contains("badge")) {
-                internalPinLayout.setVisibility(View.VISIBLE);
-                final ImageView pinImage = (ImageView) view.findViewById(R.id.detailViewImagePin);
+            if (mCategoryPosition < mData.categories.size()) {
+                Category category = mData.categories.get(mCategoryPosition);
+                if (category == null || !category.name.toLowerCase().contains("badge")) {
+                    internalPinLayout.setVisibility(View.VISIBLE);
+                    final ImageView pinImage = (ImageView) view.findViewById(R.id.detailViewImagePin);
 
-                if (mData.hasPinnedNote(note.noteId)) {
-                    pinImage.setColorFilter(0xffef1111);
-                } else {
-                    pinImage.setColorFilter(0xffdedede);
-                }
-
-                internalPinLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mData.hasPinnedNote(note.noteId)) {
-                            mData.unPinNote(note);
-                            pinImage.setColorFilter(0xffdedede);
-                            mData.save(mActivity);
-                        } else {
-                            mData.pinNote(note);
-                            pinImage.setColorFilter(0xffef1111);
-                            mData.save(mActivity);
-                        }
+                    if (mData.hasPinnedNote(note.noteId)) {
+                        pinImage.setColorFilter(0xffef1111);
+                    } else {
+                        pinImage.setColorFilter(0xffdedede);
                     }
-                });
-            } else {
-                internalPinLayout.setVisibility(View.GONE);
+
+                    internalPinLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mData.hasPinnedNote(note.noteId)) {
+                                mData.unPinNote(note);
+                                pinImage.setColorFilter(0xffdedede);
+                                mData.save(mActivity);
+                            } else {
+                                mData.pinNote(note);
+                                pinImage.setColorFilter(0xffef1111);
+                                mData.save(mActivity);
+                            }
+                        }
+                    });
+                } else {
+                    internalPinLayout.setVisibility(View.GONE);
+                }
             }
 
             //Quote boxes

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Category {
 
+    public int id;
+
     public String name;
     public boolean requiredFlag;
     public boolean newFlag;

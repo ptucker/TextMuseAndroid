@@ -203,9 +203,9 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return HomeFragment.newInstance(mAlreadyLoadedData, false);
-            } else if (position == 1) {
                 return HomeFragment.newInstance(mAlreadyLoadedData, true);
+            } else if (position == 1) {
+                return BadgeFragment.newInstance();
             } else {
                 return GroupsFragment.newInstance();
             }
@@ -219,9 +219,9 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             if (position == 0) {
-                return "Home";
-            } else if (position == 1) {
                 return "Events";
+            } else if (position == 1) {
+                return "Badges";
             } else {
                 return "Groups";
             }

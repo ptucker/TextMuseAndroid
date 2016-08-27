@@ -6,6 +6,7 @@ import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.LocalNotification;
 import com.laloosh.textmuse.datamodel.Note;
+import com.laloosh.textmuse.datamodel.PointUpdate;
 import com.laloosh.textmuse.datamodel.TextMuseCurrentSkinData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseLaunchIcon;
@@ -86,6 +87,53 @@ public class WebDataParser {
 
     }
 
+    //Used to parse generic output
+    public PointUpdate parsePointUpdate(String data) {
+        if (data == null) {
+            return null;
+        }
+
+        StringReader reader = new StringReader(data);
+
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            XmlPullParser xpp = factory.newPullParser();
+
+            xpp.setInput(reader);
+            xpp.nextTag();
+
+            PointUpdate result = new PointUpdate();
+
+            xpp.require(XmlPullParser.START_TAG, null, "success");
+
+            int attributeCount = xpp.getAttributeCount();
+            for (int i = 0; i < attributeCount; i++) {
+                String attributeName = xpp.getAttributeName(i);
+                String attributeValue = xpp.getAttributeValue(i);
+
+                if (attributeName.equalsIgnoreCase("ep")) {
+                    result.ep = Integer.parseInt(attributeValue);
+                } else if (attributeName.equalsIgnoreCase("mp")) {
+                    result.mp = Integer.parseInt(attributeValue);
+                } else if (attributeName.equalsIgnoreCase("sp")) {
+                    result.sp = Integer.parseInt(attributeValue);
+                }
+            }
+
+            return result;
+        } catch (XmlPullParserException e) {
+            Log.e(Constants.TAG, "Error parsing XML data", e);
+        } catch (IOException e) {
+            Log.e(Constants.TAG, "IOException when parsing XML data", e);
+        }
+
+        if (reader != null) {
+            reader.close();
+        }
+
+        return null;
+    }
+
     protected TextMuseSkinData parseSkinContent(XmlPullParser xpp) throws XmlPullParserException, IOException {
         xpp.require(XmlPullParser.START_TAG, null, "ss");
 
@@ -150,6 +198,12 @@ public class WebDataParser {
                 parsedData.timestamp = formatter.parseDateTime(attributeValue);
             } else if (attributeName.equalsIgnoreCase("app")) {
                 parsedData.appId = Integer.parseInt(attributeValue);
+            } else if (attributeName.equalsIgnoreCase("ep")) {
+                parsedData.explorerPoints = Integer.parseInt(attributeValue);
+            } else if (attributeName.equalsIgnoreCase("mp")) {
+                parsedData.musePoints = Integer.parseInt(attributeValue);
+            } else if (attributeName.equalsIgnoreCase("sp")) {
+                parsedData.sharerPoints = Integer.parseInt(attributeValue);
             }
         }
 
@@ -200,6 +254,10 @@ public class WebDataParser {
                 skinData.title = attributeValue;
             } else if (attributeName.equalsIgnoreCase("icon")) {
                 skinData.icon = attributeValue;
+            } else if (attributeName.equalsIgnoreCase("master")) {
+                skinData.masterName = attributeValue;
+            } else if (attributeName.equalsIgnoreCase("masterurl")) {
+                skinData.masterIconUrl = attributeValue;
             }
         }
 
@@ -284,6 +342,8 @@ public class WebDataParser {
                 category.versionFlag = (Integer.parseInt(attributeValue) > 0);
             } else if (attributeName.equalsIgnoreCase("event")) {
                 category.eventCategory = (Integer.parseInt(attributeValue) > 0);
+            } else if (attributeName.equalsIgnoreCase("id")) {
+                category.id = Integer.parseInt(attributeValue);
             }
         }
 

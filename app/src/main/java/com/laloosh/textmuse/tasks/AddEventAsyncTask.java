@@ -1,11 +1,17 @@
 package com.laloosh.textmuse.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.laloosh.textmuse.app.Constants;
+import com.laloosh.textmuse.datamodel.GlobalData;
+import com.laloosh.textmuse.datamodel.PointUpdate;
+import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.utils.ConnectionUtils;
+import com.laloosh.textmuse.utils.PointsHelper;
+import com.laloosh.textmuse.utils.WebDataParser;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -21,15 +27,17 @@ public class AddEventAsyncTask extends AsyncTask<Void, Void, String> {
     private String mEmail;
     private String mLocation;
     private int mSkinId;
+    private Context mContext;
 
 
-    public AddEventAsyncTask(AddEventHandler handler, String description, String eventDate, String email, String location, int skinId) {
+    public AddEventAsyncTask(AddEventHandler handler, String description, String eventDate, String email, String location, int skinId, Context context) {
         mHandler = new WeakReference<AddEventHandler>(handler);
         mDescription = description;
         mEventDate = eventDate;
         mEmail = email;
         mLocation = location;
         mSkinId = skinId;
+        mContext = context;
     }
 
     @Override
@@ -63,6 +71,9 @@ public class AddEventAsyncTask extends AsyncTask<Void, Void, String> {
 
         Log.d(Constants.TAG, "Finished async task to add an event, length = " + (result == null ? "null" : Integer.toString(result.length())));
 
+        if (result != null && result.toLowerCase().contains("success")) {
+            PointsHelper.checkPoints(result, mContext);
+        }
         return result;
     }
 

@@ -23,6 +23,8 @@
     <string name="title_activity_webview">External Page</string>
     <string name="title_activity_skin_select">TextMuse</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="explorer_congrats">Congratulations!\nYou\'ve just earned Explorer status.</string>
+    <string name="sharer_congrats">Way to spread the word!\nYou\'ve just earned Sharer status.</string>
+    <string name="muse_congrats">Outstanding!!!\nYou\'ve reached Muse status.</string>
+    <string name="master_congrats">Great job!!!\nYou\'ve become a Duck Master.</string>
 </resources>

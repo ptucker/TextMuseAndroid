@@ -1,10 +1,16 @@
 package com.laloosh.textmuse.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.laloosh.textmuse.app.Constants;
+import com.laloosh.textmuse.datamodel.GlobalData;
+import com.laloosh.textmuse.datamodel.PointUpdate;
+import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.utils.ConnectionUtils;
+import com.laloosh.textmuse.utils.PointsHelper;
+import com.laloosh.textmuse.utils.WebDataParser;
 
 import java.util.HashMap;
 
@@ -15,11 +21,13 @@ public class NoteSendAsyncTask extends AsyncTask<Void, Void, String> {
     int mAppId = -1;
     int mNoteId = -1;
     int mCount = 0;
+    Context mContext = null;
 
-    public NoteSendAsyncTask(int appId, int noteId, int count) {
+    public NoteSendAsyncTask(int appId, int noteId, int count, Context context) {
         mAppId = appId;
         mNoteId = noteId;
         mCount = count;
+        mContext = context;
     }
 
     @Override
@@ -38,6 +46,10 @@ public class NoteSendAsyncTask extends AsyncTask<Void, Void, String> {
         result = connUtils.postUrl(SEND_URL, webParams);
 
         Log.d(Constants.TAG, "Finished async task to send note id to server, length = " + (result == null ? "null" : Integer.toString(result.length())));
+
+        if (result != null && result.toLowerCase().contains("success")) {
+            PointsHelper.checkPoints(result, mContext);
+        }
 
         return result;
     }

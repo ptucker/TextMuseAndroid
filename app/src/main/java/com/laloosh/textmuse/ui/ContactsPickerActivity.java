@@ -298,7 +298,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         if (data != null) {
             int appId = data.appId;
             if (appId > 0) {
-                NoteSendAsyncTask asyncTask = new NoteSendAsyncTask(appId, mNote.noteId, number);
+                NoteSendAsyncTask asyncTask = new NoteSendAsyncTask(appId, mNote.noteId, number, ContactsPickerActivity.this);
                 asyncTask.execute();
             }
         }

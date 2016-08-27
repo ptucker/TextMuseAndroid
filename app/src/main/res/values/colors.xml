@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <color name="explorer_background">#4ba6e1</color>
+ <color name="sharer_background">#4ead6b</color>
+ <color name="muse_background">#da7035</color>
+ <color name="master_background">#224d3a</color>
+</resources>

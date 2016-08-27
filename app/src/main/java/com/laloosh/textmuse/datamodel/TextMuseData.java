@@ -34,6 +34,11 @@ public class TextMuseData {
 
     public HashSet<Integer> flaggedNotesSet;
 
+    public int explorerPoints;
+    public int sharerPoints;
+    public int musePoints;
+    public boolean gotMasterBadge;
+
     private transient HashSet<Integer> mPinnedNotesSet;
 
     public TextMuseData() {

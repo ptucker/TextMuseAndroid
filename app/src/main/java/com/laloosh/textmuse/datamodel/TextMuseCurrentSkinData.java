@@ -12,6 +12,8 @@ public class TextMuseCurrentSkinData {
     public String home;
     public String title;
     public String icon;
+    public String masterName;
+    public String masterIconUrl;
 
     public ArrayList<TextMuseLaunchIcon> launchIcons;
 

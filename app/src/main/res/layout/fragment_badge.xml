@@ -1,0 +1,175 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.laloosh.textmuse.ui.BadgeFragment"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:id="@+id/badgeExplorerLayout"
+            >
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/explorer"
+                android:id="@+id/badgeExplorerIcon"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/badgeExplorerCount"
+                android:text="(0/10)"
+                android:layout_marginLeft="16dp"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explorer Badge"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/badgeExplorerDescription"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:text="You are great at discovering events and getting out there.\n    1 pt: Open the app daily\n    1 pt: Open an event category\n    2 pts: Remit a deal"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:id="@+id/badgeSharerLayout"
+            >
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/sharer"
+                android:id="@+id/badgeSharerIcon"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/badgeSharerCount"
+                android:text="(0/10)"
+                android:layout_marginLeft="16dp"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sharer Badge"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/badgeSharerDescription"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:text="You are the information source for great things. Your friends rely on you to know what's happening.\n    1 pt: Text a deal or event to friends\n    2 pts: Create an event"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:id="@+id/badgeMuseLayout"
+            >
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/muse"
+                android:id="@+id/badgeMuseIcon"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/badgeMuseCount"
+                android:text="(0/10)"
+                android:layout_marginLeft="16dp"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Muse Badge"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/badgeMuseDescription"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:text="You are the social leader. You get the group together and find great things to do.\n    1 pt: Open the app daily\n    1 pt: Open an event category\n    2 pts: Remit a deal"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:id="@+id/badgeMasterLayout"
+            >
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/duckmaster"
+                android:id="@+id/badgeMasterIcon"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/badgeMasterTitle"
+                android:text="Duck Master Badge"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/badgeMasterDescription"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="16dp"
+            android:text="You are great at discovering events and getting out there.\n    -Have two badges or 25 points"
+            />
+
+    </LinearLayout>
+</ScrollView>
+
