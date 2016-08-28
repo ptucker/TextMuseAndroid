@@ -104,6 +104,8 @@ public class WebDataParser {
 
             PointUpdate result = new PointUpdate();
 
+            xpp.require(XmlPullParser.START_TAG, null, "results");
+            xpp.nextTag();
             xpp.require(XmlPullParser.START_TAG, null, "success");
 
             int attributeCount = xpp.getAttributeCount();
