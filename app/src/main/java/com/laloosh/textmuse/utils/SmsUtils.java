@@ -102,7 +102,7 @@ public class SmsUtils {
         if (note.hasDisplayableMedia() ) {
             if (note.isLocalNote()) {
                 return Uri.parse(note.mediaUrl);
-            } else if (note.savedInternally) {
+            } else if (note.isSavedInternally()) {
                 File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), note.getInternalFilename());
                 if (!file.isFile()) {
                     return null;
@@ -190,6 +190,39 @@ public class SmsUtils {
         Log.d(Constants.TAG, "Could not use known good messaging app, just creating a sendto intent without an image");
         return getTextOnlyIntent(note, phoneNumberSet);
     }
+
+//    //Only call this function post Kit-Kat, or else this will crash
+//    @TargetApi(Build.VERSION_CODES.KITKAT)
+//    private static Intent getPostKitKatIntent(Context context, Note note, Set<String> phoneNumberSet) {
+//
+//        Intent intent;
+//        List<ResolveInfo> resolveInfoList;
+//        PackageManager packageManager = context.getPackageManager();
+//        Uri mediaUri = getMediaFile(context, note);
+//
+//        if (mediaUri == null) {
+//            Log.d(Constants.TAG, "No images to attach, using simpler intent");
+//            return getTextOnlyIntent(note, phoneNumberSet);
+//        }
+//
+//        intent = new Intent(Intent.ACTION_SEND);
+//        intent.setClassName("com.android.mms", "com.android.mms.ui.ComposeMessageActivity");
+//        intent.putExtra("address", getToList(phoneNumberSet));
+//        intent.putExtra("sms_body", getText(note, false));
+//
+//        if (mediaUri != null) {
+//            intent.putExtra(Intent.EXTRA_STREAM, mediaUri);
+//            intent.setType("image/*");
+//        }
+//
+//        resolveInfoList = packageManager.queryIntentActivities(intent, 0);
+//        if (resolveInfoList.size() > 0) {
+//            return intent;
+//        }
+//
+//        Log.d(Constants.TAG, "Could not use known good messaging app, just creating a sendto intent without an image");
+//        return getTextOnlyIntent(note, phoneNumberSet);
+//    }
 
     private static Intent getPreKitKatIntent(Context context, Note note, Set<String> phoneNumberSet) {
 

@@ -72,6 +72,10 @@ public class Note implements Parcelable {
         return true;
     }
 
+    public boolean isSavedInternally() {
+        return savedInternally;
+    }
+
     //Used to update our saved internally flag upon reload of the data set
     public void updateSavedInternally(Context context) {
         try {

@@ -37,6 +37,7 @@ import com.laloosh.textmuse.datamodel.NoteExtended;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
+import com.laloosh.textmuse.tasks.DownloadImageAsyncTask;
 import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.ColorHelpers;
@@ -728,6 +729,9 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 holder.mBackgroundViewTextOnly.setBackgroundColor(color);
                 holder.mTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
             } else {
+
+                DownloadImageAsyncTask task = new DownloadImageAsyncTask(note, mContext.getApplicationContext());
+                task.execute();
 
                 holder.mBackgroundImageView.post(new Runnable() {
                     @Override

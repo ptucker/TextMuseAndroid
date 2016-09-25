@@ -28,15 +28,16 @@ public class AddEventAsyncTask extends AsyncTask<Void, Void, String> {
     private String mLocation;
     private int mSkinId;
     private Context mContext;
+    private int mAppId;
 
-
-    public AddEventAsyncTask(AddEventHandler handler, String description, String eventDate, String email, String location, int skinId, Context context) {
+    public AddEventAsyncTask(AddEventHandler handler, String description, String eventDate, String email, String location, int skinId, int appId, Context context) {
         mHandler = new WeakReference<AddEventHandler>(handler);
         mDescription = description;
         mEventDate = eventDate;
         mEmail = email;
         mLocation = location;
         mSkinId = skinId;
+        mAppId = appId;
         mContext = context;
     }
 
@@ -64,7 +65,7 @@ public class AddEventAsyncTask extends AsyncTask<Void, Void, String> {
         if (!TextUtils.isEmpty(mLocation)) {
             webParams.put("loc", mLocation);
         }
-
+        webParams.put("app", Integer.toString(mAppId));
         webParams.put("spon", Integer.toString(mSkinId));
 
         result = connUtils.postUrl(ADD_EVENT_URL, webParams);

@@ -219,7 +219,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             if (position == 0) {
-                return "Events";
+                return "Home";
             } else if (position == 1) {
                 return "Badges";
             } else {

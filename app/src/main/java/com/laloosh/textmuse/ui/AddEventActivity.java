@@ -71,7 +71,7 @@ public class AddEventActivity extends AppCompatActivity implements AddEventAsync
             return;
         }
 
-        AddEventAsyncTask task = new AddEventAsyncTask(this, description, date, email, location, skinId, AddEventActivity.this);
+        AddEventAsyncTask task = new AddEventAsyncTask(this, description, date, email, location, skinId, data.appId, AddEventActivity.this);
         task.execute();
     }
 
