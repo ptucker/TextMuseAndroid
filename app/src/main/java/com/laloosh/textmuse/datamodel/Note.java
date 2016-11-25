@@ -26,6 +26,8 @@ public class Note implements Parcelable {
     public int likeCount;
     public String location;
     public String eventDate;
+    public String sponsorName;
+    public String sponsorLogoUrl;
 
     //Non-serialized value that are used temporarily
     //savedInternally is a transient field since the external drive where we save these

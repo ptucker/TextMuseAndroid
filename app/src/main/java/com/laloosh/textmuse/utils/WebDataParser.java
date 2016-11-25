@@ -411,6 +411,12 @@ public class WebDataParser {
                 note.mediaUrl = readText(xpp);
             } else if (name.equalsIgnoreCase("url")) {
                 note.extraUrl = readText(xpp);
+            } else if (name.equalsIgnoreCase("sp_name")) {
+                note.sponsorName = readText(xpp);
+            } else if (name.equalsIgnoreCase("sp_logo")) {
+                note.sponsorLogoUrl = readText(xpp);
+            } else {
+                xpp.nextTag();
             }
         }
 
