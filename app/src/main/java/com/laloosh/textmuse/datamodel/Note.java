@@ -106,6 +106,19 @@ public class Note implements Parcelable {
         return mediaUrl;
     }
 
+    public String getSavedMediaPath(Context context) {
+        if (savedInternally) {
+            try {
+                File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), getInternalFilename());
+                return file.getAbsolutePath();
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Could not get display media path for note id: " + noteId);
+            }
+        }
+
+        return null;
+    }
+
     //On certain images, we should center fit instead of crop.  Only do this for quotehd images
     //for now
     public boolean shouldCenterInside() {

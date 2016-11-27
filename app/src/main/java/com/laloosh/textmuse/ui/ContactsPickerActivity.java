@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -219,14 +220,26 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             updateRecentContacts();
             sendNoteIdToServer(phoneNumberSet.size());
 
-            Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
+            if (!mNote.hasDisplayableMedia() || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                //If there is no displayable media or if we're on older versions of android,
+                //fall back to using the old method
 
-            try {
+                Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
+
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
+                    CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
+                    fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
+                }
+
+            } else {
+                String[] phoneNumberArray = phoneNumberSet.toArray(new String[phoneNumberSet.size()]);
+                Intent intent = new Intent(this, MmsSendActivity.class);
+                intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
+                intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
                 startActivity(intent);
-            } catch (Exception e) {
-                Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
-                CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
-                fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
             }
 
             return true;

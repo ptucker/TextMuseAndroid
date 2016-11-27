@@ -211,7 +211,10 @@
                 android:value=".ui.HomeActivity" />
         </activity>
         <activity android:name=".ui.GotBadgeActivity" />
-        <activity android:name=".ui.TestActivity"></activity>
+        <activity
+            android:name=".ui.MmsSendActivity"
+            android:label="Customize Your Text"
+            ></activity>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <receiver android:name="com.klinker.android.send_message.MmsSentReceiver">

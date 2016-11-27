@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#efefef"
+    tools:context="com.laloosh.textmuse.ui.MmsSendActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:id="@+id/mmsLayoutBottom"
+        android:layout_alignParentBottom="true"
+        android:background="#0081ff"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dedede"
+            />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/mmsSendNow"
+            android:src="@drawable/ic_action_send_now"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mmsText"
+            android:gravity="top"
+            android:background="@color/white_opaque"
+            android:layout_toLeftOf="@id/mmsSendNow"
+            android:layout_margin="5dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mmsLayoutImage"
+        android:layout_above="@id/mmsLayoutBottom"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mmsImageView"
+            />
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/mmsCloseImage"
+            android:src="@drawable/ic_clear_black_48dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>
