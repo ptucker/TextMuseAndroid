@@ -5,3 +5,15 @@
 .DS_Store
 /build
 /*/build/
+
+# Signing files
+.signing/
+
+# User-specific configurations
+.idea/
+
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
