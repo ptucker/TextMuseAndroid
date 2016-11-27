@@ -9,6 +9,23 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_MMS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.provider.Telephony.SMS_RECEIVED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <permission
         android:name="com.laloosh.textmuse.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -193,7 +210,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.HomeActivity" />
         </activity>
-        <activity android:name=".ui.GotBadgeActivity"></activity>
+        <activity android:name=".ui.GotBadgeActivity" />
+        <activity android:name=".ui.TestActivity"></activity>
+
+        <service android:name="com.android.mms.transaction.TransactionService" />
+        <receiver android:name="com.klinker.android.send_message.MmsSentReceiver">
+            <intent-filter>
+                <action android:name="com.klinker.android.messaging.MMS_SENT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

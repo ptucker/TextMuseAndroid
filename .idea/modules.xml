@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TextMuseAndroid.iml" filepath="$PROJECT_DIR$/TextMuseAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-smsmms/android-smsmms.iml" filepath="$PROJECT_DIR$/android-smsmms/android-smsmms.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" filepath="$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" />
     </modules>
