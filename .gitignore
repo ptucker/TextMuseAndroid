@@ -1,7 +1,5 @@
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
 /build
 /*/build/
@@ -10,7 +8,7 @@
 .signing/
 
 # User-specific configurations
-.idea/
+/.idea
 
 .DS_Store?
 .Spotlight-V100
