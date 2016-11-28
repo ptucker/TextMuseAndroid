@@ -1,23 +1,22 @@
 package com.laloosh.textmuse.ui;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.klinker.android.send_message.Message;
 import com.klinker.android.send_message.Settings;
 import com.klinker.android.send_message.Transaction;
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.utils.SimpleBitmapTarget;
+import com.laloosh.textmuse.utils.SmsUtils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
@@ -28,7 +27,7 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
     public static final String NOTE_EXTRA = "note";
     public static final String PHONE_NUMBERS_EXTRA = "phone numbers";
 
-    private static final int MAX_IMAGE_DIMEN = 350;
+    private static final int MAX_IMAGE_DIMEN = 500;
 
     @Bind(R.id.mmsLayoutImage) View mLayoutImage;
     @Bind(R.id.mmsText) EditText mEditText;
@@ -36,7 +35,6 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
 
     private SimpleBitmapTarget mTarget;
     private Bitmap mBitmap;
-    private boolean mFinishedLoading;
     private ProgressDialog mProgressDialog;
     private boolean mClosedImage;
     private Note mNote;
@@ -47,6 +45,8 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mms_send);
         ButterKnife.bind(this);
+
+        setResult(Activity.RESULT_CANCELED);
 
         mNote = getIntent().getParcelableExtra(NOTE_EXTRA);
         mPhoneNumbers = getIntent().getStringArrayExtra(PHONE_NUMBERS_EXTRA);
@@ -66,13 +66,6 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
 
     protected void handleNote() {
 
-        Picasso.with(this)
-                .load(mNote.getDisplayMediaUrl(this))
-                .error(R.drawable.placeholder_image)
-                .resize(MAX_IMAGE_DIMEN, MAX_IMAGE_DIMEN)
-                .centerInside()
-                .into(mImageView);
-
         mTarget = new SimpleBitmapTarget(this);
 
         Picasso.with(this)
@@ -86,8 +79,10 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
 
     @Override
     public void finishedLoadingBitmap(Bitmap bitmap) {
-        mFinishedLoading = true;
         mBitmap = bitmap;
+        if (bitmap != null) {
+            mImageView.setImageBitmap(bitmap);
+        }
         mProgressDialog.dismiss();
     }
 
@@ -99,17 +94,21 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
 
     @OnClick(R.id.mmsSendNow)
     public void sendNow() {
-        mProgressDialog.show();
 
         Settings sendSettings = new Settings();
         sendSettings.setUseSystemSending(true);
         Transaction sendTransaction = new Transaction(this, sendSettings);
 
-        Message mMessage = new Message(mEditText.getText().toString(), mPhoneNumbers);
+        Message mMessage = new Message(mEditText.getText().toString(), SmsUtils.cleanPhoneNumbers(mPhoneNumbers));
         if (!mClosedImage && mBitmap != null) {
             mMessage.setImage(mBitmap);
         }
 
+        Toast.makeText(this, "Sending...", Toast.LENGTH_SHORT).show();
+
         sendTransaction.sendNewMessage(mMessage, 0L);
+
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 }

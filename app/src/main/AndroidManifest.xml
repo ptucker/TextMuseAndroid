@@ -214,6 +214,7 @@
         <activity
             android:name=".ui.MmsSendActivity"
             android:label="Customize Your Text"
+            android:windowSoftInputMode="adjustResize"
             ></activity>
 
         <service android:name="com.android.mms.transaction.TransactionService" />

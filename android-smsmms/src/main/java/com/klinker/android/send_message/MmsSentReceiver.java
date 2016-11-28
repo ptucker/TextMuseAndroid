@@ -22,6 +22,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Telephony;
+import android.telephony.SmsManager;
+import android.widget.Toast;
 
 import com.google.android.mms.util_alt.SqliteWrapper;
 import com.klinker.android.logger.Log;
@@ -51,6 +53,12 @@ public class MmsSentReceiver extends BroadcastReceiver {
         String filePath = intent.getStringExtra(EXTRA_FILE_PATH);
         Log.v(TAG, filePath);
         new File(filePath).delete();
+
+        if (getResultCode() == SmsManager.MMS_ERROR_IO_ERROR) {
+            Toast.makeText(context, "Failed in sending your message. Please try again.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Successfully sent message.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

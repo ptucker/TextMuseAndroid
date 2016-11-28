@@ -59,6 +59,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     public static final String NOTE_OBJECT_EXTRA = "com.laloosh.textmuse.contactspicker.noteobj";
 
     private static final int REQUEST_CODE_GROUPEDIT = 1000;
+    private static final int REQUEST_CODE_MMS = 1001;
     private static final String SAVE_STATE_PICKER_STATE = "contactandgrouppickerstate";
     private static final String SAVE_STATE_NOTE_STATE = "notestate";
 
@@ -239,7 +240,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                 Intent intent = new Intent(this, MmsSendActivity.class);
                 intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
                 intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_MMS);
             }
 
             return true;
@@ -467,6 +468,10 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                     mStoredContacts = contacts;
                     mAdapter.notifyDataSetChanged();
                 }
+            }
+        } else if (requestCode == REQUEST_CODE_MMS) {
+            if (resultCode == Activity.RESULT_OK) {
+                finish();
             }
         }
     }

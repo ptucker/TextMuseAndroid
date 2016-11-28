@@ -27,6 +27,19 @@ public class SmsUtils {
     //If an intent produces too many providers, then it's probably the wrong one...
     private static final int TOO_MANY_PROVIDERS = 10;
 
+    public static String[] cleanPhoneNumbers(String[] phoneNumbers) {
+        if (phoneNumbers == null) {
+            return null;
+        }
+
+        String[] result = new String[phoneNumbers.length];
+        for (int i = 0; i < phoneNumbers.length; i++) {
+            result[i] = phoneNumbers[i].replaceAll("[()\\-\\s]", "");
+        }
+
+        return result;
+    }
+
     public static Intent createSmsIntent(Context context, Note note, Set<String> phoneNumberSet) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
