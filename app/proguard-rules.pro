@@ -103,3 +103,6 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+-dontwarn okio.**
+-dontwarn android.net.**
