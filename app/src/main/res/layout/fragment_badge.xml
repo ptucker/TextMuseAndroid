@@ -51,7 +51,7 @@
             android:id="@+id/badgeExplorerDescription"
             android:layout_marginLeft="80dp"
             android:layout_marginRight="16dp"
-            android:text="You are great at discovering events and getting out there.\n    1 pt: Open the app daily\n    1 pt: Open an event category\n    2 pts: Remit a deal"
+            android:text="You are great at discovering cool activities on or around campus.\n    1 pt: Open the app daily\n    1 pt: Open a deal or event\n    2 pts: Remit an activity"
             />
 
         <LinearLayout
@@ -93,7 +93,7 @@
             android:id="@+id/badgeSharerDescription"
             android:layout_marginLeft="80dp"
             android:layout_marginRight="16dp"
-            android:text="You are the information source for great things. Your friends rely on you to know what's happening.\n    1 pt: Text a deal or event to friends\n    2 pts: Create an event"
+            android:text="You are the go-to person for an awesome social life. Your friends rely on you to know what's goin' on.\n    1 pt: Text a deal or event to friends\n    2 pts: Create and share an event"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,7 +134,7 @@
             android:id="@+id/badgeMuseDescription"
             android:layout_marginLeft="80dp"
             android:layout_marginRight="16dp"
-            android:text="You are the social leader. You get the group together and find great things to do.\n    1 pt: Open the app daily\n    1 pt: Open an event category\n    2 pts: Remit a deal"
+            android:text="You are the social leader. You get the group together to have a rockin' good time.\n    2 pts: Remit an activity as a group"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,7 +167,7 @@
             android:id="@+id/badgeMasterDescription"
             android:layout_marginLeft="80dp"
             android:layout_marginRight="16dp"
-            android:text="You are great at discovering events and getting out there.\n    -Have two badges or 25 points"
+            android:text="You've achieved &quot;Master&quot; status at discovering cool activities on or around campus.\n    Receive 25 or more points.\n    Have two or more badges."
             />
 
     </LinearLayout>
