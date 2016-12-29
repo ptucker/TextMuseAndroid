@@ -1,5 +1,6 @@
 package com.laloosh.textmuse.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.laloosh.textmuse.app.Constants;
@@ -391,6 +392,15 @@ public class WebDataParser {
                 note.eventDate = attributeValue;
             } else if (attributeName.equalsIgnoreCase("loc")) {
                 note.location = attributeValue;
+            } else if (attributeName.equalsIgnoreCase("notesponsor")) {
+                if (!TextUtils.isEmpty(attributeValue)) {
+                    note.sponsorId = Integer.parseInt(attributeValue);
+                    note.hasSponsor = true;
+                }
+            } else if (attributeName.equalsIgnoreCase("follow")) {
+                if (!TextUtils.isEmpty(attributeValue)) {
+                    note.follow = (Integer.parseInt(attributeValue) > 0);
+                }
             }
         }
 

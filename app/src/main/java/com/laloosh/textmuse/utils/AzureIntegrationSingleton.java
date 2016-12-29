@@ -1,13 +1,19 @@
 package com.laloosh.textmuse.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.laloosh.textmuse.app.Constants;
+import com.laloosh.textmuse.datamodel.GlobalData;
+import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.notifications.MobileServicePush;
 import com.microsoft.windowsazure.notifications.NotificationsManager;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 
 public class AzureIntegrationSingleton {
@@ -29,6 +35,7 @@ public class AzureIntegrationSingleton {
     private static final String MOBILE_APPKEY = "AkuctIqaVFjQEPTOZDLcaGEutliECb96";
     private MobileServiceClient mClient;
     private boolean mStarted = false;
+    private String mGcmRegistrationId = null;
 
     //This should be called on app startup in order to start up the Azure client
     public void startupIntegration(Context context) {
@@ -53,4 +60,53 @@ public class AzureIntegrationSingleton {
         return mStarted;
     }
 
+    public String getGcmRegistrationId() {
+        return mGcmRegistrationId;
+    }
+
+    public void setGcmRegistrationId(String gcmRegistrationId) {
+        mGcmRegistrationId = gcmRegistrationId;
+    }
+
+    public void registerForGcm(Context context) {
+        try {
+            if (getStarted() && getClient() != null && !TextUtils.isEmpty(mGcmRegistrationId)) {
+
+                ArrayList<String> tags = null;
+                tags = new ArrayList<String>();
+
+                GlobalData globalData = GlobalData.getInstance();
+                if (globalData.hasLoadedData()) {
+                    TextMuseData data = globalData.getData();
+                    if (data.appId > 0) {
+                        tags.add(Integer.toString(data.appId));
+
+                        int skinId = TextMuseSkinData.getCurrentlySelectedSkin(context);
+                        if (skinId <= 0) {
+                            skinId = 0;
+                        }
+                        tags.add("skin" + Integer.toString(skinId));
+                    }
+                    if (data.followedSponsorsSet != null && data.followedSponsorsSet.size() > 0) {
+                        for (Integer id : data.followedSponsorsSet) {
+                            tags.add("spon" + Integer.toString(id));
+                        }
+                    }
+                }
+
+                MobileServicePush pushClient = getClient().getPush();
+
+                if (tags.size() > 0) {
+                    pushClient.register(mGcmRegistrationId, tags.toArray(new String[tags.size()]));
+                } else {
+                    pushClient.register(mGcmRegistrationId, null);
+                }
+
+                Log.d(Constants.TAG, "Succeeded in sending off the registration with GCM ID: " + mGcmRegistrationId);
+            }
+        }
+        catch(Exception e) {
+            Log.e(Constants.TAG, "Failed to register for google cloud messaging with the azure client!");
+        }
+    }
 }

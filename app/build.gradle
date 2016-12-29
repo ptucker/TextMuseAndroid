@@ -9,8 +9,8 @@ android {
         applicationId "com.laloosh.textmuse.app"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 34
-        versionName "2.70"
+        versionCode 35
+        versionName "2.80"
     }
     buildTypes {
         release {

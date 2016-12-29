@@ -26935,37 +26935,40 @@ com.laloosh.textmuse.datamodel.Note -> com.laloosh.textmuse.datamodel.Note:
     int likeCount -> likeCount
     java.lang.String location -> location
     java.lang.String eventDate -> eventDate
+    boolean hasSponsor -> hasSponsor
+    int sponsorId -> sponsorId
+    boolean follow -> follow
     java.lang.String sponsorName -> sponsorName
     java.lang.String sponsorLogoUrl -> sponsorLogoUrl
     boolean savedInternally -> savedInternally
     boolean saveFailed -> saveFailed
     android.os.Parcelable$Creator CREATOR -> CREATOR
-    38:38:void <init>() -> <init>
-    40:45:void <init>(boolean) -> <init>
-    48:48:java.lang.String getInternalFilename() -> a
-    53:53:boolean isLocalNote() -> b
-    57:61:boolean hasDisplayableText() -> c
-    65:74:boolean hasDisplayableMedia() -> d
-    78:78:boolean isSavedInternally() -> e
-    84:93:void updateSavedInternally(android.content.Context) -> a
-    96:106:java.lang.String getDisplayMediaUrl(android.content.Context) -> b
-    133:136:boolean hasExternalLink() -> f
-    140:162:android.net.Uri getExternalLinkUri(java.lang.String) -> a
-    166:166:boolean isEvent() -> g
-    170:180:java.lang.String getText() -> h
-    184:197:boolean isMediaYoutube() -> i
-    201:207:java.lang.String getYoutubeVideoTag() -> j
-    211:216:java.lang.String getYoutubeImgUrl() -> k
-    221:221:int describeContents() -> describeContents
-    225:238:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    250:265:void <init>(android.os.Parcel) -> <init>
-    240:240:void <clinit>() -> <clinit>
+    42:42:void <init>() -> <init>
+    44:49:void <init>(boolean) -> <init>
+    52:52:java.lang.String getInternalFilename() -> a
+    57:57:boolean isLocalNote() -> b
+    61:65:boolean hasDisplayableText() -> c
+    69:78:boolean hasDisplayableMedia() -> d
+    82:82:boolean isSavedInternally() -> e
+    88:97:void updateSavedInternally(android.content.Context) -> a
+    100:110:java.lang.String getDisplayMediaUrl(android.content.Context) -> b
+    137:140:boolean hasExternalLink() -> f
+    144:166:android.net.Uri getExternalLinkUri(java.lang.String) -> a
+    170:170:boolean isEvent() -> g
+    174:184:java.lang.String getText() -> h
+    188:201:boolean isMediaYoutube() -> i
+    205:211:java.lang.String getYoutubeVideoTag() -> j
+    215:220:java.lang.String getYoutubeImgUrl() -> k
+    225:225:int describeContents() -> describeContents
+    229:248:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    260:281:void <init>(android.os.Parcel) -> <init>
+    250:250:void <clinit>() -> <clinit>
 com.laloosh.textmuse.datamodel.Note$1 -> com.laloosh.textmuse.datamodel.e:
-    240:240:void <init>() -> <init>
-    242:242:com.laloosh.textmuse.datamodel.Note createFromParcel(android.os.Parcel) -> a
-    246:246:com.laloosh.textmuse.datamodel.Note[] newArray(int) -> a
-    240:240:java.lang.Object[] newArray(int) -> newArray
-    240:240:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    250:250:void <init>() -> <init>
+    252:252:com.laloosh.textmuse.datamodel.Note createFromParcel(android.os.Parcel) -> a
+    256:256:com.laloosh.textmuse.datamodel.Note[] newArray(int) -> a
+    250:250:java.lang.Object[] newArray(int) -> newArray
+    250:250:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 com.laloosh.textmuse.datamodel.NoteExtended -> com.laloosh.textmuse.datamodel.f:
     com.laloosh.textmuse.datamodel.Note note -> a
     int notePos -> b
@@ -27048,27 +27051,30 @@ com.laloosh.textmuse.datamodel.TextMuseData -> com.laloosh.textmuse.datamodel.Te
     int appId -> appId
     com.laloosh.textmuse.datamodel.TextMuseCurrentSkinData skinData -> skinData
     java.util.HashSet flaggedNotesSet -> flaggedNotesSet
+    java.util.HashSet followedSponsorsSet -> followedSponsorsSet
     int explorerPoints -> explorerPoints
     int sharerPoints -> sharerPoints
     int musePoints -> musePoints
     boolean gotMasterBadge -> gotMasterBadge
     java.util.HashSet mPinnedNotesSet -> mPinnedNotesSet
-    44:46:void <init>() -> <init>
-    50:53:void save(android.content.Context) -> a
-    57:57:com.laloosh.textmuse.datamodel.TextMuseData load(android.content.Context) -> b
-    61:69:com.laloosh.textmuse.datamodel.TextMuseData loadRawContent(android.content.Context) -> c
-    77:93:void updateNoteImageFlags(android.content.Context) -> d
-    101:146:boolean isDataSimilar(com.laloosh.textmuse.datamodel.TextMuseData) -> a
-    150:171:void setupNewLocalNotes() -> a
-    174:215:void updatePhotos(android.content.Context) -> e
-    220:266:void reorderCategories(java.util.ArrayList) -> a
-    269:276:int[] getColorList() -> b
-    281:292:boolean hasPinnedNote(int) -> a
-    297:305:void pinNote(com.laloosh.textmuse.datamodel.Note) -> a
-    309:322:void unPinNote(com.laloosh.textmuse.datamodel.Note) -> b
-    325:332:void flagNote(int) -> b
-    336:347:void filterFlaggedNotes() -> c
-    350:357:void removeEmptyCategories() -> d
+    45:47:void <init>() -> <init>
+    51:54:void save(android.content.Context) -> a
+    58:58:com.laloosh.textmuse.datamodel.TextMuseData load(android.content.Context) -> b
+    62:70:com.laloosh.textmuse.datamodel.TextMuseData loadRawContent(android.content.Context) -> c
+    78:94:void updateNoteImageFlags(android.content.Context) -> d
+    102:147:boolean isDataSimilar(com.laloosh.textmuse.datamodel.TextMuseData) -> a
+    151:173:void setupNewLocalNotes() -> a
+    176:217:void updatePhotos(android.content.Context) -> e
+    222:268:void reorderCategories(java.util.ArrayList) -> a
+    271:278:int[] getColorList() -> b
+    283:294:boolean hasPinnedNote(int) -> a
+    299:307:void pinNote(com.laloosh.textmuse.datamodel.Note) -> a
+    311:324:void unPinNote(com.laloosh.textmuse.datamodel.Note) -> b
+    327:332:void followSponsor(int) -> b
+    335:340:void unfollowSponsor(int) -> c
+    343:350:void flagNote(int) -> d
+    354:365:void filterFlaggedNotes() -> c
+    368:375:void removeEmptyCategories() -> d
 com.laloosh.textmuse.datamodel.TextMuseGroup -> com.laloosh.textmuse.datamodel.TextMuseGroup:
     java.lang.String displayName -> displayName
     java.util.List contactList -> contactList
@@ -27421,7 +27427,19 @@ com.laloosh.textmuse.tasks.FlagContentAsyncTask -> com.laloosh.textmuse.c.n:
     13:13:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.laloosh.textmuse.tasks.FlagContentAsyncTask$FlagContentResultHandler -> com.laloosh.textmuse.c.o:
     void handleFlagPostResult(java.lang.String) -> a
-com.laloosh.textmuse.tasks.NoteSeeItAsyncTask -> com.laloosh.textmuse.c.p:
+com.laloosh.textmuse.tasks.FollowSponsorAsyncTask -> com.laloosh.textmuse.c.p:
+    java.lang.ref.WeakReference mHandler -> a
+    int mAppId -> b
+    int mSponsorId -> c
+    int mFollow -> d
+    23:28:void <init>(com.laloosh.textmuse.tasks.FollowSponsorAsyncTask$FollowResultHandler,int,int,boolean) -> <init>
+    33:48:java.lang.String doInBackground(java.lang.Void[]) -> a
+    53:63:void onPostExecute(java.lang.String) -> a
+    13:13:void onPostExecute(java.lang.Object) -> onPostExecute
+    13:13:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.laloosh.textmuse.tasks.FollowSponsorAsyncTask$FollowResultHandler -> com.laloosh.textmuse.c.q:
+    void handleFlagPostResult(boolean) -> a
+com.laloosh.textmuse.tasks.NoteSeeItAsyncTask -> com.laloosh.textmuse.c.r:
     java.lang.ref.WeakReference mHandler -> a
     int mAppId -> b
     int mMessageId -> c
@@ -27431,7 +27449,7 @@ com.laloosh.textmuse.tasks.NoteSeeItAsyncTask -> com.laloosh.textmuse.c.p:
     60:69:void onPostExecute(java.lang.String) -> a
     19:19:void onPostExecute(java.lang.Object) -> onPostExecute
     19:19:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.tasks.NoteSendAsyncTask -> com.laloosh.textmuse.c.q:
+com.laloosh.textmuse.tasks.NoteSendAsyncTask -> com.laloosh.textmuse.c.s:
     int mAppId -> a
     int mNoteId -> b
     int mCount -> c
@@ -27439,7 +27457,7 @@ com.laloosh.textmuse.tasks.NoteSendAsyncTask -> com.laloosh.textmuse.c.q:
     21:31:void <init>(int,int,int,android.content.Context) -> <init>
     36:54:java.lang.String doInBackground(java.lang.Void[]) -> a
     17:17:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.tasks.RegisterAsyncTask -> com.laloosh.textmuse.c.r:
+com.laloosh.textmuse.tasks.RegisterAsyncTask -> com.laloosh.textmuse.c.t:
     java.lang.ref.WeakReference mHandler -> a
     java.lang.String mName -> b
     java.lang.String mEmail -> c
@@ -27450,9 +27468,9 @@ com.laloosh.textmuse.tasks.RegisterAsyncTask -> com.laloosh.textmuse.c.r:
     60:69:void onPostExecute(java.lang.String) -> a
     13:13:void onPostExecute(java.lang.Object) -> onPostExecute
     13:13:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.tasks.RegisterAsyncTask$RegisterAsyncTaskHandler -> com.laloosh.textmuse.c.s:
+com.laloosh.textmuse.tasks.RegisterAsyncTask$RegisterAsyncTaskHandler -> com.laloosh.textmuse.c.u:
     void handleRegisterResult(boolean) -> b_
-com.laloosh.textmuse.tasks.RemitBadgeAsyncTask -> com.laloosh.textmuse.c.t:
+com.laloosh.textmuse.tasks.RemitBadgeAsyncTask -> com.laloosh.textmuse.c.v:
     java.lang.ref.WeakReference mHandler -> a
     int mAppId -> b
     int mMessageId -> c
@@ -27461,9 +27479,9 @@ com.laloosh.textmuse.tasks.RemitBadgeAsyncTask -> com.laloosh.textmuse.c.t:
     48:57:void onPostExecute(java.lang.String) -> a
     13:13:void onPostExecute(java.lang.Object) -> onPostExecute
     13:13:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.tasks.RemitBadgeAsyncTask$RemitBadgeEventHandler -> com.laloosh.textmuse.c.u:
+com.laloosh.textmuse.tasks.RemitBadgeAsyncTask$RemitBadgeEventHandler -> com.laloosh.textmuse.c.w:
     void handleRemitPostResult(java.lang.String) -> b
-com.laloosh.textmuse.tasks.RemitDealAsyncTask -> com.laloosh.textmuse.c.v:
+com.laloosh.textmuse.tasks.RemitDealAsyncTask -> com.laloosh.textmuse.c.x:
     java.lang.ref.WeakReference mHandler -> a
     int mAppId -> b
     int mMessageId -> c
@@ -27473,7 +27491,7 @@ com.laloosh.textmuse.tasks.RemitDealAsyncTask -> com.laloosh.textmuse.c.v:
     60:69:void onPostExecute(java.lang.String) -> a
     19:19:void onPostExecute(java.lang.Object) -> onPostExecute
     19:19:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.tasks.SetHighlightAsyncTask -> com.laloosh.textmuse.c.w:
+com.laloosh.textmuse.tasks.SetHighlightAsyncTask -> com.laloosh.textmuse.c.y:
     java.lang.ref.WeakReference mHandler -> a
     java.lang.ref.WeakReference mView -> b
     com.laloosh.textmuse.datamodel.Note mNote -> c
@@ -27485,9 +27503,9 @@ com.laloosh.textmuse.tasks.SetHighlightAsyncTask -> com.laloosh.textmuse.c.w:
     57:66:void onPostExecute(java.lang.String) -> a
     15:15:void onPostExecute(java.lang.Object) -> onPostExecute
     15:15:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.laloosh.textmuse.tasks.SetHighlightAsyncTask$SetHighlightAsyncTaskHandler -> com.laloosh.textmuse.c.x:
+com.laloosh.textmuse.tasks.SetHighlightAsyncTask$SetHighlightAsyncTaskHandler -> com.laloosh.textmuse.c.z:
     void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
-com.laloosh.textmuse.tasks.ViewCategoryAsyncTask -> com.laloosh.textmuse.c.y:
+com.laloosh.textmuse.tasks.ViewCategoryAsyncTask -> com.laloosh.textmuse.c.aa:
     java.lang.ref.WeakReference mHandler -> a
     int mAppId -> b
     int mCategoryId -> c
@@ -28430,25 +28448,25 @@ com.laloosh.textmuse.ui.SelectMessageActivity -> com.laloosh.textmuse.ui.SelectM
     com.laloosh.textmuse.datamodel.TextMuseData mData -> t
     boolean mRequireSave -> u
     boolean mIsBadge -> v
-    53:53:void <init>() -> <init>
-    87:205:void onCreate(android.os.Bundle) -> onCreate
-    209:214:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
-    218:222:void onPause() -> onPause
-    226:231:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    239:250:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    254:265:void remitClicked() -> l
-    269:275:void flagClicked() -> m
-    279:283:void handleFlagPostResult(java.lang.String) -> a
-    287:291:void handleRemitPostResult(java.lang.String) -> b
-    294:303:void removeActiveNote() -> n
-    312:315:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    53:53:com.laloosh.textmuse.datamodel.TextMuseData access$000(com.laloosh.textmuse.ui.SelectMessageActivity) -> a
+    58:58:void <init>() -> <init>
+    92:210:void onCreate(android.os.Bundle) -> onCreate
+    214:219:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    223:227:void onPause() -> onPause
+    231:236:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    244:255:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    259:270:void remitClicked() -> l
+    274:280:void flagClicked() -> m
+    284:288:void handleFlagPostResult(java.lang.String) -> a
+    292:296:void handleRemitPostResult(java.lang.String) -> b
+    299:308:void removeActiveNote() -> n
+    317:320:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    58:58:com.laloosh.textmuse.datamodel.TextMuseData access$000(com.laloosh.textmuse.ui.SelectMessageActivity) -> a
 com.laloosh.textmuse.ui.SelectMessageActivity$1 -> com.laloosh.textmuse.ui.cm:
     com.laloosh.textmuse.ui.SelectMessageActivity this$0 -> a
-    179:179:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity) -> <init>
-    182:182:void onPageScrolled(int,float,int) -> a
-    186:187:void onPageSelected(int) -> b
-    192:192:void onPageScrollStateChanged(int) -> a
+    184:184:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity) -> <init>
+    187:187:void onPageScrolled(int,float,int) -> a
+    191:192:void onPageSelected(int) -> b
+    197:197:void onPageScrollStateChanged(int) -> a
 com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter -> com.laloosh.textmuse.ui.cn:
     java.util.List mNotes -> a
     android.view.LayoutInflater mLayoutInflater -> b
@@ -28457,67 +28475,81 @@ com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter -> com.laloos
     java.util.HashMap mDownloadTargets -> e
     int mCategoryPosition -> f
     com.laloosh.textmuse.datamodel.TextMuseData mData -> g
-    327:335:void <init>(java.util.List,android.support.v7.app.ActionBarActivity,int,int,com.laloosh.textmuse.datamodel.TextMuseData) -> <init>
-    339:339:int getCount() -> b
-    345:655:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
-    660:664:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
-    668:668:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
-    317:317:android.support.v7.app.ActionBarActivity access$100(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter) -> a
-    317:317:com.laloosh.textmuse.datamodel.TextMuseData access$200(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter) -> b
-    317:317:int access$300(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter) -> c
+    332:340:void <init>(java.util.List,android.support.v7.app.ActionBarActivity,int,int,com.laloosh.textmuse.datamodel.TextMuseData) -> <init>
+    344:344:int getCount() -> b
+    350:735:java.lang.Object instantiateItem(android.view.ViewGroup,int) -> a
+    740:744:void destroyItem(android.view.ViewGroup,int,java.lang.Object) -> a
+    748:748:boolean isViewFromObject(android.view.View,java.lang.Object) -> a
+    322:322:android.support.v7.app.ActionBarActivity access$100(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter) -> a
+    322:322:com.laloosh.textmuse.datamodel.TextMuseData access$200(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter) -> b
+    322:322:int access$300(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter) -> c
 com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$1 -> com.laloosh.textmuse.ui.co:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    360:360:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note) -> <init>
-    363:363:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
-    367:367:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-    371:372:void afterTextChanged(android.text.Editable) -> afterTextChanged
+    365:365:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note) -> <init>
+    368:368:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
+    372:372:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
+    376:377:void afterTextChanged(android.text.Editable) -> afterTextChanged
 com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$2 -> com.laloosh.textmuse.ui.cp:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    403:403:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note) -> <init>
-    407:409:void onClick(android.view.View) -> onClick
+    408:408:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note) -> <init>
+    412:414:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$3 -> com.laloosh.textmuse.ui.cq:
+    android.widget.ImageView val$followImageView -> a
+    android.widget.TextView val$sponsorNameTextView -> b
+    com.laloosh.textmuse.datamodel.Note val$note -> c
+    com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> d
+    437:437:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,android.widget.ImageView,android.widget.TextView,com.laloosh.textmuse.datamodel.Note) -> <init>
+    440:440:void onSuccess() -> a
+    444:447:void onError() -> b
+com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$4 -> com.laloosh.textmuse.ui.cr:
+    com.laloosh.textmuse.datamodel.Note val$note -> a
+    android.widget.TextView val$followButtonTextView -> b
+    com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> c
+    457:457:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note,android.widget.TextView) -> <init>
+    460:485:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$5 -> com.laloosh.textmuse.ui.cs:
     android.widget.RelativeLayout val$previewLayout -> a
     com.laloosh.textmuse.datamodel.Note val$note -> b
     int val$framelayoutId -> c
     com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> d
-    432:432:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,android.widget.RelativeLayout,com.laloosh.textmuse.datamodel.Note,int) -> <init>
-    436:483:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$3$1 -> com.laloosh.textmuse.ui.cr:
-    com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$3 this$1 -> a
-    460:460:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$3) -> <init>
-    463:466:void onInitializationSuccess(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubePlayer,boolean) -> onInitializationSuccess
-    470:476:void onInitializationFailure(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubeInitializationResult) -> onInitializationFailure
-com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$4 -> com.laloosh.textmuse.ui.cs:
+    512:512:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,android.widget.RelativeLayout,com.laloosh.textmuse.datamodel.Note,int) -> <init>
+    516:563:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$5$1 -> com.laloosh.textmuse.ui.ct:
+    com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$5 this$1 -> a
+    540:540:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$5) -> <init>
+    543:546:void onInitializationSuccess(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubePlayer,boolean) -> onInitializationSuccess
+    550:556:void onInitializationFailure(com.google.android.youtube.player.YouTubePlayer$Provider,com.google.android.youtube.player.YouTubeInitializationResult) -> onInitializationFailure
+com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$6 -> com.laloosh.textmuse.ui.cu:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> b
-    519:519:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note) -> <init>
-    523:533:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$5 -> com.laloosh.textmuse.ui.ct:
+    599:599:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note) -> <init>
+    603:613:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$7 -> com.laloosh.textmuse.ui.cv:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     android.widget.ImageView val$likeImage -> b
     android.widget.TextView val$likeText -> c
     android.view.ViewGroup val$internalLikeLayout -> d
     com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> e
-    555:555:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note,android.widget.ImageView,android.widget.TextView,android.view.ViewGroup) -> <init>
-    559:594:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$5$1 -> com.laloosh.textmuse.ui.cu:
-    com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$5 this$1 -> a
-    569:569:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$5) -> <init>
-    572:589:void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
-com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$6 -> com.laloosh.textmuse.ui.cv:
+    635:635:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note,android.widget.ImageView,android.widget.TextView,android.view.ViewGroup) -> <init>
+    639:674:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$7$1 -> com.laloosh.textmuse.ui.cw:
+    com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$7 this$1 -> a
+    649:649:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$7) -> <init>
+    652:669:void handlePostResult(java.lang.String,com.laloosh.textmuse.datamodel.Note,boolean,android.view.View) -> a
+com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$8 -> com.laloosh.textmuse.ui.cx:
     com.laloosh.textmuse.datamodel.Note val$note -> a
     android.widget.ImageView val$pinImage -> b
     com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> c
-    616:616:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note,android.widget.ImageView) -> <init>
-    619:628:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$7 -> com.laloosh.textmuse.ui.cw:
+    696:696:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,com.laloosh.textmuse.datamodel.Note,android.widget.ImageView) -> <init>
+    699:708:void onClick(android.view.View) -> onClick
+com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter$9 -> com.laloosh.textmuse.ui.cy:
     int val$position -> a
     com.laloosh.textmuse.datamodel.Note val$note -> b
     com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter this$0 -> c
-    642:642:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,int,com.laloosh.textmuse.datamodel.Note) -> <init>
-    645:650:void onClick(android.view.View) -> onClick
+    722:722:void <init>(com.laloosh.textmuse.ui.SelectMessageActivity$NoteViewPagerAdapter,int,com.laloosh.textmuse.datamodel.Note) -> <init>
+    725:730:void onClick(android.view.View) -> onClick
 com.laloosh.textmuse.ui.SettingsActivity -> com.laloosh.textmuse.ui.SettingsActivity:
     int REORDER_CATEGORIES_REQUEST_CODE -> n
     int SELECT_SKIN_REQUEST_CODE -> o
@@ -28548,23 +28580,23 @@ com.laloosh.textmuse.ui.SettingsActivity -> com.laloosh.textmuse.ui.SettingsActi
     34:34:void access$700(com.laloosh.textmuse.ui.SettingsActivity) -> e
     34:34:boolean access$902(com.laloosh.textmuse.ui.SettingsActivity,boolean) -> a
     37:38:void <clinit>() -> <clinit>
-com.laloosh.textmuse.ui.SettingsActivity$1 -> com.laloosh.textmuse.ui.cx:
+com.laloosh.textmuse.ui.SettingsActivity$1 -> com.laloosh.textmuse.ui.cz:
     com.laloosh.textmuse.ui.SettingsActivity this$0 -> a
     158:158:void <init>(com.laloosh.textmuse.ui.SettingsActivity) -> <init>
     162:164:boolean onCreateActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> a
     171:171:boolean onPrepareActionMode(android.support.v7.view.ActionMode,android.view.Menu) -> b
     177:186:boolean onActionItemClicked(android.support.v7.view.ActionMode,android.view.MenuItem) -> a
     193:194:void onDestroyActionMode(android.support.v7.view.ActionMode) -> a
-com.laloosh.textmuse.ui.SettingsActivity$2 -> com.laloosh.textmuse.ui.cy:
+com.laloosh.textmuse.ui.SettingsActivity$2 -> com.laloosh.textmuse.ui.da:
     int[] $SwitchMap$com$laloosh$textmuse$ui$SettingsActivity$TextOnlyViewType -> a
     363:363:void <clinit>() -> <clinit>
-com.laloosh.textmuse.ui.SettingsActivity$CategoryEleViewHolder -> com.laloosh.textmuse.ui.cz:
+com.laloosh.textmuse.ui.SettingsActivity$CategoryEleViewHolder -> com.laloosh.textmuse.ui.db:
     android.widget.TextView mTextView -> a
     android.widget.CheckBox mCheckBox -> b
     com.laloosh.textmuse.ui.SettingsActivity this$0 -> c
     518:518:void <init>(com.laloosh.textmuse.ui.SettingsActivity) -> <init>
     518:518:void <init>(com.laloosh.textmuse.ui.SettingsActivity,com.laloosh.textmuse.ui.SettingsActivity$1) -> <init>
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter -> com.laloosh.textmuse.ui.da:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter -> com.laloosh.textmuse.ui.dc:
     java.util.ArrayList mCategoryList -> b
     android.view.LayoutInflater mLayoutInflater -> c
     com.laloosh.textmuse.ui.SettingsActivity this$0 -> a
@@ -28581,49 +28613,49 @@ com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter -> com.laloosh.text
     427:470:android.view.View getCategoryElementView(int,android.view.View,android.view.ViewGroup) -> a
     476:494:int getItemViewType(int) -> getItemViewType
     501:501:int getViewTypeCount() -> getViewTypeCount
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$1 -> com.laloosh.textmuse.ui.db:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$1 -> com.laloosh.textmuse.ui.dd:
     com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter this$1 -> a
     273:273:void <init>(com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter) -> <init>
     276:278:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$2 -> com.laloosh.textmuse.ui.dc:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$2 -> com.laloosh.textmuse.ui.de:
     android.widget.SeekBar val$seekBar -> a
     com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter this$1 -> b
     303:303:void <init>(com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter,android.widget.SeekBar) -> <init>
     306:318:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$3 -> com.laloosh.textmuse.ui.dd:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$3 -> com.laloosh.textmuse.ui.df:
     com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter this$1 -> a
     321:321:void <init>(com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter) -> <init>
     324:324:void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
     328:328:void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
     333:342:void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$4 -> com.laloosh.textmuse.ui.de:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$4 -> com.laloosh.textmuse.ui.dg:
     com.laloosh.textmuse.ui.SettingsActivity$TextOnlyViewType val$viewType -> a
     com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter this$1 -> b
     380:380:void <init>(com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter,com.laloosh.textmuse.ui.SettingsActivity$TextOnlyViewType) -> <init>
     383:403:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$5 -> com.laloosh.textmuse.ui.df:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$5 -> com.laloosh.textmuse.ui.dh:
     com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter this$1 -> a
     415:415:void <init>(com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter) -> <init>
     418:419:boolean onLongClick(android.view.View) -> onLongClick
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$6 -> com.laloosh.textmuse.ui.dg:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$6 -> com.laloosh.textmuse.ui.di:
     java.lang.String val$categoryName -> a
     com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter this$1 -> b
     444:444:void <init>(com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter,java.lang.String) -> <init>
     447:451:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$7 -> com.laloosh.textmuse.ui.dh:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$7 -> com.laloosh.textmuse.ui.dj:
     com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter this$1 -> a
     454:454:void <init>(com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter) -> <init>
     457:459:void onClick(android.view.View) -> onClick
-com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$8 -> com.laloosh.textmuse.ui.di:
+com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter$8 -> com.laloosh.textmuse.ui.dk:
     com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter this$1 -> a
     462:462:void <init>(com.laloosh.textmuse.ui.SettingsActivity$SettingsListAdapter) -> <init>
     465:466:boolean onLongClick(android.view.View) -> onLongClick
-com.laloosh.textmuse.ui.SettingsActivity$TextItemViewHolder -> com.laloosh.textmuse.ui.dj:
+com.laloosh.textmuse.ui.SettingsActivity$TextItemViewHolder -> com.laloosh.textmuse.ui.dl:
     android.widget.TextView mTextView -> a
     com.laloosh.textmuse.ui.SettingsActivity this$0 -> b
     514:514:void <init>(com.laloosh.textmuse.ui.SettingsActivity) -> <init>
     514:514:void <init>(com.laloosh.textmuse.ui.SettingsActivity,com.laloosh.textmuse.ui.SettingsActivity$1) -> <init>
-com.laloosh.textmuse.ui.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.ui.dk:
+com.laloosh.textmuse.ui.SettingsActivity$TextOnlyViewType -> com.laloosh.textmuse.ui.dm:
     com.laloosh.textmuse.ui.SettingsActivity$TextOnlyViewType FEEDBACK_VIEW -> a
     com.laloosh.textmuse.ui.SettingsActivity$TextOnlyViewType PRIVACY_POLICY_VIEW -> b
     com.laloosh.textmuse.ui.SettingsActivity$TextOnlyViewType REGISTER_VIEW -> c
@@ -28656,15 +28688,15 @@ com.laloosh.textmuse.ui.SkinSelectActivity -> com.laloosh.textmuse.ui.SkinSelect
     216:224:void onBackPressed() -> onBackPressed
     228:253:void handleFetchResult(com.laloosh.textmuse.tasks.FetchNotesAsyncTask$FetchNotesResult) -> a
     31:31:void access$000(com.laloosh.textmuse.ui.SkinSelectActivity,int) -> a
-com.laloosh.textmuse.ui.SkinSelectActivity$1 -> com.laloosh.textmuse.ui.dl:
+com.laloosh.textmuse.ui.SkinSelectActivity$1 -> com.laloosh.textmuse.ui.dn:
     com.laloosh.textmuse.ui.SkinSelectActivity this$0 -> a
     85:85:void <init>(com.laloosh.textmuse.ui.SkinSelectActivity) -> <init>
     88:90:void run() -> run
-com.laloosh.textmuse.ui.SkinSelectActivity$2 -> com.laloosh.textmuse.ui.dm:
+com.laloosh.textmuse.ui.SkinSelectActivity$2 -> com.laloosh.textmuse.ui.do:
     com.laloosh.textmuse.ui.SkinSelectActivity this$0 -> a
     93:93:void <init>(com.laloosh.textmuse.ui.SkinSelectActivity) -> <init>
     96:124:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.laloosh.textmuse.ui.SkinSelectActivity$SkinSelectListAdapter -> com.laloosh.textmuse.ui.dn:
+com.laloosh.textmuse.ui.SkinSelectActivity$SkinSelectListAdapter -> com.laloosh.textmuse.ui.dp:
     android.app.Activity mActivity -> a
     java.util.ArrayList mSkins -> b
     266:269:void <init>(android.app.Activity,java.util.ArrayList) -> <init>
@@ -28672,7 +28704,7 @@ com.laloosh.textmuse.ui.SkinSelectActivity$SkinSelectListAdapter -> com.laloosh.
     311:311:int getCount() -> getCount
     316:316:int getItemViewType(int) -> getItemViewType
     321:321:int getViewTypeCount() -> getViewTypeCount
-com.laloosh.textmuse.ui.SkinSelectActivity$SkinSelectListAdapter$ViewHolder -> com.laloosh.textmuse.ui.do:
+com.laloosh.textmuse.ui.SkinSelectActivity$SkinSelectListAdapter$ViewHolder -> com.laloosh.textmuse.ui.dq:
     android.widget.TextView mTextView -> a
     android.widget.ImageView mImageView -> b
     260:260:void <init>() -> <init>
@@ -28691,7 +28723,7 @@ com.laloosh.textmuse.ui.SortableCategoryActivity -> com.laloosh.textmuse.ui.Sort
     109:122:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     128:130:void onBackPressed() -> onBackPressed
     134:136:void setActivityResultValue() -> l
-com.laloosh.textmuse.ui.SortableCategoryAdapter -> com.laloosh.textmuse.ui.dp:
+com.laloosh.textmuse.ui.SortableCategoryAdapter -> com.laloosh.textmuse.ui.dr:
     java.util.ArrayList mCategoryList -> a
     int mFirstUnlockedIndex -> b
     42:60:void <init>(java.util.ArrayList) -> <init>
@@ -28707,7 +28739,7 @@ com.laloosh.textmuse.ui.SortableCategoryAdapter -> com.laloosh.textmuse.ui.dp:
     22:22:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> onCreateViewHolder
     22:22:com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange onGetItemDraggableRange(android.support.v7.widget.RecyclerView$ViewHolder,int) -> onGetItemDraggableRange
     22:22:boolean onCheckCanStartDrag(android.support.v7.widget.RecyclerView$ViewHolder,int,int,int) -> onCheckCanStartDrag
-com.laloosh.textmuse.ui.SortableCategoryAdapter$CategoryViewHolder -> com.laloosh.textmuse.ui.dq:
+com.laloosh.textmuse.ui.SortableCategoryAdapter$CategoryViewHolder -> com.laloosh.textmuse.ui.ds:
     android.widget.FrameLayout mContainer -> a
     android.widget.TextView mTextView -> b
     android.widget.ImageView mLockImageView -> c
@@ -28738,11 +28770,11 @@ com.laloosh.textmuse.ui.SplashScreenActivity -> com.laloosh.textmuse.ui.SplashSc
     256:263:void handleFetchSkinsResult(com.laloosh.textmuse.tasks.FetchSkinsAsyncTask$FetchSkinsResult) -> a
     266:268:void startupAzureIntegration() -> t
     33:33:void access$000(com.laloosh.textmuse.ui.SplashScreenActivity) -> a
-com.laloosh.textmuse.ui.SplashScreenActivity$1 -> com.laloosh.textmuse.ui.dr:
+com.laloosh.textmuse.ui.SplashScreenActivity$1 -> com.laloosh.textmuse.ui.dt:
     com.laloosh.textmuse.ui.SplashScreenActivity this$0 -> a
     169:169:void <init>(com.laloosh.textmuse.ui.SplashScreenActivity) -> <init>
     172:173:void run() -> run
-com.laloosh.textmuse.ui.TabSelectListener -> com.laloosh.textmuse.ui.ds:
+com.laloosh.textmuse.ui.TabSelectListener -> com.laloosh.textmuse.ui.du:
     void onTabSelected() -> d
     void onTabDeselected() -> c
 com.laloosh.textmuse.ui.WalkthroughActivity -> com.laloosh.textmuse.ui.WalkthroughActivity:
@@ -28758,12 +28790,12 @@ com.laloosh.textmuse.ui.WalkthroughActivity -> com.laloosh.textmuse.ui.Walkthrou
     21:21:java.lang.String[] access$000() -> l
     21:21:int[] access$100() -> m
     29:36:void <clinit>() -> <clinit>
-com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughAdapter -> com.laloosh.textmuse.ui.dt:
+com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughAdapter -> com.laloosh.textmuse.ui.dv:
     boolean mInitialLaunch -> a
     76:78:void <init>(android.support.v4.app.FragmentManager,boolean) -> <init>
     82:82:android.support.v4.app.Fragment getItem(int) -> a
     87:87:int getCount() -> b
-com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughFragment -> com.laloosh.textmuse.ui.du:
+com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughFragment -> com.laloosh.textmuse.ui.dw:
     int mNum -> a
     boolean mInitialLaunch -> b
     91:91:void <init>() -> <init>
@@ -28771,7 +28803,7 @@ com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughFragment -> com.laloosh.t
     108:111:void onCreate(android.os.Bundle) -> onCreate
     115:144:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     91:91:boolean access$200(com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughFragment) -> a
-com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughFragment$1 -> com.laloosh.textmuse.ui.dv:
+com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughFragment$1 -> com.laloosh.textmuse.ui.dx:
     com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughFragment this$0 -> a
     124:124:void <init>(com.laloosh.textmuse.ui.WalkthroughActivity$WalkthroughFragment) -> <init>
     127:141:void onClick(android.view.View) -> onClick
@@ -28784,7 +28816,7 @@ com.laloosh.textmuse.ui.WebviewActivity -> com.laloosh.textmuse.ui.WebviewActivi
     74:75:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     83:92:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     18:18:android.widget.ProgressBar access$000(com.laloosh.textmuse.ui.WebviewActivity) -> a
-com.laloosh.textmuse.ui.WebviewActivity$1 -> com.laloosh.textmuse.ui.dw:
+com.laloosh.textmuse.ui.WebviewActivity$1 -> com.laloosh.textmuse.ui.dy:
     com.laloosh.textmuse.ui.WebviewActivity this$0 -> a
     39:39:void <init>(com.laloosh.textmuse.ui.WebviewActivity) -> <init>
     42:45:void onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) -> onReceivedError
@@ -28796,29 +28828,32 @@ com.laloosh.textmuse.utils.AndroidUtils -> com.laloosh.textmuse.d.a:
 com.laloosh.textmuse.utils.AzureIntegrationSingleton -> com.laloosh.textmuse.d.b:
     com.microsoft.windowsazure.mobileservices.MobileServiceClient mClient -> a
     boolean mStarted -> b
-    21:21:com.laloosh.textmuse.utils.AzureIntegrationSingleton getInstance() -> a
-    24:31:void <init>() -> <init>
-    38:46:void startupIntegration(android.content.Context) -> a
-    49:49:com.microsoft.windowsazure.mobileservices.MobileServiceClient getClient() -> b
-    53:53:boolean getStarted() -> c
-    13:13:void <init>(com.laloosh.textmuse.utils.AzureIntegrationSingleton$1) -> <init>
+    java.lang.String mGcmRegistrationId -> c
+    27:27:com.laloosh.textmuse.utils.AzureIntegrationSingleton getInstance() -> a
+    30:38:void <init>() -> <init>
+    45:53:void startupIntegration(android.content.Context) -> a
+    56:56:com.microsoft.windowsazure.mobileservices.MobileServiceClient getClient() -> b
+    60:60:boolean getStarted() -> c
+    68:69:void setGcmRegistrationId(java.lang.String) -> a
+    73:111:void registerForGcm(android.content.Context) -> b
+    19:19:void <init>(com.laloosh.textmuse.utils.AzureIntegrationSingleton$1) -> <init>
 com.laloosh.textmuse.utils.AzureIntegrationSingleton$1 -> com.laloosh.textmuse.d.c:
 com.laloosh.textmuse.utils.AzureIntegrationSingleton$SingletonHolder -> com.laloosh.textmuse.d.d:
     com.laloosh.textmuse.utils.AzureIntegrationSingleton instance -> a
-    16:16:com.laloosh.textmuse.utils.AzureIntegrationSingleton access$100() -> a
-    17:17:void <clinit>() -> <clinit>
+    22:22:com.laloosh.textmuse.utils.AzureIntegrationSingleton access$100() -> a
+    23:23:void <clinit>() -> <clinit>
 com.laloosh.textmuse.utils.AzureTextMuseNotificationHandler -> com.laloosh.textmuse.d.e:
-    26:26:void <init>() -> <init>
-    30:72:void onRegistered(android.content.Context,java.lang.String) -> onRegistered
-    76:87:void onReceive(android.content.Context,android.os.Bundle) -> onReceive
-    94:127:void showReminderNotification(android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
+    20:20:void <init>() -> <init>
+    24:36:void onRegistered(android.content.Context,java.lang.String) -> onRegistered
+    40:51:void onReceive(android.content.Context,android.os.Bundle) -> onReceive
+    58:91:void showReminderNotification(android.content.Context,java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
 com.laloosh.textmuse.utils.AzureTextMuseNotificationHandler$1 -> com.laloosh.textmuse.d.f:
-    android.content.Context val$context -> a
-    java.lang.String val$gcmRegistrationId -> b
+    java.lang.String val$gcmRegistrationId -> a
+    android.content.Context val$context -> b
     com.laloosh.textmuse.utils.AzureTextMuseNotificationHandler this$0 -> c
-    32:32:void <init>(com.laloosh.textmuse.utils.AzureTextMuseNotificationHandler,android.content.Context,java.lang.String) -> <init>
-    35:69:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    32:32:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    26:26:void <init>(com.laloosh.textmuse.utils.AzureTextMuseNotificationHandler,java.lang.String,android.content.Context) -> <init>
+    28:33:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    26:26:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.laloosh.textmuse.utils.ColorHelpers -> com.laloosh.textmuse.d.g:
     11:20:int getTextColorForBackground(int) -> a
     26:35:int getTextColorForWhiteBackground(int) -> b
@@ -28863,18 +28898,18 @@ com.laloosh.textmuse.utils.SmsUtils -> com.laloosh.textmuse.d.m:
     244:295:android.content.Intent getPreKitKatIntent(android.content.Context,com.laloosh.textmuse.datamodel.Note,java.util.Set) -> c
     301:334:boolean testIfPhotosSupported(android.content.Context) -> a
 com.laloosh.textmuse.utils.WebDataParser -> com.laloosh.textmuse.d.n:
-    27:27:void <init>() -> <init>
-    31:56:com.laloosh.textmuse.datamodel.TextMuseData parse(java.lang.String) -> a
-    61:86:com.laloosh.textmuse.datamodel.TextMuseSkinData parseSkinData(java.lang.String) -> b
-    92:136:com.laloosh.textmuse.datamodel.PointUpdate parsePointUpdate(java.lang.String) -> c
-    140:155:com.laloosh.textmuse.datamodel.TextMuseSkinData parseSkinContent(org.xmlpull.v1.XmlPullParser) -> a
-    159:181:com.laloosh.textmuse.datamodel.TextMuseSkin parseSkin(org.xmlpull.v1.XmlPullParser) -> b
-    186:230:com.laloosh.textmuse.datamodel.TextMuseData parseContent(org.xmlpull.v1.XmlPullParser) -> c
-    234:301:void parseCurrentSkinData(org.xmlpull.v1.XmlPullParser,com.laloosh.textmuse.datamodel.TextMuseData) -> a
-    304:324:void parseLocalNotifications(org.xmlpull.v1.XmlPullParser,com.laloosh.textmuse.datamodel.TextMuseData) -> b
-    327:369:com.laloosh.textmuse.datamodel.Category parseCategory(org.xmlpull.v1.XmlPullParser) -> d
-    373:425:com.laloosh.textmuse.datamodel.Note parseNote(org.xmlpull.v1.XmlPullParser) -> e
-    429:434:java.lang.String readText(org.xmlpull.v1.XmlPullParser) -> f
+    28:28:void <init>() -> <init>
+    32:57:com.laloosh.textmuse.datamodel.TextMuseData parse(java.lang.String) -> a
+    62:87:com.laloosh.textmuse.datamodel.TextMuseSkinData parseSkinData(java.lang.String) -> b
+    93:137:com.laloosh.textmuse.datamodel.PointUpdate parsePointUpdate(java.lang.String) -> c
+    141:156:com.laloosh.textmuse.datamodel.TextMuseSkinData parseSkinContent(org.xmlpull.v1.XmlPullParser) -> a
+    160:182:com.laloosh.textmuse.datamodel.TextMuseSkin parseSkin(org.xmlpull.v1.XmlPullParser) -> b
+    187:231:com.laloosh.textmuse.datamodel.TextMuseData parseContent(org.xmlpull.v1.XmlPullParser) -> c
+    235:302:void parseCurrentSkinData(org.xmlpull.v1.XmlPullParser,com.laloosh.textmuse.datamodel.TextMuseData) -> a
+    305:325:void parseLocalNotifications(org.xmlpull.v1.XmlPullParser,com.laloosh.textmuse.datamodel.TextMuseData) -> b
+    328:370:com.laloosh.textmuse.datamodel.Category parseCategory(org.xmlpull.v1.XmlPullParser) -> d
+    374:435:com.laloosh.textmuse.datamodel.Note parseNote(org.xmlpull.v1.XmlPullParser) -> e
+    439:444:java.lang.String readText(org.xmlpull.v1.XmlPullParser) -> f
 com.microsoft.windowsazure.mobileservices.ApiJsonOperationCallback -> com.microsoft.windowsazure.mobileservices.ApiJsonOperationCallback:
     void onCompleted(com.google.gson.JsonElement,java.lang.Exception,com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse) -> onCompleted
 com.microsoft.windowsazure.mobileservices.ApiOperationCallback -> com.microsoft.windowsazure.mobileservices.ApiOperationCallback:

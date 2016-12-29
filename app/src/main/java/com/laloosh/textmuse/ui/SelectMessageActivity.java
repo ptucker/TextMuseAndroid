@@ -2,11 +2,13 @@ package com.laloosh.textmuse.ui;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.text.TextUtilsCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,14 +37,17 @@ import com.laloosh.textmuse.dialogs.GeneralDialogAndFinishFragment;
 import com.laloosh.textmuse.dialogs.GeneralDialogFragment;
 import com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment;
 import com.laloosh.textmuse.tasks.FlagContentAsyncTask;
+import com.laloosh.textmuse.tasks.FollowSponsorAsyncTask;
 import com.laloosh.textmuse.tasks.NoteSeeItAsyncTask;
 import com.laloosh.textmuse.tasks.RemitBadgeAsyncTask;
 import com.laloosh.textmuse.tasks.RemitDealAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.tasks.ViewCategoryAsyncTask;
 import com.laloosh.textmuse.utils.AndroidUtils;
+import com.laloosh.textmuse.utils.AzureIntegrationSingleton;
 import com.laloosh.textmuse.utils.ColorHelpers;
 import com.laloosh.textmuse.utils.ImageDownloadTarget;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -408,6 +413,81 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
                         fragment.show(mActivity.getSupportFragmentManager(), "expandedimagefragment");
                     }
                 });
+
+                View followLayout = view.findViewById(R.id.detailViewLayoutFollow);
+                if (note.hasSponsor) {
+                    followLayout.setVisibility(View.VISIBLE);
+
+                    final TextView sponsorNameTextView = (TextView) view.findViewById(R.id.detailViewFollowText);
+                    final TextView followButtonTextView = (TextView) view.findViewById(R.id.detailViewFollowTextButton);
+                    final ImageView followImageView = (ImageView) view.findViewById(R.id.detailViewFollowImage);
+
+                    if (TextUtils.isEmpty(note.sponsorLogoUrl)) {
+                        followImageView.setVisibility(View.GONE);
+                        sponsorNameTextView.setVisibility(View.VISIBLE);
+                        sponsorNameTextView.setText(note.sponsorName);
+                    } else {
+                        followImageView.setVisibility(View.VISIBLE);
+                        sponsorNameTextView.setVisibility(View.GONE);
+                        Picasso.with(mActivity)
+                                .load(note.sponsorLogoUrl)
+                                .error(R.drawable.placeholder_image)
+                                .fit()
+                                .centerCrop()
+                                .into(followImageView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        followImageView.setVisibility(View.GONE);
+                                        sponsorNameTextView.setVisibility(View.VISIBLE);
+                                        sponsorNameTextView.setText(note.sponsorName);
+                                    }
+                                });
+                    }
+
+                    if (note.follow) {
+                        followButtonTextView.setText("unfollow");
+                    } else {
+                        followButtonTextView.setText("follow");
+                    }
+
+                    followLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (note.follow) {
+                                //unfollow, since we are already following
+                                mData.unfollowSponsor(note.sponsorId);
+                            } else {
+                                mData.followSponsor(note.sponsorId);
+                            }
+
+                            FollowSponsorAsyncTask task = new FollowSponsorAsyncTask(null, mData.appId, note.sponsorId, !note.follow);
+                            task.execute();
+
+                            AzureIntegrationSingleton azureIntegrationSingleton = AzureIntegrationSingleton.getInstance();
+                            azureIntegrationSingleton.registerForGcm(mActivity);
+
+                            note.follow = !note.follow;
+                            mData.save(mActivity);
+
+                            Log.d(Constants.TAG, "note follow flag set to : " + note.follow);
+
+                            if (note.follow) {
+                                Log.d(Constants.TAG, "note setting text to unfollow");
+                                followButtonTextView.setText("unfollow");
+                            } else {
+                                Log.d(Constants.TAG, "note setting text to follow");
+                                followButtonTextView.setText("follow");
+                            }
+                        }
+                    });
+
+                } else {
+                    followLayout.setVisibility(View.GONE);
+                }
 
                 useImageLayout = true;
 

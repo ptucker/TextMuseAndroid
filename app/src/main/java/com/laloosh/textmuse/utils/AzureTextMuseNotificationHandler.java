@@ -13,15 +13,9 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.laloosh.textmuse.R;
-import com.laloosh.textmuse.ui.SplashScreenActivity;
 import com.laloosh.textmuse.app.Constants;
-import com.laloosh.textmuse.datamodel.GlobalData;
-import com.laloosh.textmuse.datamodel.TextMuseData;
-import com.laloosh.textmuse.datamodel.TextMuseSkinData;
-import com.microsoft.windowsazure.mobileservices.notifications.MobileServicePush;
+import com.laloosh.textmuse.ui.SplashScreenActivity;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
-
-import java.util.ArrayList;
 
 public class AzureTextMuseNotificationHandler extends NotificationsHandler {
 
@@ -31,40 +25,10 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
 
         new AsyncTask<Void, Void, Void>() {
             protected Void doInBackground(Void... params) {
-                try {
-                    AzureIntegrationSingleton client = AzureIntegrationSingleton.getInstance();
-                    if (client.getStarted() && client.getClient() != null) {
-
-                        ArrayList<String> tags = null;
-
-                        GlobalData globalData = GlobalData.getInstance();
-                        if (globalData.hasLoadedData()) {
-                            TextMuseData data = globalData.getData();
-                            if (data.appId > 0) {
-                                tags = new ArrayList<String>();
-                                tags.add(Integer.toString(data.appId));
-
-                                int skinId = TextMuseSkinData.getCurrentlySelectedSkin(context);
-                                if (skinId <= 0) {
-                                    skinId = 0;
-                                }
-                                tags.add("skin" + Integer.toString(skinId));
-                            }
-                        }
-
-                        MobileServicePush pushClient = client.getClient().getPush();
-
-                        if (tags != null && tags.size() > 0) {
-                            pushClient.register(gcmRegistrationId, tags.toArray(new String[tags.size()]));
-                        } else {
-                            pushClient.register(gcmRegistrationId, null);
-                        }
-
-                        Log.d(Constants.TAG, "Succeeded in sending off the registration with GCM ID: " + gcmRegistrationId);
-                    }
-                }
-                catch(Exception e) {
-                    Log.e(Constants.TAG, "Failed to register for google cloud messaging with the azure client!");
+                AzureIntegrationSingleton client = AzureIntegrationSingleton.getInstance();
+                client.setGcmRegistrationId(gcmRegistrationId);
+                if (client.getStarted() && client.getClient() != null) {
+                    client.registerForGcm(context);
                 }
                 return null;
             }

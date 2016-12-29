@@ -33,6 +33,7 @@ public class TextMuseData {
     public TextMuseCurrentSkinData skinData;
 
     public HashSet<Integer> flaggedNotesSet;
+    public HashSet<Integer> followedSponsorsSet;
 
     public int explorerPoints;
     public int sharerPoints;
@@ -168,6 +169,7 @@ public class TextMuseData {
         pinnedNotes.notes = new ArrayList<Note>();
 
         flaggedNotesSet = new HashSet<>();
+        followedSponsorsSet = new HashSet<>();
     }
 
     public void updatePhotos(Context context) {
@@ -318,6 +320,22 @@ public class TextMuseData {
                 mPinnedNotesSet.remove(note.noteId);
                 return;
             }
+        }
+    }
+
+    public void followSponsor(int id) {
+        if (followedSponsorsSet == null) {
+            followedSponsorsSet = new HashSet<>();
+        }
+
+        followedSponsorsSet.add(id);
+    }
+
+    public void unfollowSponsor(int id) {
+        if (followedSponsorsSet == null) {
+            followedSponsorsSet = new HashSet<>();
+        } else {
+            followedSponsorsSet.remove(id);
         }
     }
 

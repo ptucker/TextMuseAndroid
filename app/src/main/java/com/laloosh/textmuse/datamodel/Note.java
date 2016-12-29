@@ -26,6 +26,10 @@ public class Note implements Parcelable {
     public int likeCount;
     public String location;
     public String eventDate;
+
+    public boolean hasSponsor;
+    public int sponsorId;
+    public boolean follow;
     public String sponsorName;
     public String sponsorLogoUrl;
 
@@ -235,6 +239,12 @@ public class Note implements Parcelable {
         out.writeInt(likeCount);
         ParcelUtils.writeString(out, location);
         ParcelUtils.writeString(out, eventDate);
+
+        out.writeByte(hasSponsor ? (byte) 1 : (byte) 0);
+        out.writeInt(sponsorId);
+        out.writeByte(follow ? (byte) 1 : (byte) 0);
+        ParcelUtils.writeString(out, sponsorName);
+        ParcelUtils.writeString(out, sponsorLogoUrl);
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
@@ -262,6 +272,12 @@ public class Note implements Parcelable {
 
         location = ParcelUtils.readString(in);
         eventDate = ParcelUtils.readString(in);
+
+        hasSponsor = (in.readByte() != 0);
+        sponsorId = in.readInt();
+        follow = (in.readByte() != 0);
+        sponsorName = ParcelUtils.readString(in);
+        sponsorLogoUrl = ParcelUtils.readString(in);
     }
 
 }
