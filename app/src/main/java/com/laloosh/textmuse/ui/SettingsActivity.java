@@ -216,7 +216,8 @@ public class SettingsActivity extends ActionBarActivity {
         public int getCount() {
 
             //There are a base of 7 (notifications, recent contacts, feedback, register, privacy policy, walkthrough, skins) items
-            int total = 7;
+            // hide the skins option if we're B2B
+            int total = (Constants.BuildType == Constants.Builds.University) ? 7 : 6;
 
             if (mShouldShowCategories) {
                 total += mCategoryList.size() + 1;  //category list plus header
@@ -237,6 +238,7 @@ public class SettingsActivity extends ActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            int adjustedPosition;
             switch (position) {
                 case 0:
                     return getNotificationView(convertView, parent);
@@ -251,11 +253,16 @@ public class SettingsActivity extends ActionBarActivity {
                 case 5:
                     return getTextOnlyView(convertView, parent, TextOnlyViewType.WALKTHROUGH_VIEW);
                 case 6:
-                    return getTextOnlyView(convertView, parent, TextOnlyViewType.SKIN_VIEW);
+                    return (Constants.BuildType == Constants.Builds.University) ?
+                            getTextOnlyView(convertView, parent, TextOnlyViewType.SKIN_VIEW) :
+                            getCategoryHeader(convertView, parent);
                 case 7:
-                    return getCategoryHeader(convertView, parent);
+                    adjustedPosition = position - (getCount() - mCategoryList.size());
+                    return (Constants.BuildType == Constants.Builds.University) ?
+                            getCategoryHeader(convertView, parent) :
+                            getCategoryElementView(adjustedPosition, convertView, parent);
                 default:
-                    int adjustedPosition = position - (getCount() - mCategoryList.size());
+                    adjustedPosition = position - (getCount() - mCategoryList.size());
                     return getCategoryElementView(adjustedPosition, convertView, parent);
             }
         }

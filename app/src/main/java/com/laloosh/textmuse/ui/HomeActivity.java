@@ -143,10 +143,15 @@ public class HomeActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.mainToolbarTitle);
         mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_white));
 
-        if (mData != null && mData.skinData != null) {
-            textView.setText(mData.skinData.name + " TextMuse");
-        } else {
-            textView.setText("TextMuse");
+        if (Constants.BuildType == Constants.Builds.Humanix) {
+            textView.setText("Humanix TextMuse");
+        }
+        else {
+            if (mData != null && mData.skinData != null) {
+                textView.setText(mData.skinData.name + " TextMuse");
+            } else {
+                textView.setText("TextMuse");
+            }
         }
     }
 
@@ -203,7 +208,8 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return HomeFragment.newInstance(mAlreadyLoadedData, true);
+                boolean events = (Constants.BuildType != Constants.Builds.Humanix);
+                return HomeFragment.newInstance(mAlreadyLoadedData, events);
             } else if (position == 1) {
                 return BadgeFragment.newInstance();
             } else {

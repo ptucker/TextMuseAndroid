@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.laloosh.textmuse.R;
@@ -83,7 +84,9 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     //Sets up the layout.  Must be called after we load the global data
     private void setupLayout() {
         int skinId = TextMuseSkinData.getCurrentlySelectedSkin(this);
-        if (skinId <= 0) {
+        if (Constants.BuildType == Constants.Builds.Humanix) {
+            setContentView(R.layout.activity_splash_screen_humanix);
+        } else if (skinId <= 0) {
             setContentView(R.layout.activity_splash_screen);
         } else {
             if (mData == null || mData.skinData == null) {
@@ -140,6 +143,11 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
                 }
             }
         }
+
+        if (Constants.BuildType == Constants.Builds.Humanix){
+            ImageView img = (ImageView)findViewById(R.id.imageHumanix);
+            if (img != null) img.setVisibility(View.VISIBLE);
+        }
     }
 
     //If we've failed in loading new data, and we don't have any, then we'll get here.  Load the
@@ -189,7 +197,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
         Intent intent;
 
-        if (mFirstLaunch) {
+        if (mFirstLaunch && Constants.BuildType == Constants.Builds.University) {
             //Go to the skin selection screen
             if (mFinishedLoadingSkins && mFinishedLoadingSkinsResult == FetchSkinsAsyncTask.FetchSkinsResult.FETCH_SUCCEEDED) {
                 intent = new Intent(SplashScreenActivity.this, SkinSelectActivity.class);

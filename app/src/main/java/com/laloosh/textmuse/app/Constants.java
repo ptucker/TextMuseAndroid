@@ -1,6 +1,5 @@
 package com.laloosh.textmuse.app;
 
-
 public class Constants {
     public static final String TAG = "TextMuse";
 
@@ -45,5 +44,9 @@ public class Constants {
     public static final String LAUNCH_MESSAGE_EXTRA = "com.laloosh.textmuse.launch.messageextra";
 
     public static final String GOOGLE_API_YOUTUBE = "AIzaSyCwp-hP3BadhQKKfnsFSPqoGPV9wmNANM0";
+
+    public enum Builds { University, Humanix}
+    public static final Builds BuildType = Builds.Humanix;
+    public static final int HumanixSponsorID = 82;
 
 }

@@ -71,9 +71,15 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
             Log.d(Constants.TAG, "Fetching new data for app ID: " + Integer.toString(mAppId));
         }
 
-        if (mSkinId > 0) {
-            webParams.put("sponsor", Integer.toString(mSkinId));
-            Log.d(Constants.TAG, "Fetching new data for skin ID: " + Integer.toString(mSkinId));
+        if (Constants.BuildType == Constants.Builds.Humanix) {
+            webParams.put("sponsor", Integer.toString(Constants.HumanixSponsorID));
+            Log.d(Constants.TAG, "Fetching new data for skin ID: " + Integer.toString(Constants.HumanixSponsorID));
+        }
+        else { //if (Constants.BuildType == Constants.Builds.University) {
+            if (mSkinId > 0) {
+                webParams.put("sponsor", Integer.toString(mSkinId));
+                Log.d(Constants.TAG, "Fetching new data for skin ID: " + Integer.toString(mSkinId));
+            }
         }
 
         result = connUtils.getUrl(UPDATE_URL, webParams);

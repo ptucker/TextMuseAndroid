@@ -21,6 +21,8 @@ public class TextMuseData {
 
     public List<Category> categories;
     public List<LocalNotification> localNotifications;
+    public String preamble;
+    public String inquiry;
 
     public Category localTexts;
     public Category localPhotos;
@@ -268,14 +270,24 @@ public class TextMuseData {
     }
 
     public int[] getColorList() {
-        if (skinData == null) {
-            return Constants.COLOR_LIST;
-        } else {
-            int c1 = 0xff000000 + skinData.c1;
-            int c2 = 0xff000000 + skinData.c2;
-            int c3 = 0xff000000 + skinData.c3;
+        if (Constants.BuildType == Constants.Builds.Humanix) {
+            //007db1, white, bb6b1e
+            int c1 = 0xff000000 + 0x00007db1;
+            int c2 = 0xff000000 + 0X00ffffff;
+            int c3 = 0xff000000 + 0x00bb6b1e;
 
             return new int[]{c1, c2, c3};
+        }
+        else {
+            if (skinData == null) {
+                return Constants.COLOR_LIST;
+            } else {
+                int c1 = 0xff000000 + skinData.c1;
+                int c2 = 0xff000000 + skinData.c2;
+                int c3 = 0xff000000 + skinData.c3;
+
+                return new int[]{c1, c2, c3};
+            }
         }
     }
 

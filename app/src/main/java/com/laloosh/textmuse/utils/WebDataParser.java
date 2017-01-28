@@ -221,6 +221,8 @@ public class WebDataParser {
             // Starts by looking for the entry tag
             if (name.equals("ns")) {
                 parseLocalNotifications(xpp, parsedData);
+            } else if (name.equals("ens")) {
+                parseNoteExtensions(xpp, parsedData);
             } else if (name.equals("c")) {
                 parsedData.categories.add(parseCategory(xpp));
             } else if (name.equals("skin")) {
@@ -322,6 +324,36 @@ public class WebDataParser {
         }
 
         xpp.require(XmlPullParser.END_TAG, null, "ns");
+    }
+
+    protected void parseNoteExtensions(XmlPullParser xpp, TextMuseData parsedData) throws XmlPullParserException, IOException {
+        xpp.require(XmlPullParser.START_TAG, null, "ens");
+
+        while (xpp.next() != XmlPullParser.END_TAG) {
+            if (xpp.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+
+            String name = xpp.getName();
+            if (name.equalsIgnoreCase("p")) {
+                String p = readText(xpp);
+
+                if (p!= null) {
+                    parsedData.preamble = p;
+                }
+                xpp.require(XmlPullParser.END_TAG, null, "p");
+            } else if (name.equalsIgnoreCase("i")) {
+                String i = readText(xpp);
+
+                if (i!= null) {
+                    parsedData.inquiry = i;
+                }
+                xpp.require(XmlPullParser.END_TAG, null, "i");
+            }
+
+        }
+
+        xpp.require(XmlPullParser.END_TAG, null, "ens");
     }
 
     protected Category parseCategory(XmlPullParser xpp) throws XmlPullParserException, IOException {
