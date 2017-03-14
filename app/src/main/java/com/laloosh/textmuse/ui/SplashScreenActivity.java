@@ -143,11 +143,6 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
                 }
             }
         }
-
-        if (Constants.BuildType == Constants.Builds.Humanix){
-            ImageView img = (ImageView)findViewById(R.id.imageHumanix);
-            if (img != null) img.setVisibility(View.VISIBLE);
-        }
     }
 
     //If we've failed in loading new data, and we don't have any, then we'll get here.  Load the
