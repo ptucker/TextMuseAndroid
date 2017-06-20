@@ -74,9 +74,11 @@ public class NetworkPolicyManager {
         mService = service;
     }
 
+    /*
     public static NetworkPolicyManager from(Context context) {
         return (NetworkPolicyManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
+    */
 
     /**
      * Set policy flags for specific UID.

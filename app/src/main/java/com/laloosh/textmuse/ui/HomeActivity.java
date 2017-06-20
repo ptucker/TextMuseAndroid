@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver;
+import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
@@ -105,6 +106,26 @@ public class HomeActivity extends AppCompatActivity {
             });
         }
 
+        final String highlighted = intent.getStringExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA);
+        if (highlighted != null) {
+            Intent intentMsg = new Intent(this.getApplicationContext(), SelectMessageActivity.class);
+            int idHighlighted = Integer.parseInt(highlighted);
+            intentMsg.putExtra(SelectMessageActivity.NOTE_ID_EXTRA, idHighlighted);
+            int iCategory = -1;
+            for (int c=0; c<mData.categories.size() && iCategory == -1; c++) {
+                Category cat = mData.categories.get(c);
+                for (int n=0; n<cat.notes.size() && iCategory == -1; n++) {
+                    if (cat.notes.get(n).noteId == idHighlighted)
+                        iCategory = c;
+                }
+            }
+            //EventBus.getDefault().post(new HomeFragment.ShowNoteDetailEvent(intentMsg));
+            if (iCategory != -1) {
+                intentMsg.putExtra(SelectMessageActivity.CATEGORY_EXTRA, iCategory);
+                startActivity(intentMsg);
+            }
+        }
+
         //Post an extra selection event for 0, since we don't get that callback
         mViewPager.post(new Runnable() {
             @Override
@@ -144,7 +165,7 @@ public class HomeActivity extends AppCompatActivity {
         mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_white));
 
         if (Constants.BuildType == Constants.Builds.Humanix) {
-            textView.setText("Humanix TextMuse");
+            textView.setText("Hire Me Northwest");
         }
         else {
             if (mData != null && mData.skinData != null) {

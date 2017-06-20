@@ -23,10 +23,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.mms.util_alt.SqliteWrapper;
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
 
 import java.io.File;
 

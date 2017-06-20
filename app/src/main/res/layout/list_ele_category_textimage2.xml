@@ -63,7 +63,7 @@
                     android:id="@+id/mainViewImageViewItemBackground"
                     android:src="@drawable/bubble"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
                     android:background="#ffeeeeee"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true"

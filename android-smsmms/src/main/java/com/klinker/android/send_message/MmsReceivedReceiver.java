@@ -21,13 +21,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 import com.android.mms.service_alt.DownloadRequest;
 import com.android.mms.service_alt.MmsConfig;
 import com.android.mms.transaction.DownloadManager;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.util_alt.SqliteWrapper;
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
 
 import java.io.File;
 import java.io.FileInputStream;

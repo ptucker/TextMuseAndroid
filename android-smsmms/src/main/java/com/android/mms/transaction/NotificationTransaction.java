@@ -38,7 +38,8 @@ import android.provider.Telephony.Mms;
 import android.provider.Telephony.Threads;
 import android.provider.Telephony.Mms.Inbox;
 import android.telephony.TelephonyManager;
-import com.klinker.android.logger.Log;
+import android.util.Log;
+//import com.klinker.android.logger.Log;
 
 import com.android.mms.LogTag;
 import com.android.mms.MmsConfig;

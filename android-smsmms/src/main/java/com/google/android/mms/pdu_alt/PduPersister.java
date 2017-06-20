@@ -44,7 +44,8 @@ import android.provider.Telephony.MmsSms.PendingMessages;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import com.klinker.android.logger.Log;
+import android.util.Log;
+//import com.klinker.android.logger.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

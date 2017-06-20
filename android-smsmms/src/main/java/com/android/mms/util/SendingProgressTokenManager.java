@@ -16,11 +16,13 @@
 
 package com.android.mms.util;
 
+import android.util.Log;
+
 import com.android.mms.LogTag;
 
 import java.util.HashMap;
 
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
 
 public class SendingProgressTokenManager {
     private static final String TAG = LogTag.TAG;

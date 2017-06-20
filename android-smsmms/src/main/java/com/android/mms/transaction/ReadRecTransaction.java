@@ -21,7 +21,8 @@ import java.io.IOException;
 import android.content.Context;
 import android.net.Uri;
 import android.provider.Telephony.Mms.Sent;
-import com.klinker.android.logger.Log;
+import android.util.Log;
+//import com.klinker.android.logger.Log;
 
 import com.android.mms.LogTag;
 import com.google.android.mms.MmsException;

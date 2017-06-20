@@ -16,6 +16,8 @@
 
 package com.android.mms.dom.smil;
 
+import android.util.Log;
+
 import com.android.mms.LogTag;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 
+//import org.apache.commons.logging.Log;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.DocumentEvent;
 import org.w3c.dom.events.Event;
@@ -33,7 +36,7 @@ import org.w3c.dom.smil.ElementTime;
 import org.w3c.dom.smil.Time;
 import org.w3c.dom.smil.TimeList;
 
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
 
 /**
  * The SmilPlayer is responsible for playing, stopping, pausing and resuming a SMIL tree.

@@ -1,6 +1,9 @@
 package com.laloosh.textmuse.utils;
 
+//https://docs.microsoft.com/en-us/azure/notification-hubs/notification-hubs-android-push-notification-google-fcm-get-started
+
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -11,6 +14,7 @@ import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.notifications.MobileServicePush;
 import com.microsoft.windowsazure.notifications.NotificationsManager;
+import com.google.firebase.FirebaseApp;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -30,9 +34,11 @@ public class AzureIntegrationSingleton {
     private AzureIntegrationSingleton() {}
     //End singleton details
 
-    private static final String SENDER_ID = "949243437629";
+    //private static final String SENDER_ID = "949243437629";
+    private static final String SENDER_ID = "765970005379";
     private static final String MOBILE_SERVICE_URL = "https://textmuse.azure-mobile.net/";
-    private static final String MOBILE_APPKEY = "AkuctIqaVFjQEPTOZDLcaGEutliECb96";
+    //private static final String MOBILE_APPKEY = "AkuctIqaVFjQEPTOZDLcaGEutliECb96";
+    private static final String MOBILE_APPKEY = "AIzaSyC58iQZc8PJMF3tZhgAJY8zu1SCFmbyCHA";
     private MobileServiceClient mClient;
     private boolean mStarted = false;
     private String mGcmRegistrationId = null;
@@ -44,7 +50,9 @@ public class AzureIntegrationSingleton {
             // Mobile Service URL and key
             mClient = new MobileServiceClient(MOBILE_SERVICE_URL, MOBILE_APPKEY, context);
 
-            NotificationsManager.handleNotifications(context, SENDER_ID, AzureTextMuseNotificationHandler.class);
+            FirebaseApp app = FirebaseApp.initializeApp(context);
+            NotificationsManager.handleNotifications(context, AzureNotificationSettings.SenderID,
+                    AzureTextMuseNotificationHandler.class);
             mStarted = true;
             Log.d(Constants.TAG, "Started up azure integration for push notifications");
         } catch (MalformedURLException e) {
@@ -69,6 +77,12 @@ public class AzureIntegrationSingleton {
     }
 
     public void registerForGcm(Context context) {
+        int skin = TextMuseSkinData.getCurrentlySelectedSkin(context);
+        Intent intent = new Intent(context, RegistrationIntentService.class);
+        intent.putExtra(Constants.SKIN_ID_EXTRA, skin);
+        context.startService(intent);
+
+        /*
         try {
             if (getStarted() && getClient() != null && !TextUtils.isEmpty(mGcmRegistrationId)) {
 
@@ -108,5 +122,6 @@ public class AzureIntegrationSingleton {
         catch(Exception e) {
             Log.e(Constants.TAG, "Failed to register for google cloud messaging with the azure client!");
         }
+        */
     }
 }

@@ -25,8 +25,9 @@ import android.net.NetworkInfo;
 import android.net.SSLCertificateSocketFactory;
 import android.os.Build;
 import android.os.SystemClock;
+import android.util.Log;
 
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
 
 import com.android.mms.service_alt.exception.MmsNetworkException;
 import com.squareup.okhttp.ConnectionPool;

@@ -34,7 +34,7 @@ public class GlobalData {
         }
 
         mSettings = TextMuseSettings.load(context);
-        mLoaded = true;
+        mLoaded = mData != null;
     }
 
     public TextMuseData getData() {

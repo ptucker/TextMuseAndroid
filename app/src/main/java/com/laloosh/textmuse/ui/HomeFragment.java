@@ -11,12 +11,14 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -656,6 +658,9 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 if (note.hasDisplayableMedia()) {
                     rowView = inflater.inflate(R.layout.list_ele_category_textimage2, parent, false);
                     viewHolder.mBackgroundImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewItemBackground);
+                    DisplayMetrics metrics = new DisplayMetrics();
+                    ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
+                    viewHolder.mBackgroundImageView.setMaxHeight((int)(metrics.heightPixels * 0.67));
                     viewHolder.mTextOnly = false;
                 } else {
                     rowView = inflater.inflate(R.layout.list_ele_category_textonly2, parent, false);

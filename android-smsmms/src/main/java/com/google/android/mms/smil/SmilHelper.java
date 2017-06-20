@@ -1,6 +1,8 @@
 package com.google.android.mms.smil;
 
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
+import android.util.Log;
+
 import com.android.mms.dom.smil.SmilDocumentImpl;
 import com.google.android.mms.ContentType;
 import com.google.android.mms.pdu_alt.PduBody;

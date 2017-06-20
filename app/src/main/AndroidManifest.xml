@@ -27,10 +27,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <permission
-        android:name="com.laloosh.textmuse.permission.C2D_MESSAGE"
+        android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.laloosh.textmuse.permission.C2D_MESSAGE" />
+    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -38,7 +38,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/launcher_icon"
-        android:label="@string/app_name"
+        android:label="@string/humanix_app_name"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.version"
@@ -107,7 +107,7 @@
             android:exported="false"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="com.laloosh.textmuse.alarmbroadcast.triggered" />
+                <action android:name="${applicationId}.alarmbroadcast.triggered" />
             </intent-filter>
         </receiver>
         <receiver
@@ -118,6 +118,15 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <service android:name=".utils.TextMuseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".utils.RegistrationIntentService"
+            android:exported="false">
+        </service>
 
         <activity
             android:name=".ui.SettingsActivity"
@@ -169,7 +178,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="com.laloosh.textmuse" />
+                <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
 

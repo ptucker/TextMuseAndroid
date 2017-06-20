@@ -16,6 +16,8 @@
 
 package com.android.mms.dom.smil.parser;
 
+import android.util.Log;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,7 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;

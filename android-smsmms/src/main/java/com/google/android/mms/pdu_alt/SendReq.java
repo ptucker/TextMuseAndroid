@@ -16,7 +16,9 @@
 
 package com.google.android.mms.pdu_alt;
 
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
+
+import android.util.Log;
 
 import com.google.android.mms.InvalidHeaderValueException;
 

@@ -30,7 +30,8 @@ import android.provider.Settings;
 import android.service.carrier.CarrierMessagingService;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
-import com.klinker.android.logger.Log;
+import android.util.Log;
+//import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Utils;
 
 import com.android.mms.service_alt.exception.ApnException;

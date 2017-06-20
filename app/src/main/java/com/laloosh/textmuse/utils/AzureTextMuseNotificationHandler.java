@@ -46,11 +46,18 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
         String url = bundle.getString("messageUrl");
         String inAppMessage = bundle.getString("extendedMessage");
         String messageTitle = bundle.getString("messageTitle");
+        String highlighted = bundle.getString("highlight");
+        if (inAppMessage == null || inAppMessage.length() <= 0)
+            inAppMessage = notificationMessage;
 
-        showReminderNotification(context, notificationMessage, url, inAppMessage, messageTitle);
+        //Clear out the notifications
+        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+
+        showReminderNotification(context, notificationMessage, url, inAppMessage, messageTitle, highlighted);
     }
 
-    private void showReminderNotification(Context context, String text, String url, String inAppMessage, String messageTitle) {
+    private void showReminderNotification(Context context, String text, String url, String inAppMessage, String messageTitle, String highlighted) {
 
         //Build the intent that will start the activity on click
         Intent resultIntent;
@@ -69,6 +76,9 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
                 resultIntent.putExtra(Constants.LAUNCH_MESSAGE_EXTRA, inAppMessage);
             }
         }
+        if (highlighted != null) {
+            resultIntent.putExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA, highlighted);
+        }
 
         pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -85,6 +95,10 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
                 .setSmallIcon(R.drawable.notification_icon)
                 .setContentIntent(pendingIntent)
                 .setSound(sound, AudioManager.STREAM_NOTIFICATION);
+
+        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+        inboxStyle.setBigContentTitle(text);
+        builder.setStyle(inboxStyle);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, builder.build());

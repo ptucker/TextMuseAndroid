@@ -25,7 +25,8 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.text.TextUtils;
-import com.klinker.android.logger.Log;
+import android.util.Log;
+//import com.klinker.android.logger.Log;
 
 import com.android.mms.service_alt.exception.ApnException;
 

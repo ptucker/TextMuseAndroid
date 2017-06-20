@@ -25,7 +25,6 @@ public class FetchSkinsAsyncTask extends AsyncTask<Void, Void, FetchSkinsAsyncTa
 
     @Override
     protected FetchSkinsResult doInBackground(Void... params) {
-
         Log.d(Constants.TAG, "Starting async task to fetch new data from server");
 
         String result = null;

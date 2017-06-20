@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.BuildConfig;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
@@ -47,7 +49,9 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     private Handler mHandler;
     private boolean mFirstLaunch;
     private String mLaunchMessage;
+    private String mHighlighted;
     private boolean mTimerFired;
+    private boolean mSkinRetry = true;
 
     private FetchNotesAsyncTask mFetchNotesTask;
     private FetchSkinsAsyncTask mFetchSkinsTask;
@@ -55,6 +59,29 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*
+            //def applicationid = "com.laloosh.textmuse"
+            //def applicationid = "com.oodles.oodles"
+            //def applicationid = "com.laloosh.clearwatertextmuse"
+            def applicationid = "com.laloosh.humanixtextmuse"
+         */
+        Log.d("AppID", com.laloosh.textmuse.BuildConfig.applicationid);
+        switch (com.laloosh.textmuse.BuildConfig.applicationid) {
+            case "com.laloosh.textmuse":
+                Constants.BuildType = Constants.Builds.University;
+                break;
+            case "com.laloosh.humanixtextmuse":
+                Constants.BuildType = Constants.Builds.Humanix;
+                break;
+            case "com.laloosh.clearwatertextmuse":
+                Constants.BuildType = Constants.Builds.Clearwater;
+                break;
+            case "com.oodles.oodles":
+                Constants.BuildType = Constants.Builds.Oodles;
+                break;
+        }
+
         //getSupportActionBar().hide();
 
         GlobalData instance = GlobalData.getInstance();
@@ -79,6 +106,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
         Intent intent = getIntent();
         mLaunchMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
+        mHighlighted = intent.getStringExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA);
     }
 
     //Sets up the layout.  Must be called after we load the global data
@@ -104,9 +132,16 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
                            .load(file)
                            .into(splashScreenIcon);
                 } else {
-                    Picasso.with(this)
-                            .load(mData.skinData.icon)
-                            .into(splashScreenIcon);
+                    try {
+                        Picasso.with(this)
+                                .load(mData.skinData.icon)
+                                .into(splashScreenIcon);
+                    }
+                    catch (Exception ex) {
+                        //skinData.icon may not yet exist, especially for the first run.
+                        // Ignore the error
+                        ;
+                    }
                 }
 
                 //Pick a logo
@@ -182,6 +217,20 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
             return;
         }
 
+        if (mFirstLaunch && Constants.BuildType == Constants.Builds.University && mSkinRetry && !mFinishedLoadingSkins)
+        {
+            //Give the request for skins one more try
+            mSkinRetry = false;
+            long timeDelay = mFirstLaunch ?  SPLASH_SCREEN_MAX_TIME_FIRST_RUN : SPLASH_SCREEN_MAX_TIME;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    timerFinished();
+                }
+            }, timeDelay);
+            return;
+        }
+
         mTimerFired = true;
 
         if (!mFinishedLoading || (mFinishedLoading && mFinishedLoadingResult == FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED)) {
@@ -214,6 +263,9 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
             if (mLaunchMessage != null && mLaunchMessage.length() > 0) {
                 intent.putExtra(Constants.LAUNCH_MESSAGE_EXTRA, mLaunchMessage);
+            }
+            if (mHighlighted != null && mHighlighted.length() > 0) {
+                intent.putExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA, mHighlighted);
             }
         }
 

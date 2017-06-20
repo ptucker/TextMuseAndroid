@@ -272,9 +272,9 @@ public class TextMuseData {
     public int[] getColorList() {
         if (Constants.BuildType == Constants.Builds.Humanix) {
             //007db1, white, bb6b1e
-            int c1 = 0xff000000 + 0x00007db1;
+            int c1 = 0xff000000 + 0x008dc73f;
             int c2 = 0xff000000 + 0X00ffffff;
-            int c3 = 0xff000000 + 0x00bb6b1e;
+            int c3 = 0xff000000 + 0x00231f20;
 
             return new int[]{c1, c2, c3};
         }

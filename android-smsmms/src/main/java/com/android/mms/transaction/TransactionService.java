@@ -47,7 +47,8 @@ import com.android.mms.service_alt.DownloadRequest;
 import com.android.mms.service_alt.MmsNetworkManager;
 import com.android.mms.service_alt.MmsRequestManager;
 import com.google.android.mms.MmsException;
-import com.klinker.android.logger.Log;
+//import com.klinker.android.logger.Log;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.mms.LogTag;

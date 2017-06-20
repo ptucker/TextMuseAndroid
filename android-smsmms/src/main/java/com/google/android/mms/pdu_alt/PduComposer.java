@@ -19,7 +19,8 @@ package com.google.android.mms.pdu_alt;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.text.TextUtils;
-import com.klinker.android.logger.Log;
+import android.util.Log;
+//import com.klinker.android.logger.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

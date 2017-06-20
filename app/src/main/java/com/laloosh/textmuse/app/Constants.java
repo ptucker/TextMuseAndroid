@@ -1,5 +1,8 @@
 package com.laloosh.textmuse.app;
 
+import android.support.v4.BuildConfig;
+import android.util.Log;
+
 public class Constants {
     public static final String TAG = "TextMuse";
 
@@ -42,11 +45,12 @@ public class Constants {
     public static final long MAX_IMAGE_CACHE_SIZE = 64 * 1024 * 1024;
 
     public static final String LAUNCH_MESSAGE_EXTRA = "com.laloosh.textmuse.launch.messageextra";
+    public static final String SKIN_ID_EXTRA = "com.laloosh.textmuse.skin.idextra";
+    public static final String HIGHLIGHTED_MESSAGE_EXTRA = "com.laloosh.textmuse.highlighted.idextra";
 
     public static final String GOOGLE_API_YOUTUBE = "AIzaSyCwp-hP3BadhQKKfnsFSPqoGPV9wmNANM0";
 
-    public enum Builds { University, Humanix}
-    public static final Builds BuildType = Builds.University;
-    public static final int HumanixSponsorID = 82;
-
+    public enum Builds { University, Humanix, Oodles, Clearwater}
+    public static Builds BuildType = Builds.University;
+    public static final int HumanixSponsorID = 6;
 }
