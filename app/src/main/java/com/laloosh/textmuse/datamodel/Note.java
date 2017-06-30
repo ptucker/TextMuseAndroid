@@ -32,6 +32,10 @@ public class Note implements Parcelable {
     public boolean follow;
     public String sponsorName;
     public String sponsorLogoUrl;
+    public int minSendCount;
+    public int minVisitCount;
+    public String winnerText;
+    public String badgeUrl;
 
     //Non-serialized value that are used temporarily
     //savedInternally is a transient field since the external drive where we save these
@@ -245,6 +249,11 @@ public class Note implements Parcelable {
         out.writeByte(follow ? (byte) 1 : (byte) 0);
         ParcelUtils.writeString(out, sponsorName);
         ParcelUtils.writeString(out, sponsorLogoUrl);
+
+        out.writeInt(minSendCount);
+        out.writeInt(minVisitCount);
+        ParcelUtils.writeString(out, winnerText);
+        ParcelUtils.writeString(out, badgeUrl);
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
@@ -278,6 +287,11 @@ public class Note implements Parcelable {
         follow = (in.readByte() != 0);
         sponsorName = ParcelUtils.readString(in);
         sponsorLogoUrl = ParcelUtils.readString(in);
+
+        minSendCount = in.readInt();
+        minVisitCount = in.readInt();
+        winnerText = ParcelUtils.readString(in);
+        badgeUrl = ParcelUtils.readString(in);
     }
 
 }

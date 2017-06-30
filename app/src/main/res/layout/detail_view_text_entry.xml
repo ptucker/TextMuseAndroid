@@ -4,45 +4,25 @@
     android:layout_height="match_parent"
     >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <Button
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/detailViewButtonSelectButton"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/detailViewCloseButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="X"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:backgroundTint="#a0bbbbbb"
         >
-
-        <ImageView
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-
-            android:src="@drawable/textmuse_logo_small"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detailViewTextViewSelect"
-            android:text="Text It"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:textAllCaps="true"
-            android:padding="8dp"
-            android:focusableInTouchMode="false"
-            android:focusable="false"
-            />
-
-    </LinearLayout>
+    </Button>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/detailViewImageViewBackgroundBubble"
-        android:layout_above="@id/detailViewButtonSelectButton"
         android:src="@drawable/detailbubble"
         android:scaleType="fitStart"
         android:adjustViewBounds="true"
@@ -51,176 +31,210 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_above="@id/detailViewButtonSelectButton"
-        android:gravity="center"
-        >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:id="@+id/detailViewLayoutLikeParent"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/detailViewLayoutLike"
-                >
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/heart_white"
-                    android:id="@+id/detailViewImageViewHeart"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:layout_marginRight="4dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/detailViewTextViewLike"
-                    android:text="Like It"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    />
-
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:id="@+id/detailViewLayoutLinkParent"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/detailViewLayoutLink"
-                >
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/link_icon"
-
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:layout_marginRight="4dp"
-
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/detailViewTextViewLink"
-                    android:text="See It"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    />
-
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:id="@+id/detailViewLayoutPinParent"
-            >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/detailViewLayoutPin"
-                >
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/pin_white"
-                    android:id="@+id/detailViewImagePin"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:layout_marginRight="4dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Save It"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/detailViewButtonSelectButton"
-        android:gravity="center"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="25dp"
-        >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detailViewImageViewLeftQuote"
-            android:src="@drawable/leftquote"
-            android:scaleType="fitCenter"
-            android:layout_alignTop="@+id/detailViewTextViewText"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="8dp"
-            />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detailViewImageViewRightQuote"
-            android:src="@drawable/rightquote"
-            android:scaleType="fitCenter"
-            android:layout_alignTop="@+id/detailViewTextViewText"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="8dp"
-            />
-
-        <EditText
+        android:orientation="vertical">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/detailViewEditText"
-            android:hint="Enter your text here"
-            android:background="#00000000"
-            android:textSize="24sp"
+            android:layout_alignParentTop="true"
+            android:layout_weight="0.5"
             android:gravity="center"
-            android:inputType="textCapSentences|textMultiLine"
-            android:layout_toRightOf="@id/detailViewImageViewLeftQuote"
-            android:layout_toLeftOf="@id/detailViewImageViewRightQuote"
-            />
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="25dp"
+            >
 
-    </RelativeLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailViewImageViewLeftQuote"
+                android:src="@drawable/leftquote"
+                android:scaleType="fitCenter"
+                android:layout_alignTop="@+id/detailViewTextViewText"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="8dp"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailViewImageViewRightQuote"
+                android:src="@drawable/rightquote"
+                android:scaleType="fitCenter"
+                android:layout_alignTop="@+id/detailViewTextViewText"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="8dp"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/detailViewEditText"
+                android:hint="Enter your text here"
+                android:background="#00000000"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:inputType="textCapSentences|textMultiLine"
+                android:layout_toRightOf="@id/detailViewImageViewLeftQuote"
+                android:layout_toLeftOf="@id/detailViewImageViewRightQuote"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/detailViewLayoutTextItParent"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/detailViewLayoutSelect"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/detailViewButtonSelectButton"
+                        android:text="Text It"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/detailViewLayoutLinkParent"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/detailViewLayoutLink"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/detailViewTextViewLink"
+                        android:text="Details"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/detailViewLayoutFollowParent"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/detailViewLayoutFollow"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/detailViewFollowButton"
+                        android:text="Follow"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/detailViewBadgeImageLayout"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailViewImageViewBadge1"
+                    android:layout_margin="5dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailViewImageViewBadge2"
+                    android:layout_margin="5dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailViewImageViewBadge3"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/detailViewRewardLayout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_margin="8dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="5"
+                android:id="@+id/detailViewTextViewSendReward"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_margin="8dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="5"
+                android:id="@+id/detailViewTextViewVisitReward"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

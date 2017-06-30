@@ -1,61 +1,38 @@
 package com.laloosh.textmuse.ui;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.text.TextUtilsCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
-import com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment;
 import com.laloosh.textmuse.dialogs.GeneralDialogAndFinishFragment;
-import com.laloosh.textmuse.dialogs.GeneralDialogFragment;
 import com.laloosh.textmuse.dialogs.SetHighlightProblemDialogFragment;
 import com.laloosh.textmuse.tasks.FlagContentAsyncTask;
-import com.laloosh.textmuse.tasks.FollowSponsorAsyncTask;
-import com.laloosh.textmuse.tasks.NoteSeeItAsyncTask;
 import com.laloosh.textmuse.tasks.RemitBadgeAsyncTask;
 import com.laloosh.textmuse.tasks.RemitDealAsyncTask;
-import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.tasks.ViewCategoryAsyncTask;
-import com.laloosh.textmuse.utils.AndroidUtils;
-import com.laloosh.textmuse.utils.AzureIntegrationSingleton;
 import com.laloosh.textmuse.utils.ColorHelpers;
 import com.laloosh.textmuse.utils.ImageDownloadTarget;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.HashMap;
 import java.util.List;
 
-
-public class SelectMessageActivity extends ActionBarActivity implements FlagContentAsyncTask.FlagContentResultHandler, RemitBadgeAsyncTask.RemitBadgeEventHandler {
+public class SelectMessageActivity extends AppCompatActivity implements FlagContentAsyncTask.FlagContentResultHandler, RemitBadgeAsyncTask.RemitBadgeEventHandler {
 
     public static final String CATEGORY_EXTRA = "com.laloosh.textmuse.category.extra";
     public static final String COLOR_OFFSET_EXTRA = "com.laloosh.textmuse.category.coloroffset.extra";
@@ -207,6 +184,8 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
         categoryTextView.setText(mCategory.name);
         categoryTextView.setBackgroundColor(color);
         categoryTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
+
+        overridePendingTransition(R.anim.activitydropdown, R.anim.activityslideup);
     }
 
     @Override
@@ -323,13 +302,13 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
 
         private List<Note> mNotes;
         private LayoutInflater mLayoutInflater;
-        private ActionBarActivity mActivity;
+        private AppCompatActivity mActivity;
         private int mColor;
         private HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
         private int mCategoryPosition;
         private TextMuseData mData;
 
-        public NoteViewPagerAdapter(List<Note> notes, ActionBarActivity activity, int color, int categoryPosition, TextMuseData data) {
+        public NoteViewPagerAdapter(List<Note> notes, AppCompatActivity activity, int color, int categoryPosition, TextMuseData data) {
             mNotes = notes;
             mActivity = activity;
             mLayoutInflater = activity.getLayoutInflater();
@@ -349,390 +328,13 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
 
             Log.d(Constants.TAG, "Instantiating view at position " + position);
 
-            View view;
-            boolean useImageLayout = false;
             final Note note = mNotes.get(position);
 
-            if (note.isLocalNote() && !note.hasDisplayableMedia()) {
-                //Local texts
-                view = mLayoutInflater.inflate(R.layout.detail_view_text_entry, container, false);
+            View v = MessageDetailFactory.CreateDetailView(container, note, mActivity, mColor, mCategoryPosition, position);
 
-                ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewBackgroundBubble);
-                imageView.setColorFilter(mColor);
+            container.addView(v);
 
-                EditText editText = (EditText) view.findViewById(R.id.detailViewEditText);
-                editText.setText(note.text);
-                editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        note.text = s.toString();
-                    }
-                });
-
-            } else if (note.hasDisplayableMedia()) {
-                view = mLayoutInflater.inflate(R.layout.detail_view_textimage, container, false);
-                ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewImage);
-
-                //Try out picasso library to see how it performs
-                Picasso.with(mActivity)
-                        .load(note.getDisplayMediaUrl(mActivity))
-                        .error(R.drawable.placeholder_image)
-                        .fit()
-                        .centerCrop()
-                        .into(imageView);
-
-                Log.d(Constants.TAG, "Seeing if this contains key: " + note.noteId);
-                if (!note.isLocalNote() && !mDownloadTargets.containsKey(note.noteId)) {
-
-                    Log.d(Constants.TAG, "Preparing to download image: " + note.mediaUrl + " with note ID: " + note.noteId);
-                    //Do another picasso task to write the image file to external storage.  This will
-                    //reuse the same image in the cache so it won't go to network again
-                    ImageDownloadTarget downloadTarget = new ImageDownloadTarget(mActivity, note);
-
-                    //Use a hashmap to keep track of these for 2 reasons--to prevent them from getting
-                    //garbage collected, and also so that we don't download twice
-                    mDownloadTargets.put(note.noteId, downloadTarget);
-                    Picasso.with(mActivity)
-                            .load(note.mediaUrl)
-                            .into(downloadTarget);
-                }
-
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Load the expanded image on a click
-                        ExpandedImageDialogFragment fragment = ExpandedImageDialogFragment.newInstance(note);
-                        fragment.show(mActivity.getSupportFragmentManager(), "expandedimagefragment");
-                    }
-                });
-
-                View followLayout = view.findViewById(R.id.detailViewLayoutFollow);
-                if (note.hasSponsor) {
-                    followLayout.setVisibility(View.VISIBLE);
-
-                    final TextView sponsorNameTextView = (TextView) view.findViewById(R.id.detailViewFollowText);
-                    final TextView followButtonTextView = (TextView) view.findViewById(R.id.detailViewFollowTextButton);
-                    final ImageView followImageView = (ImageView) view.findViewById(R.id.detailViewFollowImage);
-
-                    if (TextUtils.isEmpty(note.sponsorLogoUrl)) {
-                        followImageView.setVisibility(View.GONE);
-                        sponsorNameTextView.setVisibility(View.VISIBLE);
-                        sponsorNameTextView.setText(note.sponsorName);
-                    } else {
-                        followImageView.setVisibility(View.VISIBLE);
-                        sponsorNameTextView.setVisibility(View.GONE);
-                        Picasso.with(mActivity)
-                                .load(note.sponsorLogoUrl)
-                                .error(R.drawable.placeholder_image)
-                                .fit()
-                                .centerCrop()
-                                .into(followImageView, new Callback() {
-                                    @Override
-                                    public void onSuccess() {
-                                    }
-
-                                    @Override
-                                    public void onError() {
-                                        followImageView.setVisibility(View.GONE);
-                                        sponsorNameTextView.setVisibility(View.VISIBLE);
-                                        sponsorNameTextView.setText(note.sponsorName);
-                                    }
-                                });
-                    }
-
-                    if (note.follow) {
-                        followButtonTextView.setText("unfollow");
-                    } else {
-                        followButtonTextView.setText("follow");
-                    }
-
-                    followLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (note.follow) {
-                                //unfollow, since we are already following
-                                mData.unfollowSponsor(note.sponsorId);
-                            } else {
-                                mData.followSponsor(note.sponsorId);
-                            }
-
-                            FollowSponsorAsyncTask task = new FollowSponsorAsyncTask(null, mData.appId, note.sponsorId, !note.follow);
-                            task.execute();
-
-                            AzureIntegrationSingleton azureIntegrationSingleton = AzureIntegrationSingleton.getInstance();
-                            azureIntegrationSingleton.registerForGcm(mActivity);
-
-                            note.follow = !note.follow;
-                            mData.save(mActivity);
-
-                            Log.d(Constants.TAG, "note follow flag set to : " + note.follow);
-
-                            if (note.follow) {
-                                Log.d(Constants.TAG, "note setting text to unfollow");
-                                followButtonTextView.setText("unfollow");
-                            } else {
-                                Log.d(Constants.TAG, "note setting text to follow");
-                                followButtonTextView.setText("follow");
-                            }
-                        }
-                    });
-
-                } else {
-                    followLayout.setVisibility(View.GONE);
-                }
-
-                useImageLayout = true;
-
-            } else if (note.isMediaYoutube()) {
-                view = mLayoutInflater.inflate(R.layout.detail_view_textvideo, container, false);
-
-                final int framelayoutId = YOUTUBE_FRAMELAYOUT_BASE_ID + note.noteId;
-                FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.detailViewYoutubeFragmentPlaceholder);
-                frameLayout.setId(framelayoutId);
-
-                ImageView imageView = (ImageView) view.findViewById(R.id.detailViewYoutubeThumbnailImage);
-                final RelativeLayout previewLayout = (RelativeLayout) view.findViewById(R.id.detailViewYoutubeThumbnailLayout);
-
-                //Try out picasso library to see how it performs
-                Picasso.with(mActivity)
-                        .load(note.getYoutubeImgUrl())
-                        .error(R.drawable.placeholder_image)
-                        .fit()
-                        .centerCrop()
-                        .into(imageView);
-
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //On click of the image, let's load the youtube fragment
-                        previewLayout.setVisibility(View.GONE);
-
-                        //Search for the old fragment
-                        YouTubePlayerSupportFragment fragment = (YouTubePlayerSupportFragment) mActivity.getSupportFragmentManager().findFragmentByTag(YOUTUBE_FRAGMENT_NAME);
-                        if (fragment != null) {
-                            //If it exists, then remove it first
-                            try {
-                                View parentView = (View) fragment.getView().getParent();
-                                View thumbnailViewLayout = parentView.findViewById(R.id.detailViewYoutubeThumbnailLayout);
-                                thumbnailViewLayout.setVisibility(View.VISIBLE);
-                            } catch (Exception e) {
-                                //log and ignore this since the view parent could be out of scope
-                                Log.d(Constants.TAG, "Could not get parent of youtube fragment");
-                            }
-
-                            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
-                            transaction.remove(fragment);
-                            transaction.commit();
-                            mActivity.getSupportFragmentManager().executePendingTransactions();
-                        } else {
-                            //Create it if this is the first time
-                            fragment = YouTubePlayerSupportFragment.newInstance();
-                        }
-
-                        YouTubePlayer.OnInitializedListener listener = new YouTubePlayer.OnInitializedListener() {
-                            @Override
-                            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-                                if (!wasRestored) {
-                                    youTubePlayer.loadVideo(note.getYoutubeVideoTag());
-                                }
-                            }
-
-                            @Override
-                            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                                if (youTubeInitializationResult.isUserRecoverableError()) {
-                                    youTubeInitializationResult.getErrorDialog(mActivity, YOUTUBE_RECOVERY_DIALOG_REQUEST_CODE).show();
-                                } else {
-                                    String errorMessage = "Could not initialize video player for the youtube video.";
-                                    Toast.makeText(mActivity, errorMessage, Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        };
-
-                        FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
-                        transaction.add(framelayoutId, fragment, YOUTUBE_FRAGMENT_NAME);
-                        transaction.commit();
-                        fragment.initialize(Constants.GOOGLE_API_YOUTUBE, listener);
-                    }
-                });
-
-
-                useImageLayout = true;
-
-            } else {
-                view = mLayoutInflater.inflate(R.layout.detail_view_textonly, container, false);
-
-                ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewBackgroundBubble);
-                imageView.setColorFilter(mColor);
-            }
-
-            if (!note.isLocalNote() || (note.isLocalNote() && note.hasDisplayableMedia())) {
-                TextView textView = (TextView) view.findViewById(R.id.detailViewTextViewText);
-                if (useImageLayout && (!note.hasDisplayableText())) {
-                    ViewGroup textLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutText);
-                    textLayout.setVisibility(View.GONE);
-                } else {
-                    if (AndroidUtils.hasTextSizeBug()) {
-                        //Due to a bug in android between some specific versions, text resizing doesn't
-                        //work properly unless you add a double byte space around it
-                        final String DOUBLE_BYTE_SPACE = "\u3000";
-                        textView.setText(DOUBLE_BYTE_SPACE + note.getText() + DOUBLE_BYTE_SPACE);
-                    } else {
-                        textView.setText(note.getText());
-                    }
-                }
-            }
-
-            //Link if necessary
-            ViewGroup linkLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLinkParent);
-            if (note.hasExternalLink()) {
-                linkLayout.setVisibility(View.VISIBLE);
-
-                ViewGroup internalLinkLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLink);
-                internalLinkLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            Intent intent = new Intent(mActivity, WebviewActivity.class);
-                            intent.putExtra(WebviewActivity.WEBVIEW_ACTIVITY_EXTRA, note.getExternalLinkUri(Integer.toString(mData.appId)).toString());
-                            mActivity.startActivity(intent);
-
-                            NoteSeeItAsyncTask task = new NoteSeeItAsyncTask(null, mData.appId, note.noteId, v.getContext());
-                            task.execute();
-                        } catch (Exception e) {
-                            Log.e(Constants.TAG, "Could not open link!");
-                            //TODO: error popup?
-                        }
-                    }
-                });
-            } else {
-                linkLayout.setVisibility(View.GONE);
-            }
-
-            //Like if necessary
-            ViewGroup likeLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLikeParent);
-            if (!note.isLocalNote()) {
-                likeLayout.setVisibility(View.VISIBLE);
-
-                final ImageView likeImage = (ImageView) view.findViewById(R.id.detailViewImageViewHeart);
-                final TextView likeText = (TextView) view.findViewById(R.id.detailViewTextViewLike);
-                if (note.liked) {
-                    likeImage.setColorFilter(0xffef1111);
-                } else {
-                    likeImage.setColorFilter(0xffdedede);
-                }
-
-                likeText.setText(Integer.toString(note.likeCount));
-
-                final ViewGroup internalLikeLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLike);
-                internalLikeLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        note.liked = !note.liked;
-                        if (note.liked) {
-                            likeImage.setColorFilter(0xffef1111);
-                            note.likeCount++;
-                        } else {
-                            likeImage.setColorFilter(0xffdedede);
-                            note.likeCount--;
-                        }
-                        likeText.setText(Integer.toString(note.likeCount));
-
-                        SetHighlightAsyncTask.SetHighlightAsyncTaskHandler handler = new SetHighlightAsyncTask.SetHighlightAsyncTaskHandler() {
-                            @Override
-                            public void handlePostResult(String s, Note note, boolean liked, View view) {
-                                if (s == null) {
-                                    //In the case of failure, let's reverse what we did
-                                    note.liked = !liked;
-
-                                    if (note.liked) {
-                                        likeImage.setColorFilter(0xffef1111);
-                                        note.likeCount++;
-                                    } else {
-                                        likeImage.setColorFilter(0xffdedede);
-                                        note.likeCount--;
-                                    }
-                                    likeText.setText(Integer.toString(note.likeCount));
-                                } else {
-                                    note.liked = liked;
-                                }
-
-                                mData.save(mActivity);
-                            }
-                        };
-
-                        SetHighlightAsyncTask task = new SetHighlightAsyncTask(handler, mData.appId, note.liked, note, internalLikeLayout);
-                        task.execute();
-                    }
-                });
-            } else {
-                likeLayout.setVisibility(View.GONE);
-            }
-
-            //Pin
-            ViewGroup internalPinLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutPin);
-
-            //Only allow a pin if this is not a badge
-            if (mCategoryPosition < mData.categories.size()) {
-                Category category = mData.categories.get(mCategoryPosition);
-                if (category == null || !category.name.toLowerCase().contains("badge")) {
-                    internalPinLayout.setVisibility(View.VISIBLE);
-                    final ImageView pinImage = (ImageView) view.findViewById(R.id.detailViewImagePin);
-
-                    if (mData.hasPinnedNote(note.noteId)) {
-                        pinImage.setColorFilter(0xffef1111);
-                    } else {
-                        pinImage.setColorFilter(0xffdedede);
-                    }
-
-                    internalPinLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (mData.hasPinnedNote(note.noteId)) {
-                                mData.unPinNote(note);
-                                pinImage.setColorFilter(0xffdedede);
-                                mData.save(mActivity);
-                            } else {
-                                mData.pinNote(note);
-                                pinImage.setColorFilter(0xffef1111);
-                                mData.save(mActivity);
-                            }
-                        }
-                    });
-                } else {
-                    internalPinLayout.setVisibility(View.GONE);
-                }
-            }
-
-            //Quote boxes
-            ImageView quote = (ImageView) view.findViewById(R.id.detailViewImageViewLeftQuote);
-            quote.setColorFilter(0xff000000);
-            quote = (ImageView) view.findViewById(R.id.detailViewImageViewRightQuote);
-            quote.setColorFilter(0xff000000);
-
-            ViewGroup selectButton = (ViewGroup) view.findViewById(R.id.detailViewButtonSelectButton);
-            selectButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mActivity, ContactsPickerActivity.class);
-                    intent.putExtra(ContactsPickerActivity.CATEGORY_POSITION_EXTRA, mCategoryPosition);
-                    intent.putExtra(ContactsPickerActivity.NOTE_POSITION_EXTRA, position);
-                    intent.putExtra(ContactsPickerActivity.NOTE_ID_EXTRA, note.noteId);
-                    mActivity.startActivity(intent);
-                }
-            });
-
-            container.addView(view);
-
-            return view;
+            return v;
         }
 
         @Override
@@ -747,6 +349,5 @@ public class SelectMessageActivity extends ActionBarActivity implements FlagCont
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
-
     }
 }

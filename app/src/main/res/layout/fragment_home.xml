@@ -5,42 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        android:id="@+id/mainFragmentRoot"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/mainFragmentFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:background="#999999"
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                android:id="@+id/filterContentIcon"
+                android:src="@drawable/launcher_icon"
+                android:background="#999999"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                />
 
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/mainFragmentSwipeContainer"
+            <TextView
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/filterContentTitle"
+
+                android:text="Categories"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/filterContentIcon"
+                android:layout_marginLeft="10dp"
+                />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                android:id="@+id/filterContentButton"
+                android:src="@drawable/ic_details"
+                android:background="#999999"
+                android:layout_centerHorizontal="true"
+                android:layout_toRightOf="@id/filterContentTitle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="4dp"
+                />
+        </RelativeLayout>
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_below="@id/mainFragmentFilter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
+            android:orientation="vertical"
             >
 
-            <ListView
-                android:id="@+id/mainFragmentListView"
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/mainFragmentSwipeContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawSelectorOnTop="false"
+                android:layout_marginTop="10dp"
+                >
+
+                <ListView
+                    android:id="@+id/mainFragmentListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawSelectorOnTop="false"
+                    />
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+
+            <TextView
+                android:id="@+id/mainFragmentTextViewNoItems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Loading..."
+                android:padding="25dp"
+                android:textSize="23sp"
+                android:gravity="center"
+
                 />
-        </android.support.v4.widget.SwipeRefreshLayout>
 
-
-        <TextView
-            android:id="@+id/mainFragmentTextViewNoItems"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Loading..."
-            android:padding="25dp"
-            android:textSize="23sp"
-            android:gravity="center"
-
-            />
-
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="240dp"

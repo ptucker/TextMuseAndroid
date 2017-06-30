@@ -1,6 +1,6 @@
 package com.laloosh.textmuse.ui;
 
-
+import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,13 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -327,7 +328,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             } else {
 
                 generateNoteList();
-                mAdapter = new MainNotesAdapter(this.getContext(), mSortedNotes, mData);
+                mAdapter = new MainNotesAdapter(this.getContext(), mSortedNotes, mData, this.getActivity());
                 mListView.setAdapter(mAdapter);
 
                 mDrawerListAdapter = new DrawerListArrayAdapter(this.getContext(), mData.categories, mData.localTexts, mData.localPhotos, mSettings, mShowPhotos);
@@ -603,6 +604,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
     public static class MainNotesAdapter extends ArrayAdapter<NoteExtended> {
 
         private Context mContext;
+        private Activity mActivity;
         private ArrayList<NoteExtended> mNotes;
         private TextMuseData mData;
 
@@ -615,14 +617,8 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             public TextView mTextView;
             public ImageView mBackgroundImageView;
 
-            public TextView mTextViewLikeCount;
-
-            public ImageView mLikeImageView;
-            public ImageView mPinImageView;
             public ImageView mSendImageView;
 
-            public ViewGroup mLayoutLike;
-            public ViewGroup mLayoutPin;
             public ViewGroup mLayoutSend;
 
             public ViewGroup mTextLayout;
@@ -630,12 +626,13 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             public boolean mTextOnly;
         }
 
-        public MainNotesAdapter(Context context, ArrayList<NoteExtended> notes, TextMuseData data) {
+        public MainNotesAdapter(Context context, ArrayList<NoteExtended> notes, TextMuseData data, Activity activity) {
             super(context, R.layout.list_ele_category, notes);
 
             this.mContext = context;
             this.mData = data;
             this.mNotes = notes;
+            this.mActivity = activity;
         }
 
 
@@ -645,7 +642,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         }
 
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, final ViewGroup parent) {
             View rowView = convertView;
             final NoteExtended noteExtended = mNotes.get(position);
             final Note note = noteExtended.note;
@@ -656,14 +653,14 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 ViewHolder viewHolder = new ViewHolder();
 
                 if (note.hasDisplayableMedia()) {
-                    rowView = inflater.inflate(R.layout.list_ele_category_textimage2, parent, false);
+                    rowView = inflater.inflate(R.layout.list_ele_category_textimage3, parent, false);
                     viewHolder.mBackgroundImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewItemBackground);
                     DisplayMetrics metrics = new DisplayMetrics();
                     ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
                     viewHolder.mBackgroundImageView.setMaxHeight((int)(metrics.heightPixels * 0.67));
                     viewHolder.mTextOnly = false;
                 } else {
-                    rowView = inflater.inflate(R.layout.list_ele_category_textonly2, parent, false);
+                    rowView = inflater.inflate(R.layout.list_ele_category_textonly3, parent, false);
                     viewHolder.mBackgroundViewTextOnly = rowView.findViewById(R.id.mainViewBackgroundView);
                     viewHolder.mTextOnly = true;
                 }
@@ -672,13 +669,8 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewTitle);
                 viewHolder.mArrow = (ImageView) rowView.findViewById(R.id.mainFragmentListItemImageArrow);
                 viewHolder.mTextLayout = (ViewGroup) rowView.findViewById(R.id.mainViewRelativeLayoutTextItem);
-                viewHolder.mLikeImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewHeart);
-                viewHolder.mPinImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewPin);
                 viewHolder.mSendImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewSend);
-                viewHolder.mTextViewLikeCount = (TextView) rowView.findViewById(R.id.mainViewTextViewHeartCount);
 
-                viewHolder.mLayoutLike = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutHeart);
-                viewHolder.mLayoutPin = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutPin);
                 viewHolder.mLayoutSend = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutSend);
 
                 rowView.setTag(viewHolder);
@@ -695,39 +687,25 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
             holder.mArrow.setColorFilter(color);
 
-            View.OnClickListener onCategoryClickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, SelectMessageActivity.class);
-                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA_NAME, noteExtended.categoryName);
-                    intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
-                    EventBus.getDefault().post(new ShowNoteDetailEvent(intent));
-                }
-            };
-
             View.OnClickListener onNoteClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, SelectMessageActivity.class);
-                    intent.putExtra(SelectMessageActivity.CATEGORY_EXTRA_NAME, noteExtended.categoryName);
-                    intent.putExtra(SelectMessageActivity.COLOR_OFFSET_EXTRA, position);
-                    intent.putExtra(SelectMessageActivity.NOTE_ID_EXTRA, noteExtended.note.noteId);
-                    EventBus.getDefault().post(new ShowNoteDetailEvent(intent));
+                    ViewGroup root = (ViewGroup)mActivity.findViewById(R.id.mainFragmentRoot);
+                    View detail = MessageDetailFactory.CreateDetailView(root, note, mActivity, position, noteExtended.categoryIndex, position);
+                    Animation detailSlide = AnimationUtils.loadAnimation(mContext, R.anim.activitydropdown);
+                    root.addView(detail);
+                    detail.startAnimation(detailSlide);
                 }
             };
 
-            holder.mArrow.setOnClickListener(onCategoryClickListener);
-            holder.mCategoryTitle.setOnClickListener(onCategoryClickListener);
             holder.mTextLayout.setOnClickListener(onNoteClickListener);
-
-            //Default the text color to white unless we change it
-            holder.mTextView.setTextColor(0xFFFFFFFF);
 
             if (!note.hasDisplayableText()) {
                 holder.mTextView.setVisibility(View.INVISIBLE);
             } else {
                 holder.mTextView.setVisibility(View.VISIBLE);
-                holder.mTextView.setText(note.getText());
+                String t = note.getText();
+                holder.mTextView.setText(t);
             }
 
             if (!note.hasDisplayableMedia()) {
@@ -751,82 +729,6 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                     }
                 });
             }
-
-            if (note.liked) {
-                holder.mLikeImageView.setColorFilter(0xffef1111);
-            } else {
-                holder.mLikeImageView.setColorFilter(0xffdedede);
-            }
-
-            holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
-
-            if (mData.hasPinnedNote(note.noteId)) {
-                holder.mPinImageView.setColorFilter(0xffef1111);
-            } else {
-                holder.mPinImageView.setColorFilter(0xffdedede);
-            }
-
-            holder.mLayoutLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    note.liked = !note.liked;
-                    if (note.liked) {
-                        holder.mLikeImageView.setColorFilter(0xffef1111);
-                        note.likeCount++;
-                    } else {
-                        holder.mLikeImageView.setColorFilter(0xffdedede);
-                        note.likeCount--;
-                    }
-                    holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
-
-                    SetHighlightAsyncTask.SetHighlightAsyncTaskHandler handler = new SetHighlightAsyncTask.SetHighlightAsyncTaskHandler() {
-                        @Override
-                        public void handlePostResult(String s, Note note, boolean liked, View view) {
-
-                            if (s == null) {
-                                //In the case of failure, let's reverse what we did
-                                note.liked = !liked;
-
-                                if (note.liked) {
-                                    holder.mLikeImageView.setColorFilter(0xffef1111);
-                                    note.likeCount++;
-                                } else {
-                                    holder.mLikeImageView.setColorFilter(0xffdedede);
-                                    note.likeCount--;
-                                }
-                                holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
-                            } else {
-                                note.liked = liked;
-                            }
-
-                            mData.save(mContext);
-                        }
-                    };
-
-                    SetHighlightAsyncTask task = new SetHighlightAsyncTask(handler, mData.appId, note.liked, note, holder.mLayoutLike);
-                    task.execute();
-                }
-            });
-
-            holder.mLayoutPin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (noteExtended.categoryName.toLowerCase().contains("badge")) {
-                        Toast.makeText(mContext, "You can't save a badge.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    if (mData.hasPinnedNote(note.noteId)) {
-                        mData.unPinNote(note);
-                        holder.mPinImageView.setColorFilter(0xffdedede);
-                        mData.save(mContext);
-                    } else {
-                        mData.pinNote(note);
-                        holder.mPinImageView.setColorFilter(0xffef1111);
-                        mData.save(mContext);
-                    }
-                }
-            });
 
             holder.mLayoutSend.setOnClickListener(new View.OnClickListener() {
                 @Override

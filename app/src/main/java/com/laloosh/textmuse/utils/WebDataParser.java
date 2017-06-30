@@ -457,6 +457,14 @@ public class WebDataParser {
                 note.sponsorName = readText(xpp);
             } else if (name.equalsIgnoreCase("sp_logo")) {
                 note.sponsorLogoUrl = readText(xpp);
+            } else if (name.equalsIgnoreCase("send")) {
+                note.minSendCount = Integer.parseInt(readText(xpp));
+            } else if (name.equalsIgnoreCase("visit")) {
+                note.minVisitCount= Integer.parseInt(readText(xpp));
+            } else if (name.equalsIgnoreCase("winner")) {
+                note.winnerText = readText(xpp);
+            } else if (name.equalsIgnoreCase("badge")) {
+                note.sponsorLogoUrl = readText(xpp);
             } else {
                 xpp.nextTag();
             }

@@ -30,4 +30,5 @@
     <string name="sharer_congrats">Way to spread the word!\nYou\'ve just earned Sharer status.</string>
     <string name="muse_congrats">Outstanding!!!\nYou\'ve reached Muse status.</string>
     <string name="master_congrats">Great job!!!\nYou\'ve become a Duck Master.</string>
+    <string name="title_activity_message_detail">MessageDetailActivity</string>
 </resources>

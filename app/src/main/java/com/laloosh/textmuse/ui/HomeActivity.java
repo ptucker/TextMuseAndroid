@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -42,7 +41,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private ViewPager mViewPager;
-    private TabLayout mTabLayout;
     private MainAdapter mAdapter;
     private ImageView mToolbarImage;
 
@@ -75,25 +73,8 @@ public class HomeActivity extends AppCompatActivity {
         mAlreadyLoadedData = intent.getBooleanExtra(ALREADY_LOADED_DATA_EXTRA, false);
 
         mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
-        mTabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
         mAdapter = new MainAdapter(getSupportFragmentManager(), mAlreadyLoadedData);
         mViewPager.setAdapter(mAdapter);
-
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                notifyTabSelected(tab.getPosition());
-                super.onTabSelected(tab);
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                notifyTabDeselected(tab.getPosition());
-                super.onTabUnselected(tab);
-            }
-        });
-
 
         final String startMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
         if (startMessage != null) {
@@ -168,11 +149,7 @@ public class HomeActivity extends AppCompatActivity {
             textView.setText("Hire Me Northwest");
         }
         else {
-            if (mData != null && mData.skinData != null) {
-                textView.setText(mData.skinData.name + " TextMuse");
-            } else {
-                textView.setText("TextMuse");
-            }
+            textView.setText("TextMuse");
         }
     }
 

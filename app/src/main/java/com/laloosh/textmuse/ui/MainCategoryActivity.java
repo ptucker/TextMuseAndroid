@@ -210,25 +210,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         TextView textView = (TextView) findViewById(R.id.mainToolbarTitle);
         mToolbarImage = (ImageView) findViewById(R.id.mainToolbarButton);
 
-        if (mData != null && mData.skinData != null) {
-            textView.setText(mData.skinData.name + " TextMuse");
-
-            File logoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), mData.skinData.getIconImageFilename());
-            if (logoFile.exists()) {
-                Picasso.with(this)
-                        .load(logoFile)
-                        .fit()
-                                //.placeholder(R.drawable.launcher_icon)
-                        .error(R.drawable.launcher_icon)
-                        .centerInside()
-                        .into(mToolbarImage);
-            } else {
-                mToolbarImage.setImageResource(R.drawable.launcher_icon);
-            }
-        } else {
-            textView.setText("TextMuse");
-            mToolbarImage.setImageResource(R.drawable.launcher_icon);
-        }
+        textView.setText("TextMuse");
+        mToolbarImage.setImageResource(R.drawable.launcher_icon);
 
     }
 
@@ -571,14 +554,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
             public TextView mTextView;
             public ImageView mBackgroundImageView;
 
-            public TextView mTextViewLikeCount;
-
-            public ImageView mLikeImageView;
-            public ImageView mPinImageView;
             public ImageView mSendImageView;
 
-            public ViewGroup mLayoutLike;
-            public ViewGroup mLayoutPin;
             public ViewGroup mLayoutSend;
 
             public ViewGroup mTextLayout;
@@ -612,11 +589,11 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 ViewHolder viewHolder = new ViewHolder();
 
                 if (note.hasDisplayableMedia()) {
-                    rowView = inflater.inflate(R.layout.list_ele_category_textimage2, parent, false);
+                    rowView = inflater.inflate(R.layout.list_ele_category_textimage3, parent, false);
                     viewHolder.mBackgroundImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewItemBackground);
                     viewHolder.mTextOnly = false;
                 } else {
-                    rowView = inflater.inflate(R.layout.list_ele_category_textonly2, parent, false);
+                    rowView = inflater.inflate(R.layout.list_ele_category_textonly3, parent, false);
                     viewHolder.mBackgroundViewTextOnly = rowView.findViewById(R.id.mainViewBackgroundView);
                     viewHolder.mTextOnly = true;
                 }
@@ -625,13 +602,8 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewTitle);
                 viewHolder.mArrow = (ImageView) rowView.findViewById(R.id.mainFragmentListItemImageArrow);
                 viewHolder.mTextLayout = (ViewGroup) rowView.findViewById(R.id.mainViewRelativeLayoutTextItem);
-                viewHolder.mLikeImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewHeart);
-                viewHolder.mPinImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewPin);
                 viewHolder.mSendImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewSend);
-                viewHolder.mTextViewLikeCount = (TextView) rowView.findViewById(R.id.mainViewTextViewHeartCount);
 
-                viewHolder.mLayoutLike = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutHeart);
-                viewHolder.mLayoutPin = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutPin);
                 viewHolder.mLayoutSend = (ViewGroup) rowView.findViewById(R.id.mainViewLayoutSend);
 
                 rowView.setTag(viewHolder);
@@ -701,78 +673,7 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 });
             }
 
-            if (note.liked) {
-                holder.mLikeImageView.setColorFilter(0xffef1111);
-            } else {
-                holder.mLikeImageView.setColorFilter(0xffdedede);
-            }
-
-            holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
-
-            if (mData.hasPinnedNote(note.noteId)) {
-                holder.mPinImageView.setColorFilter(0xffef1111);
-            } else {
-                holder.mPinImageView.setColorFilter(0xffdedede);
-            }
-
             holder.mSendImageView.setColorFilter(0xff1a1a1a);
-
-            holder.mLayoutLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    note.liked = !note.liked;
-                    if (note.liked) {
-                        holder.mLikeImageView.setColorFilter(0xffef1111);
-                        note.likeCount++;
-                    } else {
-                        holder.mLikeImageView.setColorFilter(0xffdedede);
-                        note.likeCount--;
-                    }
-                    holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
-
-                    SetHighlightAsyncTask.SetHighlightAsyncTaskHandler handler = new SetHighlightAsyncTask.SetHighlightAsyncTaskHandler() {
-                        @Override
-                        public void handlePostResult(String s, Note note, boolean liked, View view) {
-
-                            if (s == null) {
-                                //In the case of failure, let's reverse what we did
-                                note.liked = !liked;
-
-                                if (note.liked) {
-                                    holder.mLikeImageView.setColorFilter(0xffef1111);
-                                    note.likeCount++;
-                                } else {
-                                    holder.mLikeImageView.setColorFilter(0xffdedede);
-                                    note.likeCount--;
-                                }
-                                holder.mTextViewLikeCount.setText(Integer.toString(note.likeCount));
-                            } else {
-                                note.liked = liked;
-                            }
-
-                            mData.save(mContext);
-                        }
-                    };
-
-                    SetHighlightAsyncTask task = new SetHighlightAsyncTask(handler, mData.appId, note.liked, note, holder.mLayoutLike);
-                    task.execute();
-                }
-            });
-
-            holder.mLayoutPin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mData.hasPinnedNote(note.noteId)) {
-                        mData.unPinNote(note);
-                        holder.mPinImageView.setColorFilter(0xffdedede);
-                        mData.save(mContext);
-                    } else {
-                        mData.pinNote(note);
-                        holder.mPinImageView.setColorFilter(0xffef1111);
-                        mData.save(mContext);
-                    }
-                }
-            });
 
             holder.mLayoutSend.setOnClickListener(new View.OnClickListener() {
                 @Override

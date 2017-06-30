@@ -114,69 +114,8 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         int skinId = TextMuseSkinData.getCurrentlySelectedSkin(this);
         if (Constants.BuildType == Constants.Builds.Humanix) {
             setContentView(R.layout.activity_splash_screen_humanix);
-        } else if (skinId <= 0) {
-            setContentView(R.layout.activity_splash_screen);
         } else {
-            if (mData == null || mData.skinData == null) {
-                setContentView(R.layout.activity_splash_screen);
-            } else {
-                //Use the current skin data to show a different splash screen
-                setContentView(R.layout.activity_splash_screen_skin);
-
-                ImageView splashScreenLogo = (ImageView) findViewById(R.id.splashScreenSkinLogo);
-                ImageView splashScreenIcon = (ImageView) findViewById(R.id.splashScreenSkinIcon);
-
-                File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), mData.skinData.getIconImageFilename());
-                if (file.exists()) {
-                    Picasso.with(this)
-                           .load(file)
-                           .into(splashScreenIcon);
-                } else {
-                    try {
-                        Picasso.with(this)
-                                .load(mData.skinData.icon)
-                                .into(splashScreenIcon);
-                    }
-                    catch (Exception ex) {
-                        //skinData.icon may not yet exist, especially for the first run.
-                        // Ignore the error
-                        ;
-                    }
-                }
-
-                //Pick a logo
-                //First get the screen size
-                DisplayMetrics displaymetrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-                int screenWidth = displaymetrics.widthPixels;
-
-                //Get the closest in size and just pick one
-                ArrayList<TextMuseLaunchIcon> closestSizeIcons = mData.skinData.getClosestSizeLaunchIcons(screenWidth);
-
-                if (closestSizeIcons == null || closestSizeIcons.size() <= 0) {
-                    setContentView(R.layout.activity_splash_screen);
-                    return;
-                }
-
-                Random ran = new Random();
-                int randIndex = ran.nextInt(closestSizeIcons.size());
-
-                TextMuseLaunchIcon icon = closestSizeIcons.get(randIndex);
-                File logoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), mData.skinData.getSplashImageFilename(icon, randIndex));
-                if (logoFile.exists()) {
-                    Picasso.with(this)
-                            .load(logoFile)
-                            .fit()
-                            .centerInside()
-                            .into(splashScreenLogo);
-                } else {
-                    Picasso.with(this)
-                            .load(icon.url)
-                            .fit()
-                            .centerInside()
-                            .into(splashScreenLogo);
-                }
-            }
+            setContentView(R.layout.activity_splash_screen);
         }
     }
 

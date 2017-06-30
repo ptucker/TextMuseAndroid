@@ -68,16 +68,6 @@ tools:context=".ui.HomeActivity">
     </android.support.v7.widget.Toolbar>
 
 
-    <android.support.design.widget.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mainTabLayout"
-        app:tabTextColor="#dedede"
-        app:tabSelectedTextColor="#ffffff"
-        >
-
-    </android.support.design.widget.TabLayout>
-
 </android.support.design.widget.AppBarLayout>
 
 <android.support.v4.view.ViewPager

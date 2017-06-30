@@ -50,7 +50,7 @@ public class Constants {
 
     public static final String GOOGLE_API_YOUTUBE = "AIzaSyCwp-hP3BadhQKKfnsFSPqoGPV9wmNANM0";
 
-    public enum Builds { University, Humanix, Oodles, Clearwater}
+    public enum Builds { University, Humanix, Oodles, Clearwater, NRCC};
     public static Builds BuildType = Builds.University;
     public static final int HumanixSponsorID = 6;
 }

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="5dp"
+        android:layout_margin="10dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mainFragmentListItemImageArrow"
+                android:src="@drawable/ic_action_next_item"
+                android:layout_margin="12dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                />
+            <!--android:tint="#ff990000" -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mainFragmentListItemTextViewTitle"
+                android:text="Category Title"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/mainViewFragmentListItemLayoutNewBadge"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit ="marquee_forever"
+                android:scrollHorizontally="true"
+
+                />
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:id="@+id/mainViewRelativeLayoutTextItem"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/mainFragmentListItemTextViewTitle"
+                >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mainViewBackgroundView"
+                    android:background="#ffee885a"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mainViewImageViewItemBackground"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/bubble"
+                    android:scaleType="fitEnd"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    >
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.15"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingBottom="40dp"
+                        android:src="@drawable/leftquote"
+                        android:scaleType="fitCenter"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:id="@+id/mainViewTextViewText"
+                        android:text="SEND A TEXT TO\nLAUREN PANGBORN"
+                        android:textSize="16sp"
+                        android:textColor="#ffffffff"
+                        android:gravity="center"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        />
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.15"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="20dp"
+                        android:paddingBottom="40dp"
+                        android:src="@drawable/rightquote"
+                        android:scaleType="fitCenter"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mainViewRelativeLayoutTextItem"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:gravity="center_vertical|right"
+                >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mainViewLayoutSend"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TEXT IT"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

@@ -4,53 +4,32 @@
     android:layout_height="match_parent"
     >
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <Button
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/detailViewButtonSelectButton"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/detailViewCloseButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="X"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:backgroundTint="#a0bbbbbb"
         >
-
-        <ImageView
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-
-            android:src="@drawable/textmuse_logo_small"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/detailViewTextViewSelect"
-            android:text="Text It"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:textAllCaps="true"
-            android:padding="8dp"
-            android:focusableInTouchMode="false"
-            android:focusable="false"
-            />
-
-    </LinearLayout>
+    </Button>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_above="@id/detailViewButtonSelectButton"
         android:orientation="vertical"
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.8"
+            android:layout_weight="0.5"
             android:layout_margin="15dp"
             >
             <ImageView
@@ -58,45 +37,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/detailViewImageViewImage"
                 android:src="@drawable/bubble"
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
                 />
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/detailViewLayoutFollow"
-                android:orientation="vertical"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/rounded_grey_rect"
-                android:gravity="center"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/detailViewFollowText"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@android:color/white"
-                    />
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:id="@+id/detailViewFollowImage"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="follow"
-                    android:id="@+id/detailViewFollowTextButton"
-                    android:textColor="@android:color/white"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    />
-
-            </LinearLayout>
-
 
         </RelativeLayout>
 
@@ -153,6 +95,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
+            android:padding="8dp"
             >
 
             <LinearLayout
@@ -161,30 +104,20 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:id="@+id/detailViewLayoutLikeParent"
+                android:id="@+id/detailViewLayoutTextItParent"
                 >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:id="@+id/detailViewLayoutLike"
+                    android:id="@+id/detailViewLayoutSelect"
                     >
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/heart_white"
-                        android:id="@+id/detailViewImageViewHeart"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:layout_marginRight="4dp"
-                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/detailViewTextViewLike"
-                        android:text="Like It"
+                        android:id="@+id/detailViewButtonSelectButton"
+                        android:text="Text It"
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -210,21 +143,11 @@
                     android:id="@+id/detailViewLayoutLink"
                     >
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/link_icon"
-
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:layout_marginRight="4dp"
-
-                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/detailViewTextViewLink"
-                        android:text="See It"
+                        android:text="Details"
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -240,28 +163,20 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:id="@+id/detailViewLayoutPinParent"
+                android:id="@+id/detailViewLayoutFollowParent"
                 >
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:id="@+id/detailViewLayoutPin"
+                    android:id="@+id/detailViewLayoutFollow"
                     >
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/pin_white"
-                        android:id="@+id/detailViewImagePin"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:layout_marginRight="4dp"
-                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Save It"
+                        android:id="@+id/detailViewFollowButton"
+                        android:text="Follow"
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -271,6 +186,64 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/detailViewBadgeImageLayout"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailViewImageViewBadge1"
+                    android:layout_margin="5dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailViewImageViewBadge2"
+                    android:layout_margin="5dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detailViewImageViewBadge3"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/detailViewRewardLayout">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_margin="8dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="5"
+                android:id="@+id/detailViewTextViewSendReward"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_margin="8dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="5"
+                android:id="@+id/detailViewTextViewVisitReward"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
 
