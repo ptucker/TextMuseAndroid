@@ -464,7 +464,7 @@ public class WebDataParser {
             } else if (name.equalsIgnoreCase("winner")) {
                 note.winnerText = readText(xpp);
             } else if (name.equalsIgnoreCase("badge")) {
-                note.sponsorLogoUrl = readText(xpp);
+                note.badgeUrl = readText(xpp);
             } else {
                 xpp.nextTag();
             }

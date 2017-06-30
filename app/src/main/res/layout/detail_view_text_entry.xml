@@ -51,8 +51,9 @@
                 android:id="@+id/detailViewImageViewLeftQuote"
                 android:src="@drawable/leftquote"
                 android:scaleType="fitCenter"
-                android:layout_alignTop="@+id/detailViewTextViewText"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
+                android:layout_marginTop="60dp"
                 android:layout_marginRight="8dp"
                 />
 
@@ -62,8 +63,9 @@
                 android:id="@+id/detailViewImageViewRightQuote"
                 android:src="@drawable/rightquote"
                 android:scaleType="fitCenter"
-                android:layout_alignTop="@+id/detailViewTextViewText"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="60dp"
                 android:layout_marginLeft="8dp"
                 />
 

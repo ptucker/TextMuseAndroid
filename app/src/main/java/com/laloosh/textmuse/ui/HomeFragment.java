@@ -680,7 +680,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
             TextMuseData data = GlobalData.getInstance().getData();
             int[] colorList = data.getColorList();
-            int color = colorList[position % colorList.length];
+            final int color = colorList[position % colorList.length];
 
             holder.mCategoryTitle.setText(noteExtended.categoryName);
             holder.mCategoryTitle.setTextColor(ColorHelpers.getTextColorForWhiteBackground(color));
@@ -691,7 +691,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 @Override
                 public void onClick(View v) {
                     ViewGroup root = (ViewGroup)mActivity.findViewById(R.id.mainFragmentRoot);
-                    View detail = MessageDetailFactory.CreateDetailView(root, note, mActivity, position, noteExtended.categoryIndex, position);
+                    View detail = MessageDetailFactory.CreateDetailView(root, note, mActivity, color, noteExtended.categoryIndex, position);
                     Animation detailSlide = AnimationUtils.loadAnimation(mContext, R.anim.activitydropdown);
                     root.addView(detail);
                     detail.startAnimation(detailSlide);

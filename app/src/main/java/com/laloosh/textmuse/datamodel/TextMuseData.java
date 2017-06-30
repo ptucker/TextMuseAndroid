@@ -127,7 +127,7 @@ public class TextMuseData {
         for (Category category : this.categories) {
             if (category.notes != null && category.notes.size() > 0) {
                 for (Note note : category.notes) {
-                    notesHashset.add(category.name + Integer.toString(note.noteId));
+                    notesHashset.add(category.name + note.text + note.mediaUrl + note.winnerText);
                 }
             }
         }
@@ -135,7 +135,7 @@ public class TextMuseData {
         for (Category category: data.categories) {
             if (category.notes != null && category.notes.size() > 0) {
                 for (Note note : category.notes) {
-                    if (!notesHashset.remove(category.name + Integer.toString(note.noteId))) {
+                    if (!notesHashset.remove(category.name + note.text + note.mediaUrl + note.winnerText)) {
                         return false;
                     }
                 }
