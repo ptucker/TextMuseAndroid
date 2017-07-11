@@ -4,51 +4,6 @@
     android:layout_height="wrap_content"
     >
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mainFragmentListItemImageArrow"
-        android:src="@drawable/ic_action_next_item"
-        android:layout_margin="12dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        />
-        <!--android:tint="#ff990000" -->
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mainViewFragmentListItemLayoutNewBadge"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@id/mainFragmentListItemImageArrow"
-        android:layout_marginTop="10dp"
-        android:layout_alignBaseline="@id/mainFragmentListItemImageArrow"
-        android:gravity="center"
-        >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mainViewFragmentImageViewNewBadge"
-            android:src="@drawable/newbadge"
-            android:scaleType="fitCenter"
-            android:layout_alignBottom="@+id/mainViewFragmentListItemTextViewNewBadge"
-            android:layout_alignLeft="@+id/mainViewFragmentListItemTextViewNewBadge"
-            android:layout_alignRight="@+id/mainViewFragmentListItemTextViewNewBadge"
-            android:layout_alignTop="@+id/mainViewFragmentListItemTextViewNewBadge"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mainViewFragmentListItemTextViewNewBadge"
-            android:text="24 NEW"
-            android:textColor="#ffffffff"
-            android:textAllCaps="true"
-            android:padding="10dp"
-            />
-
-    </RelativeLayout>
         <!-- android:backgroundTint="#ff990000" -->
 
     <TextView
@@ -58,7 +13,6 @@
         android:text="Category Title"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/mainViewFragmentListItemLayoutNewBadge"
         android:layout_marginBottom="6dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"

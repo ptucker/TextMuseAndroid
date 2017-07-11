@@ -548,7 +548,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
         //view holder pattern to prevent repeated queries for ID
         static class ViewHolder {
             public TextView mCategoryTitle;
-            public ImageView mArrow;
 
             public View mBackgroundViewTextOnly;
             public TextView mTextView;
@@ -600,7 +599,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
                 viewHolder.mTextView = (TextView) rowView.findViewById(R.id.mainViewTextViewText);
                 viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewTitle);
-                viewHolder.mArrow = (ImageView) rowView.findViewById(R.id.mainFragmentListItemImageArrow);
                 viewHolder.mTextLayout = (ViewGroup) rowView.findViewById(R.id.mainViewRelativeLayoutTextItem);
                 viewHolder.mSendImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewSend);
 
@@ -617,8 +615,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
 
             holder.mCategoryTitle.setText(noteExtended.categoryName);
             holder.mCategoryTitle.setTextColor(ColorHelpers.getTextColorForWhiteBackground(color));
-
-            holder.mArrow.setColorFilter(color);
 
             View.OnClickListener onCategoryClickListener = new View.OnClickListener() {
                 @Override
@@ -642,7 +638,6 @@ public class MainCategoryActivity extends ActionBarActivity implements FetchNote
                 }
             };
 
-            holder.mArrow.setOnClickListener(onCategoryClickListener);
             holder.mCategoryTitle.setOnClickListener(onCategoryClickListener);
             holder.mTextLayout.setOnClickListener(onNoteClickListener);
 

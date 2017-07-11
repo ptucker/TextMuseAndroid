@@ -17,9 +17,13 @@
             android:gravity="center_horizontal"
             android:background="#999999"
             >
+
+            <!--
+Error:The number of method references in a .dex file cannot exceed 64K.
+Learn how to resolve this issue at https://developer.android.com/tools/building/multidex.html            -->
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
 
                 android:id="@+id/filterContentIcon"
                 android:src="@drawable/launcher_icon"
@@ -45,13 +49,14 @@
                 />
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
 
                 android:id="@+id/filterContentButton"
                 android:src="@drawable/ic_details"
                 android:background="#999999"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/filterContentTitle"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="4dp"

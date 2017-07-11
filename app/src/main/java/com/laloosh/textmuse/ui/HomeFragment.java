@@ -697,7 +697,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         //view holder pattern to prevent repeated queries for ID
         static class ViewHolder {
             public TextView mCategoryTitle;
-            public ImageView mArrow;
+            //public ImageView mArrow;
 
             public View mBackgroundViewTextOnly;
             public TextView mTextView;
@@ -753,7 +753,6 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
                 viewHolder.mTextView = (TextView) rowView.findViewById(R.id.mainViewTextViewText);
                 viewHolder.mCategoryTitle = (TextView) rowView.findViewById(R.id.mainFragmentListItemTextViewTitle);
-                viewHolder.mArrow = (ImageView) rowView.findViewById(R.id.mainFragmentListItemImageArrow);
                 viewHolder.mTextLayout = (ViewGroup) rowView.findViewById(R.id.mainViewRelativeLayoutTextItem);
                 viewHolder.mSendImageView = (ImageView) rowView.findViewById(R.id.mainViewImageViewSend);
 
@@ -770,8 +769,6 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
             holder.mCategoryTitle.setText(noteExtended.categoryName);
             holder.mCategoryTitle.setTextColor(ColorHelpers.getTextColorForWhiteBackground(color));
-
-            holder.mArrow.setColorFilter(color);
 
             View.OnClickListener onNoteClickListener = new View.OnClickListener() {
                 @Override

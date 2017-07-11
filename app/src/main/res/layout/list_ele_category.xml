@@ -20,31 +20,12 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mainViewFragmentListItemTextViewNewBadge"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@id/mainFragmentListItemImageArrow"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/newbadge"
-        android:text="24 NEW"
-        android:textColor="#ffffffff"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:scaleType="centerCrop"
-        />
-        <!-- android:backgroundTint="#ff990000" -->
-
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mainFragmentListItemTextViewTitle"
         android:text="Category Title"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/mainViewFragmentListItemTextViewNewBadge"
         android:layout_margin="15dp"
         android:textSize="18sp"
         android:singleLine="true"
