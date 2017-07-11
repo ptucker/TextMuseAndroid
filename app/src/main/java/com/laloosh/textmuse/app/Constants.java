@@ -35,6 +35,8 @@ public class Constants {
     public static final String SHARED_PREF_KEY_SKIN_BASE = "skinnum";
     public static final String SHARED_PREF_KEY_SKIN_CURRENT_ID = "currentskinid";
 
+    public static final String CATEGORY_FILTER_ALL = "all";
+
     //We will do a backoff on the notifications based on this frequency.  We'll first
     //notify the user after 3 days of non-use, then 6 days after that, then 9 days after that, etc.
     public static final int NOTIFICATION_FREQUENCY = 3;

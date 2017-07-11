@@ -1,5 +1,6 @@
 package com.laloosh.textmuse.ui;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
@@ -21,11 +22,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -76,6 +79,8 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
     private ImageView mToolbarImage;
     private TextView mTextView;
     private boolean mShowPhotos;
+    private View mCategoryFilter;
+    private String mFilter = Constants.CATEGORY_FILTER_ALL;
 
     private View.OnClickListener mDrawerListener;
 
@@ -116,6 +121,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
         mAdapter = null;
         mDrawerListAdapter = null;
+        mCategoryFilter = null;
 
         mToolbarImage = (ImageView) getActivity().findViewById(R.id.mainToolbarButton);
 
@@ -188,8 +194,86 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             Log.d(Constants.TAG, "Already successfully loaded data from internet via splash screen. Skipping reload");
         }
 
+        RelativeLayout filter = (RelativeLayout)v.findViewById(R.id.mainFragmentFilter);
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCategoryFilter == null)
+                    showCategoryFilter();
+                else
+                    hideCategoryFilter();
+            }
+        });
+
         return v;
     }
+
+    protected void showCategoryFilter() {
+        ViewGroup root = (ViewGroup)getActivity().findViewById(R.id.category_menu);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mCategoryFilter = inflater.inflate(R.layout.view_category_filter, root);
+        ListView categoryList = (ListView)mCategoryFilter.findViewById(R.id.category_list);
+        final ArrayList<Category> categories = new ArrayList<>(mData.categories);
+        Category all = new Category();
+        all.id = -1; all.name = Constants.CATEGORY_FILTER_ALL;
+        categories.add(0, all);
+        categoryList.setAdapter(new CategoryArrayAdapter(this.getContext(), categories));
+        Animation filterSlide = AnimationUtils.loadAnimation(getContext(), R.anim.activitydropdown);
+        mCategoryFilter.startAnimation(filterSlide);
+
+        categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mFilter = categories.get(i).name;
+                generateViewsFromData();
+                hideCategoryFilter();
+            }
+        });
+    }
+
+    protected void hideCategoryFilter() {
+        final ViewGroup root = (ViewGroup)getActivity().findViewById(R.id.category_menu);
+        Animation filterSlide = AnimationUtils.loadAnimation(getContext(), R.anim.activityslideup);
+        mCategoryFilter.startAnimation(filterSlide);
+        filterSlide.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) { }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                root.removeAllViews();
+                mCategoryFilter = null;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+        });
+    }
+
+    class CategoryArrayAdapter extends ArrayAdapter<Category> {
+        private final Context context;
+        private final List<Category> values;
+
+        public CategoryArrayAdapter(Context context, List<Category> values) {
+            super(context, -1, values);
+            this.context = context;
+            this.values = values;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View rowView = inflater.inflate(R.layout.list_ele_categoryfilter, parent, false);
+            TextView textView = (TextView) rowView.findViewById(R.id.categoryname);
+            textView.setText(values.get(position).name);
+            if (values.get(position).name == mFilter)
+                textView.setTypeface(null, Typeface.BOLD);
+            else
+                textView.setTypeface(null, Typeface.NORMAL);
+
+            return rowView;
+        }
+     }
 
     protected void setDrawerListener() {
         mDrawerOpen = false;
@@ -353,13 +437,15 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             for (Category category : mData.categories) {
                 categoryPos++;
 
-                if (!mSettings.shouldShowCategory(category.name)) {
+                if ((mFilter == Constants.CATEGORY_FILTER_ALL && !mSettings.shouldShowCategory(category.name)) ||
+                        (mFilter != Constants.CATEGORY_FILTER_ALL && mFilter != category.name)) {
                     continue;
                 }
 
                 int inCategoryPos = 0;
                 for (Note note : category.notes) {
-                    if ((mEventsOnly && note.isEvent()) || !mEventsOnly || (mEventsOnly && category.eventCategory)) {
+                    if ((mEventsOnly && note.isEvent()) || !mEventsOnly || (mEventsOnly && category.eventCategory) ||
+                            mFilter != Constants.CATEGORY_FILTER_ALL) {
                         int score = rnd.nextInt(3);
                         score += note.newFlag ? 4 : 0;
                         score += note.liked ? 1 : 0;

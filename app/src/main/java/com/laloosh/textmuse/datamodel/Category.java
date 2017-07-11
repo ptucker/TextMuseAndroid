@@ -14,4 +14,6 @@ public class Category {
     public boolean eventCategory;
 
     public List<Note> notes;
+
+    public String toString() { return name; }
 }

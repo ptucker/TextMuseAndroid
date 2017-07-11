@@ -58,7 +58,6 @@
                 />
         </RelativeLayout>
 
-
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_below="@id/mainFragmentFilter"
             android:layout_width="match_parent"
@@ -96,6 +95,14 @@
                 />
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/category_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainFragmentFilter"
+            />
+
     </RelativeLayout>
 
     <LinearLayout
