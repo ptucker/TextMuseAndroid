@@ -445,7 +445,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 int inCategoryPos = 0;
                 for (Note note : category.notes) {
                     if ((mEventsOnly && note.isEvent()) || !mEventsOnly || (mEventsOnly && category.eventCategory) ||
-                            mFilter != Constants.CATEGORY_FILTER_ALL) {
+                            mFilter != Constants.CATEGORY_FILTER_ALL || category.name == "Badges") {
                         int score = rnd.nextInt(3);
                         score += note.newFlag ? 4 : 0;
                         score += note.liked ? 1 : 0;

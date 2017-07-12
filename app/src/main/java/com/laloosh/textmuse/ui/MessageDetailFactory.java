@@ -389,7 +389,7 @@ public class MessageDetailFactory {
             TextView sendreward = (TextView)view.findViewById(R.id.detailViewTextViewSendReward);
             sendreward.setText(String.format("Text to %d: %s", note.minSendCount, note.winnerText));
             TextView visitreward = (TextView)view.findViewById(R.id.detailViewTextViewVisitReward);
-            visitreward.setText(String.format("Come with %d badges for an even better deal", note.minVisitCount));
+            visitreward.setText(String.format("Visit with %d badges: %s", note.minVisitCount, note.visitWinnerText));
         }
         else {
             rewards.setVisibility(View.GONE);

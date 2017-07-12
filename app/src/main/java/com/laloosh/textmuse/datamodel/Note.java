@@ -35,6 +35,7 @@ public class Note implements Parcelable {
     public int minSendCount;
     public int minVisitCount;
     public String winnerText;
+    public String visitWinnerText;
     public String badgeUrl;
 
     //Non-serialized value that are used temporarily

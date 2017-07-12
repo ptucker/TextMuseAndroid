@@ -463,6 +463,8 @@ public class WebDataParser {
                 note.minVisitCount= Integer.parseInt(readText(xpp));
             } else if (name.equalsIgnoreCase("winner")) {
                 note.winnerText = readText(xpp);
+            } else if (name.equalsIgnoreCase("visitwinner")) {
+                note.visitWinnerText = readText(xpp);
             } else if (name.equalsIgnoreCase("badge")) {
                 note.badgeUrl = readText(xpp);
             } else {
