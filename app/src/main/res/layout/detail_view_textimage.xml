@@ -192,31 +192,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/detailViewBadgeImageLayout"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/detailViewImageViewBadge1"
-                    android:layout_margin="5dp"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/detailViewImageViewBadge2"
-                    android:layout_margin="5dp"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/detailViewImageViewBadge3"
-                    android:layout_margin="5dp"/>
-
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:id="@+id/detailViewBadgeImageLayout"
+            >
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:id="@+id/detailViewImageViewBadge1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:id="@+id/detailViewImageViewBadge2"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:id="@+id/detailViewImageViewBadge3"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
 
         </LinearLayout>
 

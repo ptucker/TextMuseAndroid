@@ -55,7 +55,7 @@ public class MessageDetailFactory {
     private static Activity mActivity;
     private static LayoutInflater mLayoutInflater;
     private static HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
-    private static int mColor, mCategoryPosition;
+    private static int mColor, mCategoryPosition, mPosition;
 
     private static final int YOUTUBE_RECOVERY_DIALOG_REQUEST_CODE = 1222;
     private static final int YOUTUBE_FRAMELAYOUT_BASE_ID = 10000000;
@@ -71,6 +71,7 @@ public class MessageDetailFactory {
         mDownloadTargets = new HashMap<Integer, ImageDownloadTarget>();
         mColor = color;
         mCategoryPosition = categoryPosition;
+        mPosition = position;
 
         if (note.isLocalNote() && !note.hasDisplayableMedia()) {
             view = CreateDetailTextEntry(container, note);
@@ -101,6 +102,7 @@ public class MessageDetailFactory {
         }
 
         SetupTouch(view);
+        SetupTextIt(view, note);
         SetupSeeIt(view, note);
         SetupFollows(view, note);
         SetupQuotes(view, note, position);
@@ -261,6 +263,20 @@ public class MessageDetailFactory {
         return view;
     }
 
+    private static void SetupTextIt(View view, final Note note) {
+        ViewGroup internalTextLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutSelect);
+        internalTextLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, ContactsPickerActivity.class);
+                intent.putExtra(ContactsPickerActivity.CATEGORY_POSITION_EXTRA, mCategoryPosition);
+                intent.putExtra(ContactsPickerActivity.NOTE_POSITION_EXTRA, mPosition);
+                intent.putExtra(ContactsPickerActivity.NOTE_ID_EXTRA, note.noteId);
+                mActivity.startActivity(intent);
+            }
+        });
+    }
+
     private static void SetupSeeIt(View view, final Note note) {
         //Link if necessary
         ViewGroup linkLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutLinkParent);
@@ -361,7 +377,7 @@ public class MessageDetailFactory {
 
     private static void SetupBadgeDetail(View view, final Note note) {
         LinearLayout badges = (LinearLayout)view.findViewById(R.id.detailViewBadgeImageLayout);
-        if (note.badgeUrl != null && note.badgeUrl.length() > 0) {
+        if (note.minSendCount > 0 && note.badgeUrl != null && note.badgeUrl.length() > 0) {
             badges.setVisibility(View.VISIBLE);
 
             ImageView[] badgeIcons = {
@@ -386,8 +402,10 @@ public class MessageDetailFactory {
         LinearLayout rewards = (LinearLayout)view.findViewById(R.id.detailViewRewardLayout);
         if (note.minSendCount > 0) {
             rewards.setVisibility(View.VISIBLE);
-            TextView sendreward = (TextView)view.findViewById(R.id.detailViewTextViewSendReward);
+            TextView sendreward = (TextView) view.findViewById(R.id.detailViewTextViewSendReward);
             sendreward.setText(String.format("Text to %d: %s", note.minSendCount, note.winnerText));
+        }
+        if (note.minVisitCount > 0) {
             TextView visitreward = (TextView)view.findViewById(R.id.detailViewTextViewVisitReward);
             visitreward.setText(String.format("Visit with %d badges: %s", note.minVisitCount, note.visitWinnerText));
         }

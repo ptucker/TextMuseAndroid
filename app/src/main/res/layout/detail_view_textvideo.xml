@@ -134,7 +134,8 @@
                         android:text="Text It"
                         android:textAllCaps="true"
                         android:textStyle="bold"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
+                        android:textColor="#00ac65"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         />
@@ -164,7 +165,8 @@
                         android:text="Details"
                         android:textAllCaps="true"
                         android:textStyle="bold"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
+                        android:textColor="#e9662c"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         />
@@ -193,7 +195,8 @@
                         android:text="Follow"
                         android:textAllCaps="true"
                         android:textStyle="bold"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
+                        android:textColor="#16c2ef"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         />

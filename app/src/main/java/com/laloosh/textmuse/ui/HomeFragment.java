@@ -48,6 +48,7 @@ import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.ColorHelpers;
 import com.laloosh.textmuse.utils.SmsUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,6 +78,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
     private TextView mTextViewDrawerSaved;
     private ListView mDrawerList;
     private ImageView mToolbarImage;
+    private ImageView mFilterButton;
     private TextView mTextView;
     private boolean mShowPhotos;
     private View mCategoryFilter;
@@ -143,6 +145,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         });
 
         mTextView = (TextView) v.findViewById(R.id.mainFragmentTextViewNoItems);
+        mFilterButton = (ImageView)v.findViewById(R.id.filterContentIcon);
 
         mListView = (ListView) v.findViewById(R.id.mainFragmentListView);
         mListView.setVisibility(View.GONE);
@@ -204,6 +207,14 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                     hideCategoryFilter();
             }
         });
+
+        if (mData.skinData.icon != null) {
+            Picasso.with(getContext())
+                    .load(mData.skinData.icon)
+                    .error(R.drawable.launcher_icon)
+                    .resize(32, 32)
+                    .into(mFilterButton);
+        }
 
         return v;
     }
@@ -291,8 +302,14 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 }
             }
         };
-        mToolbarImage.setOnClickListener(mDrawerListener);
-
+        //mToolbarImage.setOnClickListener(mDrawerListener);
+        mToolbarImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), SettingsActivity.class);
+                getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_SETTINGS);
+            }
+        });
     }
 
     @Override
@@ -380,7 +397,8 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
 
     @Override
     public void onTabSelected() {
-        mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.ic_menu_white));
+        //mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.ic_menu_white));
+        mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.gear_white));
         mToolbarImage.setAlpha(1.0f);
         setDrawerListener();
         mTabSelected = true;
@@ -774,7 +792,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 @Override
                 public void onClick(View v) {
                     ViewGroup root = (ViewGroup)mActivity.findViewById(R.id.mainFragmentRoot);
-                    View detail = MessageDetailFactory.CreateDetailView(root, note, mActivity, color, noteExtended.categoryIndex, position);
+                    View detail = MessageDetailFactory.CreateDetailView(root, note, mActivity, color, noteExtended.categoryIndex, noteExtended.notePos);
                     Animation detailSlide = AnimationUtils.loadAnimation(mContext, R.anim.activitydropdown);
                     root.addView(detail);
                     detail.startAnimation(detailSlide);

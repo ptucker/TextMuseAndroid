@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:background="#999999"
+            android:background="#d3d3d3"
             >
 
             <!--
@@ -27,7 +27,6 @@ Learn how to resolve this issue at https://developer.android.com/tools/building/
 
                 android:id="@+id/filterContentIcon"
                 android:src="@drawable/launcher_icon"
-                android:background="#999999"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="4dp"
@@ -54,7 +53,6 @@ Learn how to resolve this issue at https://developer.android.com/tools/building/
 
                 android:id="@+id/filterContentButton"
                 android:src="@drawable/ic_details"
-                android:background="#999999"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/filterContentTitle"

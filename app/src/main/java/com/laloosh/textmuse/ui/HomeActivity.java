@@ -25,6 +25,7 @@ import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
 import com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment;
+import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -143,7 +144,8 @@ public class HomeActivity extends AppCompatActivity {
     public void setSkinTitle() {
         setTitle("");
         TextView textView = (TextView) findViewById(R.id.mainToolbarTitle);
-        mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_white));
+        //mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_menu_white));
+        mToolbarImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.gear_white));
 
         if (Constants.BuildType == Constants.Builds.Humanix) {
             textView.setText("Hire Me Northwest");

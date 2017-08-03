@@ -26,23 +26,22 @@ tools:context=".ui.HomeActivity">
         android:layout_height="wrap_content"
         android:id="@+id/mainToolbar"
 
-        android:background="#222222"
+        android:background="#16c2ef"
         android:elevation="4dp"
         >
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             >
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
 
                 android:id="@+id/mainToolbarButton"
-                android:src="@drawable/launcher_icon"
-                android:background="#222222"
+                android:src="@drawable/gear_white"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginTop="4dp"
@@ -56,11 +55,10 @@ tools:context=".ui.HomeActivity">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/mainToolbarTitle"
-
                 android:text="TextMuse"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/mainToolbarButton"
-                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/mainToolbarButton"
+                android:layout_marginLeft="25dp"
                 />
 
         </RelativeLayout>
