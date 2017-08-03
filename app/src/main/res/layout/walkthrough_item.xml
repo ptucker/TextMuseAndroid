@@ -61,7 +61,7 @@
         android:layout_above="@id/walkthroughDoneButton"
         android:layout_margin="20dp"
 
-        android:src="@drawable/page1_walkthrough"
+        android:src="@drawable/page1_walkthru"
         android:scaleType="fitCenter"
 
         />

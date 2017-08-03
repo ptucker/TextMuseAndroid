@@ -27,17 +27,17 @@ public class WalkthroughActivity extends ActionBarActivity {
     private boolean mInitialLaunch;
 
     private static final String[] WALKTHROUGH_DESCRIPTIONS = {"Every day, you'll find great local deals, great events, university news, and other fun stuff.",
-                                                              "Choose a text to see more, save it for later, or share it with someone.",
+                                                              "Choose a text to share it with friends, see more, or follow the sponsor.",
                                                               "Choose a friend or group. If they have more than one number, tap the person's name.",
-                                                              "Before you send it, you can make some edits to give it that personal touch.",
+                                                              "Before you send it, make some edits to give it that personal touch.",
                                                               "Use the settings to personalize TextMuse - choose which categories you want to see and send us feedback."
                                                              };
 
-    private static final int[] WALKTHROUGH_IMAGE_RESOURCES = {R.drawable.page1_walkthrough,
-                                                              R.drawable.page2_walkthrough,
-                                                              R.drawable.page3_walkthrough,
-                                                              R.drawable.page4_walkthrough,
-                                                              R.drawable.page5_walkthrough
+    private static final int[] WALKTHROUGH_IMAGE_RESOURCES = {R.drawable.page1_walkthru,
+                                                              R.drawable.page2_walkthru,
+                                                              R.drawable.page3_walkthru,
+                                                              R.drawable.page4_walkthru,
+                                                              R.drawable.page5_walkthru
                                                              };
 
 
