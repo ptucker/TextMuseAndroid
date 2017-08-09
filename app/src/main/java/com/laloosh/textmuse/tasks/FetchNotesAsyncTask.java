@@ -181,7 +181,8 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
         }
 
         File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), skinData.getIconImageFilename());
-        downloadImageToFile(context, skinData.icon, file);
+        if (skinData != null && skinData.icon != null)
+            downloadImageToFile(context, skinData.icon, file);
     }
 
     //Returns true if succeeded

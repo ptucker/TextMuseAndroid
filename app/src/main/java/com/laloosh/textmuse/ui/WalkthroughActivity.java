@@ -33,6 +33,10 @@ public class WalkthroughActivity extends ActionBarActivity {
                                                               "Use the settings to personalize TextMuse - choose which categories you want to see and send us feedback."
                                                              };
 
+    // mdpi: 166 X 288
+    // hdpi: 252 X 437
+    // xhdpi: 333 X 577
+    // xxhdpi: 504 X 874
     private static final int[] WALKTHROUGH_IMAGE_RESOURCES = {R.drawable.page1_walkthru,
                                                               R.drawable.page2_walkthru,
                                                               R.drawable.page3_walkthru,

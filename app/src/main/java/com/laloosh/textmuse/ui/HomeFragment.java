@@ -208,7 +208,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
             }
         });
 
-        if (mData.skinData.icon != null) {
+        if (mData != null && mData.skinData != null && mData.skinData.icon != null) {
             Picasso.with(getContext())
                     .load(mData.skinData.icon)
                     .error(R.drawable.launcher_icon)
