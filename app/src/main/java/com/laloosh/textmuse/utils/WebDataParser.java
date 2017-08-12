@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 
 public class WebDataParser {
+    private boolean isBadge;
 
     public TextMuseData parse(String data) {
 
@@ -382,6 +383,8 @@ public class WebDataParser {
             }
         }
 
+        isBadge = category.name.equalsIgnoreCase("badges");
+
         while (xpp.next() != XmlPullParser.END_TAG) {
             if (xpp.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -435,6 +438,7 @@ public class WebDataParser {
                 }
             }
         }
+        note.isBadge = isBadge;
 
         while (xpp.next() != XmlPullParser.END_TAG) {
             if (xpp.getEventType() != XmlPullParser.START_TAG) {

@@ -463,12 +463,14 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 int inCategoryPos = 0;
                 for (Note note : category.notes) {
                     if ((mEventsOnly && note.isEvent()) || !mEventsOnly || (mEventsOnly && category.eventCategory) ||
-                            mFilter != Constants.CATEGORY_FILTER_ALL || category.name == "Badges") {
+                            mFilter != Constants.CATEGORY_FILTER_ALL || note.isBadge) {
                         int score = rnd.nextInt(3);
                         score += note.newFlag ? 4 : 0;
                         score += note.liked ? 1 : 0;
                         score += mData.hasPinnedNote(note.noteId) ? 1 : 0;
                         score += inCategoryPos / 3;
+                        if (note.isBadge)
+                            score = 1000;
 
                         if (note.hasDisplayableMedia()) {
                             imageNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
@@ -767,6 +769,11 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                     rowView = inflater.inflate(R.layout.list_ele_category_textonly3, parent, false);
                     viewHolder.mBackgroundViewTextOnly = rowView.findViewById(R.id.mainViewBackgroundView);
                     viewHolder.mTextOnly = true;
+                }
+
+                if (note.isBadge) {
+                    TextView tv = (TextView)rowView.findViewById(R.id.mainViewLayoutSendText);
+                    tv.setVisibility(View.INVISIBLE);
                 }
 
                 viewHolder.mTextView = (TextView) rowView.findViewById(R.id.mainViewTextViewText);

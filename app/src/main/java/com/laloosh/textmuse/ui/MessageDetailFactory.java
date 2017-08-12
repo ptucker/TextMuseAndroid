@@ -37,6 +37,8 @@ import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment;
 import com.laloosh.textmuse.tasks.FollowSponsorAsyncTask;
 import com.laloosh.textmuse.tasks.NoteSeeItAsyncTask;
+import com.laloosh.textmuse.tasks.RemitBadgeAsyncTask;
+import com.laloosh.textmuse.tasks.RemitDealAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.AndroidUtils;
 import com.laloosh.textmuse.utils.AzureIntegrationSingleton;
@@ -60,7 +62,6 @@ public class MessageDetailFactory {
     private static final int YOUTUBE_RECOVERY_DIALOG_REQUEST_CODE = 1222;
     private static final int YOUTUBE_FRAMELAYOUT_BASE_ID = 10000000;
     private static final String YOUTUBE_FRAGMENT_NAME = "youtubefragment";
-
 
     public static View CreateDetailView(ViewGroup container, final Note note, Activity activity, int color, int categoryPosition, final int position) {
         View view = null;
@@ -105,7 +106,7 @@ public class MessageDetailFactory {
         SetupTextIt(view, note);
         SetupSeeIt(view, note);
         SetupFollows(view, note);
-        SetupQuotes(view, note, position);
+        SetupQuotes(view);
         SetupBadgeDetail(view, note);
         SetupClose(view);
 
@@ -263,18 +264,35 @@ public class MessageDetailFactory {
         return view;
     }
 
-    private static void SetupTextIt(View view, final Note note) {
+    private static void SetupTextIt(final View view, final Note note) {
         ViewGroup internalTextLayout = (ViewGroup) view.findViewById(R.id.detailViewLayoutSelect);
         internalTextLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mActivity, ContactsPickerActivity.class);
-                intent.putExtra(ContactsPickerActivity.CATEGORY_POSITION_EXTRA, mCategoryPosition);
-                intent.putExtra(ContactsPickerActivity.NOTE_POSITION_EXTRA, mPosition);
-                intent.putExtra(ContactsPickerActivity.NOTE_ID_EXTRA, note.noteId);
-                mActivity.startActivity(intent);
+                if (note.isBadge) {
+                    RemitBadgeAsyncTask task = new RemitBadgeAsyncTask(new RemitBadgeAsyncTask.RemitBadgeEventHandler() {
+                        @Override
+                        public void handleRemitPostResult(String s) {
+                            Toast.makeText(mActivity.getApplicationContext(), "Badge is remitted", Toast.LENGTH_LONG).show();
+                            removeView(view);
+                        }
+                    }, mData.appId, note.noteId);
+                    task.execute();
+                }
+                else {
+                    Intent intent = new Intent(mActivity, ContactsPickerActivity.class);
+                    intent.putExtra(ContactsPickerActivity.CATEGORY_POSITION_EXTRA, mCategoryPosition);
+                    intent.putExtra(ContactsPickerActivity.NOTE_POSITION_EXTRA, mPosition);
+                    intent.putExtra(ContactsPickerActivity.NOTE_ID_EXTRA, note.noteId);
+                    mActivity.startActivity(intent);
+                }
             }
         });
+
+        if (note.isBadge) {
+            TextView b = (TextView)view.findViewById(R.id.detailViewButtonSelectButton);
+            b.setText("REMIT IT");
+        }
     }
 
     private static void SetupSeeIt(View view, final Note note) {
@@ -305,7 +323,7 @@ public class MessageDetailFactory {
         }
     }
 
-    private static void SetupQuotes(View view, final Note note, final int position) {
+    private static void SetupQuotes(View view) {
         //Quote boxes
         ImageView quote = (ImageView) view.findViewById(R.id.detailViewImageViewLeftQuote);
         if (quote != null)
@@ -313,18 +331,6 @@ public class MessageDetailFactory {
         quote = (ImageView) view.findViewById(R.id.detailViewImageViewRightQuote);
         if (quote != null)
             quote.setColorFilter(0xff000000);
-
-        ViewGroup selectButton = (ViewGroup) view.findViewById(R.id.detailViewLayoutSelect);
-        selectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mActivity, ContactsPickerActivity.class);
-                intent.putExtra(ContactsPickerActivity.CATEGORY_POSITION_EXTRA, mCategoryPosition);
-                intent.putExtra(ContactsPickerActivity.NOTE_POSITION_EXTRA, position);
-                intent.putExtra(ContactsPickerActivity.NOTE_ID_EXTRA, note.noteId);
-                mActivity.startActivity(intent);
-            }
-        });
     }
 
     private static void SetupFollows(View view, final Note note) {

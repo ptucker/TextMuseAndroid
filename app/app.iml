@@ -148,11 +148,5 @@
     <orderEntry type="module" module-name="android-smsmms" exported="" />
     <orderEntry type="module" module-name="viewpagerindicator" exported="" />
     <orderEntry type="library" exported="" name="org.apache.http.legacy-android-24" level="project" />
-    <orderEntry type="library" exported="" name="okhttp-urlconnection-2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="okio-1.6.0" level="project" />
-    <orderEntry type="library" exported="" name="okhttp-2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
   </component>
 </module>

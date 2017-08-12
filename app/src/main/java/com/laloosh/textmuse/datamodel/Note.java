@@ -23,6 +23,7 @@ public class Note implements Parcelable {
     public String mediaUrl;
     public String extraUrl;
     public boolean liked;
+    public boolean isBadge;
     public int likeCount;
     public String location;
     public String eventDate;
