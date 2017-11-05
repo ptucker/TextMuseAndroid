@@ -76,8 +76,7 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
         for (int i = 0; i < mSkins.size(); i++) {
             TextMuseSkin skin = mSkins.get(i);
             if (skin.skinId == selectedSkinId) {
-                //i + 1 because position 0 is the regular skin
-                mSelectedSkinIndex = i + 1;
+                mSelectedSkinIndex = i;
             }
         }
 
@@ -95,32 +94,15 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
 
-                //At this point, the selected skin index is the old one. Use it to keep track of the
-                //previous skin ID in case of a failure
-                if (mSelectedSkinIndex == 0) {
-                    mPreviousSkinId = -1;
-                } else {
-                    TextMuseSkin skin = mSkins.get(mSelectedSkinIndex - 1);
-                    mPreviousSkinId = skin.skinId;
-                }
-
-                if (position != mSelectedSkinIndex) {
-                    if (position == 0) {
-                        //-1 indicates the standard skin
-                        selectSkinId(-1);
-                    } else {
-                        // -1 because position 0 is the standard skin
-                        TextMuseSkin skin = mSkins.get(position - 1);
-                        selectSkinId(skin.skinId);
-                    }
-                }
+                TextMuseSkin skin = mSkins.get(position);
+                selectSkinId(skin.skinId);
 
                 mSelectedSkinIndex = position;
 
-//                //Automatically go to the next screen if we are launched from the splash screen
-//                if (mLaunchedFromSplash) {
-//                    donePressed();
-//                }
+                //Automatically go to the next screen if we are launched from the splash screen
+                if (mLaunchedFromSplash) {
+                    donePressed();
+                }
             }
         });
     }
@@ -288,6 +270,7 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
 
             ViewHolder viewHolder = (ViewHolder) rowView.getTag();
 
+            /*
             if (position == 0) {
                 //Position 0 is the standard textmuse item
                 viewHolder.mTextView.setText("TextMuse");
@@ -295,12 +278,13 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
                         .load(R.drawable.launcher_icon)
                         .into(viewHolder.mImageView);
             } else {
-                TextMuseSkin skin = mSkins.get(position - 1);
+            */
+                TextMuseSkin skin = mSkins.get(position);
                 viewHolder.mTextView.setText(skin.name);
                 Picasso.with(mActivity)
                         .load(skin.iconUrl)
                         .into(viewHolder.mImageView);
-            }
+            /*}*/
 
             return rowView;
         }
@@ -308,7 +292,7 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
         @Override
         public int getCount() {
             //Add one to the count since we always have the standard textmuse skin at position 0
-            return mSkins.size() + 1;
+            return mSkins.size();
         }
 
         @Override

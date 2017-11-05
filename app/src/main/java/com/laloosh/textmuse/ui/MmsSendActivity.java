@@ -74,7 +74,10 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
                 .centerInside()
                 .into(mTarget);
 
-        mEditText.setText(mNote.getText());
+        String text = mNote.getText();
+        if (mNote.extraUrl != null && mNote.extraUrl.length() > 0)
+            text = text + " (" + mNote.extraUrl + ")";
+        mEditText.setText(text);
     }
 
     @Override

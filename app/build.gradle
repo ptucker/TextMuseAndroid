@@ -8,15 +8,14 @@ def applicationid = "com.laloosh.textmuse"
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '25.0.0'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId = applicationid + ".app"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 42
-        versionName "2.90"
+        versionCode 45
+        versionName "2.92"
         buildConfigField "String", "applicationid", "\"${applicationid}\""
         multiDexEnabled true
     }
@@ -26,6 +25,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "university"
+    productFlavors {
+        university {
+            dimension "university"
+        }
+    }
+
     sourceSets { main { java.srcDirs = ['src/main/java', 'src/main/java/datamodel'] } }
 
     packagingOptions {
@@ -69,6 +76,7 @@ repositories {
     maven {
         url "http://dl.bintray.com/microsoftazuremobile/SDK"
     }
+    google()
 }
 
 apply plugin: 'com.google.gms.google-services'

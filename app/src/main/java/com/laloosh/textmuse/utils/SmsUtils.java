@@ -113,9 +113,9 @@ public class SmsUtils {
 
         if (text.length() > 0) {
             TextMuseData tmd = GlobalData.getInstance().getData();
-            if (tmd.preamble != null && tmd.preamble.length() > 0)
+            if (tmd != null && tmd.preamble != null && tmd.preamble.length() > 0)
                 text = tmd.preamble + " " + text;
-            if (tmd.inquiry != null && tmd.inquiry.length() > 0)
+            if (tmd != null && tmd.inquiry != null && tmd.inquiry.length() > 0)
                 text += " (" + tmd.inquiry + ")";
         }
         return text;

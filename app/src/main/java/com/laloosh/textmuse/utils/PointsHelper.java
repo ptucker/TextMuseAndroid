@@ -26,6 +26,7 @@ public class PointsHelper {
             data.explorerPoints = update.ep;
             data.save(context);
 
+            /*
             if (!data.gotMasterBadge) {
                 int total = update.sp + update.mp + update.ep;
                 if (total >= 25) {
@@ -67,6 +68,7 @@ public class PointsHelper {
                 intent.putExtra(GotBadgeActivity.BADGE_EXTRA, GotBadgeActivity.BADGE_EXPLORER);
                 context.startActivity(intent);
             }
+            */
         }
     }
 }

@@ -19,13 +19,14 @@ public class GlobalData {
     private GlobalData() {}
     //End singleton details
 
-
     private TextMuseData mData;
+    private Context mContext;
     private TextMuseStoredContacts mStoredContacts;
     private TextMuseSettings mSettings;
     private boolean mLoaded = false;
 
     public void loadData(Context context) {
+        mContext = context;
         mData = TextMuseData.load(context);
         mStoredContacts = TextMuseStoredContacts.load(context);
 
