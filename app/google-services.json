@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "765970005379",
+    "firebase_url": "https://textmuse.firebaseio.com",
+    "project_id": "textmuse",
+    "storage_bucket": "textmuse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765970005379:android:7e70e3cba05202f7",
+        "android_client_info": {
+          "package_name": "com.laloosh.textmuse.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "765970005379-uc6bjvfv9ubl8ba57ef0919cc9fgor6a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.laloosh.textmuse.app",
+            "certificate_hash": "3c5f9d0a0b697bb74313d9b16239e10189428873"
+          }
+        },
+        {
+          "client_id": "765970005379-h300ntrk1qdrm4mivhnq000kmqd3kdlt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChvRcgjQ7EyrAT0YsclPwtlSSmuoFqfUY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "765970005379-h300ntrk1qdrm4mivhnq000kmqd3kdlt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
