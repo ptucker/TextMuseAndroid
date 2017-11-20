@@ -53,7 +53,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:background="#ffeeeeee"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
                     android:focusable="false"
                     android:focusableInTouchMode="false"

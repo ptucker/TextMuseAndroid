@@ -101,7 +101,6 @@ public class HomeActivity extends AppCompatActivity {
                         iCategory = c;
                 }
             }
-            //EventBus.getDefault().post(new HomeFragment.ShowNoteDetailEvent(intentMsg));
             if (iCategory != -1) {
                 intentMsg.putExtra(SelectMessageActivity.CATEGORY_EXTRA, iCategory);
                 startActivity(intentMsg);
@@ -115,6 +114,11 @@ public class HomeActivity extends AppCompatActivity {
                 notifyTabSelected(0);
             }
         });
+    }
+
+    public void onBackPressed() {
+        if (!mAdapter.onBack())
+            super.onBackPressed();
     }
 
     protected void notifyTabSelected(int position) {
@@ -198,6 +202,7 @@ public class HomeActivity extends AppCompatActivity {
     public static class MainAdapter extends FragmentPagerAdapter {
         private boolean mAlreadyLoadedData = false;
         private HashMap<Integer, String> mTabMap;
+        private HomeFragment mFragment;
 
         public MainAdapter(FragmentManager fm, boolean alreadyLoadedData) {
             super(fm);
@@ -209,7 +214,8 @@ public class HomeActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             if (position == 0) {
                 boolean events = (Constants.BuildType != Constants.Builds.Humanix);
-                return HomeFragment.newInstance(mAlreadyLoadedData, events);
+                mFragment = HomeFragment.newInstance(mAlreadyLoadedData, events);
+                return mFragment;
             } else if (position == 1) {
                 return BadgeFragment.newInstance();
             } else {
@@ -242,6 +248,10 @@ public class HomeActivity extends AppCompatActivity {
 
         public String getTabFragmentTag(int position) {
             return mTabMap.get(position);
+        }
+
+        public boolean onBack() {
+            return mFragment.onBack();
         }
     }
 }

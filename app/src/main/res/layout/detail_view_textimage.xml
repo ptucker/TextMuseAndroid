@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/detailViewImageViewImage"
                 android:src="@drawable/bubble"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 />
 
         </RelativeLayout>

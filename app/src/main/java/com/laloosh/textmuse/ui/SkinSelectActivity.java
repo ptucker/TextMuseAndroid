@@ -172,6 +172,14 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
         return super.onOptionsItemSelected(item);
     }
 
+    public void onStop() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+            mProgressDialog = null;
+        }
+        super.onStop();
+    }
+
     private void donePressed() {
         if (mLaunchedFromSplash) {
             Intent intent = new Intent(this, WalkthroughActivity.class);
@@ -207,8 +215,11 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
 
     @Override
     public void handleFetchResult(FetchNotesAsyncTask.FetchNotesResult result) {
-        mProgressDialog.dismiss();
-        mProgressBar.setVisibility(View.GONE);
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+            mProgressBar.setVisibility(View.GONE);
+            mProgressDialog = null;
+        }
         mLoadingSkinChange = false;
 
         //Go to the next screen if we are done loading from splash

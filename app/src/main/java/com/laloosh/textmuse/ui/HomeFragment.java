@@ -47,6 +47,7 @@ import com.laloosh.textmuse.tasks.DownloadImageAsyncTask;
 import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.ColorHelpers;
+import com.laloosh.textmuse.utils.OnBackListener;
 import com.laloosh.textmuse.utils.SmsUtils;
 import com.squareup.picasso.Picasso;
 
@@ -58,7 +59,8 @@ import java.util.Random;
 
 import de.greenrobot.event.EventBus;
 
-public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler, TabSelectListener {
+public class HomeFragment extends Fragment
+        implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler, TabSelectListener, OnBackListener {
     private static final String ARG_ALREADY_LOADED_DATA = "arg.alreadyloadeddata";
     private static final String ARG_EVENTS_ONLY = "arg.eventsonly";
     private static final int REQUEST_SELECT_MESSAGE = 1005;
@@ -217,6 +219,15 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         }
 
         return v;
+    }
+
+    public boolean onBack() {
+        boolean ret = mAdapter.getDetail() != null;
+        if (ret) {
+            MessageDetailFactory.removeView(mAdapter.getDetail());
+            mAdapter.clearDetail();
+        }
+        return ret;
     }
 
     protected void showCategoryFilter() {
@@ -713,6 +724,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
         private Activity mActivity;
         private ArrayList<NoteExtended> mNotes;
         private TextMuseData mData;
+        private View detail;
 
         //view holder pattern to prevent repeated queries for ID
         static class ViewHolder {
@@ -799,7 +811,7 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 @Override
                 public void onClick(View v) {
                     ViewGroup root = (ViewGroup)mActivity.findViewById(R.id.mainFragmentRoot);
-                    View detail = MessageDetailFactory.CreateDetailView(root, note, mActivity, color, noteExtended.categoryIndex, noteExtended.notePos);
+                    detail = MessageDetailFactory.CreateDetailView(root, note, mActivity, color, noteExtended.categoryIndex, noteExtended.notePos);
                     Animation detailSlide = AnimationUtils.loadAnimation(mContext, R.anim.activitydropdown);
                     root.addView(detail);
                     detail.startAnimation(detailSlide);
@@ -867,6 +879,10 @@ public class HomeFragment extends Fragment implements FetchNotesAsyncTask.FetchN
                 return 1;
             }
         }
+
+        public View getDetail() { return detail; }
+
+        public void clearDetail() { detail = null; }
 
         public void updateNotes(ArrayList<NoteExtended> notes) {
             mNotes = notes;

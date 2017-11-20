@@ -149,7 +149,7 @@ public class MessageDetailFactory {
                 .load(note.getDisplayMediaUrl(mActivity))
                 .error(R.drawable.placeholder_image)
                 .fit()
-                .centerCrop()
+                .centerInside()
                 .into(imageView);
 
         Log.d(Constants.TAG, "Seeing if this contains key: " + note.noteId);
@@ -450,7 +450,7 @@ public class MessageDetailFactory {
             );
     }
 
-    private static void removeView(View view) {
+    public static void removeView(View view) {
         ViewGroup root = (ViewGroup)view.getParent();
         Animation detailSlide = AnimationUtils.loadAnimation(mActivity.getApplicationContext(), R.anim.activityslideup);
         view.startAnimation(detailSlide);

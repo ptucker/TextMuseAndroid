@@ -234,6 +234,11 @@ public class SelectMessageActivity extends AppCompatActivity implements FlagCont
         return super.onOptionsItemSelected(item);
     }
 
+    public void onBackPressed() {
+        if (!mPagerAdapter.onBack())
+            super.onBackPressed();
+    }
+
     protected void remitClicked() {
         int index = mViewPager.getCurrentItem();
         Note note = mCategory.notes.get(index);
@@ -307,6 +312,7 @@ public class SelectMessageActivity extends AppCompatActivity implements FlagCont
         private HashMap<Integer, ImageDownloadTarget> mDownloadTargets;
         private int mCategoryPosition;
         private TextMuseData mData;
+        private View detail;
 
         public NoteViewPagerAdapter(List<Note> notes, AppCompatActivity activity, int color, int categoryPosition, TextMuseData data) {
             mNotes = notes;
@@ -330,11 +336,11 @@ public class SelectMessageActivity extends AppCompatActivity implements FlagCont
 
             final Note note = mNotes.get(position);
 
-            View v = MessageDetailFactory.CreateDetailView(container, note, mActivity, mColor, mCategoryPosition, position);
+            detail = MessageDetailFactory.CreateDetailView(container, note, mActivity, mColor, mCategoryPosition, position);
 
-            container.addView(v);
+            container.addView(detail);
 
-            return v;
+            return detail;
         }
 
         @Override
@@ -348,6 +354,15 @@ public class SelectMessageActivity extends AppCompatActivity implements FlagCont
         @Override
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
+        }
+
+        public boolean onBack() {
+            boolean ret = detail != null;
+            if (ret) {
+                MessageDetailFactory.removeView(detail);
+                detail = null;
+            }
+            return ret;
         }
     }
 }
