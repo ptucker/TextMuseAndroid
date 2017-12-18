@@ -215,9 +215,9 @@ public class SettingsActivity extends ActionBarActivity {
         @Override
         public int getCount() {
 
-            //There are a base of 7 (notifications, recent contacts, feedback, register, privacy policy, walkthrough, skins) items
+            //There are a base of 8 (notifications, group sends, recent contacts, feedback, register, privacy policy, walkthrough, skins) items
             // hide the skins option if we're B2B
-            int total = (Constants.BuildType == Constants.Builds.University) ? 7 : 6;
+            int total = (Constants.BuildType == Constants.Builds.University) ? 8 : 7;
 
             if (mShouldShowCategories) {
                 total += mCategoryList.size() + 1;  //category list plus header
@@ -243,20 +243,22 @@ public class SettingsActivity extends ActionBarActivity {
                 case 0:
                     return getNotificationView(convertView, parent);
                 case 1:
-                    return getRecentContactsView(convertView, parent);
+                    return getGroupSendView(convertView, parent);
                 case 2:
-                    return getTextOnlyView(convertView, parent, TextOnlyViewType.FEEDBACK_VIEW);
+                    return getRecentContactsView(convertView, parent);
                 case 3:
-                    return getTextOnlyView(convertView, parent, TextOnlyViewType.REGISTER_VIEW);
+                    return getTextOnlyView(convertView, parent, TextOnlyViewType.FEEDBACK_VIEW);
                 case 4:
-                    return getTextOnlyView(convertView, parent, TextOnlyViewType.PRIVACY_POLICY_VIEW);
+                    return getTextOnlyView(convertView, parent, TextOnlyViewType.REGISTER_VIEW);
                 case 5:
-                    return getTextOnlyView(convertView, parent, TextOnlyViewType.WALKTHROUGH_VIEW);
+                    return getTextOnlyView(convertView, parent, TextOnlyViewType.PRIVACY_POLICY_VIEW);
                 case 6:
+                    return getTextOnlyView(convertView, parent, TextOnlyViewType.WALKTHROUGH_VIEW);
+                case 7:
                     return (Constants.BuildType == Constants.Builds.University) ?
                             getTextOnlyView(convertView, parent, TextOnlyViewType.SKIN_VIEW) :
                             getCategoryHeader(convertView, parent);
-                case 7:
+                case 8:
                     adjustedPosition = position - (getCount() - mCategoryList.size());
                     return (Constants.BuildType == Constants.Builds.University) ?
                             getCategoryHeader(convertView, parent) :
@@ -281,6 +283,27 @@ public class SettingsActivity extends ActionBarActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     mSettings.notifications = isChecked;
+                    mSettings.save(SettingsActivity.this);
+                }
+            });
+
+            return rowView;
+        }
+
+        //Don't bother with view holders here, since there's only 1 of these
+        private View getGroupSendView(View convertView, ViewGroup parent) {
+            View rowView = convertView;
+            if (rowView == null) {
+                rowView = mLayoutInflater.inflate(R.layout.settings_groupsend_ele, parent, false);
+            }
+
+            Switch groupsSwitch = (Switch) rowView.findViewById(R.id.settingsSwitchGroups);
+            groupsSwitch.setChecked(mSettings.groupsends);
+
+            groupsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mSettings.groupsends = isChecked;
                     mSettings.save(SettingsActivity.this);
                 }
             });

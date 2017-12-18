@@ -13,6 +13,7 @@ import java.util.List;
 public class TextMuseSettings {
 
     public boolean notifications = true;
+    public boolean groupsends = true;
     public boolean saveRecentContacts = true;
     public int recentContactLimit = Constants.DEFAULT_NUMBER_RECENT_CONTACTS;
 

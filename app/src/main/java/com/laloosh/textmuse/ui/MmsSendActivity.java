@@ -50,7 +50,9 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
 
         mNote = getIntent().getParcelableExtra(NOTE_EXTRA);
         mPhoneNumbers = getIntent().getStringArrayExtra(PHONE_NUMBERS_EXTRA);
-        if (mNote == null || mPhoneNumbers == null) {
+        if (mPhoneNumbers == null)
+            mPhoneNumbers = new String[]{""};
+        if (mNote == null) {
             finish();
             return;
         }

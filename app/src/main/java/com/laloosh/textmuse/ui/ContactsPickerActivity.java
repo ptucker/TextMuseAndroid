@@ -212,35 +212,65 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         } else if (id == R.id.menu_send) {
 
             HashSet<String> phoneNumberSet = getSelectedPhoneNumbers();
+            /*
             if (phoneNumberSet.isEmpty()) {
                 NoContactsSelectedDialogFragment fragment = NoContactsSelectedDialogFragment.newInstance();
                 fragment.show(getSupportFragmentManager(), "nocontactsfragment");
                 return true;
             }
-
-            updateRecentContacts();
+            */
+            if (!phoneNumberSet.isEmpty())
+                updateRecentContacts();
             sendNoteIdToServer(phoneNumberSet.size());
 
             if (!mNote.hasDisplayableMedia() || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 //If there is no displayable media or if we're on older versions of android,
                 //fall back to using the old method
 
-                Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
+                if (mSettings.groupsends) {
+                    Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
 
-                try {
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
-                    CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
-                    fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
+                        CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
+                        fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
+                    }
+                }
+                else {
+                    for (String p: phoneNumberSet) {
+                        HashSet<String> phone = new HashSet<>();
+                        phone.add(p);
+                        Intent intent = SmsUtils.createSmsIntent(this, mNote, phone);
+
+                        try {
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
+                            CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
+                            fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
+                        }
+                    }
                 }
 
             } else {
-                String[] phoneNumberArray = phoneNumberSet.toArray(new String[phoneNumberSet.size()]);
-                Intent intent = new Intent(this, MmsSendActivity.class);
-                intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
-                intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
-                startActivityForResult(intent, REQUEST_CODE_MMS);
+                if (mSettings.groupsends) {
+                    String[] phoneNumberArray = phoneNumberSet.toArray(new String[phoneNumberSet.size()]);
+                    Intent intent = new Intent(this, MmsSendActivity.class);
+                    intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
+                    intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
+                    startActivityForResult(intent, REQUEST_CODE_MMS);
+                }
+                else {
+                    for (String p: phoneNumberSet) {
+                        String[] phoneNumberArray = new String[] {p};
+                        Intent intent = new Intent(this, MmsSendActivity.class);
+                        intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
+                        intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
+                        startActivityForResult(intent, REQUEST_CODE_MMS);
+                    }
+                }
             }
 
             return true;

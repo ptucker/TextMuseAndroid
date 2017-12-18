@@ -38,6 +38,8 @@ public class Note implements Parcelable {
     public String winnerText;
     public String visitWinnerText;
     public String badgeUrl;
+    public String phoneNumber;
+    public String textNumber;
 
     //Non-serialized value that are used temporarily
     //savedInternally is a transient field since the external drive where we save these

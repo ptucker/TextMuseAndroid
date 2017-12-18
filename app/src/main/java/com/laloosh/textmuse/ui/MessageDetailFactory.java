@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -34,6 +36,7 @@ import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
+import com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment;
 import com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment;
 import com.laloosh.textmuse.tasks.FollowSponsorAsyncTask;
 import com.laloosh.textmuse.tasks.NoteSeeItAsyncTask;
@@ -43,10 +46,13 @@ import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.AndroidUtils;
 import com.laloosh.textmuse.utils.AzureIntegrationSingleton;
 import com.laloosh.textmuse.utils.ImageDownloadTarget;
+import com.laloosh.textmuse.utils.SmsUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by petertucker on 6/23/17.
@@ -103,6 +109,7 @@ public class MessageDetailFactory {
         }
 
         SetupTouch(view);
+        SetupQuickContent(view, note);
         SetupTextIt(view, note);
         SetupSeeIt(view, note);
         SetupFollows(view, note);
@@ -262,6 +269,48 @@ public class MessageDetailFactory {
         imageView.setColorFilter(mColor);
 
         return view;
+    }
+
+    private static void SetupQuickContent(final View view, final Note note) {
+        ViewGroup internalQuickLayout = (ViewGroup) view.findViewById(R.id.detailViewQuickContent);
+        if (note.phoneNumber == null && note.textNumber == null)
+            internalQuickLayout.setVisibility(View.INVISIBLE);
+        else {
+            internalQuickLayout.setVisibility(View.VISIBLE);
+
+            if (note.phoneNumber != null) {
+                TextView vphone = (TextView)view.findViewById(R.id.detailViewButtonQuickPhone);
+                vphone.setText("p:" + note.phoneNumber);
+                ViewGroup layoutQuickPhone = (ViewGroup) view.findViewById(R.id.detailViewLayoutQuickPhone);
+                layoutQuickPhone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + note.phoneNumber));
+                        mActivity.startActivity(intent);                    }
+                });
+            }
+            if (note.textNumber != null) {
+                TextView vtext = (TextView)view.findViewById(R.id.detailViewButtonQuickText);
+                vtext.setText("t:" + note.textNumber);
+                ViewGroup layoutQuickText = (ViewGroup) view.findViewById(R.id.detailViewLayoutQuickText);
+                layoutQuickText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Note n = new Note(true);
+                        HashSet<String> phoneNumberSet = new HashSet<String>();
+                        phoneNumberSet.add(note.textNumber);
+                        Intent intent = SmsUtils.createSmsIntent(mActivity, n, phoneNumberSet);
+
+                        try {
+                            mActivity.startActivity(intent);
+                        } catch (Exception e) {
+                            Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
+                        }
+                    }
+                });
+            }
+        }
     }
 
     private static void SetupTextIt(final View view, final Note note) {
