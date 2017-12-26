@@ -52,7 +52,8 @@ public class Constants {
 
     public static final String GOOGLE_API_YOUTUBE = "AIzaSyCwp-hP3BadhQKKfnsFSPqoGPV9wmNANM0";
 
-    public enum Builds { University, Humanix, Oodles, Clearwater, NRCC};
+    public enum Builds { University, Humanix, Oodles, Clearwater, NRCC, YouthREACH};
     public static Builds BuildType = Builds.University;
-    public static final int HumanixSponsorID = 6;
+    public static final int HumanixSponsorID = 82;
+    public static final int YouthREACHSponsorID = 171;
 }

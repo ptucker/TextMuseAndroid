@@ -278,6 +278,14 @@ public class TextMuseData {
 
             return new int[]{c1, c2, c3};
         }
+        else if (Constants.BuildType == Constants.Builds.YouthREACH) {
+            //007db1, white, bb6b1e
+            int c1 = 0xff000000 + 0x00000000;
+            int c2 = 0xff000000 + 0X00be1009;
+            int c3 = 0xff000000 + 0x0000009a;
+
+            return new int[]{c1, c2, c3};
+        }
         else {
             if (skinData == null) {
                 return Constants.COLOR_LIST;

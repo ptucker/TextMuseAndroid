@@ -80,6 +80,9 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
             case "com.oodles.oodles":
                 Constants.BuildType = Constants.Builds.Oodles;
                 break;
+            case "com.laloosh.youthreachtextmuse":
+                Constants.BuildType = Constants.Builds.YouthREACH;
+                break;
         }
 
         //getSupportActionBar().hide();
@@ -114,6 +117,8 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
         int skinId = TextMuseSkinData.getCurrentlySelectedSkin(this);
         if (Constants.BuildType == Constants.Builds.Humanix) {
             setContentView(R.layout.activity_splash_screen_humanix);
+        } else if (Constants.BuildType == Constants.Builds.YouthREACH) {
+            setContentView(R.layout.activity_splash_screen_youthreach);
         } else {
             setContentView(R.layout.activity_splash_screen);
         }

@@ -278,8 +278,9 @@ public class MessageDetailFactory {
         else {
             internalQuickLayout.setVisibility(View.VISIBLE);
 
+            TextView vphone = (TextView)view.findViewById(R.id.detailViewButtonQuickPhone);
+            TextView vtext = (TextView)view.findViewById(R.id.detailViewButtonQuickText);
             if (note.phoneNumber != null) {
-                TextView vphone = (TextView)view.findViewById(R.id.detailViewButtonQuickPhone);
                 vphone.setText("p:" + note.phoneNumber);
                 ViewGroup layoutQuickPhone = (ViewGroup) view.findViewById(R.id.detailViewLayoutQuickPhone);
                 layoutQuickPhone.setOnClickListener(new View.OnClickListener() {
@@ -290,8 +291,10 @@ public class MessageDetailFactory {
                         mActivity.startActivity(intent);                    }
                 });
             }
+            else
+                vphone.setVisibility(View.INVISIBLE);
+
             if (note.textNumber != null) {
-                TextView vtext = (TextView)view.findViewById(R.id.detailViewButtonQuickText);
                 vtext.setText("t:" + note.textNumber);
                 ViewGroup layoutQuickText = (ViewGroup) view.findViewById(R.id.detailViewLayoutQuickText);
                 layoutQuickText.setOnClickListener(new View.OnClickListener() {
@@ -310,6 +313,8 @@ public class MessageDetailFactory {
                     }
                 });
             }
+            else
+                vtext.setVisibility(View.INVISIBLE);
         }
     }
 

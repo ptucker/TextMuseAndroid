@@ -210,13 +210,15 @@ public class HomeFragment extends Fragment
             }
         });
 
-        if (mData != null && mData.skinData != null && mData.skinData.icon != null) {
+        if (mData != null && mData.skinData != null && mData.skinData.icon != null && mData.skinData.icon.length() > 0) {
             Picasso.with(getContext())
                     .load(mData.skinData.icon)
                     .error(R.drawable.launcher_icon)
                     .resize(32, 32)
                     .into(mFilterButton);
         }
+        else
+            mFilterButton.setVisibility(View.INVISIBLE);
 
         return v;
     }

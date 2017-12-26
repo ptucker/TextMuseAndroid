@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TextMuse</string>
-    <string name="humanix_app_name">TextMuse</string>
+    <string name="humanix_app_name">Hire Me NW</string>
+    <string name="youthreach_app_name">YouthREACH</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -8,6 +9,7 @@
 
     <string name="title_activity_main_category">TextMuse</string>
     <string name="humanix_title_activity_main_category">Hire Me Northwest</string>
+    <string name="youthreach_title_activity_main_category">YouthREACH</string>
     <string name="title_activity_select_message">Select Message</string>
     <string name="enter_group_name_description">"Enter a name for this group:"</string>
     <string name="enter_group_name_error">"The group name cannot be blank."</string>
@@ -22,6 +24,7 @@
     <string name="title_activity_walkthrough">Walkthrough</string>
     <string name="title_activity_splash_screen">TextMuse</string>
     <string name="humanix_title_activity_splash_screen">Hire Me Northwest</string>
+    <string name="youthreach_title_activity_splash_screen">YouthREACH</string>
     <string name="title_activity_sortable_category">Reorder Categories</string>
     <string name="title_activity_webview">External Page</string>
     <string name="title_activity_skin_select">TextMuse</string>

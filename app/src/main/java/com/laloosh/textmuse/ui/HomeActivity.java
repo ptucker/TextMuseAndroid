@@ -154,6 +154,9 @@ public class HomeActivity extends AppCompatActivity {
         if (Constants.BuildType == Constants.Builds.Humanix) {
             textView.setText("Hire Me Northwest");
         }
+        else if (Constants.BuildType == Constants.Builds.YouthREACH) {
+            textView.setText("YouthREACH");
+        }
         else {
             textView.setText("TextMuse");
         }
@@ -213,7 +216,8 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                boolean events = (Constants.BuildType != Constants.Builds.Humanix);
+                boolean events = (Constants.BuildType != Constants.Builds.Humanix &&
+                        Constants.BuildType != Constants.Builds.YouthREACH);
                 mFragment = HomeFragment.newInstance(mAlreadyLoadedData, events);
                 return mFragment;
             } else if (position == 1) {
