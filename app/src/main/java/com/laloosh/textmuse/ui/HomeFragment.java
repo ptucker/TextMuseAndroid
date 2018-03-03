@@ -85,6 +85,7 @@ public class HomeFragment extends Fragment
     private boolean mShowPhotos;
     private View mCategoryFilter;
     private String mFilter = Constants.CATEGORY_FILTER_ALL;
+    private String mHighlighted;
 
     private View.OnClickListener mDrawerListener;
 
@@ -96,12 +97,13 @@ public class HomeFragment extends Fragment
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly) {
+    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly, String highlighted) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARG_ALREADY_LOADED_DATA, alreadyLoaded);
         args.putBoolean(ARG_EVENTS_ONLY, eventsOnly);
         fragment.setArguments(args);
+        fragment.mHighlighted = highlighted;
         return fragment;
     }
 
@@ -219,6 +221,28 @@ public class HomeFragment extends Fragment
         }
         else
             mFilterButton.setVisibility(View.INVISIBLE);
+
+        if (mHighlighted != null && mHighlighted.length() > 0) {
+            int highlighted = Integer.parseInt(mHighlighted);
+            Note note = null;
+            int iNote=-1, iCategory=-1, color=-1;
+            for (int i=0; i<mSortedNotes.size(); i++) {
+                if (mSortedNotes.get(i).note.noteId == highlighted) {
+                    note = mSortedNotes.get(i).note;
+                    iNote = mSortedNotes.get(i).notePos;
+                    iCategory = mSortedNotes.get(i).categoryIndex;
+                    int[] colors = GlobalData.getInstance().getData().getColorList();
+                    color = colors[iCategory % colors.length];
+                }
+            }
+            if (note != null) {
+                ViewGroup root = (ViewGroup) v.findViewById(R.id.mainFragmentRoot);
+                View detail = MessageDetailFactory.CreateDetailView(root, note, this.getActivity(), color, iCategory, iNote);
+                Animation detailSlide = AnimationUtils.loadAnimation(this.getContext(), R.anim.activitydropdown);
+                root.addView(detail);
+                detail.startAnimation(detailSlide);
+            }
+        }
 
         return v;
     }

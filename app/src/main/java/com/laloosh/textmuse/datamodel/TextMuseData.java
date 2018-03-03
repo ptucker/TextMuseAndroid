@@ -36,6 +36,7 @@ public class TextMuseData {
 
     public HashSet<Integer> flaggedNotesSet;
     public HashSet<Integer> followedSponsorsSet;
+    public HashSet<Integer> followedCategoriesSet;
 
     public int explorerPoints;
     public int sharerPoints;
@@ -356,6 +357,22 @@ public class TextMuseData {
             followedSponsorsSet = new HashSet<>();
         } else {
             followedSponsorsSet.remove(id);
+        }
+    }
+
+    public void followCategory(int id) {
+        if (followedCategoriesSet== null) {
+            followedCategoriesSet = new HashSet<>();
+        }
+
+        followedCategoriesSet.add(id);
+    }
+
+    public void unfollowCategory(int id) {
+        if (followedCategoriesSet == null) {
+            followedCategoriesSet = new HashSet<>();
+        } else {
+            followedCategoriesSet.remove(id);
         }
     }
 

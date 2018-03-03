@@ -89,19 +89,18 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
             messageTitle = "TextMuse";
         }
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentTitle(messageTitle)
-                .setContentText(text)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setContentIntent(pendingIntent)
-                .setSound(sound, AudioManager.STREAM_NOTIFICATION);
-
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setBigContentTitle(text);
-        builder.setStyle(inboxStyle);
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.notification_icon)
+                        .setContentTitle(messageTitle)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
+                        .setContentText(text)
+                        .setDefaults(AudioManager.STREAM_NOTIFICATION)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, builder.build());
+        notificationManager.notify(0, mBuilder.build());
     }
 
 }

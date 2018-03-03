@@ -13,7 +13,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver;
 import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
+import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
 import com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment;
@@ -47,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private boolean mAlreadyLoadedData = false;
     private TextMuseData mData;
+    private String mHighlighted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +79,8 @@ public class HomeActivity extends AppCompatActivity {
         mAlreadyLoadedData = intent.getBooleanExtra(ALREADY_LOADED_DATA_EXTRA, false);
 
         mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
-        mAdapter = new MainAdapter(getSupportFragmentManager(), mAlreadyLoadedData);
+        mHighlighted = "87256";//intent.getStringExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA);
+        mAdapter = new MainAdapter(getSupportFragmentManager(), mAlreadyLoadedData, mHighlighted);
         mViewPager.setAdapter(mAdapter);
 
         final String startMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
@@ -86,25 +92,6 @@ public class HomeActivity extends AppCompatActivity {
                     fragment.show(getSupportFragmentManager(), "launchmessagefragment");
                 }
             });
-        }
-
-        final String highlighted = intent.getStringExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA);
-        if (highlighted != null) {
-            Intent intentMsg = new Intent(this.getApplicationContext(), SelectMessageActivity.class);
-            int idHighlighted = Integer.parseInt(highlighted);
-            intentMsg.putExtra(SelectMessageActivity.NOTE_ID_EXTRA, idHighlighted);
-            int iCategory = -1;
-            for (int c=0; c<mData.categories.size() && iCategory == -1; c++) {
-                Category cat = mData.categories.get(c);
-                for (int n=0; n<cat.notes.size() && iCategory == -1; n++) {
-                    if (cat.notes.get(n).noteId == idHighlighted)
-                        iCategory = c;
-                }
-            }
-            if (iCategory != -1) {
-                intentMsg.putExtra(SelectMessageActivity.CATEGORY_EXTRA, iCategory);
-                startActivity(intentMsg);
-            }
         }
 
         //Post an extra selection event for 0, since we don't get that callback
@@ -206,10 +193,12 @@ public class HomeActivity extends AppCompatActivity {
         private boolean mAlreadyLoadedData = false;
         private HashMap<Integer, String> mTabMap;
         private HomeFragment mFragment;
+        private String mHighlighted;
 
-        public MainAdapter(FragmentManager fm, boolean alreadyLoadedData) {
+        public MainAdapter(FragmentManager fm, boolean alreadyLoadedData, String highlighted) {
             super(fm);
             mAlreadyLoadedData = alreadyLoadedData;
+            mHighlighted = highlighted;
             mTabMap = new HashMap<>(3);
         }
 
@@ -218,7 +207,8 @@ public class HomeActivity extends AppCompatActivity {
             if (position == 0) {
                 boolean events = (Constants.BuildType != Constants.Builds.Humanix &&
                         Constants.BuildType != Constants.Builds.YouthREACH);
-                mFragment = HomeFragment.newInstance(mAlreadyLoadedData, events);
+                mFragment = HomeFragment.newInstance(mAlreadyLoadedData, events, mHighlighted);
+
                 return mFragment;
             } else if (position == 1) {
                 return BadgeFragment.newInstance();

@@ -15,8 +15,8 @@ android {
         applicationId = applicationid + ".app"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 47
-        versionName "2.94"
+        versionCode 48
+        versionName "2.95"
         buildConfigField "String", "applicationid", "\"${applicationid}\""
         multiDexEnabled true
     }

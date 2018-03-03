@@ -82,6 +82,7 @@ public class FeedbackActivity extends ActionBarActivity implements FeedbackAsync
         if (success) {
             Toast toast = Toast.makeText(this, "Feedback sent.", Toast.LENGTH_SHORT);
             toast.show();
+            this.finish();
         } else {
             Toast toast = Toast.makeText(this, "Feedback could not be sent. Please try again later.", Toast.LENGTH_LONG);
             Log.d(Constants.TAG, "Could not send feedback!");
