@@ -185,7 +185,7 @@ public class SelectMessageActivity extends AppCompatActivity implements FlagCont
         categoryTextView.setBackgroundColor(color);
         categoryTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
 
-        overridePendingTransition(R.anim.activitydropdown, R.anim.activityslideup);
+        overridePendingTransition(R.anim.activitydropdown, R.anim.activityfadeout);
     }
 
     @Override

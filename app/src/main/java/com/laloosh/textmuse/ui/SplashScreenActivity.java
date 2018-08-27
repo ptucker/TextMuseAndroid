@@ -19,6 +19,7 @@ import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseLaunchIcon;
+import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 import com.laloosh.textmuse.tasks.CalculateFreeSpaceCleanupAsyncTask;
 import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
@@ -47,7 +48,6 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     private FetchNotesAsyncTask.FetchNotesResult mFinishedLoadingResult;
     private FetchSkinsAsyncTask.FetchSkinsResult mFinishedLoadingSkinsResult;
     private Handler mHandler;
-    private boolean mFirstLaunch;
     private String mLaunchMessage;
     private String mHighlighted;
     private boolean mTimerFired;
@@ -97,7 +97,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
             mData.updateNoteImageFlags(this);
         }
 
-        mFirstLaunch = isFirstLaunch();
+        instance.getSettings().firstLaunch = isFirstLaunch();
         setLaunchedBefore();
 
         mHandler = new Handler();
@@ -147,7 +147,7 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
     }
 
     private void scheduleTimerForFinish() {
-        long timeDelay = mFirstLaunch ?  SPLASH_SCREEN_MAX_TIME_FIRST_RUN : SPLASH_SCREEN_MAX_TIME;
+        long timeDelay = GlobalData.getInstance().getSettings().firstLaunch ? SPLASH_SCREEN_MAX_TIME_FIRST_RUN : SPLASH_SCREEN_MAX_TIME;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -161,11 +161,12 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
             return;
         }
 
-        if (mFirstLaunch && Constants.BuildType == Constants.Builds.University && mSkinRetry && !mFinishedLoadingSkins)
+        TextMuseSettings settings = GlobalData.getInstance().getSettings();
+        if (settings.firstLaunch && Constants.BuildType == Constants.Builds.University && mSkinRetry && !mFinishedLoadingSkins)
         {
             //Give the request for skins one more try
             mSkinRetry = false;
-            long timeDelay = mFirstLaunch ?  SPLASH_SCREEN_MAX_TIME_FIRST_RUN : SPLASH_SCREEN_MAX_TIME;
+            long timeDelay = settings.firstLaunch ?  SPLASH_SCREEN_MAX_TIME_FIRST_RUN : SPLASH_SCREEN_MAX_TIME;
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -185,20 +186,21 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
 
         Intent intent;
 
-        if (mFirstLaunch && Constants.BuildType == Constants.Builds.University) {
+        if (settings.firstLaunch && Constants.BuildType == Constants.Builds.University) {
             //Go to the skin selection screen
-            if (mFinishedLoadingSkins && mFinishedLoadingSkinsResult == FetchSkinsAsyncTask.FetchSkinsResult.FETCH_SUCCEEDED) {
+            //if (mFinishedLoadingSkins && mFinishedLoadingSkinsResult == FetchSkinsAsyncTask.FetchSkinsResult.FETCH_SUCCEEDED) {
                 intent = new Intent(SplashScreenActivity.this, SkinSelectActivity.class);
                 intent.putExtra(SkinSelectActivity.EXTRA_LAUNCH_FROM_SPLASH, true);
 
-            } else {
+            //} else {
                 //Go to the walkthrough screen if there are no skins or no response
 
-                intent = new Intent(SplashScreenActivity.this, WalkthroughActivity.class);
-                intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
-            }
+            //    intent = new Intent(SplashScreenActivity.this, WalkthroughActivity.class);
+            //    intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
+            //}
 
         } else {
+
             intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
 
             if (mFinishedLoading && mFinishedLoadingResult != FetchNotesAsyncTask.FetchNotesResult.FETCH_FAILED) {

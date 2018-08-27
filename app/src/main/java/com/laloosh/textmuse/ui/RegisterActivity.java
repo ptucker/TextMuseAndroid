@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
+import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 import com.laloosh.textmuse.dialogs.AlreadyRegisteredDialogFragment;
 import com.laloosh.textmuse.dialogs.BadRegisterDataDialogFragment;
 import com.laloosh.textmuse.dialogs.NoRegisterDataDialogFragment;
@@ -167,7 +168,8 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
 
         mRegistered = true;
 
-        RegisterAsyncTask asyncTask = new RegisterAsyncTask(this, name, email, birthMonth, birthYear);
+        int selectedSkinId = TextMuseSkinData.getCurrentlySelectedSkin(this);
+        RegisterAsyncTask asyncTask = new RegisterAsyncTask(this, name, email, birthMonth, birthYear, selectedSkinId);
         asyncTask.execute();
 
         return true;

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.R;
@@ -29,6 +31,7 @@ import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
 import com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment;
+import com.laloosh.textmuse.utils.GuidedTour;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -66,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         mToolbar = (Toolbar) findViewById(R.id.mainToolbar);
-        mToolbar.setTitleTextColor(0xffffffff);
+        mToolbar.setTitleTextColor(Color.WHITE);
         mToolbarImage = (ImageView) findViewById(R.id.mainToolbarButton);
 
         setSupportActionBar(mToolbar);
@@ -79,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         mAlreadyLoadedData = intent.getBooleanExtra(ALREADY_LOADED_DATA_EXTRA, false);
 
         mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
-        mHighlighted = "87256";//intent.getStringExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA);
+        mHighlighted = intent.getStringExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA);
         mAdapter = new MainAdapter(getSupportFragmentManager(), mAlreadyLoadedData, mHighlighted);
         mViewPager.setAdapter(mAdapter);
 

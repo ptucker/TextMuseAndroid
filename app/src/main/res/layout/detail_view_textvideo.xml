@@ -2,23 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/detail_view_root"
     >
-
-    <Button
+<!--
+    <ImageButton
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/detailViewCloseButton"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        android:text="X"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:backgroundTint="#a0bbbbbb"
+        android:src="@drawable/arrow_collapse_left"
         >
-    </Button>
-
+    </ImageButton>
+-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -136,7 +133,7 @@
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:textColor="#00ac65"
+                        android:textColor="#1c9a9e"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         />
@@ -166,7 +163,7 @@
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:textColor="#16c2ef"
+                        android:textColor="#0d395d"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         />
@@ -205,7 +202,7 @@
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:textColor="#00ac65"
+                        android:textColor="#ed6923"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         />
@@ -236,7 +233,7 @@
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:textColor="#e9662c"
+                        android:textColor="#1c9a9e"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         />
@@ -266,7 +263,7 @@
                         android:textAllCaps="true"
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:textColor="#16c2ef"
+                        android:textColor="#0d395d"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         />

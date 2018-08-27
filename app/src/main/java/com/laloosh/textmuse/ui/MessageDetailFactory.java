@@ -21,6 +21,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -494,19 +495,20 @@ public class MessageDetailFactory {
     }
 
     private static void SetupClose(final View view) {
-        Button close = (Button)view.findViewById(R.id.detailViewCloseButton);
+        /*
+        ImageButton close = (ImageButton)view.findViewById(R.id.detailViewCloseButton);
         close.setOnClickListener(new View.OnClickListener() {
-                                     @Override
-                                     public void onClick(View v) {
-                                         removeView(view);
-                                     }
-                                 }
-            );
+            @Override
+            public void onClick(View v) {
+                removeView(view);
+            }
+        });
+        */
     }
 
     public static void removeView(View view) {
         ViewGroup root = (ViewGroup)view.getParent();
-        Animation detailSlide = AnimationUtils.loadAnimation(mActivity.getApplicationContext(), R.anim.activityslideup);
+        Animation detailSlide = AnimationUtils.loadAnimation(mActivity.getApplicationContext(), R.anim.activityfadeout);
         view.startAnimation(detailSlide);
         root.removeView(view);
     }

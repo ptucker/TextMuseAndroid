@@ -19,13 +19,15 @@ public class RegisterAsyncTask extends AsyncTask<Void, Void, String> {
     String mEmail;
     int mBirthMonth;
     int mBirthYear;
+    int mVersion;
 
-    public RegisterAsyncTask(RegisterAsyncTaskHandler handler, String name, String email, int birthMonth, int birthYear) {
+    public RegisterAsyncTask(RegisterAsyncTaskHandler handler, String name, String email, int birthMonth, int birthYear, int version) {
         mHandler = new WeakReference<RegisterAsyncTaskHandler>(handler);
         mName = name;
         mEmail = email;
         mBirthMonth = birthMonth;
         mBirthYear = birthYear;
+        mVersion = version;
     }
 
     @Override
@@ -47,6 +49,7 @@ public class RegisterAsyncTask extends AsyncTask<Void, Void, String> {
 
         webParams.put("bmonth", Integer.toString(mBirthMonth));
         webParams.put("byear", Integer.toString(mBirthYear));
+        webParams.put("version", Integer.toString(mVersion));
 
         result = connUtils.postUrl(FEEDBACK_URL, webParams);
 

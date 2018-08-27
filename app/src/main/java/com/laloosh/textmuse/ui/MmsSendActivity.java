@@ -8,13 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.klinker.android.send_message.Message;
 import com.klinker.android.send_message.Settings;
 import com.klinker.android.send_message.Transaction;
 import com.laloosh.textmuse.R;
+import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
+import com.laloosh.textmuse.utils.GuidedTour;
 import com.laloosh.textmuse.utils.SimpleBitmapTarget;
 import com.laloosh.textmuse.utils.SmsUtils;
 import com.squareup.picasso.Picasso;
@@ -23,7 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTarget.SimpleBitmapTargetHandler {
+public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTarget.SimpleBitmapTargetHandler, GuidedTour.Pause {
     public static final String NOTE_EXTRA = "note";
     public static final String PHONE_NUMBERS_EXTRA = "phone numbers";
 
@@ -99,7 +102,15 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
 
     @OnClick(R.id.mmsSendNow)
     public void sendNow() {
+        if (GlobalData.getInstance().getSettings().firstLaunch) {
+            RelativeLayout parent = (RelativeLayout)findViewById(R.id.mms_send_root);
+            GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.DONE, this, parent, this);
+        }
+        else
+            this.onComplete();
+    }
 
+    public void onComplete() {
         Settings sendSettings = new Settings();
         sendSettings.setUseSystemSending(true);
         Transaction sendTransaction = new Transaction(this, sendSettings);

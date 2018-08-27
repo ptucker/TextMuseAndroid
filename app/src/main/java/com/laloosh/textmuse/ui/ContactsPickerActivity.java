@@ -26,7 +26,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.R;
@@ -40,12 +42,14 @@ import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.TextMuseGroup;
 import com.laloosh.textmuse.datamodel.TextMuseRecentContact;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
+import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 import com.laloosh.textmuse.datamodel.TextMuseStoredContacts;
 import com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment;
 import com.laloosh.textmuse.dialogs.EnterGroupDialogFragment;
 import com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment;
 import com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment;
 import com.laloosh.textmuse.tasks.NoteSendAsyncTask;
+import com.laloosh.textmuse.utils.GuidedTour;
 import com.laloosh.textmuse.utils.SmsUtils;
 
 import java.util.HashSet;
@@ -111,6 +115,12 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         listView.setAdapter(mAdapter);
 
         getSupportLoaderManager().initLoader(Queries.ContactsQuery.QUERY_ID, null, this);
+
+        if (GlobalData.getInstance().getSettings().firstLaunch) {
+            FrameLayout parent = (FrameLayout)findViewById(R.id.contacts_picker_root);
+            GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.CONTACT, this, parent);
+        }
+
     }
 
     @Override
@@ -342,7 +352,8 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
         if (data != null) {
             int appId = data.appId;
             if (appId > 0) {
-                NoteSendAsyncTask asyncTask = new NoteSendAsyncTask(appId, mNote.noteId, number, ContactsPickerActivity.this);
+                int selectedSkinId = TextMuseSkinData.getCurrentlySelectedSkin(this);
+                NoteSendAsyncTask asyncTask = new NoteSendAsyncTask(appId, mNote.noteId, number, selectedSkinId,ContactsPickerActivity.this);
                 asyncTask.execute();
             }
         }

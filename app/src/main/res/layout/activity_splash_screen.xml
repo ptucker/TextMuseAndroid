@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="48dp"
-    android:background="#ffffffff"
+    android:background="#d5d5d6"
     tools:context=".ui.SplashScreenActivity">
 
     <ImageView

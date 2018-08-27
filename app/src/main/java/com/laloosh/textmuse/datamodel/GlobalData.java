@@ -2,6 +2,8 @@ package com.laloosh.textmuse.datamodel;
 
 import android.content.Context;
 
+import com.laloosh.textmuse.utils.GuidedTour;
+
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -23,6 +25,7 @@ public class GlobalData {
     private Context mContext;
     private TextMuseStoredContacts mStoredContacts;
     private TextMuseSettings mSettings;
+    private GuidedTour mGuidedTour;
     private boolean mLoaded = false;
 
     public void loadData(Context context) {
@@ -34,8 +37,12 @@ public class GlobalData {
             mStoredContacts = new TextMuseStoredContacts();
         }
 
-        mSettings = TextMuseSettings.load(context);
+        TextMuseSettings settings = TextMuseSettings.load(context);
+        if (settings != null)
+            mSettings = settings;
         mLoaded = mData != null;
+
+        mGuidedTour = new GuidedTour();
     }
 
     public TextMuseData getData() {
@@ -85,6 +92,8 @@ public class GlobalData {
     public void updateTextMuseSettings(TextMuseSettings settings) {
         mSettings = settings;
     }
+
+    public GuidedTour getGuidedTour() { return mGuidedTour; }
 
     public boolean hasLoadedData() {
         return mLoaded;

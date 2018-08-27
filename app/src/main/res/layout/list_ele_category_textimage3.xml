@@ -97,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TEXT IT"
-                        android:textColor="#00ac65"
+                        android:textColor="#1c9a9e"
                         android:textStyle="bold"
                         android:gravity="center"
                         />

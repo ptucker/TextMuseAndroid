@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#efefef"
+    android:id="@+id/mms_send_root"
     tools:context="com.laloosh.textmuse.ui.MmsSendActivity">
 
     <RelativeLayout

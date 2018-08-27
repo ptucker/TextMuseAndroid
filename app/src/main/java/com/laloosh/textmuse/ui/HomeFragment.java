@@ -1,5 +1,6 @@
 package com.laloosh.textmuse.ui;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
@@ -11,6 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -24,9 +27,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,6 +52,7 @@ import com.laloosh.textmuse.tasks.DownloadImageAsyncTask;
 import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.ColorHelpers;
+import com.laloosh.textmuse.utils.GuidedTour;
 import com.laloosh.textmuse.utils.OnBackListener;
 import com.laloosh.textmuse.utils.SmsUtils;
 import com.squareup.picasso.Picasso;
@@ -80,7 +86,10 @@ public class HomeFragment extends Fragment
     private TextView mTextViewDrawerSaved;
     private ListView mDrawerList;
     private ImageView mToolbarImage;
-    private ImageView mFilterButton;
+    //private ImageView mFilterButton;
+    private RecyclerView mFilterView;
+    private LinearLayoutManager mFilterLayoutManager;
+    private RecyclerView.Adapter mFilterAdapter;
     private TextView mTextView;
     private boolean mShowPhotos;
     private View mCategoryFilter;
@@ -149,7 +158,7 @@ public class HomeFragment extends Fragment
         });
 
         mTextView = (TextView) v.findViewById(R.id.mainFragmentTextViewNoItems);
-        mFilterButton = (ImageView)v.findViewById(R.id.filterContentIcon);
+        //mFilterButton = (ImageView)v.findViewById(R.id.filterContentIcon);
 
         mListView = (ListView) v.findViewById(R.id.mainFragmentListView);
         mListView.setVisibility(View.GONE);
@@ -201,26 +210,17 @@ public class HomeFragment extends Fragment
             Log.d(Constants.TAG, "Already successfully loaded data from internet via splash screen. Skipping reload");
         }
 
-        RelativeLayout filter = (RelativeLayout)v.findViewById(R.id.mainFragmentFilter);
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCategoryFilter == null)
-                    showCategoryFilter();
-                else
-                    hideCategoryFilter();
-            }
-        });
-
-        if (mData != null && mData.skinData != null && mData.skinData.icon != null && mData.skinData.icon.length() > 0) {
-            Picasso.with(getContext())
-                    .load(mData.skinData.icon)
-                    .error(R.drawable.launcher_icon)
-                    .resize(32, 32)
-                    .into(mFilterButton);
-        }
-        else
-            mFilterButton.setVisibility(View.INVISIBLE);
+        final ArrayList<Category> categories = new ArrayList<>(mData.categories);
+        Category all = new Category();
+        all.id = -1; all.name = Constants.CATEGORY_FILTER_ALL;
+        categories.add(0, all);
+        mFilterView = (RecyclerView) v.findViewById(R.id.mainFragmentFilter);
+        mFilterView.setBackgroundColor(Color.BLACK);
+        mFilterLayoutManager = new LinearLayoutManager(this.getContext());
+        mFilterLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mFilterView.setLayoutManager(mFilterLayoutManager);
+        mFilterAdapter = new CategoryArrayAdapter(this.getContext(), categories);
+        mFilterView.setAdapter(mFilterAdapter);
 
         if (mHighlighted != null && mHighlighted.length() > 0) {
             int highlighted = Integer.parseInt(mHighlighted);
@@ -238,10 +238,16 @@ public class HomeFragment extends Fragment
             if (note != null) {
                 ViewGroup root = (ViewGroup) v.findViewById(R.id.mainFragmentRoot);
                 View detail = MessageDetailFactory.CreateDetailView(root, note, this.getActivity(), color, iCategory, iNote);
-                Animation detailSlide = AnimationUtils.loadAnimation(this.getContext(), R.anim.activitydropdown);
+                Animation detailSlide = AnimationUtils.loadAnimation(this.getContext(), R.anim.activityfadein);
                 root.addView(detail);
                 detail.startAnimation(detailSlide);
             }
+        }
+
+
+        if (instance.getSettings().firstLaunch) {
+            RelativeLayout parent = (RelativeLayout)v.findViewById(R.id.mainFragmentRoot);
+            GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.CONTENT, getActivity(), parent);
         }
 
         return v;
@@ -256,72 +262,69 @@ public class HomeFragment extends Fragment
         return ret;
     }
 
-    protected void showCategoryFilter() {
-        ViewGroup root = (ViewGroup)getActivity().findViewById(R.id.category_menu);
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mCategoryFilter = inflater.inflate(R.layout.view_category_filter, root);
-        ListView categoryList = (ListView)mCategoryFilter.findViewById(R.id.category_list);
-        final ArrayList<Category> categories = new ArrayList<>(mData.categories);
-        Category all = new Category();
-        all.id = -1; all.name = Constants.CATEGORY_FILTER_ALL;
-        categories.add(0, all);
-        categoryList.setAdapter(new CategoryArrayAdapter(this.getContext(), categories));
-        Animation filterSlide = AnimationUtils.loadAnimation(getContext(), R.anim.activitydropdown);
-        mCategoryFilter.startAnimation(filterSlide);
-
-        categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mFilter = categories.get(i).name;
-                generateViewsFromData();
-                hideCategoryFilter();
-            }
-        });
-    }
-
-    protected void hideCategoryFilter() {
-        final ViewGroup root = (ViewGroup)getActivity().findViewById(R.id.category_menu);
-        Animation filterSlide = AnimationUtils.loadAnimation(getContext(), R.anim.activityslideup);
-        mCategoryFilter.startAnimation(filterSlide);
-        filterSlide.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) { }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                root.removeAllViews();
-                mCategoryFilter = null;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) { }
-        });
-    }
-
-    class CategoryArrayAdapter extends ArrayAdapter<Category> {
+    class CategoryArrayAdapter extends RecyclerView.Adapter<CategoryArrayAdapter.CategoryViewHolder> {
         private final Context context;
         private final List<Category> values;
+        private Button btnSelected = null;
 
         public CategoryArrayAdapter(Context context, List<Category> values) {
-            super(context, -1, values);
+            super();
             this.context = context;
             this.values = values;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public int getItemCount() { return values.size(); }
+
+        @Override
+        public void onBindViewHolder(CategoryViewHolder holder, int position) {
+            holder.mButton.setText(values.get(position).name);
+            if (values.get(position).name == mFilter)
+                selectButton(holder.mButton);
+            else
+                unselectButton(holder.mButton);
+        }
+
+        @Override
+        public CategoryArrayAdapter.CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rowView = inflater.inflate(R.layout.list_ele_categoryfilter, parent, false);
-            TextView textView = (TextView) rowView.findViewById(R.id.categoryname);
-            textView.setText(values.get(position).name);
-            if (values.get(position).name == mFilter)
-                textView.setTypeface(null, Typeface.BOLD);
-            else
-                textView.setTypeface(null, Typeface.NORMAL);
-
-            return rowView;
+            CategoryViewHolder vh = new CategoryViewHolder(rowView);
+            return vh;
         }
-     }
+
+        private void selectButton(Button btn) {
+            if (btnSelected != null)
+                unselectButton(btnSelected);
+            btnSelected = btn;
+            btnSelected.setTypeface(null, Typeface.BOLD);
+            btnSelected.setTextColor(Color.WHITE);
+        }
+
+        private void unselectButton(Button btn) {
+            btn.setTypeface(null, Typeface.NORMAL);
+            btn.setTextColor(Color.LTGRAY);
+        }
+
+        class CategoryViewHolder extends RecyclerView.ViewHolder {
+            public Button mButton;
+
+            public CategoryViewHolder(View v) {
+                super(v);
+                mButton = (Button)v.findViewById(R.id.categoryname);
+                mButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mFilter = mButton.getText().toString();
+                        CategoryArrayAdapter.this.selectButton(mButton);
+                        generateViewsFromData();
+                    }
+                });
+            }
+
+        }
+
+    }
 
     protected void setDrawerListener() {
         mDrawerOpen = false;
@@ -838,9 +841,15 @@ public class HomeFragment extends Fragment
                 public void onClick(View v) {
                     ViewGroup root = (ViewGroup)mActivity.findViewById(R.id.mainFragmentRoot);
                     detail = MessageDetailFactory.CreateDetailView(root, note, mActivity, color, noteExtended.categoryIndex, noteExtended.notePos);
-                    Animation detailSlide = AnimationUtils.loadAnimation(mContext, R.anim.activitydropdown);
+                    Animation detailSlide = AnimationUtils.loadAnimation(mContext, R.anim.activityfadein);
                     root.addView(detail);
                     detail.startAnimation(detailSlide);
+
+                    if (GlobalData.getInstance().getSettings().firstLaunch) {
+                        RelativeLayout parent = (RelativeLayout)detail.findViewById(R.id.detail_view_root);
+                        GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.TEXTIT, mActivity, parent);
+                    }
+
                 }
             };
 

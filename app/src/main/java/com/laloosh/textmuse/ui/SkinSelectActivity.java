@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.laloosh.textmuse.datamodel.TextMuseSkin;
 import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
 import com.laloosh.textmuse.utils.AzureIntegrationSingleton;
+import com.laloosh.textmuse.utils.GuidedTour;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -99,12 +101,19 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
 
                 mSelectedSkinIndex = position;
 
+                /*
                 //Automatically go to the next screen if we are launched from the splash screen
                 if (mLaunchedFromSplash) {
                     donePressed();
                 }
+                */
             }
         });
+
+        if (GlobalData.getInstance().getSettings().firstLaunch) {
+            RelativeLayout parent = (RelativeLayout)findViewById(R.id.skin_select_parent);
+            GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.INTRO, this, parent);
+        }
     }
 
     private void selectSkinId(int skinId) {
@@ -165,6 +174,12 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_done) {
+            int selectedSkinId = TextMuseSkinData.getCurrentlySelectedSkin(this);
+            if (selectedSkinId == -1) {
+                //Default to skin 0
+                TextMuseSkin skin = mSkins.get(0);
+                selectSkinId(skin.skinId);
+            }
             donePressed();
             return true;
         }
@@ -182,9 +197,9 @@ public class SkinSelectActivity extends ActionBarActivity implements FetchNotesA
 
     private void donePressed() {
         if (mLaunchedFromSplash) {
-            Intent intent = new Intent(this, WalkthroughActivity.class);
-            intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
+            Intent intent = new Intent(this, RegisterActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra(RegisterActivity.REGISTER_AFTER_WALKTHROUGH_EXTRA, true);
             startActivity(intent);
             finish();
         } else {

@@ -416,7 +416,7 @@ public class SettingsActivity extends ActionBarActivity {
                         startActivity(intent);
 
                     } else if (viewType == TextOnlyViewType.PRIVACY_POLICY_VIEW) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.textmuse.com/privacy-policy"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.textmuse.com/privacy.html"));
                         startActivity(intent);
 
                     } else if (viewType == TextOnlyViewType.REGISTER_VIEW) {

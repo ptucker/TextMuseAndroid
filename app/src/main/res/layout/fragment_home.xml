@@ -10,6 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mainFragmentFilter"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <!--
         <RelativeLayout
             android:id="@+id/mainFragmentFilter"
             android:layout_width="match_parent"
@@ -18,9 +27,6 @@
             android:background="#d3d3d3"
             >
 
-            <!--
-Error:The number of method references in a .dex file cannot exceed 64K.
-Learn how to resolve this issue at https://developer.android.com/tools/building/multidex.html            -->
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
@@ -33,7 +39,6 @@ Learn how to resolve this issue at https://developer.android.com/tools/building/
                 android:layout_marginBottom="4dp"
                 />
 
-
             <TextView
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
 
@@ -42,9 +47,10 @@ Learn how to resolve this issue at https://developer.android.com/tools/building/
                 android:id="@+id/filterContentTitle"
 
                 android:text="Categories"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/filterContentIcon"
-                android:layout_marginLeft="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
                 />
 
             <ImageView
@@ -60,7 +66,7 @@ Learn how to resolve this issue at https://developer.android.com/tools/building/
                 android:layout_marginTop="4dp"
                 />
         </RelativeLayout>
-
+        -->
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_below="@id/mainFragmentFilter"
             android:layout_width="match_parent"
