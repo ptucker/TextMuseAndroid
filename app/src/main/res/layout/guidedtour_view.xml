@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:id="@+id/btnContinue"
-                android:text="Continue Tour"/>
+                android:text="Continue"/>
         </LinearLayout>
 
     </LinearLayout>

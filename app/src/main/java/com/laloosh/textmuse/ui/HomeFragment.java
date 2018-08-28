@@ -42,6 +42,7 @@ import com.bumptech.glide.request.target.Target;
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.datamodel.Category;
+import com.laloosh.textmuse.datamodel.DataPersistenceHelper;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.NoteExtended;
@@ -845,9 +846,29 @@ public class HomeFragment extends Fragment
                     root.addView(detail);
                     detail.startAnimation(detailSlide);
 
-                    if (GlobalData.getInstance().getSettings().firstLaunch) {
+                    TextMuseSettings settings = GlobalData.getInstance().getSettings();
+                    if (settings.firstLaunch) {
                         RelativeLayout parent = (RelativeLayout)detail.findViewById(R.id.detail_view_root);
                         GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.TEXTIT, mActivity, parent);
+                    }
+                    else if (note.hasSponsor && !settings.notifiedFollow) {
+                        RelativeLayout parent = (RelativeLayout)detail.findViewById(R.id.detail_view_root);
+                        ArrayList<String> params = new ArrayList<>();
+                        params.add(note.sponsorName);
+                        params.add(note.sponsorName);
+                        GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.SPONSOR, mActivity, parent, null, params);
+                        settings.notifiedFollow = true;
+                        settings.save(getContext());
+                    }
+                    else if (note.minSendCount > 0 && !settings.notifiedBadge) {
+                        RelativeLayout parent = (RelativeLayout)detail.findViewById(R.id.detail_view_root);
+                        ArrayList<String> params = new ArrayList<>();
+                        params.add(note.sponsorName);
+                        params.add(String.format("%d", note.minSendCount));
+                        params.add(note.sponsorName);
+                        GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.BADGE, mActivity, parent, null, params);
+                        settings.notifiedBadge = true;
+                        settings.save(getContext());
                     }
 
                 }

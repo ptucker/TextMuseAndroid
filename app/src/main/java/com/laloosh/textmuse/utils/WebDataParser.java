@@ -462,7 +462,8 @@ public class WebDataParser {
             } else if (name.equalsIgnoreCase("sp_logo")) {
                 note.sponsorLogoUrl = readText(xpp);
             } else if (name.equalsIgnoreCase("send")) {
-                note.minSendCount = Integer.parseInt(readText(xpp));
+                String s = readText((xpp));
+                note.minSendCount = Integer.parseInt(s);
             } else if (name.equalsIgnoreCase("visit")) {
                 note.minVisitCount = Integer.parseInt(readText(xpp));
             } else if (name.equalsIgnoreCase("winner")) {

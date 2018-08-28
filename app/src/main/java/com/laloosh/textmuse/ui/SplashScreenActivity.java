@@ -97,7 +97,8 @@ public class SplashScreenActivity extends ActionBarActivity implements FetchNote
             mData.updateNoteImageFlags(this);
         }
 
-        instance.getSettings().firstLaunch = isFirstLaunch();
+        if (instance.getSettings() != null)
+            instance.getSettings().firstLaunch = isFirstLaunch();
         setLaunchedBefore();
 
         mHandler = new Handler();

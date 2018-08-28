@@ -17,6 +17,8 @@ public class TextMuseSettings {
     public boolean saveRecentContacts = true;
     public int recentContactLimit = Constants.DEFAULT_NUMBER_RECENT_CONTACTS;
     public boolean firstLaunch = false;
+    public boolean notifiedFollow = false;
+    public boolean notifiedBadge = false;
 
     //This arraylist is used for serialization to file, but is not used for lookups. This is not
     //actually kept up to date besides the save/load
