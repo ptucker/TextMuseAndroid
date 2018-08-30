@@ -834,7 +834,10 @@ public class HomeFragment extends Fragment
             int[] colorList = data.getColorList();
             final int color = colorList[position % colorList.length];
 
-            holder.mCategoryTitle.setText(noteExtended.categoryName);
+            if (note.hasSponsor)
+                holder.mCategoryTitle.setText(note.sponsorName);
+            else
+                holder.mCategoryTitle.setText(noteExtended.categoryName);
             holder.mCategoryTitle.setTextColor(ColorHelpers.getTextColorForWhiteBackground(color));
 
             View.OnClickListener onNoteClickListener = new View.OnClickListener() {
