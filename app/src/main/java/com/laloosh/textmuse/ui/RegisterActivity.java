@@ -3,8 +3,8 @@ package com.laloosh.textmuse.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +24,7 @@ import com.laloosh.textmuse.tasks.RegisterAsyncTask;
 import org.joda.time.DateTime;
 
 
-public class RegisterActivity extends ActionBarActivity implements RegisterAsyncTask.RegisterAsyncTaskHandler{
+public class RegisterActivity extends AppCompatActivity implements RegisterAsyncTask.RegisterAsyncTaskHandler{
     public static final String REGISTER_THROUGH_WALKTHROUGH_EXTRA = "com.laloosh.textmuse.walkthrough";
     public static final String REGISTER_AFTER_WALKTHROUGH_EXTRA = "com.laloosh.textmuse.afterwalkthrough";
 
@@ -44,11 +44,12 @@ public class RegisterActivity extends ActionBarActivity implements RegisterAsync
         Intent intent = getIntent();
         boolean fromWalkthrough = intent.getBooleanExtra(REGISTER_THROUGH_WALKTHROUGH_EXTRA, false);
         mAfterWalkthrough = intent.getBooleanExtra(REGISTER_AFTER_WALKTHROUGH_EXTRA, false);
+        /*
         if (fromWalkthrough || mAfterWalkthrough) {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
-
+        */
         mEditTextName = (EditText) findViewById(R.id.registerEditTextName);
         mEditTextEmail = (EditText) findViewById(R.id.registerEditTextEmail);
         mEditTextBirthMonth = (EditText) findViewById(R.id.registerEditTextBirthMonth);

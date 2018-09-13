@@ -3,7 +3,7 @@ package com.laloosh.textmuse.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
 import android.util.Log;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GroupEditActivity extends ActionBarActivity implements NoUsersDialogFragment.NoUsersDialogHandler {
+public class GroupEditActivity extends AppCompatActivity implements NoUsersDialogFragment.NoUsersDialogHandler {
 
     public static final String NEW_GROUP_NAME_EXTRA = "com.laloosh.textmuse.newgroup.name";
     public static final String EXISTING_GROUP = "com.laloosh.textmuse.existinggroup";

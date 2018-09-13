@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.BuildConfig;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -34,7 +34,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class SplashScreenActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler, FetchSkinsAsyncTask.FetchSkinsAsyncTaskHandler{
+public class SplashScreenActivity extends AppCompatActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler, FetchSkinsAsyncTask.FetchSkinsAsyncTaskHandler{
 
     //10 seconds is the max amount of time the splash screen is going to be up
     private static final long SPLASH_SCREEN_MAX_TIME = 10000;

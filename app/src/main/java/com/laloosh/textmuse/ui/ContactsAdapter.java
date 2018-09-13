@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.v4.widget.CursorAdapter;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +24,12 @@ import java.util.ArrayList;
 
 public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnCheckedChangeListener, View.OnClickListener, ChoosePhoneNumberDialogFragment.ChoosePhoneNumberDialogHandler {
     private LayoutInflater mInflater; // Stores the layout inflater
-    private ActionBarActivity mContext;
+    private AppCompatActivity mContext;
     private ContactsAdapterHandler mHandler;
     private CompoundButton mCurrentButton;  //Used during dialog bits
     private ContactPickerState mState;
 
-    public ContactsAdapter(ActionBarActivity activity, ContactsAdapterHandler handler, ContactPickerState state) {
+    public ContactsAdapter(AppCompatActivity activity, ContactsAdapterHandler handler, ContactPickerState state) {
         super(activity, null, 0);
 
         // Stores inflater for use later

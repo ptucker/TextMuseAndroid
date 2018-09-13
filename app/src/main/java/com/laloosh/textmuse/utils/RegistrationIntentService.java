@@ -35,6 +35,9 @@ public class RegistrationIntentService extends IntentService {
         String storedToken = null;
         ArrayList<String> tags = getTags();
 
+        //Set up notification channels
+        AzureTextMuseNotificationChannelUtil channelUtil = new AzureTextMuseNotificationChannelUtil(this.getApplicationContext());
+
         try{
             String fcm = FirebaseInstanceId.getInstance().getToken();
             Log.d(TAG, "FCM token: " + fcm);

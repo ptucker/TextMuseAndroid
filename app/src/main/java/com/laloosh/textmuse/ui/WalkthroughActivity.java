@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +18,7 @@ import com.laloosh.textmuse.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
 
-public class WalkthroughActivity extends ActionBarActivity {
+public class WalkthroughActivity extends AppCompatActivity {
     public static final String INITIAL_LAUNCH_EXTRA = "com.laloosh.textmuse.initiallaunch";
 
     private ViewPager mViewPager;

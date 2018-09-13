@@ -1,9 +1,13 @@
 package com.laloosh.textmuse.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +25,9 @@ import com.laloosh.textmuse.utils.GuidedTour;
 import com.laloosh.textmuse.utils.SimpleBitmapTarget;
 import com.laloosh.textmuse.utils.SmsUtils;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -66,8 +73,73 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
         mProgressDialog.setTitle("Loading...");
         mProgressDialog.show();
 
-        handleNote();
+        getSMSPermissions();
     }
+
+    private static final int SEND_SMS_PERMISSIONS_REQUEST = 2;
+    private static final int READ_SMS_PERMISSIONS_REQUEST = 4;
+    List<String> perms;
+    private void getSMSPermissions() {
+        perms = new ArrayList<String>();
+        perms.add(Manifest.permission.READ_SMS);
+        perms.add(Manifest.permission.SEND_SMS);
+        for (int i=0; i<perms.size(); i++) {
+            if (ContextCompat.checkSelfPermission(this, perms.get(i))
+                    == PackageManager.PERMISSION_GRANTED) {
+                // The permission is already granted.
+                perms.remove(i);
+                i--;
+            }
+            else {
+                // Check if the user has been asked about this permission already and denied
+                // it. If so, we want to give more explanation about why the permission is needed.
+                if (shouldShowRequestPermissionRationale(perms.get(i))) {
+                    // TODO
+                    // Show our own UI to explain to the user why we need to read the contacts
+                    // before actually requesting the permission and showing the default UI
+                }
+
+            }
+        }
+
+        if (perms.size() > 0) {
+            // Fire off an async request to actually get the permission
+            // This will show the standard permission request dialog UI
+            requestPermissions(perms.toArray(new String[perms.size()]), READ_SMS_PERMISSIONS_REQUEST);
+        }
+        else
+            handleNote();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        // Make sure it's our original READ_SMS request
+        if (requestCode == READ_SMS_PERMISSIONS_REQUEST) {
+            if (grantResults.length == perms.size()) {
+                boolean granted = true;
+                for (int i=0; i<grantResults.length; i++)
+                    granted &= (grantResults[i] == PackageManager.PERMISSION_GRANTED);
+
+                if (granted)
+                    handleNote();
+                else {
+                    //Toast.makeText(this, "Read SMS permission denied", Toast.LENGTH_SHORT).show();
+                    setResult(Activity.RESULT_CANCELED);
+                    finish();
+                }
+            }
+            else {
+                //Toast.makeText(this, "Read SMS permission denied", Toast.LENGTH_SHORT).show();
+                setResult(Activity.RESULT_CANCELED);
+                finish();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 
     protected void handleNote() {
 

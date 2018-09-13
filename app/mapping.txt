@@ -9261,7 +9261,7 @@ android.support.v7.app.ActionBar$Tab -> android.support.v7.a.d:
     java.lang.CharSequence getText() -> b
     android.view.View getCustomView() -> c
     void select() -> d
-    java.lang.CharSequence getContentDescription() -> e
+    java.lang.CharSequence getContentDescription() -> e`
 android.support.v7.app.ActionBarActivity -> android.support.v7.a.e:
     23:23:void <init>() -> <init>
 android.support.v7.app.AlertController -> android.support.v7.a.f:

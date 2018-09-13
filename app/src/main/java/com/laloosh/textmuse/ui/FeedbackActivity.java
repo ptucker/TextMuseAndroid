@@ -2,7 +2,7 @@ package com.laloosh.textmuse.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,7 +16,7 @@ import com.laloosh.textmuse.dialogs.NoFeedbackDialogFragment;
 import com.laloosh.textmuse.tasks.FeedbackAsyncTask;
 
 
-public class FeedbackActivity extends ActionBarActivity implements FeedbackAsyncTask.FeedbackAsyncTaskHandler {
+public class FeedbackActivity extends AppCompatActivity implements FeedbackAsyncTask.FeedbackAsyncTaskHandler {
 
     private EditText mNameEditText;
     private EditText mEmailEditText;

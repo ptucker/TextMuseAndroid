@@ -1,5 +1,6 @@
 package com.laloosh.textmuse.utils;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,6 +17,8 @@ import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.ui.SplashScreenActivity;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
+
+import org.json.JSONObject;
 
 public class AzureTextMuseNotificationHandler extends NotificationsHandler {
 
@@ -35,26 +38,110 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
         }.execute();
     }
 
-    @Override
-    public void onReceive(Context context, Bundle bundle) {
-        String notificationMessage = bundle.getString("message");
-        String alertMessage = bundle.getString("alert");
-        if (notificationMessage == null || notificationMessage.length() <= 0) {
-            notificationMessage = alertMessage;
+    class TextMuseNotification {
+        public String message;
+        public String url;
+        public String extendedMsg;
+        public String title;
+        public String highight;
+
+        public void parseBundle(Bundle bundle) {
+            if (inBundle(bundle))
+                return;
+            else if (bundleInBundle(bundle))
+                return;
+            else
+                stringInBundle(bundle);
         }
 
-        String url = bundle.getString("messageUrl");
-        String inAppMessage = bundle.getString("extendedMessage");
-        String messageTitle = bundle.getString("messageTitle");
-        String highlighted = bundle.getString("highlight");
-        if (inAppMessage == null || inAppMessage.length() <= 0)
-            inAppMessage = notificationMessage;
+        private boolean inBundle(Bundle bundle) {
+            message = bundle.getString("message");
+            if (message == null)
+                message = bundle.getString("alert");
+            if (message != null) {
+                url = bundle.getString("messageUrl");
+                extendedMsg = bundle.getString("extendedMessage");
+                title = bundle.getString("messageTitle");
+                highight = bundle.getString("highlight");
+                return true;
+            }
+            else
+                return false;
+        }
+
+        private boolean bundleInBundle(Bundle bundle) {
+            Bundle b = bundle.getBundle("notification");
+            return b != null ? (inBundle(b)) : false;
+        }
+
+        private boolean stringInBundle(Bundle bundle) {
+            //Figure out the key
+            String k = "";
+            String[] possibleKeys = {"gcm.notification.body", "notification", "data", "message"};
+            for (String key: bundle.keySet())
+            {
+                String v = bundle.getString(key);
+                for (String p: possibleKeys) {
+                    if (key.equals(p) && v != null && v.length() > 0) {
+                        k = key;
+                        break;
+                    }
+                }
+                if (k.length() > 0)
+                    break;
+            }
+
+            //Now that we have a key, let's figure out if it's plain text or JSON
+            try {
+                JSONObject msg = new JSONObject(bundle.getString(k));
+                parseJSON(msg);
+            }
+            catch (Exception e) {
+                //Not JSON. Good luck with what you have!
+                message = bundle.getString(k);
+            }
+
+            return true;
+        }
+
+        private void parseJSON(JSONObject msg) {
+            //Let's see if there's a data member first
+            try {
+                Object m = msg.get("data");
+                msg = (JSONObject) m;
+            }
+            catch (Exception e) { }
+
+            //Now hopefully we have what we're looking for
+            try {
+                message = msg.getString("message");
+                if (msg.has("messageUrl"))
+                    url = msg.getString("messageUrl");
+                if (msg.has("extendedMessage"))
+                    extendedMsg = msg.getString("extendedMessage");
+                if (msg.has("messageTitle"))
+                    title = msg.getString("messageTitle");
+                if (msg.has("highlight"))
+                    highight = msg.getString("highlight");
+            }
+            catch (Exception e) {
+                //Nope. Do your best
+                message = msg.toString();
+            }
+        }
+    }
+
+    @Override
+    public void onReceive(Context context, Bundle bundle) {
+        TextMuseNotification notification = new TextMuseNotification();
+        notification.parseBundle(bundle);
 
         //Clear out the notifications
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
 
-        showReminderNotification(context, notificationMessage, url, inAppMessage, messageTitle, highlighted);
+        showReminderNotification(context, notification.message, notification.url,
+                notification.extendedMsg, notification.title, notification.highight);
     }
 
     private void showReminderNotification(Context context, String text, String url, String inAppMessage, String messageTitle, String highlighted) {
@@ -89,15 +176,9 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
             messageTitle = "TextMuse";
         }
 
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.notification_icon)
-                        .setContentTitle(messageTitle)
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
-                        .setContentText(text)
-                        .setDefaults(AudioManager.STREAM_NOTIFICATION)
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true);
+        AzureTextMuseNotificationChannelUtil channelUtil = new AzureTextMuseNotificationChannelUtil(context);
+        Notification.Builder mBuilder = channelUtil.getMessagesChannelNotification(messageTitle, text)
+                .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, mBuilder.build());

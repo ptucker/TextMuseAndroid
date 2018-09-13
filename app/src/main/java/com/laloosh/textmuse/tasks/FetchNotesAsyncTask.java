@@ -111,6 +111,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
             return FetchNotesResult.FETCH_SUCCEEDED_DIFFERENT_DATA;
         }
 
+        /*
         if (parsedData.isDataSimilar(oldData)) {
             //Don't update anything or save anything if this is the same...
             Log.d(Constants.TAG, "Data from server is the same as the current data--discarding new data");
@@ -122,7 +123,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
             }
             return FetchNotesResult.FETCH_SUCCEEDED_SAME_DATA;
         }
-
+        */
         Log.d(Constants.TAG, "Different data downloaded");
         handleDataUpdate(globalData, parsedData);
         return FetchNotesResult.FETCH_SUCCEEDED_DIFFERENT_DATA;

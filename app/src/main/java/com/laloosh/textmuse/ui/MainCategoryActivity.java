@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -54,7 +54,7 @@ import java.util.Random;
 import de.greenrobot.event.EventBus;
 
 
-public class MainCategoryActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler {
+public class MainCategoryActivity extends AppCompatActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler {
 
     public static final String ALREADY_LOADED_DATA_EXTRA = "com.laloosh.textmuse.alreadyloadeddata";
 

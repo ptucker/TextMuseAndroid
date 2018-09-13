@@ -184,39 +184,42 @@ public class TextMuseData {
         }
         localPhotos.notes.clear();
 
-        ContentResolver cr = context.getContentResolver();
-        Cursor  cur = cr.query(Queries.PhotoQuery.CONTENT_URI,
-                Queries.PhotoQuery.PROJECTION,
-                null,
-                null,
-                Queries.PhotoQuery.SORT_ORDER);
+        try {
+            ContentResolver cr = context.getContentResolver();
+            Cursor cur = cr.query(Queries.PhotoQuery.CONTENT_URI,
+                    Queries.PhotoQuery.PROJECTION,
+                    null,
+                    null,
+                    Queries.PhotoQuery.SORT_ORDER);
 
-        if (cur.getCount() > 0) {
+            if (cur.getCount() > 0) {
 
-            int curIndex = 0;
-            while (cur.moveToNext() && curIndex < Constants.LOCAL_NOTE_SIZE) {
-                String photoPath = cur.getString(Queries.PhotoQuery.DATA_PATH);
-                String bucketName = cur.getString(Queries.PhotoQuery.BUCKET_DISPLAY_NAME);
+                int curIndex = 0;
+                while (cur.moveToNext() && curIndex < Constants.LOCAL_NOTE_SIZE) {
+                    String photoPath = cur.getString(Queries.PhotoQuery.DATA_PATH);
+                    String bucketName = cur.getString(Queries.PhotoQuery.BUCKET_DISPLAY_NAME);
 
-                //Skip screenshots
-                if (bucketName.toLowerCase().contains("screenshot")) {
-                    continue;
-                }
-
-                try {
-                    File file = new File(photoPath);
-                    if (file.isFile()) {
-                        Note note = new Note(true);
-                        note.mediaUrl = Uri.fromFile(file).toString();
-                        localPhotos.notes.add(note);
-                        curIndex++;
+                    //Skip screenshots
+                    if (bucketName.toLowerCase().contains("screenshot")) {
+                        continue;
                     }
-                } catch (Exception e) {
-                    Log.e(Constants.TAG, "Photo path: " + photoPath + " was not found");
-                    continue;
+
+                    try {
+                        File file = new File(photoPath);
+                        if (file.isFile()) {
+                            Note note = new Note(true);
+                            note.mediaUrl = Uri.fromFile(file).toString();
+                            localPhotos.notes.add(note);
+                            curIndex++;
+                        }
+                    } catch (Exception e) {
+                        Log.e(Constants.TAG, "Photo path: " + photoPath + " was not found");
+                        continue;
+                    }
                 }
             }
         }
+        catch (Exception e) {}
     }
 
     public void reorderCategories(ArrayList<String> orderedCategories) {

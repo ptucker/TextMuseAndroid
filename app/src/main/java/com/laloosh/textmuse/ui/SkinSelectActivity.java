@@ -3,7 +3,7 @@ package com.laloosh.textmuse.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class SkinSelectActivity extends ActionBarActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
+public class SkinSelectActivity extends AppCompatActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler{
 
     public static final String EXTRA_LAUNCH_FROM_SPLASH = "launch_from_splash";
 

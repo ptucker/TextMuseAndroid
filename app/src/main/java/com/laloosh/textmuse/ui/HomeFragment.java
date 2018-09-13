@@ -484,13 +484,12 @@ public class HomeFragment extends Fragment
     }
 
     //Generates the pinned hash set and the sorted notes array.  These depend on your settings
+    private Random rnd = new Random();
     private void generateNoteList() {
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
 
-            mSortedNotes = new ArrayList<NoteExtended>();
-            ArrayList<NoteExtended> noImagesNotes = new ArrayList<>();
-            ArrayList<NoteExtended> imageNotes = new ArrayList<>();
-            Random rnd = new Random();
+            mSortedNotes = new ArrayList<>();
+            ArrayList<NoteExtended> tmpNotes = new ArrayList<>();
 
             int categoryPos = -1;
             for (Category category : mData.categories) {
@@ -509,15 +508,11 @@ public class HomeFragment extends Fragment
                         score += note.newFlag ? 4 : 0;
                         score += note.liked ? 1 : 0;
                         score += mData.hasPinnedNote(note.noteId) ? 1 : 0;
-                        score += inCategoryPos / 3;
+                        score += category.notes.size() - inCategoryPos / 3;
                         if (note.isBadge)
                             score = 1000;
 
-                        if (note.hasDisplayableMedia()) {
-                            imageNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
-                        } else {
-                            noImagesNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
-                        }
+                        tmpNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
                     }
 
                     inCategoryPos++;
@@ -525,21 +520,8 @@ public class HomeFragment extends Fragment
 
             }
 
-            int i = 0;
-            for (NoteExtended note : imageNotes) {
-                if (i < 3) {
-                    note.score = -1;
-                }
-
-                mSortedNotes.add(note);
-                i++;
-            }
-
-            for (NoteExtended note : noImagesNotes) {
-                mSortedNotes.add(note);
-            }
-
-            Collections.sort(mSortedNotes);
+            Collections.sort(tmpNotes, Collections.<NoteExtended>reverseOrder());
+            mSortedNotes = new ArrayList<>(tmpNotes);
         }
     }
 

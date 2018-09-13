@@ -1,17 +1,21 @@
 package com.laloosh.textmuse.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.SearchView;
@@ -30,6 +34,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
@@ -55,7 +60,7 @@ import com.laloosh.textmuse.utils.SmsUtils;
 import java.util.HashSet;
 
 
-public class ContactsPickerActivity extends ActionBarActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler{
+public class ContactsPickerActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler{
 
     public static final String CATEGORY_POSITION_EXTRA = "com.laloosh.textmuse.contactspicker.categoryextra";
     public static final String NOTE_POSITION_EXTRA = "com.laloosh.textmuse.contactspicker.noteposition";
@@ -81,7 +86,6 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts_picker);
 
         if (savedInstanceState != null) {
             Log.d(Constants.TAG, "Loading state in contacts picker activity");
@@ -90,18 +94,25 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             mState = new ContactAndGroupPickerState();
         }
 
-        mStoredContacts = GlobalData.getInstance().getStoredContacts();
-        mSettings = GlobalData.getInstance().getSettings();
-        if (mStoredContacts == null) {
-            GlobalData.getInstance().loadData(this);
-            mStoredContacts = GlobalData.getInstance().getStoredContacts();
-        }
-
         Intent intent = getIntent();
         findChosenNote(intent, savedInstanceState);
         if (mNote == null) {
             finish();
             return;
+        }
+
+        mSettings = GlobalData.getInstance().getSettings();
+
+        getContactPermissions();
+    }
+
+    protected void showContacts() {
+        setContentView(R.layout.activity_contacts_picker);
+
+        mStoredContacts = GlobalData.getInstance().getStoredContacts();
+        if (mStoredContacts == null) {
+            GlobalData.getInstance().loadData(this);
+            mStoredContacts = GlobalData.getInstance().getStoredContacts();
         }
 
         //Still no loaded contacts?  Just create an empty one
@@ -120,7 +131,6 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             FrameLayout parent = (FrameLayout)findViewById(R.id.contacts_picker_root);
             GlobalData.getInstance().getGuidedTour().addGuidedStepViewForKey(GuidedTour.GuidedTourSteps.CONTACT, this, parent);
         }
-
     }
 
     @Override
@@ -169,6 +179,7 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                 return true;
             }
         });
+
 
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
@@ -220,8 +231,16 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
             createNewGroup();
             return true;
         } else if (id == R.id.menu_send) {
+            sendMessage();
 
-            HashSet<String> phoneNumberSet = getSelectedPhoneNumbers();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void sendMessage() {
+        HashSet<String> phoneNumberSet = getSelectedPhoneNumbers();
             /*
             if (phoneNumberSet.isEmpty()) {
                 NoContactsSelectedDialogFragment fragment = NoContactsSelectedDialogFragment.newInstance();
@@ -229,16 +248,30 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                 return true;
             }
             */
-            if (!phoneNumberSet.isEmpty())
-                updateRecentContacts();
-            sendNoteIdToServer(phoneNumberSet.size());
+        if (!phoneNumberSet.isEmpty())
+            updateRecentContacts();
+        sendNoteIdToServer(phoneNumberSet.size());
 
-            if (!mNote.hasDisplayableMedia() || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                //If there is no displayable media or if we're on older versions of android,
-                //fall back to using the old method
+        if (!mNote.hasDisplayableMedia() || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            //If there is no displayable media or if we're on older versions of android,
+            //fall back to using the old method
 
-                if (mSettings.groupsends) {
-                    Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
+            if (mSettings.groupsends) {
+                Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
+
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
+                    CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
+                    fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
+                }
+            }
+            else {
+                for (String p: phoneNumberSet) {
+                    HashSet<String> phone = new HashSet<>();
+                    phone.add(p);
+                    Intent intent = SmsUtils.createSmsIntent(this, mNote, phone);
 
                     try {
                         startActivity(intent);
@@ -248,45 +281,68 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
                         fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
                     }
                 }
-                else {
-                    for (String p: phoneNumberSet) {
-                        HashSet<String> phone = new HashSet<>();
-                        phone.add(p);
-                        Intent intent = SmsUtils.createSmsIntent(this, mNote, phone);
+            }
 
-                        try {
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
-                            CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
-                            fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
-                        }
-                    }
-                }
-
-            } else {
-                if (mSettings.groupsends) {
-                    String[] phoneNumberArray = phoneNumberSet.toArray(new String[phoneNumberSet.size()]);
+        } else {
+            if (mSettings == null || mSettings.groupsends) {
+                String[] phoneNumberArray = phoneNumberSet.toArray(new String[phoneNumberSet.size()]);
+                Intent intent = new Intent(this, MmsSendActivity.class);
+                intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
+                intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
+                startActivityForResult(intent, REQUEST_CODE_MMS);
+            }
+            else {
+                for (String p: phoneNumberSet) {
+                    String[] phoneNumberArray = new String[] {p};
                     Intent intent = new Intent(this, MmsSendActivity.class);
                     intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
                     intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
                     startActivityForResult(intent, REQUEST_CODE_MMS);
                 }
-                else {
-                    for (String p: phoneNumberSet) {
-                        String[] phoneNumberArray = new String[] {p};
-                        Intent intent = new Intent(this, MmsSendActivity.class);
-                        intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
-                        intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
-                        startActivityForResult(intent, REQUEST_CODE_MMS);
-                    }
-                }
+            }
+        }
+    }
+
+    private static final int READ_CONTACTS_PERMISSIONS_REQUEST = 1;
+    private void getContactPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // The permission is NOT already granted.
+            // Check if the user has been asked about this permission already and denied
+            // it. If so, we want to give more explanation about why the permission is needed.
+            if (shouldShowRequestPermissionRationale(
+                    Manifest.permission.READ_CONTACTS)) {
+                // Show our own UI to explain to the user why we need to read the contacts
+                // before actually requesting the permission and showing the default UI
             }
 
-            return true;
+            // Fire off an async request to actually get the permission
+            // This will show the standard permission request dialog UI
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},
+                    READ_CONTACTS_PERMISSIONS_REQUEST);
         }
+        else
+            showContacts();
+    }
 
-        return super.onOptionsItemSelected(item);
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        // Make sure it's our original READ_CONTACTS request
+        if (requestCode == READ_CONTACTS_PERMISSIONS_REQUEST) {
+            if (grantResults.length == 1 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Toast.makeText(this, "Read Contacts permission granted", Toast.LENGTH_SHORT).show();
+                showContacts();
+            } else {
+                //Toast.makeText(this, "Read Contacts permission denied", Toast.LENGTH_SHORT).show();
+                sendMessage();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     private void findChosenNote(Intent intent, Bundle savedInstanceState) {
@@ -598,10 +654,10 @@ public class ContactsPickerActivity extends ActionBarActivity  implements Loader
     public class ContactGroupListAdapter extends BaseAdapter implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
 
         private ContactsAdapter mContactsAdapter;
-        private ActionBarActivity mContext;
+        private AppCompatActivity mContext;
         private LayoutInflater mLayoutInflater;
 
-        public ContactGroupListAdapter(ActionBarActivity context, ContactsAdapter.ContactsAdapterHandler handler) {
+        public ContactGroupListAdapter(AppCompatActivity context, ContactsAdapter.ContactsAdapterHandler handler) {
             mContext = context;
             mLayoutInflater = LayoutInflater.from(context);
             mContactsAdapter = new ContactsAdapter(context, handler, mState);

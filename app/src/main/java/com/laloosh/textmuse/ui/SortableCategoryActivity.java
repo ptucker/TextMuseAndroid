@@ -1,7 +1,7 @@
 package com.laloosh.textmuse.ui;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +17,7 @@ import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
 
-public class SortableCategoryActivity extends ActionBarActivity {
+public class SortableCategoryActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
