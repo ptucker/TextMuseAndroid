@@ -225,7 +225,9 @@ public class WebDataParser {
             } else if (name.equals("ens")) {
                 parseNoteExtensions(xpp, parsedData);
             } else if (name.equals("c")) {
-                parsedData.categories.add(parseCategory(xpp));
+                Category c = parseCategory(xpp);
+                if (c != null && c.notes.size() > 0)
+                    parsedData.categories.add(c);
             } else if (name.equals("skin")) {
                 parseCurrentSkinData(xpp, parsedData);
             }
@@ -474,10 +476,15 @@ public class WebDataParser {
                 note.badgeUrl = readText(xpp);
             } else if (name.equalsIgnoreCase("phoneno")) {
                 note.phoneNumber = readText(xpp);
+            } else if (name.equalsIgnoreCase("address")) {
+                note.address = readText(xpp);
             } else if (name.equalsIgnoreCase("textno")) {
                 note.textNumber = readText(xpp);
             } else {
-                xpp.nextTag();
+                //See if there's some text to read (and ignore)
+                String tmp = readText(xpp);
+                if (tmp == null)
+                    xpp.nextTag();
             }
         }
 

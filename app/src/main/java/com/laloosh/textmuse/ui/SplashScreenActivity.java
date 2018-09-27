@@ -3,36 +3,21 @@ package com.laloosh.textmuse.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.BuildConfig;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
-import com.laloosh.textmuse.datamodel.TextMuseLaunchIcon;
 import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.laloosh.textmuse.datamodel.TextMuseSkinData;
 import com.laloosh.textmuse.tasks.CalculateFreeSpaceCleanupAsyncTask;
 import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
 import com.laloosh.textmuse.tasks.FetchSkinsAsyncTask;
 import com.laloosh.textmuse.utils.AzureIntegrationSingleton;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 public class SplashScreenActivity extends AppCompatActivity implements FetchNotesAsyncTask.FetchNotesAsyncTaskHandler, FetchSkinsAsyncTask.FetchSkinsAsyncTaskHandler{
 

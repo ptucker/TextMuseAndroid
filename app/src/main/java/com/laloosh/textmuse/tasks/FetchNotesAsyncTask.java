@@ -66,6 +66,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
 
         HashMap<String, String> webParams = new HashMap<String, String>();
         webParams.put("highlight", "1");
+        webParams.put("address", "1");
         if (mAppId > 0) {
             webParams.put("app", Integer.toString(mAppId));
             Log.d(Constants.TAG, "Fetching new data for app ID: " + Integer.toString(mAppId));

@@ -1,8 +1,5 @@
 package com.laloosh.textmuse.app;
 
-import android.support.v4.BuildConfig;
-import android.util.Log;
-
 public class Constants {
     public static final String TAG = "TextMuse";
 

@@ -102,19 +102,35 @@
                     android:orientation="horizontal"
                     android:id="@+id/detailViewLayoutQuickText"
                     >
-                    <TextView
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/detailViewButtonQuickText"
-                        android:text="(789)789-7890"
-                        android:textAllCaps="true"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:textColor="#1c9a9e"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
+                        android:src="@drawable/phone_outgoing"
                         />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/detailViewLayoutShowMapParent"
+                >
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/detailViewLayoutShowMap"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/detailViewButtonShowMap"
+                        android:src="@drawable/map_marker"
+                        />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -132,17 +148,11 @@
                     android:id="@+id/detailViewLayoutQuickPhone"
                     >
 
-                    <TextView
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/detailViewButtonQuickPhone"
-                        android:text="(123)123-1234"
-                        android:textAllCaps="true"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:textColor="#0d395d"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
+                        android:src="@drawable/message_text"
                         />
                 </LinearLayout>
             </LinearLayout>

@@ -1,12 +1,15 @@
 package com.laloosh.textmuse.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -274,29 +277,53 @@ public class MessageDetailFactory {
 
     private static void SetupQuickContent(final View view, final Note note) {
         ViewGroup internalQuickLayout = (ViewGroup) view.findViewById(R.id.detailViewQuickContent);
-        if (note.phoneNumber == null && note.textNumber == null)
+        if (note.phoneNumber == null && note.address == null && note.textNumber == null)
             internalQuickLayout.setVisibility(View.INVISIBLE);
         else {
             internalQuickLayout.setVisibility(View.VISIBLE);
 
-            TextView vphone = (TextView)view.findViewById(R.id.detailViewButtonQuickPhone);
-            TextView vtext = (TextView)view.findViewById(R.id.detailViewButtonQuickText);
-            if (note.phoneNumber != null) {
-                vphone.setText("p:" + note.phoneNumber);
+            View vphone = view.findViewById(R.id.detailViewButtonQuickPhone);
+            View vmap = view.findViewById(R.id.detailViewButtonShowMap);
+            View vtext = view.findViewById(R.id.detailViewButtonQuickText);
+            if (note.phoneNumber != null &&
+                    ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.CALL_PHONE)
+                                            == PackageManager.PERMISSION_GRANTED) {
+                //vphone.setText("p:" + note.phoneNumber);
                 ViewGroup layoutQuickPhone = (ViewGroup) view.findViewById(R.id.detailViewLayoutQuickPhone);
                 layoutQuickPhone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_CALL);
                         intent.setData(Uri.parse("tel:" + note.phoneNumber));
-                        mActivity.startActivity(intent);                    }
+                        try {
+                            mActivity.startActivity(intent);
+                        }
+                        catch (SecurityException ex) {}
+                    }
                 });
             }
             else
                 vphone.setVisibility(View.INVISIBLE);
 
+            if (note.address != null) {
+                ViewGroup layoutQuickText = (ViewGroup) view.findViewById(R.id.detailViewLayoutShowMap);
+                layoutQuickText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //https://developers.google.com/maps/documentation/urls/guide
+                        //https://www.google.com/maps/search/?api=1&query=address
+                        String uri = String.format("https://www.google.com/maps/search/?api=1&query=%s", Uri.encode(note.address));
+                        Intent intent = new Intent(mActivity, WebviewActivity.class);
+                        intent.putExtra(WebviewActivity.WEBVIEW_ACTIVITY_EXTRA, uri);
+                        mActivity.startActivity(intent);
+                    }
+                });
+            }
+            else
+                vmap.setVisibility(View.INVISIBLE);
+
             if (note.textNumber != null) {
-                vtext.setText("t:" + note.textNumber);
+                //vtext.setText("t:" + note.textNumber);
                 ViewGroup layoutQuickText = (ViewGroup) view.findViewById(R.id.detailViewLayoutQuickText);
                 layoutQuickText.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -423,10 +450,10 @@ public class MessageDetailFactory {
 
                     if (note.follow) {
                         Log.d(Constants.TAG, "note setting text to unfollow");
-                        follow.setText("unfollow");
+                        follow.setText("UNFOLLOW");
                     } else {
                         Log.d(Constants.TAG, "note setting text to follow");
-                        follow.setText("follow");
+                        follow.setText("FOLLOW");
                     }
                 }
             });
@@ -470,7 +497,7 @@ public class MessageDetailFactory {
             TextView visitreward = (TextView)view.findViewById(R.id.detailViewTextViewVisitReward);
             visitreward.setText(String.format("Visit with %d badges: %s", note.minVisitCount, note.visitWinnerText));
         }
-        else {
+        if (note.minSendCount == 0 && note.minVisitCount == 0) {
             rewards.setVisibility(View.GONE);
         }
     }

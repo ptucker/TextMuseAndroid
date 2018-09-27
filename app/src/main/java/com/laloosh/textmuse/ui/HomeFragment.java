@@ -464,6 +464,9 @@ public class HomeFragment extends Fragment
         Log.d(Constants.TAG, "Re-generating views from data");
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
 
+            //Make sure there are no empty categories
+            mData.removeEmptyCategories();
+
             if (mAdapter != null) {
                 generateNoteList();
                 mAdapter.updateNotes(mSortedNotes);
@@ -632,9 +635,12 @@ public class HomeFragment extends Fragment
                 category = mOriginalCategories.get(position);
             }
 
+            /*
+            We shouldn't have any empty categories
             if (category.notes == null || category.notes.size() <= 0) {
                 return null;
             }
+            */
 
             if (rowView == null) {
                 LayoutInflater inflater = LayoutInflater.from(mContext);

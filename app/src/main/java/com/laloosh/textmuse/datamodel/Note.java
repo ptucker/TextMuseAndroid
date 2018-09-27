@@ -39,6 +39,7 @@ public class Note implements Parcelable {
     public String visitWinnerText;
     public String badgeUrl;
     public String phoneNumber;
+    public String address;
     public String textNumber;
 
     //Non-serialized value that are used temporarily
