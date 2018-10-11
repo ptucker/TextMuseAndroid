@@ -511,7 +511,7 @@ public class HomeFragment extends Fragment
                         score += note.newFlag ? 4 : 0;
                         score += note.liked ? 1 : 0;
                         score += mData.hasPinnedNote(note.noteId) ? 1 : 0;
-                        score += category.notes.size() - inCategoryPos / 3;
+                        score += (category.notes.size() - inCategoryPos) / 3;
                         if (note.isBadge)
                             score = 1000;
 

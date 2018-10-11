@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
+import com.laloosh.textmuse.datamodel.Category;
+import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.utils.WebDataParser;
 import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.datamodel.GlobalData;
@@ -144,6 +146,8 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
 
         globalData.updateData(newData);
 
+        removeStaleImages(oldData, newData);
+
         Context context = mContext.get();
         if (context != null) {
 
@@ -161,6 +165,35 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
         } else {
             if ((oldData.skinData == null && newData.skinData != null) || (oldData.skinData != null && newData.skinData != null && oldData.skinData.skinId != newData.skinData.skinId)) {
                 downloadLaunchImages(newData);
+            }
+        }
+    }
+
+    private void removeStaleImages(TextMuseData oldData, TextMuseData newData) {
+        Context context = mContext.get();
+        if (context == null)
+            return;
+
+        for (Category c: newData.categories) {
+            Category oldC = null;
+            for (int i=0; oldC == null && i<oldData.categories.size(); i++) {
+                if (oldData.categories.get(i).id == c.id)
+                    oldC = oldData.categories.get(i);
+            }
+            if (oldC != null) {
+                for (Note n: c.notes) {
+                    if (n.mediaUrl != null && n.mediaUrl.length() > 0) {
+                        boolean found = false;
+                        for (int i=0; !found && i<oldC.notes.size(); i++) {
+                            if (n.noteId == oldC.notes.get(i).noteId) {
+                                found = true;
+                                if (n.mediaUrl != oldC.notes.get(i).mediaUrl) {
+                                    n.removeStaleImage(context);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

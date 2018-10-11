@@ -105,6 +105,17 @@ public class Note implements Parcelable {
         }
     }
 
+    public void removeStaleImage(Context context) {
+        try {
+            File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), getInternalFilename());
+            if (file.exists()) {
+                file.delete();
+            }
+        } catch (Exception e) {
+            Log.e(Constants.TAG, "Could not remove image file for note id: " + noteId);
+        }
+    }
+
     public String getDisplayMediaUrl(Context context) {
         if (savedInternally) {
             try {
