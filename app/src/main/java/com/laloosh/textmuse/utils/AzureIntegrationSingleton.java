@@ -82,7 +82,6 @@ public class AzureIntegrationSingleton {
         intent.putExtra(Constants.SKIN_ID_EXTRA, skin);
         context.startService(intent);
 
-        /*
         try {
             if (getStarted() && getClient() != null && !TextUtils.isEmpty(mGcmRegistrationId)) {
 
@@ -122,6 +121,5 @@ public class AzureIntegrationSingleton {
         catch(Exception e) {
             Log.e(Constants.TAG, "Failed to register for google cloud messaging with the azure client!");
         }
-        */
     }
 }

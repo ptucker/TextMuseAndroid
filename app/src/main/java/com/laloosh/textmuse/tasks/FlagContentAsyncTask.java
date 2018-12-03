@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class FlagContentAsyncTask extends AsyncTask<Void, Void, String> {
 
-    public static final String FLAG_CONTENT_URL = "http://www.textmuse.com/admin/flagmessage.php";
+    public static final String FLAG_CONTENT_URL = "https://www.textmuse.com/admin/flagmessage.php";
 
     private WeakReference<FlagContentResultHandler> mHandler;
     private int mMessageId;

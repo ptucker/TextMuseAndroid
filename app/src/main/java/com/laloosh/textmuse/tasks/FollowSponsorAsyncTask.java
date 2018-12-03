@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class FollowSponsorAsyncTask extends AsyncTask<Void, Void, String> {
 
 //    www.textmuse.com/admin/following.php?app=56201&sponsor=76&follow=1
-    public static final String FOLLOW_URL = "http://www.textmuse.com/admin/following.php";
+    public static final String FOLLOW_URL = "https://www.textmuse.com/admin/following.php";
 
     private WeakReference<FollowResultHandler> mHandler;
     private int mAppId;

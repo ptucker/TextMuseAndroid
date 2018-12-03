@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 public class ViewCategoryAsyncTask extends AsyncTask<Void, Void, String> {
 
-    public static final String REMIT_DEAL_URL = "http://www.textmuse.com/admin/viewcategory.php";
+    public static final String REMIT_DEAL_URL = "https://www.textmuse.com/admin/viewcategory.php";
 
     private WeakReference<DefaultResultHandler> mHandler;
     private int mAppId;

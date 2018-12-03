@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference;
 
 public class FetchSkinsAsyncTask extends AsyncTask<Void, Void, FetchSkinsAsyncTask.FetchSkinsResult> {
 
-    public static final String UPDATE_URL = "http://www.textmuse.com/admin/getskins.php";
+    public static final String UPDATE_URL = "https://www.textmuse.com/admin/getskins.php";
 
     WeakReference<FetchSkinsAsyncTaskHandler> mHandler;
     WeakReference<Context> mContext;

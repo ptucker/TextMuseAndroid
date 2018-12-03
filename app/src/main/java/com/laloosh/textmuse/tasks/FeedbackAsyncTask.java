@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class FeedbackAsyncTask extends AsyncTask<Void, Void, String> {
 
-    public static final String FEEDBACK_URL = "http://www.textmuse.com/admin/postfeedback.php";
+    public static final String FEEDBACK_URL = "https://www.textmuse.com/admin/postfeedback.php";
 
     WeakReference<FeedbackAsyncTaskHandler> mHandler;
     String mName;

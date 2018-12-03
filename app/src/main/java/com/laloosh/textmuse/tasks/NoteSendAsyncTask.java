@@ -16,8 +16,8 @@ import java.util.HashMap;
 
 public class NoteSendAsyncTask extends AsyncTask<Void, Void, String> {
 
-    public static final String SEND_URL = "http://www.textmuse.com/admin/notesend.php";
-    public static final String FIRST_USER_URL = "http://www.textmuse.com/admin/firsttimesender.php";
+    public static final String SEND_URL = "https://www.textmuse.com/admin/notesend.php";
+    public static final String FIRST_USER_URL = "https://www.textmuse.com/admin/firsttimesender.php";
 
     int mAppId = -1;
     int mNoteId = -1;

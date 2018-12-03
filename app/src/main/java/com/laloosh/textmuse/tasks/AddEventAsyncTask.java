@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class AddEventAsyncTask extends AsyncTask<Void, Void, String> {
 
-    public static final String ADD_EVENT_URL = "http://www.textmuse.com/admin/addEvent.php";
+    public static final String ADD_EVENT_URL = "https://www.textmuse.com/admin/addEvent.php";
 
     private WeakReference<AddEventHandler> mHandler;
     private String mDescription;

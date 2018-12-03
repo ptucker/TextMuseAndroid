@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class RemitBadgeAsyncTask extends AsyncTask<Void, Void, String> {
 
-    public static final String REMIT_BADGE_URL = "http://www.textmuse.com/admin/remitbadge.php";
+    public static final String REMIT_BADGE_URL = "https://www.textmuse.com/admin/remitbadge.php";
 
     private WeakReference<RemitBadgeEventHandler> mHandler;
     private int mAppId;

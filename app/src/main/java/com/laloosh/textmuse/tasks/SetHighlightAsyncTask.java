@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class SetHighlightAsyncTask extends AsyncTask<Void, Void, String> {
 
-    public static final String LIKE_URL = "http://www.textmuse.com/admin/notelike.php";
+    public static final String LIKE_URL = "https://www.textmuse.com/admin/notelike.php";
 
     WeakReference<SetHighlightAsyncTaskHandler> mHandler;
     WeakReference<View> mView;

@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 public class RemitDealAsyncTask extends AsyncTask<Void, Void, String> {
 
-    public static final String REMIT_DEAL_URL = "http://www.textmuse.com/admin/remitdeal.php";
+    public static final String REMIT_DEAL_URL = "https://www.textmuse.com/admin/remitdeal.php";
 
     private WeakReference<DefaultResultHandler> mHandler;
     private int mAppId;

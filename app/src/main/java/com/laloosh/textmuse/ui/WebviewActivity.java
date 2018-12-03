@@ -63,7 +63,7 @@ public class WebviewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String url = intent.getStringExtra(WEBVIEW_ACTIVITY_EXTRA);
         if (url == null || url.length() == 0) {
-            url = "http://www.textmuse.com";
+            url = "https://www.textmuse.com";
         }
 
         mUrl = url;
