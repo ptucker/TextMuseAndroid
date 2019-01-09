@@ -1,9 +1,11 @@
 package com.laloosh.textmuse.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -12,12 +14,14 @@ import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.dialogs.GeneralDialogFragment;
 import com.laloosh.textmuse.tasks.AddEventAsyncTask;
+import com.laloosh.textmuse.tasks.AddPrayerAsyncTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddEventActivity extends AppCompatActivity implements AddEventAsyncTask.AddEventHandler {
+public class AddEventActivity extends AppCompatActivity
+        implements AddEventAsyncTask.AddEventHandler, AddPrayerAsyncTask.AddPrayerHandler {
 
     @Bind(R.id.addEventTextViewButtonSubmit) TextView mButtonSubmit;
     @Bind(R.id.addEventEditTextDate) EditText mEditTextDate;
@@ -25,11 +29,21 @@ public class AddEventActivity extends AppCompatActivity implements AddEventAsync
     @Bind(R.id.addEventEditTextEmail) EditText mEditTextEmail;
     @Bind(R.id.addEventEditTextLocation) EditText mEditTextLocation;
 
+    boolean isPrayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = super.getIntent();
+        isPrayer = i.getStringExtra ("Filter").toLowerCase().contains("prayer");
         setContentView(R.layout.activity_add_event);
         ButterKnife.bind(this);
+        if (isPrayer) {
+            mEditTextLocation.setVisibility(View.INVISIBLE);
+            TextView label = this.findViewById(R.id.addEventTextViewDescription);
+            label.setText("Submit a prayer request so others around you can pray for you.");
+            mButtonSubmit.setText("Add prayer");
+        }
     }
 
 
@@ -71,8 +85,14 @@ public class AddEventActivity extends AppCompatActivity implements AddEventAsync
             return;
         }
 
-        AddEventAsyncTask task = new AddEventAsyncTask(this, description, date, email, location, skinId, data.appId, AddEventActivity.this);
-        task.execute();
+        if (isPrayer) {
+            AddPrayerAsyncTask task = new AddPrayerAsyncTask(this, description, date, email, data.appId, AddEventActivity.this);
+            task.execute();
+        }
+        else {
+            AddEventAsyncTask task = new AddEventAsyncTask(this, description, date, email, location, skinId, data.appId, AddEventActivity.this);
+            task.execute();
+        }
     }
 
 

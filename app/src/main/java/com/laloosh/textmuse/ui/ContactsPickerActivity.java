@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.content.ContextCompat;
@@ -55,12 +58,17 @@ import com.laloosh.textmuse.dialogs.NoContactsSelectedDialogFragment;
 import com.laloosh.textmuse.dialogs.PhoneNumberRemovedDialogFragment;
 import com.laloosh.textmuse.tasks.NoteSendAsyncTask;
 import com.laloosh.textmuse.utils.GuidedTour;
+import com.laloosh.textmuse.utils.SimpleBitmapTarget;
 import com.laloosh.textmuse.utils.SmsUtils;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashSet;
 
 
-public class ContactsPickerActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler{
+public class ContactsPickerActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler {
 
     public static final String CATEGORY_POSITION_EXTRA = "com.laloosh.textmuse.contactspicker.categoryextra";
     public static final String NOTE_POSITION_EXTRA = "com.laloosh.textmuse.contactspicker.noteposition";
@@ -72,6 +80,8 @@ public class ContactsPickerActivity extends AppCompatActivity  implements Loader
     private static final String SAVE_STATE_PICKER_STATE = "contactandgrouppickerstate";
     private static final String SAVE_STATE_NOTE_STATE = "notestate";
 
+    private static final int MAX_IMAGE_DIMEN = 500;
+
     ContactGroupListAdapter mAdapter;
     TextMuseStoredContacts mStoredContacts;
     TextMuseSettings mSettings;
@@ -82,6 +92,7 @@ public class ContactsPickerActivity extends AppCompatActivity  implements Loader
     private int mActionModeIndex = -1;
 
     protected String mSearchTerm;
+    private String mBitmapFile = "tmpimage.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,65 +251,51 @@ public class ContactsPickerActivity extends AppCompatActivity  implements Loader
     }
 
     private void sendMessage() {
+        internalSendNote();
+    }
+
+    private void internalSendNote() {
         HashSet<String> phoneNumberSet = getSelectedPhoneNumbers();
-            /*
-            if (phoneNumberSet.isEmpty()) {
-                NoContactsSelectedDialogFragment fragment = NoContactsSelectedDialogFragment.newInstance();
-                fragment.show(getSupportFragmentManager(), "nocontactsfragment");
-                return true;
-            }
-            */
+
         if (!phoneNumberSet.isEmpty())
             updateRecentContacts();
         sendNoteIdToServer(phoneNumberSet.size());
 
-        if (!mNote.hasDisplayableMedia() || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            //If there is no displayable media or if we're on older versions of android,
-            //fall back to using the old method
+        String text = mNote.text;
+        if (mNote.extraUrl != null && mNote.extraUrl.length() > 0)
+            text = text + " (" + mNote.extraUrl + ")";
 
-            if (mSettings.groupsends) {
-                Intent intent = SmsUtils.createSmsIntent(this, mNote, phoneNumberSet);
-
-                try {
-                    startActivity(intent);
-                } catch (Exception e) {
-                    Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
-                    CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
-                    fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
-                }
+        if (mSettings.groupsends) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            String smsuri = "smsto:";
+            if (mNote.hasDisplayableMedia()) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri uriImage = FileProvider.getUriForFile(this.getApplicationContext(), getApplicationContext().getPackageName() + ".util", mNote.getInternalFile(this.getApplicationContext()));
+                intent.putExtra(Intent.EXTRA_STREAM, uriImage);
+                intent.setType("image/png");
             }
-            else {
-                for (String p: phoneNumberSet) {
-                    HashSet<String> phone = new HashSet<>();
-                    phone.add(p);
-                    Intent intent = SmsUtils.createSmsIntent(this, mNote, phone);
-
-                    try {
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        Log.e(Constants.TAG, "Problem launching activity to send SMS/MMS", e);
-                        CannotSendTextDialogFragment fragment = CannotSendTextDialogFragment.newInstance();
-                        fragment.show(getSupportFragmentManager(), "cantsendtextfragment");
-                    }
-                }
+            for (String p : phoneNumberSet) {
+                if (smsuri.length() > 7)
+                    smsuri = smsuri + ";";
+                smsuri = smsuri + p;
             }
-
-        } else {
-            if (mSettings == null || mSettings.groupsends) {
-                String[] phoneNumberArray = phoneNumberSet.toArray(new String[phoneNumberSet.size()]);
-                Intent intent = new Intent(this, MmsSendActivity.class);
-                intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
-                intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
-                startActivityForResult(intent, REQUEST_CODE_MMS);
-            }
-            else {
-                for (String p: phoneNumberSet) {
-                    String[] phoneNumberArray = new String[] {p};
-                    Intent intent = new Intent(this, MmsSendActivity.class);
-                    intent.putExtra(MmsSendActivity.PHONE_NUMBERS_EXTRA, phoneNumberArray);
-                    intent.putExtra(MmsSendActivity.NOTE_EXTRA, mNote);
-                    startActivityForResult(intent, REQUEST_CODE_MMS);
+            intent.putExtra("sms_body", text);
+            intent.setData(Uri.parse(smsuri));
+            startActivity(intent);
+        }
+        else {
+            for (String p: phoneNumberSet) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                String smsuri = "smsto:" + p;
+                if (mNote.hasDisplayableMedia()) {
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    Uri uriImage = FileProvider.getUriForFile(this.getApplicationContext(), getApplicationContext().getPackageName() + ".util", mNote.getInternalFile(this.getApplicationContext()));
+                    intent.putExtra(Intent.EXTRA_STREAM, uriImage);
+                    intent.setType("image/png");
                 }
+                intent.setData(Uri.parse(smsuri));
+                intent.putExtra("sms_body", text);
+                startActivity(intent);
             }
         }
     }

@@ -44,6 +44,7 @@ import com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment;
 import com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment;
 import com.laloosh.textmuse.tasks.FollowSponsorAsyncTask;
 import com.laloosh.textmuse.tasks.NoteSeeItAsyncTask;
+import com.laloosh.textmuse.tasks.PrayForAsyncTask;
 import com.laloosh.textmuse.tasks.RemitBadgeAsyncTask;
 import com.laloosh.textmuse.tasks.RemitDealAsyncTask;
 import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
@@ -361,6 +362,12 @@ public class MessageDetailFactory {
                     }, mData.appId, note.noteId);
                     task.execute();
                 }
+                else if (note.isPrayer) {
+                    PrayForAsyncTask task = new PrayForAsyncTask(mData.appId, note.noteId);
+                    task.execute();
+
+                    Toast.makeText(mActivity.getApplicationContext(), "Prayer sent", Toast.LENGTH_LONG).show();
+                }
                 else {
                     Intent intent = new Intent(mActivity, ContactsPickerActivity.class);
                     intent.putExtra(ContactsPickerActivity.CATEGORY_POSITION_EXTRA, mCategoryPosition);
@@ -374,6 +381,10 @@ public class MessageDetailFactory {
         if (note.isBadge) {
             TextView b = (TextView)view.findViewById(R.id.detailViewButtonSelectButton);
             b.setText("REMIT IT");
+        }
+        else if (note.isPrayer) {
+            TextView b = (TextView)view.findViewById(R.id.detailViewButtonSelectButton);
+            b.setText("PRAY FOR");
         }
     }
 

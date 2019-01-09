@@ -24,6 +24,7 @@ public class Note implements Parcelable {
     public String extraUrl;
     public boolean liked;
     public boolean isBadge;
+    public boolean isPrayer;
     public int likeCount;
     public String location;
     public String eventDate;
@@ -59,6 +60,10 @@ public class Note implements Parcelable {
 
     public String getInternalFilename() {
         return Integer.toString(noteId) + ".jpg";
+    }
+
+    public File getInternalFile(Context context) {
+        return new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), getInternalFilename());
     }
 
     //Local notes are initialized to have an ID of -1

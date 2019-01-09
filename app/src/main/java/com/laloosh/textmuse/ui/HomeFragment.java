@@ -2,6 +2,7 @@ package com.laloosh.textmuse.ui;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -96,6 +99,7 @@ public class HomeFragment extends Fragment
     private View mCategoryFilter;
     private String mFilter = Constants.CATEGORY_FILTER_ALL;
     private String mHighlighted;
+    private Menu mOptionsMenu;
 
     private View.OnClickListener mDrawerListener;
 
@@ -317,6 +321,16 @@ public class HomeFragment extends Fragment
                     @Override
                     public void onClick(View view) {
                         mFilter = mButton.getText().toString();
+
+                        int icon = 0;
+                        if (mFilter.toLowerCase().contains("prayer")) {
+                            icon = R.drawable.prayer_icon;
+                        }
+                        else {
+                            icon = R.drawable.ic_calendar_plus;
+                        }
+                        mOptionsMenu.findItem(R.id.action_add_event).setIcon(icon);
+
                         CategoryArrayAdapter.this.selectButton(mButton);
                         generateViewsFromData();
                     }
@@ -370,6 +384,7 @@ public class HomeFragment extends Fragment
         if (mEventsOnly) {
             inflater.inflate(R.menu.menu_event, menu);
         }
+        mOptionsMenu = menu;
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -377,6 +392,7 @@ public class HomeFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_event) {
             Intent intent = new Intent(getContext(), AddEventActivity.class);
+            intent.putExtra("Filter", mFilter);
             startActivity(intent);
 
             return true;
@@ -801,7 +817,7 @@ public class HomeFragment extends Fragment
                     viewHolder.mTextOnly = true;
                 }
 
-                if (note.isBadge) {
+                if (note.isBadge || note.isPrayer) {
                     TextView tv = (TextView)rowView.findViewById(R.id.mainViewLayoutSendText);
                     tv.setVisibility(View.INVISIBLE);
                 }

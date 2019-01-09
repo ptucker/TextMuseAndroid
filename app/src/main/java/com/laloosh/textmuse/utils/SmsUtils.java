@@ -121,7 +121,7 @@ public class SmsUtils {
         return text;
     }
 
-    private static Uri getMediaFile(Context context, Note note) {
+    public static Uri getMediaFile(Context context, Note note) {
         if (note.hasDisplayableMedia() ) {
             if (note.isLocalNote()) {
                 return Uri.parse(note.mediaUrl);
