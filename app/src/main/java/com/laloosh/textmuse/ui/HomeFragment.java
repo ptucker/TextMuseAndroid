@@ -63,6 +63,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -505,6 +506,8 @@ public class HomeFragment extends Fragment
     //Generates the pinned hash set and the sorted notes array.  These depend on your settings
     private Random rnd = new Random();
     private void generateNoteList() {
+        int maxForCategory = 10;
+        HashMap<Integer, Integer> categoryCount = new HashMap<>();
         if (mData != null && mData.categories != null && mData.categories.size() > 0) {
 
             mSortedNotes = new ArrayList<>();
@@ -512,10 +515,11 @@ public class HomeFragment extends Fragment
 
             int categoryPos = -1;
             for (Category category : mData.categories) {
+                categoryCount.put(category.id, 0);
                 categoryPos++;
 
                 if ((mFilter == Constants.CATEGORY_FILTER_ALL && !mSettings.shouldShowCategory(category.name)) ||
-                        (mFilter != Constants.CATEGORY_FILTER_ALL && mFilter != category.name)) {
+                        (mFilter != Constants.CATEGORY_FILTER_ALL && mFilter.compareTo(category.name) != 0)) {
                     continue;
                 }
 
@@ -527,11 +531,14 @@ public class HomeFragment extends Fragment
                         score += note.newFlag ? 4 : 0;
                         score += note.liked ? 1 : 0;
                         score += mData.hasPinnedNote(note.noteId) ? 1 : 0;
-                        score += (category.notes.size() - inCategoryPos) / 3;
+                        int categorySize = Math.min(category.notes.size(), maxForCategory);
+                        score += (5 * (categorySize - inCategoryPos)) / categorySize;
                         if (note.isBadge)
                             score = 1000;
 
-                        tmpNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
+                        categoryCount.put(category.id, categoryCount.get(category.id)+1);
+                        if (categoryCount.get(category.id) <= maxForCategory || mFilter != Constants.CATEGORY_FILTER_ALL || note.isBadge)
+                            tmpNotes.add(new NoteExtended(note, category, categoryPos, inCategoryPos, score));
                     }
 
                     inCategoryPos++;

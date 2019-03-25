@@ -172,7 +172,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
 
     private void removeStaleImages(TextMuseData oldData, TextMuseData newData) {
         Context context = mContext.get();
-        if (context == null)
+        if (context == null || oldData == null || oldData.categories == null)
             return;
 
         for (Category c: newData.categories) {
