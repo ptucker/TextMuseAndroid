@@ -3,14 +3,17 @@ package com.laloosh.textmuse.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -66,6 +69,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashSet;
+import java.util.List;
 
 
 public class ContactsPickerActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor>, EnterGroupDialogFragment.GroupNameChangeHandler {
@@ -266,36 +270,70 @@ public class ContactsPickerActivity extends AppCompatActivity  implements Loader
             text = text + " (" + mNote.extraUrl + ")";
 
         if (mSettings.groupsends) {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            String smsuri = "smsto:";
-            if (mNote.hasDisplayableMedia()) {
-                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                Uri uriImage = FileProvider.getUriForFile(this.getApplicationContext(), getApplicationContext().getPackageName() + ".util", mNote.getInternalFile(this.getApplicationContext()));
-                intent.putExtra(Intent.EXTRA_STREAM, uriImage);
-                intent.setType("image/png");
-            }
+            StringBuilder address = new StringBuilder();
             for (String p : phoneNumberSet) {
-                if (smsuri.length() > 7)
-                    smsuri = smsuri + ";";
-                smsuri = smsuri + p;
+                if (address.length() > 7)
+                    address.append(";");
+                address.append(p);
             }
-            intent.putExtra("sms_body", text);
-            intent.setData(Uri.parse(smsuri));
-            startActivity(intent);
+            startSMSIntent(text, address.toString(), phoneNumberSet.size()>1);
         }
         else {
             for (String p: phoneNumberSet) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                String smsuri = "smsto:" + p;
-                if (mNote.hasDisplayableMedia()) {
-                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    Uri uriImage = FileProvider.getUriForFile(this.getApplicationContext(), getApplicationContext().getPackageName() + ".util", mNote.getInternalFile(this.getApplicationContext()));
-                    intent.putExtra(Intent.EXTRA_STREAM, uriImage);
-                    intent.setType("image/png");
+                startSMSIntent(text, p, false);
+            }
+        }
+    }
+
+    private void startSMSIntent(String text, String address, boolean multipleRecepients) {
+        //If this note has media or has multiple recipients, use mms
+        String sms = (mNote.hasDisplayableMedia() || multipleRecepients) ? "mms:" : "smsto:";
+        Uri smsuri = Uri.parse(sms + address);
+        Intent intent = new Intent(Intent.ACTION_SEND, smsuri);
+        intent.setData(smsuri);
+        intent.putExtra("address", address);
+        intent.putExtra(Intent.EXTRA_TEXT, text);
+        if (mNote.hasDisplayableMedia()) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri uriImage = FileProvider.getUriForFile(this.getApplicationContext(), getApplicationContext().getPackageName() + ".util", mNote.getInternalFile(this.getApplicationContext()));
+            intent.putExtra(Intent.EXTRA_STREAM, uriImage);
+            intent.setType("image/png");
+        }
+
+        /*
+        List<ResolveInfo> resolveInfoList;
+        PackageManager packageManager = this.getApplicationContext().getPackageManager();
+        String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this.getApplicationContext());
+        resolveInfoList = packageManager.queryIntentActivities(intent, 0);
+        Log.d("SMS default", defaultSmsPackageName);
+        if (defaultSmsPackageName.length() == 0)
+            Toast.makeText(this.getApplicationContext(), "no default", Toast.LENGTH_LONG).show();
+        for (ResolveInfo ri : resolveInfoList) {
+            if (ri.toString().length() == 0)
+                Toast.makeText(this.getApplicationContext(), "no ResolveInfo", Toast.LENGTH_LONG).show();
+            Log.d("SMS Info", ri.toString());
+            Log.d("SMS Info", ri.activityInfo.name);
+        }
+        */
+
+        try {
+            startActivity(intent);
+        }
+        catch (Exception ex) {
+            if (ex instanceof ActivityNotFoundException) {
+                try {
+                    startActivity(Intent.createChooser(intent, ""));
                 }
-                intent.setData(Uri.parse(smsuri));
-                intent.putExtra("sms_body", text);
-                startActivity(intent);
+                catch (Exception innerEx) {
+                    Log.e("SMS Failure", ex.getLocalizedMessage());
+                    Toast.makeText(this.getApplicationContext(), "Error starting text messaging app", Toast.LENGTH_LONG).show();
+                    throw ex;
+                }
+            }
+            else {
+                Log.e("SMS Failure", ex.getLocalizedMessage());
+                Toast.makeText(this.getApplicationContext(), "Error starting text messaging app", Toast.LENGTH_LONG).show();
+                throw ex;
             }
         }
     }
