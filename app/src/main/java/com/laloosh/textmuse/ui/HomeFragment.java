@@ -97,9 +97,9 @@ public class HomeFragment extends Fragment
     private RecyclerView.Adapter mFilterAdapter;
     private TextView mTextView;
     private boolean mShowPhotos;
-    private View mCategoryFilter;
     private String mFilter = Constants.CATEGORY_FILTER_ALL;
     private String mHighlighted;
+    private String mCatHighlighted;
     private Menu mOptionsMenu;
 
     private View.OnClickListener mDrawerListener;
@@ -112,13 +112,17 @@ public class HomeFragment extends Fragment
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly, String highlighted) {
+    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly, String highlighted, String catHighlighted) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARG_ALREADY_LOADED_DATA, alreadyLoaded);
         args.putBoolean(ARG_EVENTS_ONLY, eventsOnly);
         fragment.setArguments(args);
         fragment.mHighlighted = highlighted;
+        if (catHighlighted != null && catHighlighted.length() > 0) {
+            fragment.mCatHighlighted = catHighlighted;
+        }
+
         return fragment;
     }
 
@@ -142,7 +146,6 @@ public class HomeFragment extends Fragment
 
         mAdapter = null;
         mDrawerListAdapter = null;
-        mCategoryFilter = null;
 
         mToolbarImage = (ImageView) getActivity().findViewById(R.id.mainToolbarButton);
 
@@ -152,6 +155,17 @@ public class HomeFragment extends Fragment
         }
         mData = instance.getData();
         mSettings = instance.getSettings();
+
+        //Check to see if we need to filter on a specific category
+        if (mData != null && mCatHighlighted != null && mCatHighlighted.length() > 0) {
+            int filterId = Integer.parseInt(mCatHighlighted);
+            for (Category c : mData.categories) {
+                if (c.id == filterId) {
+                    mFilter = c.name;
+                    break;
+                }
+            }
+        }
 
         setShowPhotos();
 

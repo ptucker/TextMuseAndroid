@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
@@ -287,9 +288,13 @@ public class ContactsPickerActivity extends AppCompatActivity  implements Loader
 
     private void startSMSIntent(String text, String address, boolean multipleRecepients) {
         //If this note has media or has multiple recipients, use mms
-        String sms = (mNote.hasDisplayableMedia() || multipleRecepients) ? "mms:" : "smsto:";
+        final String MMS = "mms:";
+        //We're going to always use MMS, because SMS doesn't work on some phones (e.g. Samsung)
+        //final String SMS = "smsto:";
+        String sms = MMS; //(mNote.hasDisplayableMedia() || multipleRecepients) ? MMS : SMS;
+        Intent intent = null;
         Uri smsuri = Uri.parse(sms + address);
-        Intent intent = new Intent(Intent.ACTION_SEND, smsuri);
+        intent = new Intent(Intent.ACTION_SEND, smsuri);
         intent.setData(smsuri);
         intent.putExtra("address", address);
         intent.putExtra(Intent.EXTRA_TEXT, text);
@@ -299,23 +304,22 @@ public class ContactsPickerActivity extends AppCompatActivity  implements Loader
             intent.putExtra(Intent.EXTRA_STREAM, uriImage);
             intent.setType("image/png");
         }
+        else {
+            //This is a kludgy hack. If there's no image and we're using MMS to send the text,
+            // then we need to add a STREAM to null. The messaging app will be smart about how
+            // to send it.
+            intent.putExtra(Intent.EXTRA_STREAM, (Parcelable[])null);
+            intent.setType("image/png");
+        }
 
         /*
         List<ResolveInfo> resolveInfoList;
         PackageManager packageManager = this.getApplicationContext().getPackageManager();
-        String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(this.getApplicationContext());
         resolveInfoList = packageManager.queryIntentActivities(intent, 0);
-        Log.d("SMS default", defaultSmsPackageName);
-        if (defaultSmsPackageName.length() == 0)
-            Toast.makeText(this.getApplicationContext(), "no default", Toast.LENGTH_LONG).show();
-        for (ResolveInfo ri : resolveInfoList) {
-            if (ri.toString().length() == 0)
-                Toast.makeText(this.getApplicationContext(), "no ResolveInfo", Toast.LENGTH_LONG).show();
-            Log.d("SMS Info", ri.toString());
-            Log.d("SMS Info", ri.activityInfo.name);
+        if (resolveInfoList.size() == 0 && retry == 1) {
+            sms = (sms == MMS) ? SMS : MMS;
         }
         */
-
         try {
             startActivity(intent);
         }

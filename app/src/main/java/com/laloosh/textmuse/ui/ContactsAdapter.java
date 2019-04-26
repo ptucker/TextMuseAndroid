@@ -21,6 +21,8 @@ import com.laloosh.textmuse.datamodel.TextMuseContact;
 import com.laloosh.textmuse.dialogs.ChoosePhoneNumberDialogFragment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnCheckedChangeListener, View.OnClickListener, ChoosePhoneNumberDialogFragment.ChoosePhoneNumberDialogHandler {
     private LayoutInflater mInflater; // Stores the layout inflater
@@ -120,7 +122,13 @@ public class ContactsAdapter extends CursorAdapter implements CompoundButton.OnC
                     contacts.add(foundContactData);
                 }
 
-                if (contacts.size() == 1) {
+                //We may have multiple entries for a person, so make sure we have multiple phone numbers
+                // before we ask what phone number to use.
+                Set<String> phones = new HashSet<>();
+                for (TextMuseContact c: contacts) {
+                    phones.add(c.phoneNumber);
+                }
+                if (phones.size() == 1) {
                     mState.checkedContact(contacts.get(0));
                 } else {
                     //More than one phone number! let's launch the dialog!

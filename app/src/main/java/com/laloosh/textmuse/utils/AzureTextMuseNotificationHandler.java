@@ -44,6 +44,7 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
         public String extendedMsg;
         public String title;
         public String highight;
+        public String cathighlight;
 
         public void parseBundle(Bundle bundle) {
             if (inBundle(bundle))
@@ -63,6 +64,7 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
                 extendedMsg = bundle.getString("extendedMessage");
                 title = bundle.getString("messageTitle");
                 highight = bundle.getString("highlight");
+                cathighlight = bundle.getString("cathighlight");
                 return true;
             }
             else
@@ -123,6 +125,8 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
                     title = msg.getString("messageTitle");
                 if (msg.has("highlight"))
                     highight = msg.getString("highlight");
+                if (msg.has("cathighlight"))
+                    cathighlight = msg.getString("cathighlight");
             }
             catch (Exception e) {
                 //Nope. Do your best
@@ -141,10 +145,10 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
         notificationManager.cancelAll();
 
         showReminderNotification(context, notification.message, notification.url,
-                notification.extendedMsg, notification.title, notification.highight);
+                notification.extendedMsg, notification.title, notification.highight, notification.cathighlight);
     }
 
-    private void showReminderNotification(Context context, String text, String url, String inAppMessage, String messageTitle, String highlighted) {
+    private void showReminderNotification(Context context, String text, String url, String inAppMessage, String messageTitle, String highlighted, String cathighlighted) {
 
         //Build the intent that will start the activity on click
         Intent resultIntent;
@@ -165,6 +169,9 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
         }
         if (highlighted != null) {
             resultIntent.putExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA, highlighted);
+        }
+        if (cathighlighted != null) {
+            resultIntent.putExtra(Constants.HIGHLIGHTED_CATEGORY_EXTRA, cathighlighted);
         }
 
         pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);

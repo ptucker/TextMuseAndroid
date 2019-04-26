@@ -46,6 +46,7 @@ public class Constants {
     public static final String LAUNCH_MESSAGE_EXTRA = "com.laloosh.textmuse.launch.messageextra";
     public static final String SKIN_ID_EXTRA = "com.laloosh.textmuse.skin.idextra";
     public static final String HIGHLIGHTED_MESSAGE_EXTRA = "com.laloosh.textmuse.highlighted.idextra";
+    public static final String HIGHLIGHTED_CATEGORY_EXTRA = "com.laloosh.textmuse.category.idextra";
 
     public static final String GOOGLE_API_YOUTUBE = "AIzaSyCwp-hP3BadhQKKfnsFSPqoGPV9wmNANM0";
 
