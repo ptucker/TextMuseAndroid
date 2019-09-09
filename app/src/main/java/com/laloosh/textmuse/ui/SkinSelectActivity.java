@@ -50,10 +50,7 @@ public class SkinSelectActivity extends AppCompatActivity implements FetchNotesA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skin_select);
 
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("Getting things ready...");
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.setIndeterminate(true);
+        initProgressDialog();
 
         Intent intent = getIntent();
         mLaunchedFromSplash = intent.getBooleanExtra(EXTRA_LAUNCH_FROM_SPLASH, false);
@@ -116,12 +113,21 @@ public class SkinSelectActivity extends AppCompatActivity implements FetchNotesA
         }
     }
 
+    private void initProgressDialog() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Getting things ready...");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setIndeterminate(true);
+    }
+
     private void selectSkinId(int skinId) {
 //        if (mLaunchedFromSplash) {
 //            Toast toast = Toast.makeText(this, "Getting things ready...", Toast.LENGTH_SHORT);
 //            toast.show();
 //        }
 //        mProgressBar.setVisibility(View.VISIBLE);
+        if (mProgressDialog == null)
+            initProgressDialog();
         mProgressDialog.show();
 
 //        if (!mLaunchedFromSplash) {

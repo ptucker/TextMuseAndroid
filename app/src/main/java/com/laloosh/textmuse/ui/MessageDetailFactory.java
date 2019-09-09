@@ -545,9 +545,10 @@ public class MessageDetailFactory {
     }
 
     public static void removeView(View view) {
-        ViewGroup root = (ViewGroup)view.getParent();
         Animation detailSlide = AnimationUtils.loadAnimation(mActivity.getApplicationContext(), R.anim.activityfadeout);
         view.startAnimation(detailSlide);
-        root.removeView(view);
+        ViewGroup root = (ViewGroup)view.getParent();
+        if (root != null)
+            root.removeView(view);
     }
 }

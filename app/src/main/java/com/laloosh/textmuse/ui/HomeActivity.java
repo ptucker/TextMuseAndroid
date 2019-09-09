@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        if (!mAdapter.onBack())
+        if (mAdapter == null || !mAdapter.onBack())
             super.onBackPressed();
     }
 

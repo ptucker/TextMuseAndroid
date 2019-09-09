@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FriendlyNotesAndroid.iml" filepath="$PROJECT_DIR$/FriendlyNotesAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TextMuse.iml" filepath="$PROJECT_DIR$/TextMuse.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-smsmms/android-smsmms.iml" filepath="$PROJECT_DIR$/android-smsmms/android-smsmms.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" filepath="$PROJECT_DIR$/viewpagerindicator/viewpagerindicator.iml" />

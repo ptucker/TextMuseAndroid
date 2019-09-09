@@ -80,7 +80,12 @@ public class AzureIntegrationSingleton {
         int skin = TextMuseSkinData.getCurrentlySelectedSkin(context);
         Intent intent = new Intent(context, RegistrationIntentService.class);
         intent.putExtra(Constants.SKIN_ID_EXTRA, skin);
-        context.startService(intent);
+        try {
+            context.startService(intent);
+        }
+        catch (Exception ex) {
+            ;   //possible illegal state exception
+        }
 
         try {
             if (getStarted() && getClient() != null && !TextUtils.isEmpty(mGcmRegistrationId)) {

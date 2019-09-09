@@ -14,7 +14,10 @@ public class TextMuseInstanceIDService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         Log.d(TAG, "Refreshing GCM Reg Token");
 
-        Intent intent = new Intent(this, RegistrationIntentService.class);
-        startService(intent);
+        try {
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+        catch (Exception ex) {;}
     }
 }

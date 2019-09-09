@@ -25,7 +25,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
-
+import java.util.Date;
+import java.util.TimeZone;
 
 public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTask.FetchNotesResult> {
 
@@ -70,6 +71,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
         webParams.put("highlight", "1");
         webParams.put("prayer", "1");
         webParams.put("address", "1");
+        webParams.put("tz", String.valueOf(TimeZone.getDefault().getOffset(new Date().getTime())));
         if (mAppId > 0) {
             webParams.put("app", Integer.toString(mAppId));
             Log.d(Constants.TAG, "Fetching new data for app ID: " + Integer.toString(mAppId));
