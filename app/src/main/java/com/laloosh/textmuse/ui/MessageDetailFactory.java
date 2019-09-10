@@ -1,6 +1,5 @@
 package com.laloosh.textmuse.ui;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.app.DialogFragment;
@@ -8,11 +7,10 @@ import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MotionEventCompat;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.view.MotionEventCompat;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -36,28 +32,22 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
-import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
 import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
-import com.laloosh.textmuse.dialogs.CannotSendTextDialogFragment;
 import com.laloosh.textmuse.dialogs.ExpandedImageDialogFragment;
 import com.laloosh.textmuse.tasks.FollowSponsorAsyncTask;
 import com.laloosh.textmuse.tasks.NoteSeeItAsyncTask;
 import com.laloosh.textmuse.tasks.PrayForAsyncTask;
 import com.laloosh.textmuse.tasks.RemitBadgeAsyncTask;
-import com.laloosh.textmuse.tasks.RemitDealAsyncTask;
-import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.AndroidUtils;
 import com.laloosh.textmuse.utils.AzureIntegrationSingleton;
 import com.laloosh.textmuse.utils.ImageDownloadTarget;
 import com.laloosh.textmuse.utils.SmsUtils;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by petertucker on 6/23/17.
@@ -157,7 +147,7 @@ public class MessageDetailFactory {
         ImageView imageView = (ImageView) view.findViewById(R.id.detailViewImageViewImage);
 
         //Try out picasso library to see how it performs
-        Picasso.with(mActivity)
+        Picasso.get()
                 .load(note.getDisplayMediaUrl(mActivity))
                 .error(R.drawable.placeholder_image)
                 .fit()
@@ -175,7 +165,7 @@ public class MessageDetailFactory {
             //Use a hashmap to keep track of these for 2 reasons--to prevent them from getting
             //garbage collected, and also so that we don't download twice
             mDownloadTargets.put(note.noteId, downloadTarget);
-            Picasso.with(mActivity)
+            Picasso.get()
                     .load(note.mediaUrl)
                     .into(downloadTarget);
         }
@@ -203,7 +193,7 @@ public class MessageDetailFactory {
         final RelativeLayout previewLayout = (RelativeLayout) view.findViewById(R.id.detailViewYoutubeThumbnailLayout);
 
         //Try out picasso library to see how it performs
-        Picasso.with(mActivity)
+        Picasso.get()
                 .load(note.getYoutubeImgUrl())
                 .error(R.drawable.placeholder_image)
                 .fit()
@@ -452,7 +442,7 @@ public class MessageDetailFactory {
                     task.execute();
 
                     AzureIntegrationSingleton azureIntegrationSingleton = AzureIntegrationSingleton.getInstance();
-                    azureIntegrationSingleton.registerForGcm(mActivity);
+                    azureIntegrationSingleton.registerWithNotificationHubs(mActivity);
 
                     note.follow = !note.follow;
                     mData.save(mActivity);
@@ -486,7 +476,7 @@ public class MessageDetailFactory {
             };
 
             for (ImageView i:badgeIcons) {
-                Picasso.with(mActivity)
+                Picasso.get()
                         .load(note.badgeUrl)
                         .error(R.drawable.placeholder_image)
                         .fit()

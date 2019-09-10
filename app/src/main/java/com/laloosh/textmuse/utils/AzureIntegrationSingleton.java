@@ -76,7 +76,7 @@ public class AzureIntegrationSingleton {
         mGcmRegistrationId = gcmRegistrationId;
     }
 
-    public void registerForGcm(Context context) {
+    public void registerWithNotificationHubs(Context context) {
         int skin = TextMuseSkinData.getCurrentlySelectedSkin(context);
         Intent intent = new Intent(context, RegistrationIntentService.class);
         intent.putExtra(Constants.SKIN_ID_EXTRA, skin);
@@ -87,6 +87,8 @@ public class AzureIntegrationSingleton {
             ;   //possible illegal state exception
         }
 
+        /*
+        deprecated with GCM. New code in RegistrationIntentService (see getTags()).
         try {
             if (getStarted() && getClient() != null && !TextUtils.isEmpty(mGcmRegistrationId)) {
 
@@ -126,5 +128,6 @@ public class AzureIntegrationSingleton {
         catch(Exception e) {
             Log.e(Constants.TAG, "Failed to register for google cloud messaging with the azure client!");
         }
+         */
     }
 }

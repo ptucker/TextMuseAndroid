@@ -3,8 +3,7 @@ package com.laloosh.textmuse.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 
 public class GeneralDialogFragment extends DialogFragment {
     private static final String ARG_TITLE = "title" ;

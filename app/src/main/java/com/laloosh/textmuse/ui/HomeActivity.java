@@ -6,33 +6,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.laloosh.textmuse.R;
 import com.laloosh.textmuse.app.Constants;
 import com.laloosh.textmuse.broadcastreceivers.AlarmReceivedBroadcastReceiver;
-import com.laloosh.textmuse.datamodel.Category;
 import com.laloosh.textmuse.datamodel.GlobalData;
-import com.laloosh.textmuse.datamodel.Note;
 import com.laloosh.textmuse.datamodel.TextMuseData;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
 import com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment;
-import com.laloosh.textmuse.utils.GuidedTour;
-import com.squareup.picasso.Picasso;
+import com.laloosh.textmuse.utils.AzureIntegrationSingleton;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -77,6 +70,8 @@ public class HomeActivity extends AppCompatActivity {
 
         setLastNotified();
         setNotificationAlarm();
+
+        AzureIntegrationSingleton.getInstance().registerWithNotificationHubs(this);
 
         Intent intent = getIntent();
         mAlreadyLoadedData = intent.getBooleanExtra(ALREADY_LOADED_DATA_EXTRA, false);

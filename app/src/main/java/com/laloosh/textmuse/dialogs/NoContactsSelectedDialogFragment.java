@@ -3,7 +3,7 @@ package com.laloosh.textmuse.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 
 public class NoContactsSelectedDialogFragment extends DialogFragment {
 

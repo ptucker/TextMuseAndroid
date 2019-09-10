@@ -21,6 +21,7 @@ public class AzureTextMuseNotificationChannelUtil extends ContextWrapper {
 
     public AzureTextMuseNotificationChannelUtil(Context base) {
         super(base);
+        TextMuseMessagingService.setContext(base);
         createChannels();
     }
 

@@ -230,7 +230,7 @@ public class FetchNotesAsyncTask extends AsyncTask<Void, Void, FetchNotesAsyncTa
     //Returns true if succeeded
     private boolean downloadImageToFile(Context context, String url, File file) {
         try {
-            Bitmap bitmap = Picasso.with(context)
+            Bitmap bitmap = Picasso.get()
                     .load(url)
                     .get();
 

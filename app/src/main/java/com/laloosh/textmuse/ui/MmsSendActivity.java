@@ -6,9 +6,9 @@ import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -145,7 +145,7 @@ public class MmsSendActivity extends AppCompatActivity implements SimpleBitmapTa
 
         mTarget = new SimpleBitmapTarget(this);
 
-        Picasso.with(this)
+        Picasso.get()
                 .load(mNote.getDisplayMediaUrl(this))
                 .resize(MAX_IMAGE_DIMEN, MAX_IMAGE_DIMEN)
                 .centerInside()

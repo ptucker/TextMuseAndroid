@@ -3,7 +3,7 @@ package com.laloosh.textmuse.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -135,7 +135,7 @@ public class SkinSelectActivity extends AppCompatActivity implements FetchNotesA
 //        }
         TextMuseSkinData.setCurrentlySelectedSkin(SkinSelectActivity.this, skinId);
         reloadMainData();
-        registerPushNotifications();
+        //registerPushNotifications();
     }
 
     protected void reloadMainData() {
@@ -313,7 +313,7 @@ public class SkinSelectActivity extends AppCompatActivity implements FetchNotesA
             */
                 TextMuseSkin skin = mSkins.get(position);
                 viewHolder.mTextView.setText(skin.name);
-                Picasso.with(mActivity)
+                Picasso.get()
                         .load(skin.iconUrl)
                         .into(viewHolder.mImageView);
             /*}*/

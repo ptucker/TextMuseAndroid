@@ -24,8 +24,8 @@ public class SimpleBitmapTarget implements Target {
     }
 
     @Override
-    public void onBitmapFailed(Drawable errorDrawable) {
-        Log.d(Constants.TAG, "Bitmap load failed in image target");
+    public void onBitmapFailed(Exception ex, Drawable errorDrawable) {
+        Log.d(Constants.TAG, "Bitmap load failed in image target: " + ex.getLocalizedMessage());
         if (mHandler != null) {
             mHandler.finishedLoadingBitmap(null);
         }

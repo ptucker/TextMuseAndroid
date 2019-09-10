@@ -59,7 +59,7 @@ public class ExpandedImageDialogFragment extends DialogFragment implements Image
 
         Activity activity = getActivity();
         Log.d(Constants.TAG, "Attempting to load media url for expanded image view: " + note.getDisplayMediaUrl(activity));
-        Picasso.with(activity)
+        Picasso.get()
                 .load(note.getDisplayMediaUrl(activity))
                 .into(mTarget);
 

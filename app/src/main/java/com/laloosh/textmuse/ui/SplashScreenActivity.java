@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -91,7 +91,7 @@ public class SplashScreenActivity extends AppCompatActivity implements FetchNote
         getNewContent();
         cleanImageCacheTask();
         scheduleTimerForFinish();
-        startupAzureIntegration();
+        //startupAzureIntegration();
 
         Intent intent = getIntent();
         mLaunchMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
@@ -172,7 +172,8 @@ public class SplashScreenActivity extends AppCompatActivity implements FetchNote
 
         Intent intent;
 
-        if (settings.firstLaunch && Constants.BuildType == Constants.Builds.University) {
+        int skinid = TextMuseSkinData.getCurrentlySelectedSkin(this);
+        if (skinid == -1 || (settings.firstLaunch && Constants.BuildType == Constants.Builds.University)) {
             //Go to the skin selection screen
             //if (mFinishedLoadingSkins && mFinishedLoadingSkinsResult == FetchSkinsAsyncTask.FetchSkinsResult.FETCH_SUCCEEDED) {
                 intent = new Intent(SplashScreenActivity.this, SkinSelectActivity.class);

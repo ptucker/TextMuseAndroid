@@ -61,7 +61,7 @@ public class ImageDownloadTarget implements Target {
     }
 
     @Override
-    public void onBitmapFailed(Drawable errorDrawable) {
+    public void onBitmapFailed(Exception ex, Drawable errorDrawable) {
         Log.d(Constants.TAG, "Bitmap load failed in image download target");
         mNote.savedInternally = false;
         mNote.saveFailed = true;

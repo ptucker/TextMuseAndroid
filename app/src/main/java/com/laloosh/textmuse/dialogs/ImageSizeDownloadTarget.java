@@ -20,8 +20,8 @@ public class ImageSizeDownloadTarget implements Target {
     }
 
     @Override
-    public void onBitmapFailed(Drawable errorDrawable) {
-        Log.d(Constants.TAG, "Bitmap load failed");
+    public void onBitmapFailed(Exception ex, Drawable errorDrawable) {
+        Log.d(Constants.TAG, "Bitmap load failed: " + ex.getLocalizedMessage());
     }
 
     @Override
@@ -36,7 +36,6 @@ public class ImageSizeDownloadTarget implements Target {
             handler.doneLoadingBitmap(bitmap);
         }
     }
-
 
     public interface ImageSizeDownloadTargetHandler {
         public void doneLoadingBitmap(Bitmap bitmap);

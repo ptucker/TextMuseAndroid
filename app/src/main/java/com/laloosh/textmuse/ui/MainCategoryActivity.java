@@ -1,16 +1,15 @@
 package com.laloosh.textmuse.ui;
 
-import android.os.Environment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +35,6 @@ import com.laloosh.textmuse.datamodel.TextMuseSettings;
 import com.laloosh.textmuse.datamodel.events.ShowCategoriesChangedEvent;
 import com.laloosh.textmuse.dialogs.LaunchMessageDialogFragment;
 import com.laloosh.textmuse.tasks.FetchNotesAsyncTask;
-import com.laloosh.textmuse.tasks.SetHighlightAsyncTask;
 import com.laloosh.textmuse.utils.ColorHelpers;
 import com.laloosh.textmuse.utils.SmsUtils;
 import com.squareup.picasso.Picasso;
@@ -45,7 +43,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -659,7 +656,7 @@ public class MainCategoryActivity extends AppCompatActivity implements FetchNote
                 holder.mBackgroundImageView.post(new Runnable() {
                     @Override
                     public void run() {
-                        Picasso.with(mContext)
+                        Picasso.get()
                                 .load(note.getDisplayMediaUrl(mContext))
                                 .error(R.drawable.placeholder_image)
                                 .resize(holder.mBackgroundImageView.getWidth(), 0)

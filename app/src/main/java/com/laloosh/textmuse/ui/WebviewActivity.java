@@ -3,8 +3,8 @@ package com.laloosh.textmuse.ui;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,8 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.laloosh.textmuse.R;
-
-import java.io.File;
 
 public class WebviewActivity extends AppCompatActivity {
 
