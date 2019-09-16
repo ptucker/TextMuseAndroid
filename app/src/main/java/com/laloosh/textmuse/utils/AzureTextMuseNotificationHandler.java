@@ -163,6 +163,9 @@ public class AzureTextMuseNotificationHandler extends NotificationsHandler {
         if (highlighted != null) {
             resultIntent.putExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA, highlighted);
         }
+        else if (highlighted != null) {
+            resultIntent.putExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA, highlighted);
+        }
 
         pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

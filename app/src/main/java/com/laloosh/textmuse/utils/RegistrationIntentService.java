@@ -67,7 +67,7 @@ public class RegistrationIntentService extends IntentService {
                 sharedPreferences.edit().putString("registrationID", regID).apply();
                 sharedPreferences.edit().putString("FCMToken", FCM_token).apply();
             }
-            else if ((storedToken = sharedPreferences.getString("FCMToken", "")) != FCM_token) {
+            else if ((storedToken = sharedPreferences.getString("FCMToken", "")).compareTo(FCM_token) != 0) {
                 NotificationHub hub = new NotificationHub(AzureNotificationSettings.HubName,
                         AzureNotificationSettings.HubListenConnectionString, this);
                 regID = hub.register(FCM_token, tags.toArray(new String[tags.size()])).getRegistrationId();

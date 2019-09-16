@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment
     private boolean mShowPhotos;
     private View mCategoryFilter;
     private String mFilter = Constants.CATEGORY_FILTER_ALL;
-    private String mHighlighted;
+    private String mHighlighted, mCatHighlighted;
     private Menu mOptionsMenu;
 
     private View.OnClickListener mDrawerListener;
@@ -107,13 +107,14 @@ public class HomeFragment extends Fragment
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly, String highlighted) {
+    public static HomeFragment newInstance(boolean alreadyLoaded, boolean eventsOnly, String highlighted, String cathighlighted) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putBoolean(ARG_ALREADY_LOADED_DATA, alreadyLoaded);
         args.putBoolean(ARG_EVENTS_ONLY, eventsOnly);
         fragment.setArguments(args);
         fragment.mHighlighted = highlighted;
+        fragment.mCatHighlighted = cathighlighted;
         return fragment;
     }
 
@@ -147,6 +148,16 @@ public class HomeFragment extends Fragment
         }
         mData = instance.getData();
         mSettings = instance.getSettings();
+
+        if (mCatHighlighted != null && mCatHighlighted.length()> 0) {
+            int cat = Integer.parseInt(mCatHighlighted);
+            for (Category category : mData.categories) {
+                if (category.id == cat) {
+                    mFilter = category.name;
+                    break;
+                }
+            }
+        }
 
         setShowPhotos();
 
@@ -244,7 +255,6 @@ public class HomeFragment extends Fragment
                 detail.startAnimation(detailSlide);
             }
         }
-
 
         if (instance.getSettings().firstLaunch) {
             RelativeLayout parent = (RelativeLayout)v.findViewById(R.id.mainFragmentRoot);

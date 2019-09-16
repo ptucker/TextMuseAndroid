@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     private boolean mAlreadyLoadedData = false;
     private TextMuseData mData;
     private String mHighlighted;
+    private String mCatHighlighted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,8 @@ public class HomeActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
         mHighlighted = intent.getStringExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA);
-        mAdapter = new MainAdapter(getSupportFragmentManager(), mAlreadyLoadedData, mHighlighted);
+        mCatHighlighted = intent.getStringExtra(Constants.CATHIGHLIGHTED_MESSAGE_EXTRA);
+        mAdapter = new MainAdapter(getSupportFragmentManager(), mAlreadyLoadedData, mHighlighted, mCatHighlighted);
         mViewPager.setAdapter(mAdapter);
 
         final String startMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
@@ -192,11 +194,13 @@ public class HomeActivity extends AppCompatActivity {
         private HashMap<Integer, String> mTabMap;
         private HomeFragment mFragment;
         private String mHighlighted;
+        private String mCatHighlighted;
 
-        public MainAdapter(FragmentManager fm, boolean alreadyLoadedData, String highlighted) {
+        public MainAdapter(FragmentManager fm, boolean alreadyLoadedData, String highlighted, String cathighlighted) {
             super(fm);
             mAlreadyLoadedData = alreadyLoadedData;
             mHighlighted = highlighted;
+            mCatHighlighted = cathighlighted;
             mTabMap = new HashMap<>(3);
         }
 
@@ -205,7 +209,7 @@ public class HomeActivity extends AppCompatActivity {
             if (position == 0) {
                 boolean events = (Constants.BuildType != Constants.Builds.Humanix &&
                         Constants.BuildType != Constants.Builds.YouthREACH);
-                mFragment = HomeFragment.newInstance(mAlreadyLoadedData, events, mHighlighted);
+                mFragment = HomeFragment.newInstance(mAlreadyLoadedData, events, mHighlighted, mCatHighlighted);
 
                 return mFragment;
             } else if (position == 1) {

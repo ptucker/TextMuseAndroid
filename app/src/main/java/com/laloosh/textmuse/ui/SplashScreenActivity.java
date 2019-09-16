@@ -35,6 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity implements FetchNote
     private Handler mHandler;
     private String mLaunchMessage;
     private String mHighlighted;
+    private String mCatHighlighted;
     private boolean mTimerFired;
     private boolean mSkinRetry = true;
 
@@ -96,6 +97,7 @@ public class SplashScreenActivity extends AppCompatActivity implements FetchNote
         Intent intent = getIntent();
         mLaunchMessage = intent.getStringExtra(Constants.LAUNCH_MESSAGE_EXTRA);
         mHighlighted = intent.getStringExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA);
+        mCatHighlighted = intent.getStringExtra(Constants.CATHIGHLIGHTED_MESSAGE_EXTRA);
     }
 
     //Sets up the layout.  Must be called after we load the global data
@@ -174,17 +176,8 @@ public class SplashScreenActivity extends AppCompatActivity implements FetchNote
 
         int skinid = TextMuseSkinData.getCurrentlySelectedSkin(this);
         if (skinid == -1 || (settings.firstLaunch && Constants.BuildType == Constants.Builds.University)) {
-            //Go to the skin selection screen
-            //if (mFinishedLoadingSkins && mFinishedLoadingSkinsResult == FetchSkinsAsyncTask.FetchSkinsResult.FETCH_SUCCEEDED) {
-                intent = new Intent(SplashScreenActivity.this, SkinSelectActivity.class);
-                intent.putExtra(SkinSelectActivity.EXTRA_LAUNCH_FROM_SPLASH, true);
-
-            //} else {
-                //Go to the walkthrough screen if there are no skins or no response
-
-            //    intent = new Intent(SplashScreenActivity.this, WalkthroughActivity.class);
-            //    intent.putExtra(WalkthroughActivity.INITIAL_LAUNCH_EXTRA, true);
-            //}
+            intent = new Intent(SplashScreenActivity.this, SkinSelectActivity.class);
+            intent.putExtra(SkinSelectActivity.EXTRA_LAUNCH_FROM_SPLASH, true);
 
         } else {
 
@@ -199,6 +192,9 @@ public class SplashScreenActivity extends AppCompatActivity implements FetchNote
             }
             if (mHighlighted != null && mHighlighted.length() > 0) {
                 intent.putExtra(Constants.HIGHLIGHTED_MESSAGE_EXTRA, mHighlighted);
+            }
+            if (mCatHighlighted != null && mCatHighlighted.length() > 0) {
+                intent.putExtra(Constants.CATHIGHLIGHTED_MESSAGE_EXTRA, mCatHighlighted);
             }
         }
 
