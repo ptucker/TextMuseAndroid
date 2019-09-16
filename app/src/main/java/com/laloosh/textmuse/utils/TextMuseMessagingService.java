@@ -18,7 +18,6 @@ import java.util.Map;
 public class TextMuseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "TextMuseFirebaseService";
     public static String FirebaseToken;
-    static Context context;
 
     class TextMuseNotification {
         public String message;
@@ -48,10 +47,6 @@ public class TextMuseMessagingService extends FirebaseMessagingService {
 
     }
 
-    public static void setContext(Context ctx) {
-        context = ctx;
-    }
-
     public void onNewToken(String token) {
         Log.d(TAG, "Refreshing GCM Reg Token");
         FirebaseToken = token;
@@ -65,7 +60,6 @@ public class TextMuseMessagingService extends FirebaseMessagingService {
     }
 
     private void showReminderNotification(TextMuseNotification notification) {
-
         //Build the intent that will start the activity on click
         Intent resultIntent;
         PendingIntent pendingIntent;
@@ -73,11 +67,11 @@ public class TextMuseMessagingService extends FirebaseMessagingService {
             try {
                 resultIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(notification.url));
             } catch (Exception e) {
-                resultIntent = new Intent(context, SplashScreenActivity.class);
+                resultIntent = new Intent(this, SplashScreenActivity.class);
                 Log.e(Constants.TAG, "Could not create intent to start web browser in notification");
             }
         } else {
-            resultIntent = new Intent(context, SplashScreenActivity.class);
+            resultIntent = new Intent(this, SplashScreenActivity.class);
 
             if (notification.extendedMsg != null) {
                 resultIntent.putExtra(Constants.LAUNCH_MESSAGE_EXTRA, notification.extendedMsg);
@@ -90,7 +84,7 @@ public class TextMuseMessagingService extends FirebaseMessagingService {
             resultIntent.putExtra(Constants.CATHIGHLIGHTED_MESSAGE_EXTRA, notification.cathighlight);
         }
 
-        pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Get a default sound to play
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -99,11 +93,11 @@ public class TextMuseMessagingService extends FirebaseMessagingService {
             notification.title = "TextMuse";
         }
 
-        AzureTextMuseNotificationChannelUtil channelUtil = new AzureTextMuseNotificationChannelUtil(context);
+        AzureTextMuseNotificationChannelUtil channelUtil = new AzureTextMuseNotificationChannelUtil(this);
         Notification.Builder mBuilder = channelUtil.getMessagesChannelNotification(notification.title, notification.message)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, mBuilder.build());
     }
 }

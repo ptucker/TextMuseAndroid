@@ -92,7 +92,8 @@ public class RegistrationIntentService extends IntentService {
             TextMuseData data = globalData.getData();
             if (data.appId > 0) {
                 tags.add(Integer.toString(data.appId));
-
+            }
+            if (skinid > 0) {
                 tags.add("skin" + Integer.toString(skinid));
             }
             if (data.followedSponsorsSet != null && data.followedSponsorsSet.size() > 0) {
