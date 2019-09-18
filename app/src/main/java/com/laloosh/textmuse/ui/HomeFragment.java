@@ -80,6 +80,7 @@ public class HomeFragment extends Fragment
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ListView mListView;
     private MainNotesAdapter mAdapter;
+    private View mHighlightDetail;
     private DrawerListArrayAdapter mDrawerListAdapter;
     private DrawerLayout mDrawerLayout;
     private TextView mTextViewDrawerSettings;
@@ -260,10 +261,10 @@ public class HomeFragment extends Fragment
 
             if (note != null) {
                 ViewGroup root = (ViewGroup) v.findViewById(R.id.mainFragmentRoot);
-                View detail = MessageDetailFactory.CreateDetailView(root, note, this.getActivity(), color, iCategory, iNote);
+                mHighlightDetail = MessageDetailFactory.CreateDetailView(root, note, this.getActivity(), color, iCategory, iNote);
                 Animation detailSlide = AnimationUtils.loadAnimation(this.getContext(), R.anim.activityfadein);
-                root.addView(detail);
-                detail.startAnimation(detailSlide);
+                root.addView(mHighlightDetail);
+                mHighlightDetail.startAnimation(detailSlide);
             }
         }
 
@@ -276,12 +277,13 @@ public class HomeFragment extends Fragment
     }
 
     public boolean onBack() {
-        boolean ret = mAdapter.getDetail() != null;
-        if (ret) {
-            MessageDetailFactory.removeView(mAdapter.getDetail());
+        View detail = mAdapter.getDetail() == null ? mHighlightDetail : mAdapter.getDetail();
+        if (detail != null) {
+            MessageDetailFactory.removeView(detail);
             mAdapter.clearDetail();
+            mHighlightDetail = null;
         }
-        return ret;
+        return detail != null;
     }
 
     class CategoryArrayAdapter extends RecyclerView.Adapter<CategoryArrayAdapter.CategoryViewHolder> {
@@ -505,7 +507,6 @@ public class HomeFragment extends Fragment
                 mAdapter.updateNotes(mSortedNotes);
                 mDrawerListAdapter.updateCategories(mData.categories, mData.localTexts, mData.localPhotos);
             } else {
-
                 generateNoteList();
                 mAdapter = new MainNotesAdapter(this.getContext(), mSortedNotes, mData, this.getActivity());
                 mListView.setAdapter(mAdapter);
