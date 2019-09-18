@@ -238,15 +238,26 @@ public class HomeFragment extends Fragment
             int highlighted = Integer.parseInt(mHighlighted);
             Note note = null;
             int iNote=-1, iCategory=-1, color=-1;
-            for (int i=0; i<mSortedNotes.size(); i++) {
-                if (mSortedNotes.get(i).note.noteId == highlighted) {
-                    note = mSortedNotes.get(i).note;
-                    iNote = mSortedNotes.get(i).notePos;
-                    iCategory = mSortedNotes.get(i).categoryIndex;
-                    int[] colors = GlobalData.getInstance().getData().getColorList();
-                    color = colors[iCategory % colors.length];
+
+            int categoryPos = 0;
+            for (Category category : mData.categories) {
+                categoryPos++;
+
+                int notePos = 0;
+                for (Note n : category.notes) {
+                    if (n.noteId == highlighted) {
+                        note = n;
+                        iNote = notePos;
+                        iCategory = categoryPos;
+                        int[] colors = GlobalData.getInstance().getData().getColorList();
+                        color = colors[iCategory % colors.length];
+                        break;
+                    }
                 }
+                if (note != null)
+                    break;
             }
+
             if (note != null) {
                 ViewGroup root = (ViewGroup) v.findViewById(R.id.mainFragmentRoot);
                 View detail = MessageDetailFactory.CreateDetailView(root, note, this.getActivity(), color, iCategory, iNote);
