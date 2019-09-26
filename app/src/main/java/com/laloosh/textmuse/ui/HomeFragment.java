@@ -920,21 +920,25 @@ public class HomeFragment extends Fragment
                 holder.mTextView.setTextColor(ColorHelpers.getTextColorForBackground(color));
             } else {
 
-                DownloadImageAsyncTask task = new DownloadImageAsyncTask(note, mContext.getApplicationContext());
+                DownloadImageAsyncTask task = new DownloadImageAsyncTask(note, mContext.getApplicationContext(),
+                        new DownloadImageAsyncTask.DownloadImageAsyncListener() {
+                            @Override
+                            public void onComplete() {
+                                holder.mBackgroundImageView.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Glide.with(mContext)
+                                                .load(note.getDisplayMediaUrl(mContext))
+                                                .error(R.drawable.placeholder_image)
+                                                .fitCenter()
+                                                .override(holder.mBackgroundImageView.getWidth(), Target.SIZE_ORIGINAL)
+                                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                                .into(holder.mBackgroundImageView);
+                                    }
+                                });
+                            }
+                        });
                 task.execute();
-
-                holder.mBackgroundImageView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Glide.with(mContext)
-                            .load(note.getDisplayMediaUrl(mContext))
-                            .error(R.drawable.placeholder_image)
-                            .fitCenter()
-                            .override(holder.mBackgroundImageView.getWidth(), Target.SIZE_ORIGINAL)
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                            .into(holder.mBackgroundImageView);
-                    }
-                });
             }
 
             holder.mLayoutSend.setOnClickListener(new View.OnClickListener() {
